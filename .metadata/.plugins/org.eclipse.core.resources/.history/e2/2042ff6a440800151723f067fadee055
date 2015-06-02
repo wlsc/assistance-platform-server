@@ -1,0 +1,10 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
+
+public abstract class ModuleProxy {
+
+	public String getModuleId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

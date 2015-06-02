@@ -1,0 +1,11 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.services;
+
+public class EventDispatcher {
+	public EventDispatcher() {
+		
+	}
+	
+	public void dispatchEvent(Event event) {
+		
+	}
+}

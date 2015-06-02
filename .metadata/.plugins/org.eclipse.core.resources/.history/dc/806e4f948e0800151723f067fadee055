@@ -1,0 +1,10 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.data;
+
+
+public abstract class Event {
+	public final long timestamp;
+	
+	public Event() {
+		timestamp = System.currentTimeMillis();
+	}
+}

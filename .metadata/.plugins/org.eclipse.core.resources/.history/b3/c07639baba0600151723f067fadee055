@@ -1,0 +1,8 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotzones;
+
+public class HotZonesModule extends ModuleContainer {
+	public HotZonesModule() {
+		// TODO: Register for user context changes (GPS moves), in order to provide recommendations
+		// TODO: Perform periodic clustering, but what is the strategy? Per user? Per region?
+	}
+}

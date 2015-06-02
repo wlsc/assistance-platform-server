@@ -1,0 +1,18 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.EventDispatcher;
+
+public class AssistancePlatform {
+	public static void main(String[] args) {
+		//// Schematischer Ablauf
+		
+		// Generate event
+		GeographicPosition gps = new GeographicPosition(10, 11);
+		
+		// Event an platform schicken
+		EventDispatcher eventDispatcher = new EventDispatcher();
+		
+		eventDispatcher.dispatchEvent(gps);
+	}
+}

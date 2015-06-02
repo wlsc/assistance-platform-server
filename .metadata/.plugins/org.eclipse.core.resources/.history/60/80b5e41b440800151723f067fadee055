@@ -1,0 +1,36 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.ModuleProxy;
+
+/**
+ * @author bjeutter
+ * This class holds information about a module registration
+ */
+public class ModuleRegistration {
+	//private String id;
+	private DeviceCapability[] requiredCapabilites;
+	private DeviceCapability[] optionalCapabilites;
+	private ModuleProxy moduleProxy;
+	
+	public ModuleRegistration(ModuleProxy proxy, DeviceCapability[] requiredCapabilites, DeviceCapability[] optionalCapabilites) {
+		this.moduleProxy = proxy;
+		this.requiredCapabilites = requiredCapabilites;
+		this.optionalCapabilites = optionalCapabilites;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	
+	public ModuleProxy getProxy() {
+		return moduleProxy;
+	}
+	
+	public DeviceCapability[] getRequiredCapabilites() {
+		return requiredCapabilites;
+	}
+	
+	public DeviceCapability[] getOptionalCapabilites() {
+		return optionalCapabilites;
+	}
+}

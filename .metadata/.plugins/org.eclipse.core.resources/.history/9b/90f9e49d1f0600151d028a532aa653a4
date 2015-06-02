@@ -1,0 +1,13 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.registry.exceptions
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.registry.exceptions.ModuleRegistrationException
+
+/**
+ * @author bjeutter
+ */
+ object HelloWorld {
+    def main(args: Array[String]) {
+      println(new ModuleRegistrationException("Test"))
+    }
+  }

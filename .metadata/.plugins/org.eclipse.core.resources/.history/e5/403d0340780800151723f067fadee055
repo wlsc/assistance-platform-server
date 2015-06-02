@@ -1,0 +1,6 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+
+public class DummyMessagingService extends MessagingService {
+}

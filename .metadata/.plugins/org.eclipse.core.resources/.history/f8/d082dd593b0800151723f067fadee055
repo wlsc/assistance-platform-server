@@ -1,0 +1,10 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform;
+
+public class AssistancePlatform {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

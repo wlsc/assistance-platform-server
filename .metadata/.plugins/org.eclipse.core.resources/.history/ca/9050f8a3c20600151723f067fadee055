@@ -1,0 +1,26 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+
+public class HotPlace {
+	private GeographicPosition position;
+	
+	private String description;
+	
+	public HotPlace(GeographicPosition pos) {
+		this(pos, "unknown");
+	}
+	
+	public HotPlace(GeographicPosition pos, String description) {
+		this.position = pos;
+		this.setDescription(description);
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+}

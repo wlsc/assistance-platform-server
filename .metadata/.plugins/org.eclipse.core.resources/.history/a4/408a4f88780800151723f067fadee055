@@ -1,0 +1,27 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy;
+
+import java.util.HashMap;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+
+public class DummyMessagingService extends MessagingService {
+	private Map<Channel, Set<Consumer>> channelConsumers = new HashMap<>();
+	
+	@Override
+	protected void subscribe(Consumer consumer, Channel channel) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	protected void unsubscribe(Consumer consumer, Channel channel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void publish(Channel channel, Object data) {
+		// TODO Auto-generated method stub
+		
+	}
+}

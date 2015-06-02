@@ -1,0 +1,7 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.user.UserContext;
+
+public abstract class DataModule extends Module {
+	public abstract UserContext contextForUserWithId(long id);
+}

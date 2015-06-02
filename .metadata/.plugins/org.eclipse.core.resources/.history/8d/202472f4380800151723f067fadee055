@@ -1,0 +1,20 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+
+/**
+ * 
+ * @author bjeutter
+ *
+ */
+public class HotPlacesDataModule {
+	private void didNoticeUserContextChange() {
+		HotPlace[] places = findHotPlacesForUserTrace(null /* TODO */);
+		//notifyUserAboutHotPlaces(places);
+	}
+	
+	private HotPlace[] findHotPlacesForUserTrace(GeographicPosition[] trace) {
+		// TODO: Hier müsste die Bewegung (Richtungsvektor?) des Benutzers betrachtet werden und interessante Orte gefiltert werden
+		return null;
+	}
+}

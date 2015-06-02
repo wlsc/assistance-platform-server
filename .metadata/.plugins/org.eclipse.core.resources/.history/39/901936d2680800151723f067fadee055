@@ -1,0 +1,27 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
+
+
+/**
+ * Module bundles are containers of together deployed modules. They bootstrap the module.
+ * @author bjeutter
+ *
+ */
+public abstract class ModuleBundle {
+	private Module containedModules[];
+	
+	public ModuleBundle() {
+		containedModules = initializeContainedModules();
+	}
+	
+	protected abstract Module[] initializeContainedModules();
+	
+	/*public void registerModules(ModuleRegistry registry) {
+		if(containedModules != null) {
+			for(Module m : containedModules) {
+				//ModuleProxy proxy
+				//ModuleRegistration registration = new ModuleRegistration(proxy);
+				//registry.registerModule(registration);
+			}
+		}
+	}*/
+}

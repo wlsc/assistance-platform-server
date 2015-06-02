@@ -1,0 +1,5 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.server;
+
+public class HotPlacesAssistanceModule {
+	public HotPlacesClient
+}

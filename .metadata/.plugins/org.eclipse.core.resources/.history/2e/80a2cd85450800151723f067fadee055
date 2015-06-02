@@ -1,0 +1,18 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry.ModuleRegistration;
+import de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry.ModuleRegistry;
+
+public abstract class ModuleBundle {
+	private Module containedModules[];
+	
+	public void registerModules(ModuleRegistry registry) {
+		if(containedModules != null) {
+			for(Module m : containedModules) {
+				//ModuleProxy proxy
+				ModuleRegistration registration = new ModuleRegistration(proxy);
+				registry.registerModule(registration);
+			}
+		}
+	}
+}

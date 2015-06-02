@@ -1,0 +1,28 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.assistance;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.AssistanceModule;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data.HotPlaceFoundEvent;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService.Channel;
+
+public class HotPlacesAssistanceModule extends AssistanceModule {
+	private MessagingService messagingService;
+	
+	public HotPlacesAssistanceModule(MessagingService messagingService) {
+		this.messagingService = messagingService;
+		
+		Channel c = this.messagingService
+		.channel(HotPlaceFoundEvent.class.getSimpleName());
+		
+		c.subscribeConsumer(this::consumeHotPlaceFoundEvent);
+	}
+	
+	private void consumeHotPlaceFoundEvent(Object data) {
+		HotPlaceFoundEvent event = (HotPlaceFoundEvent)data;
+	}
+	/*@Override
+	public void didDetectInterestingHotPlacesForUser(long userId,
+			HotPlace[] places) {
+		// TODO: Push schicken und so
+	}*/
+}

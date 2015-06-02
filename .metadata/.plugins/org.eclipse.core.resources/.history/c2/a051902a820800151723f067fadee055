@@ -1,0 +1,9 @@
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlacesBundle;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService;
+
+
+public class HotPlacesMain {
+	public static void main (String[] args) {
+		HotPlacesBundle bundle = new HotPlacesBundle(new DummyMessagingService());
+	}
+}

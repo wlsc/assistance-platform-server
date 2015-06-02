@@ -1,0 +1,13 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.assistance;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlace;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data.HotPlacesDataObserver;
+
+public class HotPlacesAssistanceModule {
+
+	/*@Override
+	public void didDetectInterestingHotPlacesForUser(long userId,
+			HotPlace[] places) {
+		// TODO: Push schicken und so
+	}*/
+}

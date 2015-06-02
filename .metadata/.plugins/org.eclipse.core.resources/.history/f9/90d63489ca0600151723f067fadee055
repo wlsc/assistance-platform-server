@@ -1,0 +1,10 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.data.user;
+
+/**
+ * A user context encapsulates the view 
+ * @author bjeutter
+ *
+ */
+public abstract class UserContext {
+
+}

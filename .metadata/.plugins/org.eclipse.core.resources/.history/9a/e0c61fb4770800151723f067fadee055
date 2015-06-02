@@ -1,0 +1,48 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class MessagingService {
+	private Map<String, Channel> channels = new HashMap<>();
+	
+	public MessagingService() {
+		
+	}
+
+	public class Channel {
+		private final String name;
+		
+		public Channel(String name) {
+			this.name = name;
+		}
+		
+		protected void subscribeConsumer(Consumer consumer) {
+			
+		}
+		
+		protected void unsubscribeConsumer(Consumer consumer) {
+			
+		}
+		
+		protected void publish(Object data) {
+			
+		}
+	}
+	
+	protected Channel channel(String name) {
+		Channel result = channels.get(name);
+		
+		if(result == null) {
+			Channel newChannel = new Channel(name);
+			channels.put(name, newChannel);
+			result = newChannel;
+		}
+		
+		return result;
+	}
+	
+	private void subscribe(Consumer consumer, Channel c) {
+	}
+	}
+}

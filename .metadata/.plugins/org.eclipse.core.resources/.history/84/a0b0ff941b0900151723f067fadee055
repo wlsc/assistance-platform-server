@@ -1,0 +1,104 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.DataModule;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlace;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService.Channel;
+
+/**
+ * This module does the data processing for the hot place detections and recommendations.
+ * @author bjeutter
+ */
+public class HotPlacesDataModule extends DataModule {
+	private List<GeographicPosition> geoPosDB = new ArrayList<>();
+	
+	private Map<Long, Deque<GeographicPosition>> userTraces = new HashMap<>();
+	
+	public HotPlacesDataModule(MessagingService messagingService) {
+		super();
+		
+		Channel geoPosChannel = messagingService.channel(GeographicPosition.class.getSimpleName());
+		
+		geoPosChannel.subscribeConsumer(this::consumeGeoPosition);
+	}
+	
+	private void consumeGeoPosition(Channel c, Object data) {
+		GeographicPosition pos = (GeographicPosition) data;
+		geoPosDB.add(pos);
+		appendTrace(pos);
+		
+		// TODO: Only find hot places when user not busy
+		
+		/*CompletableFuture<HotPlace[]> findAsync = CompletableFuture.supplyAsync(() -> {
+			 HotPlace[] hotplaces = findHotPlacesForUserTrace(userTraces.get(pos.userId));
+		});*/
+		
+		findAsync.thenAccept((hotplaces) -> {
+			if(hotplaces != null && hotplaces.length != 0) {
+				//System.out.println("NOTIFICATION!!!!");
+				System.out.println(System.currentTimeMillis());
+			}
+		});
+	}
+	
+	private void appendTrace(GeographicPosition pos) {
+		Long uid = pos.userId;
+		createUserTraceIfNotExistent(uid);
+		userTraces.get(uid).add(pos);
+	}
+
+	private void createUserTraceIfNotExistent(Long uid) {
+		if(!userTraces.containsKey(uid)) {
+			userTraces.put(uid, new ArrayDeque<>(20));
+		}
+	}
+
+	private HotPlace[] findHotPlacesForUserTrace(Collection<GeographicPosition> trace) {
+		double avgLat = trace.parallelStream().mapToDouble(c -> c.latitude).average().getAsDouble();
+		double avgLong = trace.parallelStream().mapToDouble(c -> c.longitude).average().getAsDouble();
+		
+		GeographicPosition avgPos = new GeographicPosition(avgLat, avgLong, 0, 0);
+
+		Stream<GeographicPosition> nearPositions = geoPosDB.parallelStream().filter(p -> p.distance(avgPos) < 1000);
+	
+		Map<GeographicPosition, Integer> geoPosCount = new HashMap<>();
+	
+		nearPositions.forEach(geo -> {
+			GeographicPosition g = new GeographicPosition(Math.round(geo.latitude * 100.0)/100.0, Math.round(geo.longitude * 100.0)/100.0, 0, 0);
+			
+			synchronized (geoPosCount) {
+				Integer counter = geoPosCount.get(g);
+				
+				if(counter == null) {
+					counter = 0;
+				} else {
+					counter = counter;
+				}
+				
+				counter++;
+				
+				geoPosCount.put(g, counter);
+			}
+		});
+		
+		HotPlace[] hotPlaces = geoPosCount.entrySet()
+		.parallelStream()
+		.filter(e -> e.getValue() > 2)
+		.sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+		.limit(10).map(e -> new HotPlace(e.getKey())).toArray(HotPlace[]::new);
+
+
+		return hotPlaces;
+	}
+}

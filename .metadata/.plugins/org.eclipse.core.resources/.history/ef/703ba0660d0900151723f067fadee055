@@ -1,0 +1,29 @@
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlacesBundle;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService.Channel;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService;
+
+
+public class HotPlacesMain {
+	public static void main (String[] args) {
+		MessagingService ms = new DummyMessagingService();
+		HotPlacesBundle bundle = new HotPlacesBundle(ms);
+		
+		//Channel c = ms.channel(GeographicPosition.class.getSimpleName());
+		GeographicPosition lastPos = null;
+		for(int i = 0; i < 100000; i++) {
+			long timestamp = i;
+			long uid = (long) (Math.random() * Integer.MAX_VALUE);
+			double lat = Math.round(10 + (10 - Math.random() * 20));
+			double lon = Math.round(10 + (10 - Math.random() * 20));
+			
+			GeographicPosition pos = new GeographicPosition(lat, lon, uid, timestamp);
+			
+			if(lastPos != null) {
+				System.out.println(lastPos.hashCode() + " " + pos.hashCode());
+			}
+			//c.publish(new GeographicPosition(lat, lon, uid, timestamp));
+		}
+	}
+}

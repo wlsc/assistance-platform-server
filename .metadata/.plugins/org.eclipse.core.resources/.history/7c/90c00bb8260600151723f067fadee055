@@ -1,0 +1,60 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.registry.exceptions.ModuleRegistrationException
+
+/**
+ * @author bjeutter
+ * This class keeps track of registered modules on the central platform.
+ */
+class ModuleRegistry {
+  /**
+   * List of current registrations
+   */
+  private Map<String, ModuleRegistration> registrations = new HashMap<>();
+  
+  /**
+   * Returns the current registrations as a list
+   */
+  private Collection<ModuleRegistration> getRegisterdModules() {
+	  return registrations.values();
+  }
+  
+  /**
+   * Tries to register a module
+   */
+   public void registerModule(ModuleRegistration registration) {
+     if(isRegistrationValid(registration)) {
+    	 this.registrations.
+         this.registrations += registration
+     }
+   }
+  
+  /**
+   * Checks if a registration is valid
+   */
+   private def isRegistrationValid(registration : ModuleRegistration) : Boolean = {
+     val test = registrations.find((r : ModuleRegistration) => r.id == registration.id) 
+     if(registrations.find((r : ModuleRegistration) => r.id == registration.id) != None) {
+       throw new ModuleRegistrationException("Module ID already registered.")
+     }
+     
+     return true
+  }
+   
+   /**
+    * Deregister a module with certain ID
+    */
+   def deregisterModule(moduleId : String) {
+   }
+   
+  /**
+   * Deregisters a module
+   */
+   def deregisterModule(registration : ModuleRegistration) {
+     deregisterModule(registration.id);
+   }
+}

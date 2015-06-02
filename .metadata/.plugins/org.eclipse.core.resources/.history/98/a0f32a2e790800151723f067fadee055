@@ -1,0 +1,5 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
+
+public interface Consumer {
+	void consumeDataOfChannel(Channel channel, Object data);
+}

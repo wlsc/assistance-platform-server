@@ -1,0 +1,9 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
+
+public class Channel {
+	private final String name;
+	
+	public Channel(String name) {
+		
+	}
+}

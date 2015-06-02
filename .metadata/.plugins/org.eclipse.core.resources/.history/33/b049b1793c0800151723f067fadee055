@@ -1,0 +1,9 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+
+public class AssistancePlatform {
+	public static void main(String[] args) {
+		GeographicPosition gps = new GeographicPosition(10, 11);
+	}
+}

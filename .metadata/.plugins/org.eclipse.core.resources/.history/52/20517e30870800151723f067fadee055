@@ -1,0 +1,12 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.data;
+
+public class GeographicPosition extends UserEvent {
+	public final double latitude;
+	public final double longitude;
+	
+	public GeographicPosition(long userId, double latitude, double longitude) {
+		super(userId);
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+}

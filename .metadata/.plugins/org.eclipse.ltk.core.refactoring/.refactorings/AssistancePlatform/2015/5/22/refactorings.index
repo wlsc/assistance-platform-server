@@ -1,0 +1,19 @@
+1432821471622	Move file
+1432821913919	Delete element
+1432834475789	Rename resource 'ModuleRegistryTests.scala'
+1432836728138	Move file
+1432836766254	Move file
+1432836884339	Move file
+1432836932009	Move file
+1432836935798	Delete element
+1432839484005	Move file
+1432839537297	Delete element
+1432916856761	Delete element
+1432920404979	Delete element
+1432983028686	Rename type 'AssistantModule'
+1432986598583	Rename type 'GPSPosition'
+1432986746648	Rename package 'de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotzones'
+1432986758388	Rename compilation unit 'HotZonesModule.java'
+1432986869907	Encapsulate field 'description'
+1432986899771	Encapsulate field 'position'
+1432993255021	Rename type 'DataModule'

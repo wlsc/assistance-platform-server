@@ -1,0 +1,35 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry;
+
+/**
+ * @author bjeutter
+ * This class holds information about a module registration
+ */
+public class ModuleRegistration {
+	private String id;
+	private String location;
+	private DeviceCapability[] requiredCapabilites;
+	private DeviceCapability[] optionalCapabilites;
+	
+	public ModuleRegistration(String id, String location, DeviceCapability[] requiredCapabilites, DeviceCapability[] optionalCapabilites) {
+		this.id = id;
+		this.location = location;
+		this.requiredCapabilites = requiredCapabilites;
+		this.optionalCapabilites = optionalCapabilites;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+	
+	public DeviceCapability[] getRequiredCapabilites() {
+		return requiredCapabilites;
+	}
+	
+	public DeviceCapability[] getOptionalCapabilites() {
+		return optionalCapabilites;
+	}
+}

@@ -1,0 +1,9 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
+
+public abstract class ModuleContainer {
+	public void registerModules() {
+		
+	}
+	
+	private Module containedModules[];
+}

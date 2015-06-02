@@ -1,0 +1,38 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.assistance;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.AssistanceModule;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data.HotPlacesFoundEvent;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService.Channel;
+
+public class HotPlacesAssistanceModule extends AssistanceModule {
+	private MessagingService messagingService;
+	
+	public HotPlacesAssistanceModule(MessagingService messagingService) {
+		this.messagingService = messagingService;
+		
+		Channel c = this.messagingService
+		.channel(HotPlacesFoundEvent.class.getSimpleName());
+		
+		c.subscribeConsumer(this::consumeHotPlaceFoundEvent);
+	}
+	
+	Map<Long, Long> lastNotifications = new HashMap<>();
+	
+	private void consumeHotPlaceFoundEvent(Channel c, Object data) {
+		HotPlacesFoundEvent event = (HotPlacesFoundEvent)data;
+		
+		Long lastNotifiaction = lastNotifications.get(event.userId);
+		
+
+		
+		if(lastNotifiaction == null || System.currentTimeMillis() - lastNotifiaction > 5000) {
+			System.out.println("Send notification to user");
+		} else {
+			System.out.println("Protect overflow");
+		}
+	}
+}

@@ -1,0 +1,24 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.server;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.ModuleContainer;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlace;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.assistance.HotPlacesAssistanceModule;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data.HotPlacesDataModule;
+
+public class HotPlacesModule extends ModuleContainer {
+	private HotPlacesDataModule dataModule;
+	private HotPlacesAssistanceModule assistanceModule;
+	
+	public HotPlacesModule() {
+		// TODO: Register for user context changes (GPS moves), in order to provide recommendations
+		// TODO: Perform periodic clustering, but what is the strategy? Per user? Per region?
+		
+		dataModule = new HotPlacesDataModule();
+		assistanceModule = new HotPlacesAssistanceModule();
+	}
+	
+	private void notifyUserAboutHotPlaces(HotPlace[] places) {
+		// TODO: Irgendeinen Notifiaction Service ansprechen??
+	}
+}

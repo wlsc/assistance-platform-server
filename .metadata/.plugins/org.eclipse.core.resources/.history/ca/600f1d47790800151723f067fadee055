@@ -1,0 +1,33 @@
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.user.UserContext;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.DataModule;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlace;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService;
+
+/**
+ * This module does the data processing for the hot place detections and recommendations.
+ * @author bjeutter
+ */
+public class HotPlacesDataModule extends DataModule {
+	private MessagingService messagingService;
+	
+	public HotPlacesDataModule() {
+		super();
+		
+		// TODO: Wo die Reference für den Messaging Service herbekommen?
+		messagingService = new DummyMessagingService();
+	}
+	
+	private void didNoticeUserContextChange() {
+		HotPlace[] places = findHotPlacesForUserTrace(null /* TODO */);
+		//notifyUserAboutHotPlaces(places);
+	}
+	
+	private HotPlace[] findHotPlacesForUserTrace(GeographicPosition[] trace) {
+		// TODO: Hier müsste die Bewegung (Richtungsvektor?) des Benutzers betrachtet werden und interessante Orte gefiltert werden
+		return null;
+	}
+}
