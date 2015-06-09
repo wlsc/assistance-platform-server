@@ -1,0 +1,6 @@
+INDEX VERSION 1.3+/Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+1235916556.index
+361483271.index
+4151835366.index
+4047953562.index
+881130664.index

@@ -1,5 +1,0 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.data;
-
-public abstract class Event {
-
-}

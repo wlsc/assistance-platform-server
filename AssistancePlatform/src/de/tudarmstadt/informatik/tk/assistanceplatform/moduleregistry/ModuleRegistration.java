@@ -12,11 +12,11 @@ public class ModuleRegistration {
 	private ModuleProxy moduleProxy;
 	
 	public ModuleRegistration(ModuleProxy proxy) {
-		this(proxy, null, null);
+		this(null, null);
 	}
 	
-	public ModuleRegistration(ModuleProxy proxy, DeviceCapability[] requiredCapabilites, DeviceCapability[] optionalCapabilites) {
-		this.moduleProxy = proxy;
+	public ModuleRegistration(DeviceCapability[] requiredCapabilites, DeviceCapability[] optionalCapabilites) {
+	//	this.moduleProxy = proxy;
 		this.requiredCapabilites = requiredCapabilites;
 		this.optionalCapabilites = optionalCapabilites;
 	}

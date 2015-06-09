@@ -1,6 +1,0 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
-
-public abstract class AssistanceModule extends Module {
-	// Dieses Assistenzmodule soll nun auf verschiedene Data Module, bzw. deren Kontext, zugreifen können
-	// WIe Typisierung gestalten?
-}

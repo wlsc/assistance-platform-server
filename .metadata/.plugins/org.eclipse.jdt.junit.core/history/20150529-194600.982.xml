@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="ModuleRegistryTest" project="AssistancePlatform" tests="2" started="2" failures="0" errors="0" ignored="0">
-  <testsuite name="ModuleRegistryTest" time="0.003">
-    <testcase name="simpleRegistrationTests" classname="ModuleRegistryTest" time="0.003"/>
-    <testcase name="testFaultyRegistrationTest" classname="ModuleRegistryTest" time="0.0"/>
-  </testsuite>
-</testrun>

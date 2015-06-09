@@ -1,5 +1,0 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data;
-
-public class HotPlaceFoundEvent {
-
-}

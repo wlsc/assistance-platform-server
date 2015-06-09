@@ -1,4 +1,0 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.assistance;
-
-public class HotPlacesAssistanceModule implements HotPlacesClient {
-}

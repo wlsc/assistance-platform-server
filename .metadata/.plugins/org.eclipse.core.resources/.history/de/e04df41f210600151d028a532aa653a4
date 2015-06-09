@@ -1,8 +1,0 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry
-
-/**
- * @author bjeutter
- * This class holds information about a module registration
- */
-class ModuleRegistration(val id : String, val location : String, val requiredCapabilities : Array[Capability], val optionalCapabilities : Array[Capability] ) {
-}

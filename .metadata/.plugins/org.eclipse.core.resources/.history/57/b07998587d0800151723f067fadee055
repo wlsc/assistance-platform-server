@@ -1,9 +1,0 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.data;
-
-public abstract class UserEvent extends Event {
-	public final long userId;
-	
-	public UserEvent(long userId) {
-		this.userId = userId;
-	}
-}

@@ -1,8 +1,0 @@
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlacesBundle;
-
-
-public class HotPlacesMain {
-	public static void main (String[] args) {
-		HotPlacesBundle bundle = new HotPlacesBundle();
-	}
-}

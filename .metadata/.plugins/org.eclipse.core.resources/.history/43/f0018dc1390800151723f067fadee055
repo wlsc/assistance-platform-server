@@ -1,5 +1,0 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data;
-
-public interface HotPlacesClient {
-	public void didDetectInterestingHotPlacesForUser(long userId, HotPlace zones[]);
-}

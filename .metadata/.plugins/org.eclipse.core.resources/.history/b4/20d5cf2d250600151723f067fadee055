@@ -1,6 +1,0 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules.registry.exceptions;
-
-/**
- * @author bjeutter
- */
-public class ModuleRegistrationException(err : String) extends Exception(err)

@@ -4708,3 +4708,146 @@ org.eclipse.core.runtime.CoreException: Launch configuration ModuleRegistryTest 
 2015-06-02 22:43:05,161 [Worker-599] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/HotPlacesAssistanceModule/src/main/resources
 2015-06-02 22:43:05,162 [Worker-599] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 2015-06-02 22:43:05,193 [Worker-599] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/HotPlacesAssistanceModule/src/test/resources
+2015-06-03 12:20:31,869 [Worker-658] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-03 12:20:31,901 [Worker-658] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/HotPlacesAssistanceModule/src/main/resources
+2015-06-03 12:20:31,901 [Worker-658] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-03 12:20:31,931 [Worker-658] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/HotPlacesAssistanceModule/src/test/resources
+2015-06-09 12:52:02,927 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:52:02,965 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/main/resources
+2015-06-09 12:52:02,968 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:52:02,998 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/test/resources
+2015-06-09 12:52:24,872 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:52:24,885 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/main/resources
+2015-06-09 12:52:24,886 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:52:24,914 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/test/resources
+2015-06-09 12:52:33,705 [Worker-33] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:52:33,729 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/main/resources
+2015-06-09 12:52:33,730 [Worker-33] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:52:33,759 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/test/resources
+2015-06-09 12:52:35,566 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:52:35,590 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/main/resources
+2015-06-09 12:52:35,591 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:52:35,620 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/test/resources
+2015-06-09 12:53:55,733 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:53:55,740 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/main/resources
+2015-06-09 12:53:55,741 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:53:55,772 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/test/resources
+2015-06-09 12:54:03,307 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:54:03,313 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/main/resources
+2015-06-09 12:54:03,314 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 12:54:03,343 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/test/resources
+2015-06-09 13:55:01,417 [Worker-18] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AssistancePlatformRestApi:AssistancePlatformRestApi:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/pom.xml.
+2015-06-09 13:55:01,915 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AssistancePlatformRestApi/src
+2015-06-09 13:55:01,916 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /AssistancePlatformRestApi/src/test/java because it overlaps with /AssistancePlatformRestApi/src
+2015-06-09 13:55:02,425 [Worker-18] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2015-06-09 13:55:02,489 [Worker-18] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AssistancePlatformRestApi:AssistancePlatformRestApi:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/pom.xml.
+2015-06-09 13:55:02,698 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AssistancePlatformRestApi/src
+2015-06-09 13:55:02,699 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /AssistancePlatformRestApi/src/test/java because it overlaps with /AssistancePlatformRestApi/src
+2015-06-09 13:55:02,872 [Worker-18] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 0 sec
+2015-06-09 13:55:03,017 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 13:55:03,049 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/main/resources
+2015-06-09 13:55:03,050 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 13:55:03,082 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/test/resources
+2015-06-09 13:55:14,658 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 13:55:14,678 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/main/resources
+2015-06-09 13:55:14,679 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 13:55:14,709 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/test/resources
+2015-06-09 13:55:21,305 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 13:55:21,330 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/main/resources
+2015-06-09 13:55:21,331 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 13:55:21,359 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/test/resources
+2015-06-09 13:59:37,838 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 13:59:37,845 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/main/resources
+2015-06-09 13:59:37,845 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 13:59:37,875 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/test/resources
+2015-06-09 14:00:32,205 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:00:32,230 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/main/resources
+2015-06-09 14:00:32,231 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:00:32,259 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/test/resources
+2015-06-09 14:00:36,501 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:00:36,507 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/main/resources
+2015-06-09 14:00:36,508 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:00:36,538 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/test/resources
+2015-06-09 14:01:39,177 [Worker-16] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AssistancePlatformRestApi:AssistancePlatformRestApi:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/pom.xml.
+2015-06-09 14:01:40,351 [Worker-18] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-bundle//jersey-bundle-.pom
+2015-06-09 14:01:40,358 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.sun.jersey:jersey-bundle:jar: is missing, no dependency information available
+2015-06-09 14:01:40,531 [Worker-18] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/asm/asm//asm-.pom
+2015-06-09 14:01:40,538 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for asm:asm:jar: is missing, no dependency information available
+2015-06-09 14:01:40,715 [Worker-18] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-server//jersey-server-.pom
+2015-06-09 14:01:40,725 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.sun.jersey:jersey-server:jar: is missing, no dependency information available
+2015-06-09 14:01:40,802 [Worker-18] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-core//jersey-core-.pom
+2015-06-09 14:01:40,811 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.sun.jersey:jersey-core:jar: is missing, no dependency information available
+2015-06-09 14:02:04,147 [Worker-21] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2015-06-09 14:02:04,264 [Worker-21] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AssistancePlatform:AssistancePlatform:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/pom.xml.
+2015-06-09 14:02:04,333 [Worker-21] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AssistancePlatformModuleAPI:AssistancePlatformModuleAPI:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformModuleAPI/pom.xml.
+2015-06-09 14:02:09,044 [Worker-21] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AssistancePlatformRestApi:AssistancePlatformRestApi:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/pom.xml.
+2015-06-09 14:02:09,102 [Worker-21] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: HotPlacesAssistanceModule:HotPlacesAssistanceModule:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/HotPlacesAssistanceModule/pom.xml.
+2015-06-09 14:02:09,517 [Worker-21] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AssistancePlatform/src
+2015-06-09 14:02:09,517 [Worker-21] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /AssistancePlatform/src/test/java because it overlaps with /AssistancePlatform/src
+2015-06-09 14:02:09,551 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.sun.jersey:jersey-bundle:jar: is missing, no dependency information available
+2015-06-09 14:02:09,557 [Worker-21] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AssistancePlatformModuleAPI/src
+2015-06-09 14:02:09,557 [Worker-21] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /AssistancePlatformModuleAPI/src/test/java because it overlaps with /AssistancePlatformModuleAPI/src
+2015-06-09 14:02:09,590 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for asm:asm:jar: is missing, no dependency information available
+2015-06-09 14:02:09,622 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.sun.jersey:jersey-server:jar: is missing, no dependency information available
+2015-06-09 14:02:09,653 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.sun.jersey:jersey-core:jar: is missing, no dependency information available
+2015-06-09 14:02:09,964 [Worker-21] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AssistancePlatformRestApi/src
+2015-06-09 14:02:09,964 [Worker-21] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /AssistancePlatformRestApi/src/test/java because it overlaps with /AssistancePlatformRestApi/src
+2015-06-09 14:02:10,050 [Worker-21] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /HotPlacesAssistanceModule/src
+2015-06-09 14:02:10,050 [Worker-21] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /HotPlacesAssistanceModule/src/test/java because it overlaps with /HotPlacesAssistanceModule/src
+2015-06-09 14:02:10,408 [Worker-21] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 6 sec
+2015-06-09 14:02:12,355 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:02:12,362 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformModuleAPI/src/main/resources
+2015-06-09 14:02:12,363 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:02:12,393 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformModuleAPI/src/test/resources
+2015-06-09 14:02:12,591 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:02:12,605 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/main/resources
+2015-06-09 14:02:12,607 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:02:12,636 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatform/src/test/resources
+2015-06-09 14:02:12,795 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:02:12,819 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/HotPlacesAssistanceModule/src/main/resources
+2015-06-09 14:02:12,820 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:02:12,850 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/HotPlacesAssistanceModule/src/test/resources
+2015-06-09 14:05:19,616 [Worker-19] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AssistancePlatformRestApi:AssistancePlatformRestApi:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/pom.xml.
+2015-06-09 14:05:19,693 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-bundle/1.19/jersey-bundle-1.19.pom
+2015-06-09 14:05:19,803 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-bundle/1.19/jersey-bundle-1.19.pom
+2015-06-09 14:05:19,844 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-project/1.19/jersey-project-1.19.pom
+2015-06-09 14:05:19,927 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-project/1.19/jersey-project-1.19.pom
+2015-06-09 14:05:19,968 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/net/java/jvnet-parent/4/jvnet-parent-4.pom
+2015-06-09 14:05:20,035 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/net/java/jvnet-parent/4/jvnet-parent-4.pom
+2015-06-09 14:05:20,072 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/javax/ws/rs/jsr311-api/1.1.1/jsr311-api-1.1.1.pom
+2015-06-09 14:05:20,141 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/javax/ws/rs/jsr311-api/1.1.1/jsr311-api-1.1.1.pom
+2015-06-09 14:05:20,181 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-server/1.19/jersey-server-1.19.pom
+2015-06-09 14:05:20,257 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-server/1.19/jersey-server-1.19.pom
+2015-06-09 14:05:20,298 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-core/1.19/jersey-core-1.19.pom
+2015-06-09 14:05:20,365 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-core/1.19/jersey-core-1.19.pom
+2015-06-09 14:05:20,409 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-bundle/1.19/jersey-bundle-1.19.jar
+2015-06-09 14:05:21,045 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-bundle/1.19/jersey-bundle-1.19.jar
+2015-06-09 14:05:21,066 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/javax/ws/rs/jsr311-api/1.1.1/jsr311-api-1.1.1.jar
+2015-06-09 14:05:21,135 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/javax/ws/rs/jsr311-api/1.1.1/jsr311-api-1.1.1.jar
+2015-06-09 14:05:21,157 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-server/1.19/jersey-server-1.19.jar
+2015-06-09 14:05:21,457 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-server/1.19/jersey-server-1.19.jar
+2015-06-09 14:05:21,479 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-core/1.19/jersey-core-1.19.jar
+2015-06-09 14:05:21,723 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-core/1.19/jersey-core-1.19.jar
+2015-06-09 14:05:22,165 [Worker-19] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AssistancePlatformModuleAPI:AssistancePlatformModuleAPI:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformModuleAPI/pom.xml.
+2015-06-09 14:05:23,730 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for asm:asm:jar: is missing, no dependency information available
+2015-06-09 14:05:25,553 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:05:25,586 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformModuleAPI/src/main/resources
+2015-06-09 14:05:25,587 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:05:25,620 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformModuleAPI/src/test/resources
+2015-06-09 14:05:36,665 [Worker-17] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AssistancePlatformRestApi:AssistancePlatformRestApi:0.0.1-SNAPSHOT @ /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/pom.xml.
+2015-06-09 14:05:36,796 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:05:36,824 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/main/resources
+2015-06-09 14:05:36,825 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:05:36,854 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/test/resources
+2015-06-09 14:05:37,987 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:05:37,993 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/main/resources
+2015-06-09 14:05:37,994 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:05:38,024 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/test/resources
+2015-06-09 14:06:04,260 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:06:04,268 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/main/resources
+2015-06-09 14:06:04,268 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:06:04,297 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/test/resources
+2015-06-09 14:08:07,236 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:08:07,243 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/main/resources
+2015-06-09 14:08:07,243 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-09 14:08:07,273 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/test/resources

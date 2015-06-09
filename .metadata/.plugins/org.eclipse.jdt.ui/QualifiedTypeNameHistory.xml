@@ -1,2 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.registry.exceptions.ModuleRegistrationException"/>
+<fullyQualifiedTypeName name="ModuleRegistryTest"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry.exceptions.ModuleRegistrationException"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.ModuleContainer"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlacesDataModule"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlacesAssistanceModule"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data.HotPlacesClient"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.DataModule"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.data.user.UserContext"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.services.EventDispatcher"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.data.Event"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry.ModuleRegistry"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.moduleregistry.ModuleRegistration"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.AssistanceModule"/>
+<fullyQualifiedTypeName name="java.lang.Object"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel"/>
+<fullyQualifiedTypeName name="HotPlacesMain"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlacesBundle"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.assistance.HotPlacesAssistanceModule"/>
+<fullyQualifiedTypeName name="java.time.Clock"/>
+<fullyQualifiedTypeName name="java.util.Deque"/>
+<fullyQualifiedTypeName name="java.util.function.Function"/>
+<fullyQualifiedTypeName name="java.lang.FunctionalInterface"/>
+<fullyQualifiedTypeName name="java.util.function.Consumer"/>
+<fullyQualifiedTypeName name="java.util.ArrayDeque"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.util.stream.Stream"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.HotPlace"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.lang.StringBuffer"/>
+<fullyQualifiedTypeName name="java.lang.Double"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.data.UserEvent"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition"/>
+<fullyQualifiedTypeName name="java.util.concurrent.CompletableFuture"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService"/>
+<fullyQualifiedTypeName name="java.nio.channels.Channel"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService.Channel"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data.HotPlaceFoundEvent"/>
+</qualifiedTypeNameHistroy>

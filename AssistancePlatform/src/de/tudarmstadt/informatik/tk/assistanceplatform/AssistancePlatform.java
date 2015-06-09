@@ -14,7 +14,7 @@ public class AssistancePlatform {
 		//moduleRegistry.registerModule(registration);
 		
 		// Generate event
-		GeographicPosition gps = new GeographicPosition(-1, 10, 11);
+		GeographicPosition gps = new GeographicPosition(-1, 10, 11, 0);
 		
 		// Event an platform schicken
 		EventDispatcher eventDispatcher = new EventDispatcher(moduleRegistry);

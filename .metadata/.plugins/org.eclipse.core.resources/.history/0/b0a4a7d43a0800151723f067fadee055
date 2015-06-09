@@ -1,7 +1,0 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces.data;
-
-public class HotPlacesUserContext {
-	public long id;
-	
-	public HotPlace[] nearbyHotPlaces;
-}
