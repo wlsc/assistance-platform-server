@@ -12,7 +12,8 @@ libraryDependencies ++= Seq(
   javaWs,
   evolutions,
   "org.mindrot" % "jbcrypt" % "0.3m",
-"postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+  "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
+  "com.nimbusds" % "nimbus-jose-jwt" % "3.6"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

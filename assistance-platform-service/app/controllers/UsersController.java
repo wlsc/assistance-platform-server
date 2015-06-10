@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Token;
 import models.User;
 import persistency.UserPersistency;
 import play.mvc.Controller;
@@ -13,11 +14,13 @@ public class UsersController extends Controller {
 	}
 	
 	private Result tryToAuthUser(String mail, String password) {
-		if(User.authenticate(mail, password)) {
+		if(!User.authenticate(mail, password)) {
 			return badRequest("The provided user / password combination does not exist.");
 		}
+		
+		User u = UserPersistency.findUserByEmail(mail);
 
-		return ok("welcome");
+		return ok(Token.buildToken(u.id).token);
 	}
 	
 	public Result register() {
