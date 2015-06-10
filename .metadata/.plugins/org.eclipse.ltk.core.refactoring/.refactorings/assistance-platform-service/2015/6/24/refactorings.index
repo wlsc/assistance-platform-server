@@ -11,3 +11,13 @@
 1433885446529	Introduce indirection for 'create'
 1433885564577	Rename method 'create'
 1433928984440	Delete element
+1433941913595	Rename type 'User'
+1433942132973	Move compilation unit
+1433942140737	Move compilation unit
+1433942238121	Move member 'hashPassword'
+1433942245174	Move member 'createAndUpdateIdOnSuccess'
+1433942251928	Move member 'doesUserWithEmailExist'
+1433942257009	Move member 'authenticateUser'
+1433942261488	Move member 'findUserByEmail'
+1433942356520	Rename type 'UserData'
+1433942841816	Rename method 'getPasswordFromUser'

@@ -1,6 +1,7 @@
 package controllers;
 
 import models.User;
+import persistency.UserPersistency;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -12,7 +13,7 @@ public class UsersController extends Controller {
 	}
 	
 	private Result tryToAuthUser(String mail, String password) {
-		if(!User.authenticateUser(mail, password)) {
+		if(User.authenticate(mail, password)) {
 			return badRequest("The provided user / password combination does not exist.");
 		}
 
@@ -24,12 +25,15 @@ public class UsersController extends Controller {
 	}
 	
 	private Result tryToRegisterUser(String mail, String password) {
-		if(User.doesUserWithEmailExist(mail)) {
+		// TODO: Check for length of password
+		// TODO: Check for correctnes of email
+		
+		if(UserPersistency.doesUserWithEmailExist(mail)) {
 			return badRequest("The user with the provided email adress already exists.");
 		}
 		
 		User newUser = new User(mail);
-		User.createAndUpdateIdOnSuccess(newUser, password);
+		UserPersistency.createAndUpdateIdOnSuccess(newUser, password);
 		
 		if(newUser.id != 0) {
 			return ok(newUser.id.toString());
