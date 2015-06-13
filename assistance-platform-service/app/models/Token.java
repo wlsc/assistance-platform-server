@@ -3,39 +3,42 @@ package models;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
+import play.Logger;
 import play.libs.Json;
 import token.TokenDeserializer;
 import token.TokenDeserializerImpl;
 import token.TokenSerializer;
 import token.TokenSerializerImpl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class Token {
+	private static final String SECRET = "supersicher";
+	
 	public String associatedId;
 	
 	public String token;
 	
-	public Long generationTimestamp;
+	public Long expirationTimestamp;
 	
 	public Token(String token, String associatedId, Long timestamp) {
 		this.token = token;
 		this.associatedId = associatedId;
-		this.generationTimestamp = timestamp;
+		this.expirationTimestamp = timestamp;
 	}
 	
 	public Token(String token, Long associatedId, Long timestamp) {
 		this(token, associatedId.toString(), timestamp);
 	}
 	
-	public static Token buildToken(Long id) {
-		TokenSerializer gen = new TokenSerializerImpl("supersicher");
+	public static Token buildToken(Long id, int validityInHours) {
+		TokenSerializer gen = new TokenSerializerImpl(SECRET);
 		
-		long timestamp = System.currentTimeMillis();
+		long timestamp = System.currentTimeMillis() + validityInHours * 60 * 60 * 1000;
 		
 		Map<String, Object> tokenData = new HashMap<>();
 		tokenData.put("id", id);
-		tokenData.put("generationTimestamp", timestamp);
+		tokenData.put("expirationTimestamp", timestamp);
 		
 		JsonNode json = Json.toJson(tokenData);
 		String jsonString = Json.stringify(json);
@@ -44,15 +47,23 @@ public class Token {
 	}
 	
 	public static Token unpackToken(String token) {
-		TokenDeserializer deserializer = new TokenDeserializerImpl("supersicher");
+		TokenDeserializer deserializer = new TokenDeserializerImpl(SECRET);
 		
 		String payload = deserializer.deserialize(token);
 		
-		JsonNode json = Json.parse(payload);
+		if(payload != null) {
+			JsonNode json = Json.parse(payload);
 		
-		String id = json.findPath("id").asText();
-		Long generationTimestamp = json.findPath("generationTimestamp").asLong();
+			String id = json.findPath("id").asText();
+			Long timestamp = json.findPath("expirationTimestamp").asLong();
+			
+			return new Token(token, id, timestamp);
+		}
 		
-		return new Token(token, id, generationTimestamp);
+		return null;
+	}
+	
+	public boolean stillValid() {
+		return System.currentTimeMillis() < expirationTimestamp;
 	}
 }

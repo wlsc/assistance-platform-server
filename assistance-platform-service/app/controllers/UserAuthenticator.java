@@ -1,5 +1,8 @@
 package controllers;
 
+import models.Token;
+import models.User;
+import persistency.UserPersistency;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -10,10 +13,15 @@ public class UserAuthenticator extends Security.Authenticator {
         String token = getTokenFromHeader(ctx);
         
         if (token != null) {
-         /*   User user = User.find.where().eq("authToken", token).findUnique();
-            if (user != null) {
-                return user.username;
-            }*/
+        	Token unpackedToken = Token.unpackToken(token);
+        	
+        	if(unpackedToken != null && unpackedToken.stillValid()) {
+	        	User user = UserPersistency.findUserById(Long.valueOf(unpackedToken.associatedId));
+	        	
+	            if (user != null) {
+	                return user.email;
+	            }
+        	}
         }
         return null;
     }

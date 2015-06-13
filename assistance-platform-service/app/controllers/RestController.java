@@ -3,11 +3,11 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 public abstract class RestController extends Controller {
 	public Result ok(Map<String, Object> map) {

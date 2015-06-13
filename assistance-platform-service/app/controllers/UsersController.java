@@ -3,7 +3,6 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import models.Token;
 import models.User;
 import persistency.UserPersistency;
@@ -23,7 +22,7 @@ public class UsersController extends RestController {
 		
 		User u = UserPersistency.findUserByEmail(mail);
 		
-		String token = Token.buildToken(u.id).token;
+		String token = Token.buildToken(u.id, 24).token;
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("token", token);

@@ -2,9 +2,9 @@ package token;
 
 import java.text.ParseException;
 
+import play.Logger;
+
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -26,8 +26,11 @@ public class TokenDeserializerImpl implements TokenDeserializer {
 		
 		try {
 			JWSObject jwsObject = JWSObject.parse(token);
-			jwsObject.verify(verifier);
-			return jwsObject.getPayload().toString();
+			if(jwsObject.verify(verifier)) {
+				return jwsObject.getPayload().toString();
+			} else {
+				Logger.warn("Unverified token attempt: " + token);
+			}
 		} catch (JOSEException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,7 +39,7 @@ public class TokenDeserializerImpl implements TokenDeserializer {
 			e.printStackTrace();
 		}
 		
-		return "";
+		return null;
 	}
 
 }

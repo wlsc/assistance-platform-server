@@ -29,3 +29,6 @@
 1433958358243	Rename type 'TokenGeneratorImpl'
 1433958389969	Rename type 'TokenSigner'
 1433958398250	Rename type 'TokenSignerImpl'
+1434193130834	Rename field 'generationTimestamp'
+1434193153555	Rename local variable 'generationTimestamp'
+1434193201104	Rename field 'secret'
