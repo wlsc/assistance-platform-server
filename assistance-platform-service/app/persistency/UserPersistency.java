@@ -71,12 +71,30 @@ public class UserPersistency {
 		return DB
 				.withConnection(conn -> {
 					PreparedStatement s = conn
-							.prepareStatement("SELECT id, password FROM users WHERE email = ?");
+							.prepareStatement("SELECT id FROM users WHERE email = ?");
 					s.setString(1, email);
 					ResultSet result = s.executeQuery();
 	
 					if (result != null && result.next()) {
 						Long id = result.getLong(1);
+	
+						return new User(id, email);
+					}
+	
+					return null;
+				});
+	}
+	
+	public static User findUserById(Long id) {
+		return DB
+				.withConnection(conn -> {
+					PreparedStatement s = conn
+							.prepareStatement("SELECT email FROM users WHERE id = ?");
+					s.setLong(1, id);
+					ResultSet result = s.executeQuery();
+	
+					if (result != null && result.next()) {
+						String email = result.getString(1);
 	
 						return new User(id, email);
 					}

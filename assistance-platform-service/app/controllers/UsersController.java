@@ -1,26 +1,34 @@
 package controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 import models.Token;
 import models.User;
 import persistency.UserPersistency;
-import play.mvc.Controller;
 import play.mvc.Result;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class UsersController extends Controller {
+public class UsersController extends RestController {
 	public Result login() {
 		return performActionIfEmailAndPasswordAvailable(this::tryToAuthUser);
 	}
 	
 	private Result tryToAuthUser(String mail, String password) {
 		if(!User.authenticate(mail, password)) {
-			return badRequest("The provided user / password combination does not exist.");
+			return badRequestJson("The provided user / password combination does not exist.");
 		}
 		
 		User u = UserPersistency.findUserByEmail(mail);
+		
+		String token = Token.buildToken(u.id).token;
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("token", token);
 
-		return ok(Token.buildToken(u.id).token);
+		return ok(result);
 	}
 	
 	public Result register() {
@@ -32,7 +40,7 @@ public class UsersController extends Controller {
 		// TODO: Check for correctnes of email
 		
 		if(UserPersistency.doesUserWithEmailExist(mail)) {
-			return badRequest("The user with the provided email adress already exists.");
+			return badRequestJson("The user with the provided email adress already exists.");
 		}
 		
 		User newUser = new User(mail);
@@ -42,7 +50,7 @@ public class UsersController extends Controller {
 			return ok(newUser.id.toString());
 		}
 		
-		return internalServerError("This should've worked...");
+		return internalServerErrorJson("This should've worked...");
 	}
 	
 	private Result performActionIfEmailAndPasswordAvailable(TwoArgFunction<String, String, Result> action) {
@@ -55,7 +63,7 @@ public class UsersController extends Controller {
 			
 			return action.apply(mail, password);
 		} else {
-			return badRequest("Not all parameters (email and password) were provided.");
+			return badRequestJson("Not all parameters (email and password) were provided.");
 		}
 	}
 	

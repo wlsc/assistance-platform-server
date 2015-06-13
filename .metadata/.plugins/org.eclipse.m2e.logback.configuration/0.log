@@ -4851,3 +4851,7 @@ org.eclipse.core.runtime.CoreException: Launch configuration ModuleRegistryTest 
 2015-06-09 14:08:07,243 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/main/resources
 2015-06-09 14:08:07,243 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 2015-06-09 14:08:07,273 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformRestApi/src/test/resources
+2015-06-12 13:21:09,222 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-12 13:21:09,259 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformModuleAPI/src/main/resources
+2015-06-12 13:21:09,262 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-06-12 13:21:09,293 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/AssistancePlatformModuleAPI/src/test/resources
