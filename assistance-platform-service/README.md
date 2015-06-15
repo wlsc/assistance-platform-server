@@ -11,9 +11,9 @@ If an known error is caused by the API call (e.g. wrong parameters) then a JSON 
 ### /user
 ##### POST   /register
 * **Input:** JSON `{"email" : "a email", "password" : "a password"}`
-* **Result:** If successfull, JSON object: {"user_id" : (ID of the newly created user)}
+* **Result:** If successfull, JSON object: `{"user_id" : (ID of the newly created user)}`
 
 ##### POST   /login
 * **Input:** JSON `{"email" : "a email", "password" : "a password"}`
-* **Result:** If successfull, JSON object: {"token" : (token)}
+* **Result:** If successfull, JSON object: `{"token" : (token)}`
 * **Further nodes:** Provide the received token in all subsequent requests. Provide the token in the *X-AUTH-TOKEN* field.
