@@ -46,7 +46,10 @@ public class UsersController extends RestController {
 		UserPersistency.createAndUpdateIdOnSuccess(newUser, password);
 		
 		if(newUser.id != 0) {
-			return ok(newUser.id.toString());
+			Map<String, Object> result = new HashMap<>();
+			result.put("user_id", newUser.id);
+
+			return ok(result);
 		}
 		
 		return internalServerErrorJson("This should've worked...");
