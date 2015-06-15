@@ -17,3 +17,30 @@ If an known error is caused by the API call (e.g. wrong parameters) then a JSON 
 * **Input:** JSON `{"email" : "a email", "password" : "a password"}`
 * **Result:** If successfull, JSON object: `{"token" : (token)}`
 * **Further nodes:** Provide the received token in all subsequent requests. Provide the token in the *X-AUTH-TOKEN* field.
+ 
+### /assistance
+#### GET  /list
+* **Requires X-AUTH-TOKEN**
+* **Result:** If successfull, JSON list like following: 
+```
+[
+    {
+        "name": "Quantified self",
+        "id": "de.tudarmstadt.informatik.tk.assistanceplatform.modules.quantifiedself",
+        "requiredCapabilities": [
+            "GPS"
+        ],
+        "optionalCapabilites": [
+            "HUMIDITY"
+        ]
+    },
+    {
+        "name": "Hot Places",
+        "id": "de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces",
+        "requiredCapabilities": [
+            "GPS"
+        ],
+        "optionalCapabilites": null
+    }
+]
+```
