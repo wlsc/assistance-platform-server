@@ -5,6 +5,9 @@ To start the service run "activator run". In order to activate HTTPS (recommende
 
 ## API
 
+### Errors
+If an known error is caused by the API call (e.g. wrong parameters) then a JSON object with an "error" field is return, which describes the occured error.
+
 ### /user
 ##### POST   /register
 * **Input:** JSON `{"email" : "a email", "password" : "a password"}`
