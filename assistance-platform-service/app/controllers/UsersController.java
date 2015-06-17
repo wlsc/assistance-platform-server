@@ -3,6 +3,7 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import models.AssistanceAPIErrors;
 import models.Token;
 import models.User;
 import persistency.UserPersistency;
@@ -17,7 +18,7 @@ public class UsersController extends RestController {
 	
 	private Result tryToAuthUser(String mail, String password) {
 		if(!User.authenticate(mail, password)) {
-			return badRequestJson("The provided user / password combination does not exist.");
+			return badRequestJson(AssistanceAPIErrors.badAuthenciationData);
 		}
 		
 		User u = UserPersistency.findUserByEmail(mail);
@@ -39,7 +40,7 @@ public class UsersController extends RestController {
 		// TODO: Check for correctnes of email
 		
 		if(UserPersistency.doesUserWithEmailExist(mail)) {
-			return badRequestJson("The user with the provided email adress already exists.");
+			return badRequestJson(AssistanceAPIErrors.userAlreadyExists);
 		}
 		
 		User newUser = new User(mail);
@@ -52,7 +53,7 @@ public class UsersController extends RestController {
 			return ok(result);
 		}
 		
-		return internalServerErrorJson("This should've worked...");
+		return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
 	}
 	
 	private Result performActionIfEmailAndPasswordAvailable(TwoArgFunction<String, String, Result> action) {
@@ -65,7 +66,7 @@ public class UsersController extends RestController {
 			
 			return action.apply(mail, password);
 		} else {
-			return badRequestJson("Not all parameters (email and password) were provided.");
+			return badRequestJson(AssistanceAPIErrors.missingUserParameters);
 		}
 	}
 	
