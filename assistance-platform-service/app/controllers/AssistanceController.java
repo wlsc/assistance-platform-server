@@ -18,11 +18,21 @@ public class AssistanceController extends RestController {
 				new AvailableAssistanceModule(
 						"Quantified self",
 						"de.tudarmstadt.informatik.tk.assistanceplatform.modules.quantifiedself",
-						new String[] { "GPS" }, new String[] { "HUMIDITY" }),
+						"http://xyz.de/lgo123.png",
+						"Quantifies you in every way",
+						"Really quantifies out of every angle",
+						new String[] { "GPS" }, new String[] { "HUMIDITY" },
+						"TK Department TU Darmstadt"),
 				new AvailableAssistanceModule(
 						"Hot Places",
 						"de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces",
-						new String[] { "GPS" }, null) };
+						"http://blabla.de/hotzone.png",
+						"Finds the hottest places",
+						"Finds the hottest places while you are moving",
+						new String[] { "GPS" }, 
+						null,
+						"TK Department TU Darmstadt")
+		};
 
 		JsonNode json = Json.toJson(assiModules);
 		return ok(json);
