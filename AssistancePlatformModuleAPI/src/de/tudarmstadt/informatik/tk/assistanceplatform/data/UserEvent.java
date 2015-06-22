@@ -1,7 +1,11 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
 public abstract class UserEvent extends Event {
-	public final Long userId;
+	public Long userId;
+	
+	public UserEvent() {
+		
+	}
 	
 	public UserEvent(long userId, long timestamp) {
 		super(timestamp);

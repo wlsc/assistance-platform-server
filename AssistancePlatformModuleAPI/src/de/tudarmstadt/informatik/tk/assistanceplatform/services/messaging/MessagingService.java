@@ -3,7 +3,7 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class MessagingService {
+public abstract class MessagingService<T> {
 	private Map<String, Channel> channels = new HashMap<>();
 	
 	public MessagingService() {
@@ -12,33 +12,39 @@ public abstract class MessagingService {
 
 	public class Channel {
 		private final String name;
+		private final Class<T> type;
 		
-		public Channel(String name) {
+		public Channel(String name, Class<T> type) {
 			this.name = name;
+			this.type = type;
 		}
 		
 		public String getName() {
 			return name;
 		}
 		
-		public void subscribeConsumer(Consumer consumer) {
+		public Class<T> getType() {
+			return type;
+		}
+		
+		public void subscribeConsumer(Consumer<T> consumer) {
 			subscribe(consumer, this);
 		}
 		
-		public void unsubscribeConsumer(Consumer consumer) {
+		public void unsubscribeConsumer(Consumer<T> consumer) {
 			unsubscribe(consumer, this);
 		}
 		
-		public void publish(Object data) {
+		public void publish(T data) {
 			MessagingService.this.publish(this, data);
 		}
 	}
 	
-	public Channel channel(String name) {
+	public Channel channel(String name, Class<T> eventType) {
 		Channel result = channels.get(name);
 		
 		if(result == null) {
-			Channel newChannel = new Channel(name);
+			Channel newChannel = new Channel(name, eventType);
 			channels.put(name, newChannel);
 			result = newChannel;
 		}
@@ -46,9 +52,9 @@ public abstract class MessagingService {
 		return result;
 	}
 	
-	protected abstract void subscribe(Consumer consumer, Channel channel);
+	protected abstract void subscribe(Consumer<T> consumer, Channel channel);
 	
-	protected abstract void unsubscribe(Consumer consumer, Channel channel);
+	protected abstract void unsubscribe(Consumer<T> consumer, Channel channel);
 	
-	protected abstract void publish(Channel channel, Object data);
+	protected abstract void publish(Channel channel, T data);
 }

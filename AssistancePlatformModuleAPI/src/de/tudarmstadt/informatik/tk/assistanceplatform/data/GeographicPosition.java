@@ -1,8 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
 public class GeographicPosition extends UserEvent {
-	public final Double latitude;
-	public final Double longitude;
+	public Double latitude;
+	public Double longitude;
+	
+	public GeographicPosition() {
+		super();
+	}
 	
 	public GeographicPosition(double latitude, double longitude, long userId, long timestamp) {
 		super(userId, timestamp);

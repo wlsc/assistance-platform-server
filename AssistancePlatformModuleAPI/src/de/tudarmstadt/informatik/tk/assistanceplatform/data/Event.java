@@ -2,7 +2,11 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
 
 public abstract class Event {
-	public final Long timestamp;
+	public Long timestamp;
+	
+	public Event() {
+		
+	}
 	
 	public Event(long timestamp) {
 		this.timestamp = timestamp;
