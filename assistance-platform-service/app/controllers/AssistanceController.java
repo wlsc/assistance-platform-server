@@ -2,7 +2,8 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import models.AvailableAssistanceModule;
+import models.ActiveAssistanceModule;
+import persistency.ActiveAssistanceModulePersistency;
 import play.cache.Cached;
 import play.libs.Json;
 import play.mvc.Result;
@@ -14,8 +15,10 @@ public class AssistanceController extends RestController {
 	public Result list() {
 		// Dummy data
 		// TODO: Mit echten Daten ersetzen
-		AvailableAssistanceModule[] assiModules = new AvailableAssistanceModule[] {
-				new AvailableAssistanceModule(
+		ActiveAssistanceModule[] assiModules = ActiveAssistanceModulePersistency.list();
+				
+				/*new ActiveAssistanceModule[] {
+				new ActiveAssistanceModule(
 						"Quantified self",
 						"de.tudarmstadt.informatik.tk.assistanceplatform.modules.quantifiedself",
 						"http://xyz.de/lgo123.png",
@@ -23,7 +26,7 @@ public class AssistanceController extends RestController {
 						"Really quantifies out of every angle",
 						new String[] { "GPS" }, new String[] { "HUMIDITY" },
 						"TK Department TU Darmstadt"),
-				new AvailableAssistanceModule(
+				new ActiveAssistanceModule(
 						"Hot Places",
 						"de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces",
 						"http://blabla.de/hotzone.png",
@@ -32,7 +35,7 @@ public class AssistanceController extends RestController {
 						new String[] { "GPS" }, 
 						null,
 						"TK Department TU Darmstadt")
-		};
+		};*/
 
 		JsonNode json = Json.toJson(assiModules);
 		return ok(json);

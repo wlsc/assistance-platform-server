@@ -9,5 +9,9 @@ public class AssistanceAPIErrors {
 	
 	public static APIError missingUserParameters = new APIError(4, "Not all parameters (email and password) were provided.");
 	
+	public static APIError missingModuleParameters = new APIError(5, "Not all required parameters were provided.");
+	
+	public static APIError moduleAlreadyExists = new APIError(6, "The module with the provided id already exists.");
+	
 	public static APIError unknownInternalServerError = new APIError(Integer.MAX_VALUE, "Unknown error.");
 }

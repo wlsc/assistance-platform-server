@@ -13,7 +13,8 @@ libraryDependencies ++= Seq(
   evolutions,
   "org.mindrot" % "jbcrypt" % "0.3m",
   "org.postgresql" % "postgresql" % "9.2-1003-jdbc4",
-  "com.nimbusds" % "nimbus-jose-jwt" % "3.6"
+  "com.nimbusds" % "nimbus-jose-jwt" % "3.6",
+  "commons-dbutils" % "commons-dbutils" % "1.6"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

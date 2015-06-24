@@ -1,6 +1,6 @@
 package models;
 
-public class AvailableAssistanceModule {
+public class ActiveAssistanceModule {
 
 	public String name;
 
@@ -8,15 +8,15 @@ public class AvailableAssistanceModule {
 
 	public String logoUrl;
 
-	public String description_short;
-	public String description_long;
+	public String descriptionShort;
+	public String descriptionLong;
 
 	public String[] requiredCapabilities;
 	public String[] optionalCapabilites;
 
 	public String copyright;
 
-	public AvailableAssistanceModule(String name, String id, String logoUrl,
+	public ActiveAssistanceModule(String name, String id, String logoUrl,
 			String description_short, String description_long,
 			String[] requiredCapabilites, String[] optionalCapabilities,
 			String copyright) {
@@ -27,8 +27,8 @@ public class AvailableAssistanceModule {
 
 		this.logoUrl = logoUrl;
 
-		this.description_short = description_short;
-		this.description_long = description_long;
+		this.descriptionShort = description_short;
+		this.descriptionLong = description_long;
 
 		this.requiredCapabilities = requiredCapabilites;
 		this.optionalCapabilites = optionalCapabilities;
