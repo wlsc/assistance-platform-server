@@ -32,6 +32,11 @@ public class UsersController extends RestController {
 	}
 	
 	public Result register() {
+		UserAuthenticator authenticator = new UserAuthenticator();
+		if(authenticator.getUserId(ctx()) != null) {
+			return badRequestJson(AssistanceAPIErrors.alreadyLoggedIn);
+		}
+		
 		return performActionIfEmailAndPasswordAvailable(this::tryToRegisterUser);
 	}
 	
