@@ -6,9 +6,8 @@ import java.util.List;
 import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
 import persistency.ActiveAssistanceModulePersistency;
+import play.cache.Cache;
 import play.mvc.Result;
-import play.api.libs.json.*;
-import play.api.mvc.BodyParser;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -42,10 +41,10 @@ public class ModulesController extends RestController {
 			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilites.toArray(new String[0]), optionalCapabilities.toArray(new String[0]), copyright);
 			
 			if(ActiveAssistanceModulePersistency.create(module)) {
+				Cache.remove("moduleList");
+				
 				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das nächste mal "Alive" melden soll
 			}
-			
-			// TODO: Cache leeren
 			
 			return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
 		} else {
