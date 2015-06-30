@@ -3,7 +3,10 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import models.ActiveAssistanceModule;
+import models.AssistanceAPIErrors;
+import models.UserModuleActivation;
 import persistency.ActiveAssistanceModulePersistency;
+import persistency.UserModuleActivationPersistency;
 import play.cache.Cached;
 import play.libs.Json;
 import play.mvc.Result;
@@ -13,31 +16,80 @@ public class AssistanceController extends RestController {
 	@Security.Authenticated(UserAuthenticator.class)
 	@Cached(key = "moduleList")
 	public Result list() {
-		// Dummy data
-		// TODO: Mit echten Daten ersetzen
 		ActiveAssistanceModule[] assiModules = ActiveAssistanceModulePersistency.list();
-				
-				/*new ActiveAssistanceModule[] {
-				new ActiveAssistanceModule(
-						"Quantified self",
-						"de.tudarmstadt.informatik.tk.assistanceplatform.modules.quantifiedself",
-						"http://xyz.de/lgo123.png",
-						"Quantifies you in every way",
-						"Really quantifies out of every angle",
-						new String[] { "GPS" }, new String[] { "HUMIDITY" },
-						"TK Department TU Darmstadt"),
-				new ActiveAssistanceModule(
-						"Hot Places",
-						"de.tudarmstadt.informatik.tk.assistanceplatform.modules.hotplaces",
-						"http://blabla.de/hotzone.png",
-						"Finds the hottest places",
-						"Finds the hottest places while you are moving",
-						new String[] { "GPS" }, 
-						null,
-						"TK Department TU Darmstadt")
-		};*/
-
 		JsonNode json = Json.toJson(assiModules);
 		return ok(json);
+	}
+	
+	@Security.Authenticated(UserAuthenticator.class)
+	public Result activate() {
+		JsonNode postData = request().body()
+				.asJson();
+		
+		// Get Module ID to activate from request
+		JsonNode moduleIdNode = postData.findPath("module_id");
+		if(moduleIdNode.isMissingNode()) {
+			return badRequestJson(AssistanceAPIErrors.missingModuleIDParameter);
+		}
+		
+		String moduleId = moduleIdNode.textValue();
+		
+		// Check if the module exists / is registered in the platform
+		if(!ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
+			return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
+		}
+		
+		// Get User id from request
+		Long userId = getUserIdForRequest();
+		
+		UserModuleActivation attemptedActivation = new UserModuleActivation(userId, moduleId);
+		
+		if(UserModuleActivationPersistency.create(attemptedActivation)) {
+			// TODO: Event in Event Stream pushen, sodass MOdule Aktivierung mitbekommen
+			
+			return ok(); // TODO: Ggf. noch mal mit der Module ID bestätigen oder sogar die Liste aller aktivierten Module (IDs) zurückgeben?
+		} else {
+			if(UserModuleActivationPersistency.doesActivationExist(attemptedActivation)) {
+				return badRequestJson(AssistanceAPIErrors.moduleActivationAlreadyActive);
+			} else {
+				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+			}
+		}
+	}
+
+	
+	public Result deactivate() {
+		JsonNode postData = request().body()
+				.asJson();
+		
+		// Get Module ID to activate from request
+		JsonNode moduleIdNode = postData.findPath("module_id");
+		if(moduleIdNode.isMissingNode()) {
+			return badRequestJson(AssistanceAPIErrors.missingModuleIDParameter);
+		}
+		
+		String moduleId = moduleIdNode.textValue();
+		
+		// Get User id from request
+		Long userId = getUserIdForRequest();
+		
+		UserModuleActivation activationToRemove = new UserModuleActivation(userId, moduleId);
+		
+		if(UserModuleActivationPersistency.remove(activationToRemove)) {
+			// TODO: Event in Event Stream pushen, sodass MOdule Aktivierung mitbekommen
+			
+			return ok(); // TODO: Ggf. noch mal mit der Module ID bestätigen oder sogar die Liste aller aktivierten Module (IDs) zurückgeben?
+		} else {
+			if(!UserModuleActivationPersistency.doesActivationExist(activationToRemove)) {
+				return badRequestJson(AssistanceAPIErrors.moduleActivationNotActive);
+			} else {
+				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+			}
+		}
+	}
+	
+	private Long getUserIdForRequest() {
+		UserAuthenticator authenticator = new UserAuthenticator();
+		return authenticator.getUserId(ctx());
 	}
 }

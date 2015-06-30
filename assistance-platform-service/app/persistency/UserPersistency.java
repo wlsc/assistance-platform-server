@@ -11,7 +11,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.db.DB;
 
 public class UserPersistency {
-
+	private static String TABLE_NAME = "users";
+	
 	public static void createAndUpdateIdOnSuccess(User user, String password) {
 		String hashedPassword = hashPassword(password);
 	
@@ -21,7 +22,7 @@ public class UserPersistency {
 	
 		DB.withConnection(conn -> {
 			PreparedStatement s = conn.prepareStatement(
-					"INSERT INTO users (email, password) VALUES (?, ?)",
+					"INSERT INTO " + TABLE_NAME + " (email, password) VALUES (?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			s.setString(1, user.email);
 			s.setString(2, hashedPassword);
@@ -42,7 +43,7 @@ public class UserPersistency {
 	public static boolean doesUserWithEmailExist(String email) {
 		return DB.withConnection(conn -> {
 			PreparedStatement s = conn
-					.prepareStatement("SELECT id FROM users WHERE email = ?");
+					.prepareStatement("SELECT id FROM " + TABLE_NAME + " WHERE email = ?");
 			s.setString(1, email);
 			ResultSet result = s.executeQuery();
 	
@@ -54,7 +55,7 @@ public class UserPersistency {
 		return DB
 				.withConnection(conn -> {
 					PreparedStatement s = conn
-							.prepareStatement("SELECT password FROM users WHERE email = ?");
+							.prepareStatement("SELECT password FROM " + TABLE_NAME + " WHERE email = ?");
 					s.setString(1, email);
 					ResultSet result = s.executeQuery();
 	
@@ -71,7 +72,7 @@ public class UserPersistency {
 		return DB
 				.withConnection(conn -> {
 					PreparedStatement s = conn
-							.prepareStatement("SELECT id FROM users WHERE email = ?");
+							.prepareStatement("SELECT id FROM " + TABLE_NAME + " WHERE email = ?");
 					s.setString(1, email);
 					ResultSet result = s.executeQuery();
 	
@@ -89,7 +90,7 @@ public class UserPersistency {
 		return DB
 				.withConnection(conn -> {
 					PreparedStatement s = conn
-							.prepareStatement("SELECT email FROM users WHERE id = ?");
+							.prepareStatement("SELECT email FROM " + TABLE_NAME + " WHERE id = ?");
 					s.setLong(1, id);
 					ResultSet result = s.executeQuery();
 	

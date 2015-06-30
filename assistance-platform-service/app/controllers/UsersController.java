@@ -75,7 +75,7 @@ public class UsersController extends RestController {
 	}
 	
 	private boolean areAllRequiredParametersPosted(JsonNode postData) {
-		return postData != null && getEmailNode(postData) != null && getPasswordNode(postData) != null;
+		return postData != null && postData.has("email") && postData.has("password");
 	}
 
 	

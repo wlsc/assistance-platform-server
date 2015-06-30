@@ -7,6 +7,8 @@ import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
 import persistency.ActiveAssistanceModulePersistency;
 import play.mvc.Result;
+import play.api.libs.json.*;
+import play.api.mvc.BodyParser;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -43,6 +45,8 @@ public class ModulesController extends RestController {
 				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das nächste mal "Alive" melden soll
 			}
 			
+			// TODO: Cache leeren
+			
 			return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
 		} else {
 			return badRequestJson(AssistanceAPIErrors.missingModuleParameters);
@@ -51,14 +55,14 @@ public class ModulesController extends RestController {
 
 	private boolean areAllRequiredParametersPosted(JsonNode postData) {
 		return postData != null 
-				&& getIdNode(postData) != null
-				&& getNameNode(postData) != null
-				&& getLogoUrlNode(postData) != null
-				&& getDescrShortNode(postData) != null
-				&& getDescrLongNode(postData) != null
-				&& getRequiredCapsNode(postData) != null
-				&& getOptionalCapsNode(postData) != null
-				&& getCopyrightNode(postData) != null;
+				&& !getIdNode(postData).isMissingNode()
+				&& !getNameNode(postData).isMissingNode()
+				&& !getLogoUrlNode(postData).isMissingNode()
+				&& !getDescrShortNode(postData).isMissingNode()
+				&& !getDescrLongNode(postData).isMissingNode()
+				&& !getRequiredCapsNode(postData).isMissingNode()
+				&& !getOptionalCapsNode(postData).isMissingNode()
+				&& !getCopyrightNode(postData).isMissingNode();
 	}
 
 	private JsonNode getIdNode(JsonNode postData) {
