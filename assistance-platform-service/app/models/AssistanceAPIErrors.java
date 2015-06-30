@@ -16,9 +16,9 @@ public class AssistanceAPIErrors {
 	
 	public static APIError moduleActivationNotActive = new APIError(7, "The module is not activated.");
 	
-	public static APIError moduleDoesNotExist = new APIError(7, "The module does not exist.");
+	public static APIError moduleDoesNotExist = new APIError(8, "The module does not exist.");
 	
-	public static APIError alreadyLoggedIn = new APIError(8, "The user is already logged in.");
+	public static APIError alreadyLoggedIn = new APIError(9, "The user is already logged in.");
 	
 	// Module Rest API
 	public static APIError missingModuleParameters = new APIError(995, "Not all required parameters for module registration were provided.");
