@@ -3,13 +3,11 @@ package persistency;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-
+import models.ActiveAssistanceModule;
 
 import org.apache.commons.dbutils.QueryRunner;
-
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 
-import models.ActiveAssistanceModule;
 import play.db.DB;
 
 public class ActiveAssistanceModulePersistency {

@@ -3,8 +3,6 @@ package persistency;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import models.ActiveAssistanceModule;
-import models.User;
 import models.UserModuleActivation;
 import play.db.DB;
 

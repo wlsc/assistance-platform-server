@@ -3,9 +3,6 @@ package models;
 import java.util.HashMap;
 import java.util.Map;
 
-import play.Logger;
-import play.api.Configuration;
-import play.api.Play;
 import play.libs.Json;
 import token.TokenDeserializer;
 import token.TokenDeserializerImpl;

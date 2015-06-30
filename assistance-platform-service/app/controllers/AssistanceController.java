@@ -1,7 +1,5 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
 import models.UserModuleActivation;
@@ -11,6 +9,8 @@ import play.cache.Cached;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class AssistanceController extends RestController {
 	@Security.Authenticated(UserAuthenticator.class)

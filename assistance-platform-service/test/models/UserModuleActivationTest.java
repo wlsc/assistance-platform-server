@@ -9,7 +9,6 @@ import static play.test.Helpers.running;
 import org.junit.Test;
 
 import persistency.UserModuleActivationPersistency;
-import persistency.UserPersistency;
 
 public class UserModuleActivationTest {
     @Test
