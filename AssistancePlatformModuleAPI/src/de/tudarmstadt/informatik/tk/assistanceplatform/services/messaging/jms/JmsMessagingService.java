@@ -21,10 +21,11 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 
-public class JmsMessagingService<T> extends MessagingService<T> {
+public class JmsMessagingService extends MessagingService {
 	private Connection connection;
 	
 	private Session session;
@@ -52,7 +53,7 @@ public class JmsMessagingService<T> extends MessagingService<T> {
 	}
 	
 	@Override
-	protected void subscribe(Consumer<T> consumer, Channel channel) {
+	protected <T> void subscribe(Consumer<T> consumer, Channel<T> channel) {
 		MessageConsumer jmsConsumer = createConsumerForChannel(channel);
 		try {
 			jmsConsumer.setMessageListener(new MessageListener() {
@@ -86,13 +87,13 @@ public class JmsMessagingService<T> extends MessagingService<T> {
 	}
 
 	@Override
-	protected void unsubscribe(Consumer<T> consumer, Channel channel) {
+	protected <T> void unsubscribe(Consumer<T> consumer, Channel<T> channel) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void publish(Channel channel, T data) {
+	protected <T> void publish(Channel<T> channel, T data) {
 		MessageProducer producer = getProducerForChannel(channel);
 		try {
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
