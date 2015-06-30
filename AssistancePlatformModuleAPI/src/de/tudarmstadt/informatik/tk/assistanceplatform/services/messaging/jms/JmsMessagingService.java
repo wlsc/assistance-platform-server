@@ -21,6 +21,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
@@ -28,7 +29,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Messag
 public class JmsMessagingService extends MessagingService {
 	private Connection connection;
 	
-	private Session session;
+	private Session messageCreationSession;
 	
 	private Map<Channel, MessageProducer> channelsToProducers = new HashMap<>();
 	
@@ -45,11 +46,22 @@ public class JmsMessagingService extends MessagingService {
 		try {
 			connection = factory.createConnection();
 			connection.start();
-			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			this.messageCreationSession = createSession();
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	Session createSession() {
+		try {
+			return connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	@Override
@@ -75,9 +87,8 @@ public class JmsMessagingService extends MessagingService {
 					Input input = new Input(buff);
 					
 					T obj = (T)kryo.readObject(input, channel.getType());
-					
+
 					consumer.consumeDataOfChannel(channel, obj);
-					
 				}
 			});
 		} catch (JMSException e) {
@@ -101,7 +112,7 @@ public class JmsMessagingService extends MessagingService {
 			
 			kryo.writeObject(output, data);
 			
-			BytesMessage bm = session.createBytesMessage();
+			BytesMessage bm = messageCreationSession.createBytesMessage();
 			bm.writeBytes(output.getBuffer());
 
 			producer.send(bm);
@@ -118,6 +129,7 @@ public class JmsMessagingService extends MessagingService {
 		if(producer == null) {
 			Topic topic;
 			try {
+				Session session = createSession();
 				topic = session.createTopic(channelName);
 				producer = session.createProducer(topic);
 			} catch (JMSException e) {
@@ -135,6 +147,7 @@ public class JmsMessagingService extends MessagingService {
 		MessageConsumer consumer = null;
 			Topic topic;
 			try {
+				Session session = createSession();
 				topic = session.createTopic(channelName);
 				consumer = session.createConsumer(topic);
 			} catch (JMSException e) {

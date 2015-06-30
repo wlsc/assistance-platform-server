@@ -9,6 +9,12 @@ public abstract class MessagingService {
 	public MessagingService() {
 		
 	}
+	
+	public <T> Channel<T> channel(Class<T> eventType) {
+		String name = eventType.getName();
+		
+		return channel(name, eventType);
+	}
 
 	public <T> Channel<T> channel(String name, Class<T> eventType) {
 		Channel<T> result = channels.get(name);
