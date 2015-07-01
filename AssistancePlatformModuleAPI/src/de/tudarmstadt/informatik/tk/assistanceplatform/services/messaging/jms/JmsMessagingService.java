@@ -72,6 +72,7 @@ public class JmsMessagingService extends MessagingService {
 				
 				@Override
 				public void onMessage(Message msg) {
+					
 					BytesMessage bm = (BytesMessage)msg;
 					
 					byte[] buff = new byte[0];
@@ -123,15 +124,17 @@ public class JmsMessagingService extends MessagingService {
 	}
 	
 	private MessageProducer getProducerForChannel(Channel channel) {
-		String channelName = channel.getName();
-		
-		MessageProducer producer = channelsToProducers.get(channelName);
+		MessageProducer producer = channelsToProducers.get(channel);
 		if(producer == null) {
 			Topic topic;
 			try {
 				Session session = createSession();
+				
+				String channelName = channel.getName();
+				
 				topic = session.createTopic(channelName);
 				producer = session.createProducer(topic);
+				channelsToProducers.put(channel, producer);
 			} catch (JMSException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
