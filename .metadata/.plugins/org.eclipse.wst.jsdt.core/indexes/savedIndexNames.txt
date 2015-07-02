@@ -1,1 +1,0 @@
-INDEX VERSION 1.3+/Users/bjeutter/Desktop/Uni/Masterarbeit/Workspace/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes

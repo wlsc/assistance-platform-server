@@ -5,8 +5,8 @@
 .cache
 .history
 .lib/
-dist/*
-target/
+**/dist/*
+**/target/
 lib_managed/
 src_managed/
 project/boot/
@@ -20,12 +20,14 @@ project/plugins/project/
 # Eclipse
 ######################
  
+ .recommenders/
+ **/.recommenders/
 *.pydevproject
 .project
-.metadata
-bin/**
-tmp/**
-tmp/**/*
+**/.metadata
+**/bin/**
+**/tmp/**
+**/tmp/**/*
 *.tmp
 *.bak
 *.swp
