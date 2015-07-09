@@ -117,6 +117,10 @@ public class UsersController extends RestController {
 		
 		User profile = UserPersistency.findUserById(id, true);
 		
+		if(profile == null) {
+			return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+		}
+		
 		JsonNode result = Json.toJson(profile);
 		ObjectNode modifiableResult = (ObjectNode)result;
 		modifiableResult.put("joinedSince", DateTimeHelper.localDateTimeToTimestamp(profile.joinedSince));
