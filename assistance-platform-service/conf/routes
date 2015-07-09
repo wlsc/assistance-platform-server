@@ -8,6 +8,8 @@ GET     /                           controllers.Application.index()
 # User management
 POST	/users/register				controllers.UsersController.register
 POST	/users/login				controllers.UsersController.login
+GET 	/users/my_profile/:type		controllers.UsersController.myProfile(type)
+PUT		/users/my_profile			controllers.UsersController.updateProfile
 
 # Sensor data
 POST	/sensordata/insert			controllers.SensorDataController.insert

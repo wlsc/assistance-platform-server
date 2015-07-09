@@ -37,7 +37,7 @@ public class UserAuthenticator extends Security.Authenticator {
 		Long userId = getUserId(ctx);
 
 		if (userId != null) {
-			User user = UserPersistency.findUserById(userId);
+			User user = UserPersistency.findUserById(userId, false);
 
 			if (user != null) {
 				return user;

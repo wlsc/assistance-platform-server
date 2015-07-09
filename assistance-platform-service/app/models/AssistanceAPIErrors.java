@@ -20,6 +20,10 @@ public class AssistanceAPIErrors {
 	
 	public static APIError alreadyLoggedIn = new APIError(9, "The user is already logged in.");
 	
+	public static APIError missingParametersGeneral = new APIError(10, "Missing parameters.");
+	
+	public static APIError invalidParametersGeneral = new APIError(11, "Invalid parameters.");
+	
 	// Module Rest API
 	public static APIError missingModuleParameters = new APIError(995, "Not all required parameters for module registration were provided.");
 	

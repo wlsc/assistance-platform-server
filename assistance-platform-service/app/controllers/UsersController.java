@@ -7,9 +7,13 @@ import models.AssistanceAPIErrors;
 import models.Token;
 import models.User;
 import persistency.UserPersistency;
+import play.libs.Json;
 import play.mvc.Result;
+import play.mvc.Security;
+import utility.DateTimeHelper;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class UsersController extends RestController {
 	public Result login() {
@@ -21,7 +25,8 @@ public class UsersController extends RestController {
 			return badRequestJson(AssistanceAPIErrors.badAuthenciationData);
 		}
 		
-		User u = UserPersistency.findUserByEmail(mail);
+		User u = UserPersistency.findUserByEmail(mail, false);
+		UserPersistency.updateLastLogin(u.id);
 		
 		String token = Token.buildToken(u.id, 24).token;
 		
@@ -90,5 +95,65 @@ public class UsersController extends RestController {
 	
 	private JsonNode getPasswordNode(JsonNode postData) {
 		return postData.findPath("password");
+	}
+	
+	@Security.Authenticated(UserAuthenticator.class)
+	public Result myProfile(String type) {
+		Long id = getUserIdForRequest();
+		
+		String requestedType = type;
+
+		boolean putServices = false;
+		switch(requestedType) {
+		case "short":
+			 putServices = false;
+			break;
+		case "long":
+			 putServices = true;
+			break;
+		default:
+			return badRequestJson(AssistanceAPIErrors.invalidParametersGeneral);
+		}
+		
+		User profile = UserPersistency.findUserById(id, true);
+		
+		JsonNode result = Json.toJson(profile);
+		ObjectNode modifiableResult = (ObjectNode)result;
+		modifiableResult.put("joinedSince", DateTimeHelper.localDateTimeToTimestamp(profile.joinedSince));
+		modifiableResult.put("lastLogin", DateTimeHelper.localDateTimeToTimestamp(profile.lastLogin));
+		
+		if(putServices) {
+			modifiableResult.putArray("services");
+		}
+		
+		return ok(result);
+	}
+	
+	@Security.Authenticated(UserAuthenticator.class)
+	public Result updateProfile() {
+		Long id = getUserIdForRequest();
+		
+		JsonNode postData = request().body()
+				.asJson();
+		
+		if(!postData.has("firstname") && !postData.has("lastname")) {
+			return badRequestJson(AssistanceAPIErrors.missingParametersGeneral);
+		}
+		
+		JsonNode firstnameNode = postData.findPath("firstname");
+		JsonNode lastnameNode = postData.findPath("lastname");
+		
+		if(!firstnameNode.isTextual() && !lastnameNode.isTextual()) {
+			return badRequestJson(AssistanceAPIErrors.invalidParametersGeneral);
+		}
+		
+		User u = UserPersistency.findUserById(id, false);
+		
+		u.firstName = firstnameNode.asText();
+		u.lastName = lastnameNode.asText();
+		
+		UserPersistency.updateProfile(u);
+		
+		return ok();
 	}
 }

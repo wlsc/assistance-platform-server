@@ -87,9 +87,4 @@ public class AssistanceController extends RestController {
 			}
 		}
 	}
-	
-	private Long getUserIdForRequest() {
-		UserAuthenticator authenticator = new UserAuthenticator();
-		return authenticator.getUserId(ctx());
-	}
 }

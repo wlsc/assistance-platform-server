@@ -10,6 +10,11 @@ import play.mvc.Result;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public abstract class RestController extends Controller {
+	protected Long getUserIdForRequest() {
+		UserAuthenticator authenticator = new UserAuthenticator();
+		return authenticator.getUserId(ctx());
+	}
+	
 	public Result ok(Map<String, Object> map) {
 		return ok(mappedJson(map));
 	}
