@@ -28,6 +28,10 @@ public abstract class MessagingService {
 		return result;
 	}
 	
+	protected <T> void notifyConsumer(Consumer<T> consumer, Channel<T> channel, T obj) {
+		consumer.consumeDataOfChannel(channel, obj);
+	}
+	
 	protected abstract <T> void subscribe(Consumer<T> consumer, Channel<T> channel);
 	
 	protected abstract <T> void unsubscribe(Consumer<T> consumer, Channel<T> channel);

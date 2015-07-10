@@ -42,7 +42,7 @@ public class DummyMessagingService extends MessagingService {
 	protected <T> void publish(Channel<T> channel, T data) {
 		Set<Consumer<T>> consumers = getSetForChannel(channel);
 		consumers.forEach((c) -> {
-			c.consumeDataOfChannel(channel, data);
+			notifyConsumer(c, channel, data);
 		});
 	}
 }

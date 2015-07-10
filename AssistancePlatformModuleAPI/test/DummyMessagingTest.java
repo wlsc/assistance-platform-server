@@ -35,11 +35,13 @@ public class DummyMessagingTest {
 		
 		c.publish(testData);
 		
-		for(int i = 0; i < 100; i++) {
+		int events = 10000;
+		
+		for(int i = 0; i < events; i++) {
 			c.publish(new GeographicPosition(Math.random() * 100, Math.random() * 100, (long)(Math.random() * Integer.MAX_VALUE), i));
 		}
 		
-		assertEquals(101, receivedData.size());
+		assertEquals(events + 1, receivedData.size());
 
 		Thread.sleep(500);
 		

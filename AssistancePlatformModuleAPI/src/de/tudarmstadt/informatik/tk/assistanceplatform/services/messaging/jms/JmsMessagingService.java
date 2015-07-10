@@ -89,7 +89,7 @@ public class JmsMessagingService extends MessagingService {
 					
 					T obj = (T)kryo.readObject(input, channel.getType());
 
-					consumer.consumeDataOfChannel(channel, obj);
+					notifyConsumer(consumer, channel, obj);
 				}
 			});
 		} catch (JMSException e) {
@@ -100,8 +100,7 @@ public class JmsMessagingService extends MessagingService {
 
 	@Override
 	protected <T> void unsubscribe(Consumer<T> consumer, Channel<T> channel) {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
