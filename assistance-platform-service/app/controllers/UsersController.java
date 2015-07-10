@@ -153,6 +153,10 @@ public class UsersController extends RestController {
 		
 		User u = UserPersistency.findUserById(id, false);
 		
+		if(u == null) {
+			return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+		}
+		
 		u.firstName = firstnameNode.asText();
 		u.lastName = lastnameNode.asText();
 		
