@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class UserActivationList {
+public class UserActivationList implements IUserActivationChecker {
 	private Set<Long> usersWhoActivated = new HashSet<>();
 	
 	public void addActivationByUser(Long userId) {
@@ -15,6 +15,7 @@ public class UserActivationList {
 		usersWhoActivated.remove(userId);
 	}
 	
+	@Override
 	public boolean isActivatedForUser(Long userId) {
 		return usersWhoActivated.contains(userId);
 	}

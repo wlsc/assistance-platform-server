@@ -1,6 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationList;
 
 
 /**
@@ -11,21 +13,16 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Messag
 public abstract class ModuleBundle {
 	private Module containedModules[];
 	
-	private MessagingService messagingService;
-	
-	public ModuleBundle(MessagingService messagingService) {
+	private IUserActivationChecker userActivationListChecker;
+
+	public ModuleBundle(MessagingService messagingService, IUserActivationChecker userActivationListChecker) {
+		this.userActivationListChecker = userActivationListChecker;
 		containedModules = initializeContainedModules(messagingService);
 	}
 	
-	protected abstract Module[] initializeContainedModules(MessagingService messagingService);
+	public IUserActivationChecker getUserActivationListChecker() {
+		return userActivationListChecker;
+	}
 	
-	/*public void registerModules(ModuleRegistry registry) {
-		if(containedModules != null) {
-			for(Module m : containedModules) {
-				//ModuleProxy proxy
-				//ModuleRegistration registration = new ModuleRegistration(proxy);
-				//registry.registerModule(registration);
-			}
-		}
-	}*/
+	protected abstract Module[] initializeContainedModules(MessagingService messagingService);
 }

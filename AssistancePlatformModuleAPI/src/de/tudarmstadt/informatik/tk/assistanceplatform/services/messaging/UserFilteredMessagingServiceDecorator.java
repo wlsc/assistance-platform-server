@@ -1,16 +1,17 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserEvent;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationList;
 
 public class UserFilteredMessagingServiceDecorator extends MessagingService {
 	public MessagingService messagingServiceToFilter;
 
-	private UserActivationList activationList;
+	private IUserActivationChecker activationChecker;
 	
-	public UserFilteredMessagingServiceDecorator(MessagingService serviceToFilter, UserActivationList activationList) {
+	public UserFilteredMessagingServiceDecorator(MessagingService serviceToFilter, IUserActivationChecker activationChecker) {
 		this.messagingServiceToFilter = serviceToFilter;
-		this.activationList = activationList;
+		this.activationChecker = activationChecker;
 	}
 	
 	@Override
@@ -29,7 +30,7 @@ public class UserFilteredMessagingServiceDecorator extends MessagingService {
 	private <T> boolean shouldBlockPassthroughOfEvent(T event) {
 		if(event instanceof UserEvent) {
 			UserEvent dataAsUserEvent = (UserEvent)event;
-			if(!activationList.isActivatedForUser(dataAsUserEvent.userId)) {
+			if(!activationChecker.isActivatedForUser(dataAsUserEvent.userId)) {
 				return true;
 			}
 		}
