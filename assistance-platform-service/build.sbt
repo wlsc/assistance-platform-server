@@ -6,6 +6,10 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 scalaVersion := "2.11.6"
 
+resolvers += (
+    "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+)
+
 libraryDependencies ++= Seq(
   javaJdbc,
   cache,
@@ -14,7 +18,8 @@ libraryDependencies ++= Seq(
   "org.mindrot" % "jbcrypt" % "0.3m",
   "org.postgresql" % "postgresql" % "9.2-1003-jdbc4",
   "com.nimbusds" % "nimbus-jose-jwt" % "3.6",
-  "commons-dbutils" % "commons-dbutils" % "1.6"
+  "commons-dbutils" % "commons-dbutils" % "1.6",
+  "AssistancePlatformModuleAPI" % "AssistancePlatformModuleAPI" % "0.0.1-SNAPSHOT"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

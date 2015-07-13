@@ -1,10 +1,13 @@
 package controllers;
 
+import java.util.function.Predicate;
+
 import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
 import models.UserModuleActivation;
 import persistency.ActiveAssistanceModulePersistency;
 import persistency.UserModuleActivationPersistency;
+import play.Logger;
 import play.cache.Cached;
 import play.libs.Json;
 import play.mvc.Result;
@@ -12,7 +15,15 @@ import play.mvc.Security;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
+import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
+
 public class AssistanceController extends RestController {
+	MessagingService ms = new JmsMessagingService();
+	
 	@Security.Authenticated(UserAuthenticator.class)
 	@Cached(key = "moduleList")
 	public Result list() {
@@ -23,42 +34,19 @@ public class AssistanceController extends RestController {
 	
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result activate() {
-		JsonNode postData = request().body()
-				.asJson();
-		
-		// Get Module ID to activate from request
-		JsonNode moduleIdNode = postData.findPath("module_id");
-		if(moduleIdNode.isMissingNode()) {
-			return badRequestJson(AssistanceAPIErrors.missingModuleIDParameter);
-		}
-		
-		String moduleId = moduleIdNode.textValue();
-		
-		// Check if the module exists / is registered in the platform
-		if(!ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
-			return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
-		}
-		
-		// Get User id from request
-		Long userId = getUserIdForRequest();
-		
-		UserModuleActivation attemptedActivation = new UserModuleActivation(userId, moduleId);
-		
-		if(UserModuleActivationPersistency.create(attemptedActivation)) {
-			// TODO: Event in Event Stream pushen, sodass MOdule Aktivierung mitbekommen
-			
-			return ok(); // TODO: Ggf. noch mal mit der Module ID bestätigen oder sogar die Liste aller aktivierten Module (IDs) zurückgeben?
-		} else {
-			if(UserModuleActivationPersistency.doesActivationExist(attemptedActivation)) {
-				return badRequestJson(AssistanceAPIErrors.moduleActivationAlreadyActive);
-			} else {
-				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
-			}
-		}
+		return handleActivationStatusChange((a) -> {
+			return UserModuleActivationPersistency.create(a);
+		}, false);
 	}
-
 	
+	@Security.Authenticated(UserAuthenticator.class)
 	public Result deactivate() {
+		return handleActivationStatusChange((a) -> {
+			return UserModuleActivationPersistency.remove(a);
+		}, false);
+	}
+	
+	private Result handleActivationStatusChange(Predicate<UserModuleActivation> activationCheck, boolean endResultOfRegistrationStatus) {
 		JsonNode postData = request().body()
 				.asJson();
 		
@@ -73,18 +61,23 @@ public class AssistanceController extends RestController {
 		// Get User id from request
 		Long userId = getUserIdForRequest();
 		
-		UserModuleActivation activationToRemove = new UserModuleActivation(userId, moduleId);
+		UserModuleActivation activation = new UserModuleActivation(userId, moduleId);
 		
-		if(UserModuleActivationPersistency.remove(activationToRemove)) {
+		if(activationCheck.test(activation)) {
 			// TODO: Event in Event Stream pushen, sodass MOdule Aktivierung mitbekommen
+			publishUserRegistrationInformationEvent(userId, endResultOfRegistrationStatus);
 			
 			return ok(); // TODO: Ggf. noch mal mit der Module ID bestätigen oder sogar die Liste aller aktivierten Module (IDs) zurückgeben?
 		} else {
-			if(!UserModuleActivationPersistency.doesActivationExist(activationToRemove)) {
+			if(UserModuleActivationPersistency.doesActivationExist(activation) == endResultOfRegistrationStatus) {
 				return badRequestJson(AssistanceAPIErrors.moduleActivationNotActive);
 			} else {
 				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
 			}
 		}
+	}
+	
+	private void publishUserRegistrationInformationEvent(Long userId, boolean wantsToBeRegistered) {
+		ms.channel(UserRegistrationInformationEvent.class).publish(new UserRegistrationInformationEvent(userId, wantsToBeRegistered));
 	}
 }
