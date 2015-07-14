@@ -8,6 +8,7 @@ import models.UserModuleActivation;
 import persistency.ActiveAssistanceModulePersistency;
 import persistency.UserModuleActivationPersistency;
 import play.Logger;
+import play.cache.Cache;
 import play.cache.Cached;
 import play.libs.Json;
 import play.mvc.Result;
@@ -25,11 +26,15 @@ public class AssistanceController extends RestController {
 	MessagingService ms = new JmsMessagingService();
 	
 	@Security.Authenticated(UserAuthenticator.class)
-	@Cached(key = "moduleList")
-	public Result list() {
-		ActiveAssistanceModule[] assiModules = ActiveAssistanceModulePersistency.list();
-		JsonNode json = Json.toJson(assiModules);
-		return ok(json);
+	public Result list(String language) {
+	
+		JsonNode result = Cache.getOrElse("moduleList"+language, () -> {
+			ActiveAssistanceModule[] assiModules = ActiveAssistanceModulePersistency.list(language);
+			JsonNode json = Json.toJson(assiModules);
+			return json;
+		}, 3600);
+		
+		return ok(result);
 	}
 	
 	@Security.Authenticated(UserAuthenticator.class)

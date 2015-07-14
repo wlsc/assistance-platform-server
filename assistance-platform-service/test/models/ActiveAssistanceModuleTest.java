@@ -82,4 +82,37 @@ public class ActiveAssistanceModuleTest {
     		}
     	});
     }
+    
+    
+    @Test
+    public void localizationTest() {
+    	running(fakeApplication(inMemoryDatabase() ), new Runnable() {
+    		public void run() {
+    			
+    			// Create an unlocalized Module
+    			ActiveAssistanceModule unlocalized = new ActiveAssistanceModule("English", "id", "lgoo", "descr", "descr long", new String[] { }, new String[] { }, "xyz");
+    		
+    			ActiveAssistanceModulePersistency.create(unlocalized);
+    			
+    			ActiveAssistanceModule[] modules = ActiveAssistanceModulePersistency.list("de"); // Query for german localization (which should not exist) -> Fallback to english (unlocalized)
+    			
+    			compareModule(unlocalized, modules[0]);
+    			
+    			// Now create an localization of the previous module
+    			
+    			ActiveAssistanceModule localizedDe = new ActiveAssistanceModule("Deutsch", unlocalized.id, "lgoode", "descrde", "descr long de", unlocalized.optionalCapabilites, unlocalized.requiredCapabilities, "xyz");
+    			
+    			ActiveAssistanceModulePersistency.localize("de", localizedDe);
+    			
+    			modules = ActiveAssistanceModulePersistency.list("de"); // Query for german localization (which should exist now)
+    			
+    			compareModule(localizedDe, modules[0]);
+    			
+    			// Check if the english version still can be retreived
+    			modules = ActiveAssistanceModulePersistency.list("en"); // Query for german localization (which should exist now)
+    			
+    			compareModule(unlocalized, modules[0]);
+    		}
+    	});
+    }
 }

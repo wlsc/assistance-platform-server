@@ -15,12 +15,14 @@ PUT		/users/profile				controllers.UsersController.updateProfile
 POST	/sensordata/insert			controllers.SensorDataController.insert
 
 # Assistance
-GET		/assistance/list			controllers.AssistanceController.list
+GET		/assistance/list			controllers.AssistanceController.list(lang : String ?= "en")
+GET		/assistance/list/:lang		controllers.AssistanceController.list(lang)
 POST	/assistance/activate		controllers.AssistanceController.activate
 POST	/assistance/deactivate		controllers.AssistanceController.deactivate
 
 # Module API
 POST	/modules/register			controllers.ModulesController.register
+POST	/modules/localize			controllers.ModulesController.localize
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

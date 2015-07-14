@@ -1,4 +1,4 @@
-# Modules schema
+# User to modules schema
  
 # --- !Ups
  

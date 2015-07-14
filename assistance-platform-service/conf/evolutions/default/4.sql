@@ -1,4 +1,4 @@
-# Modules schema
+# User Profile information
  
 # --- !Ups
  
