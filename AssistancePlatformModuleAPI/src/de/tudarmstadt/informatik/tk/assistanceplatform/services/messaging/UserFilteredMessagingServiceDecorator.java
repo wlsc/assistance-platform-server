@@ -2,7 +2,6 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationList;
 
 public class UserFilteredMessagingServiceDecorator extends MessagingService {
 	public MessagingService messagingServiceToFilter;

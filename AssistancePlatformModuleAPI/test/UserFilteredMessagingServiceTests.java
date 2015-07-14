@@ -1,12 +1,8 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jms.ConnectionFactory;
-
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.Test;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
@@ -14,7 +10,6 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channe
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationList;
 
 

@@ -1,21 +1,13 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationList;
 
 
 public class UserActivationListKeeperTest {

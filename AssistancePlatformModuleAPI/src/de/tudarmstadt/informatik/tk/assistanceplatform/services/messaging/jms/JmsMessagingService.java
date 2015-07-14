@@ -21,7 +21,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
@@ -114,6 +113,8 @@ public class JmsMessagingService extends MessagingService {
 			
 			BytesMessage bm = messageCreationSession.createBytesMessage();
 			bm.writeBytes(output.getBuffer());
+			
+			System.out.println(output.getBuffer().length);
 
 			producer.send(bm);
 		} catch (JMSException e) {
