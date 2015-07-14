@@ -1,5 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+
 /**
  * Assistance Modules are the ones that interact with the user, give recommendations etc.
  * @author bjeutter
@@ -8,4 +10,8 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 public abstract class AssistanceModule extends Module {
 	// Dieses Assistenzmodule soll nun auf verschiedene Data Module, bzw. deren Kontext, zugreifen können
 	// WIe Typisierung gestalten?
+	
+	public AssistanceModule(MessagingService messagingService) {
+		super(messagingService);
+	}
 }
