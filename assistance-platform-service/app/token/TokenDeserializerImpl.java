@@ -32,11 +32,9 @@ public class TokenDeserializerImpl implements TokenDeserializer {
 				Logger.warn("Unverified token attempt: " + token);
 			}
 		} catch (JOSEException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.error("TokenDeserializerImpl", e);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.error("TokenDeserializerImpl", e);
 		}
 		
 		return null;

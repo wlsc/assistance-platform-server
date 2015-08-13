@@ -1,5 +1,7 @@
 package token;
 
+import play.Logger;
+
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -32,8 +34,7 @@ public class TokenSerializerImpl implements TokenSerializer {
 			jwsObject.sign(signer);
 			return jwsObject.serialize();
 		} catch (JOSEException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.error("TokenSerializerImpl", e);
 		}
 		
 		return "";

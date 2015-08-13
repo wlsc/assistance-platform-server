@@ -1,25 +1,17 @@
 package persistency;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.function.Consumer;
-
-
 
 import models.User;
 
-
-
 import org.mindrot.jbcrypt.BCrypt;
-
-
 
 import play.Logger;
 import play.db.DB;
@@ -106,8 +98,7 @@ public class UserPersistency {
 			try {
 				p.setString(1, email);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.error("Some SQL Exception in findUserByEmail", e);
 			}
 		};
 		
@@ -119,8 +110,7 @@ public class UserPersistency {
 			try {
 				p.setLong(1, id);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.error("Some SQL Exception in findUserById", e);
 			}
 		};
 		

@@ -3,7 +3,6 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import models.APIError;
 import models.AssistanceAPIErrors;
 import models.Device;
 import models.Token;
@@ -70,8 +69,7 @@ public class UsersController extends RestController {
 				try {
 					return (Device)mapper.treeToValue(deviceNode, Device.class);
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.error("Something went wrong with the parsing of device infos on login", e);
 				}
 			}
 		}

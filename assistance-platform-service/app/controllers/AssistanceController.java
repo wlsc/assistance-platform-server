@@ -7,20 +7,16 @@ import models.AssistanceAPIErrors;
 import models.UserModuleActivation;
 import persistency.ActiveAssistanceModulePersistency;
 import persistency.UserModuleActivationPersistency;
-import play.Logger;
 import play.cache.Cache;
-import play.cache.Cached;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
 public class AssistanceController extends RestController {
 	MessagingService ms = new JmsMessagingService();
