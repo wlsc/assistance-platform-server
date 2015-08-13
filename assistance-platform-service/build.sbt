@@ -20,6 +20,7 @@ libraryDependencies ++= Seq(
   "com.nimbusds" % "nimbus-jose-jwt" % "3.6",
   "commons-dbutils" % "commons-dbutils" % "1.6",
   "AssistancePlatformModuleAPI" % "AssistancePlatformModuleAPI" % "0.0.1-SNAPSHOT"
+  //"com.wordnik" % "swagger-play2_2.10" % "1.3.12"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

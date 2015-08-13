@@ -18,11 +18,14 @@ POST	/sensordata/insert			controllers.SensorDataController.insert
 GET		/assistance/list			controllers.AssistanceController.list(lang : String ?= "en")
 GET		/assistance/list/:lang		controllers.AssistanceController.list(lang)
 POST	/assistance/activate		controllers.AssistanceController.activate
-POST	/assistance/deactivate		controllers.AssistanceController.deactivate
+POST	/assistance/dipeactivate		controllers.AssistanceController.deactivate
 
 # Module API
 POST	/modules/register			controllers.ModulesController.register
 POST	/modules/localize			controllers.ModulesController.localize
+
+# API Reference
+#GET     /api-docs.json				controllers.ApiHelpController.getResources
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

@@ -24,6 +24,8 @@ public class AssistanceAPIErrors {
 	
 	public static APIError invalidParametersGeneral = new APIError(11, "Invalid parameters.");
 	
+	public static APIError deviceIdNotKnown = new APIError(12, "Device ID not known.");
+	
 	// Module Rest API
 	public static APIError missingModuleParameters = new APIError(995, "Not all required parameters for module registration were provided.");
 	
