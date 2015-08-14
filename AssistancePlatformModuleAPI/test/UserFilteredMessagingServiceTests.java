@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.Position;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
@@ -24,9 +24,9 @@ public class UserFilteredMessagingServiceTests {
 		
 		MessagingService userFiltered = new UserFilteredMessagingServiceDecorator(new DummyMessagingService(), activationList);
 
-		Channel<GeographicPosition> c = userFiltered.channel("test", GeographicPosition.class);
+		Channel<Position> c = userFiltered.channel("test", Position.class);
 		
-		List<GeographicPosition> receivedData = new ArrayList<>();
+		List<Position> receivedData = new ArrayList<>();
 		
 		c.subscribeConsumer(
 				(channel, data) -> {
@@ -38,7 +38,7 @@ public class UserFilteredMessagingServiceTests {
 		
 		for(int i = 0; i < events; i++) {
 			Long userId = i % 2 == 0 ? 2L : 1L; // Every second message is for user 1
-			c.publish(new GeographicPosition(Math.random() * 100, Math.random() * 100, userId, i));
+			c.publish(new Position(Math.random() * 100, Math.random() * 100, userId, i));
 		}
 		
 		assertEquals(events / 2, receivedData.size());

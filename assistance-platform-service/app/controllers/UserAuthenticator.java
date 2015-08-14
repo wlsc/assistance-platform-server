@@ -21,7 +21,11 @@ public class UserAuthenticator extends Security.Authenticator {
 
 	public Long getUserId(Http.Context ctx) {
 		String token = getTokenFromHeader(ctx);
-
+		
+		return getUserIdFromToken(token);
+	}
+	
+	public static Long getUserIdFromToken(String token) {
 		if (token != null) {
 			Token unpackedToken = Token.unpackToken(token);
 

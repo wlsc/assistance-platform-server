@@ -113,8 +113,6 @@ public class JmsMessagingService extends MessagingService {
 			
 			BytesMessage bm = messageCreationSession.createBytesMessage();
 			bm.writeBytes(output.getBuffer());
-			
-			System.out.println(output.getBuffer().length);
 
 			producer.send(bm);
 		} catch (JMSException e) {

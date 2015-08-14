@@ -1,20 +1,48 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
-public class GeographicPosition extends UserEvent {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties({"type"})
+public class Position extends UserEvent {
 	public Double latitude;
-	public Double longitude;
 	
-	public GeographicPosition() {
+	@JsonProperty(required = true)
+	public Double longitude;
+	public Double accuracyHorizontal;
+	public Double speed;
+	
+	/**
+	 * Altitude (optional)
+	 */
+	public Double altitude;
+	
+	/**
+	 * Vertical accuracy (optional)
+	 */
+	public Double accuracyVertical;
+	
+	/**
+	 * Course (optional)
+	 */
+	public Integer course;
+	
+	/**
+	 * Floor (optional)
+	 */
+	public Integer floor;
+	
+	public Position() {
 		super();
 	}
 	
-	public GeographicPosition(double latitude, double longitude, long userId, long timestamp) {
+	public Position(double latitude, double longitude, long userId, long timestamp) {
 		super(userId, timestamp);
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 	
-	public double distance(GeographicPosition pos2) {
+	public double distance(Position pos2) {
 
 	    final int R = 6371; // Radius of the earth
 
@@ -44,12 +72,16 @@ public class GeographicPosition extends UserEvent {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(!(obj instanceof GeographicPosition)) {
+		if(!(obj instanceof Position)) {
 			return false;
 		}
 		
-		GeographicPosition obj2 = (GeographicPosition)obj;
+		Position obj2 = (Position)obj;
 		
-		return super.equals(obj) && latitude.equals(obj2.latitude) && longitude.equals(obj2.longitude);
+		return super.equals(obj) 
+				&& latitude.equals(obj2.latitude) 
+				&& longitude.equals(obj2.longitude)
+				&& accuracyHorizontal.equals(obj2.accuracyHorizontal)
+				&& speed.equals(obj2.speed);
 	}
 }

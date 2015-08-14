@@ -9,7 +9,7 @@ import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.Test;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.GeographicPosition;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.Position;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
@@ -21,11 +21,11 @@ public class JmsTest {
 		ConnectionFactory factory = new ActiveMQConnectionFactory();
 		MessagingService msForConsumer = new JmsMessagingService(factory);
 		
-		GeographicPosition testData = new GeographicPosition(123, 321, 9775, 546);
+		Position testData = new Position(123, 321, 9775, 546);
 		
-		Channel<GeographicPosition> c = msForConsumer.channel("test", GeographicPosition.class);
+		Channel<Position> c = msForConsumer.channel("test", Position.class);
 		
-		List<GeographicPosition> receivedData = new ArrayList<>();
+		List<Position> receivedData = new ArrayList<>();
 		
 		c.subscribeConsumer(
 				(channel, data) -> {
@@ -40,12 +40,12 @@ public class JmsTest {
 		);
 		
 		MessagingService msForPub = new JmsMessagingService(factory);
-		Channel<GeographicPosition> channelForPub = msForPub.channel("test", GeographicPosition.class);
+		Channel<Position> channelForPub = msForPub.channel("test", Position.class);
 		
 		channelForPub.publish(testData);
 		
 		for(int i = 0; i < 1000; i++) {
-			channelForPub.publish(new GeographicPosition(Math.random() * 100, Math.random() * 100, (long)(Math.random() * Integer.MAX_VALUE), i));
+			channelForPub.publish(new Position(Math.random() * 100, Math.random() * 100, (long)(Math.random() * Integer.MAX_VALUE), i));
 		}
 		
 		Thread.sleep(1000);

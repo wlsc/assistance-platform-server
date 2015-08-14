@@ -12,7 +12,7 @@ GET 	/users/profile/:type		controllers.UsersController.myProfile(type)
 PUT		/users/profile				controllers.UsersController.updateProfile
 
 # Sensor data
-POST	/sensordata/insert			controllers.SensorDataController.insert
+GET		/sensordata/socket			controllers.SensorDataController.socket
 
 # Assistance
 GET		/assistance/list			controllers.AssistanceController.list(lang : String ?= "en")
