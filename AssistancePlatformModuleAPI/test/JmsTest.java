@@ -9,7 +9,7 @@ import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.Test;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.Position;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Position;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
@@ -21,7 +21,7 @@ public class JmsTest {
 		ConnectionFactory factory = new ActiveMQConnectionFactory();
 		MessagingService msForConsumer = new JmsMessagingService(factory);
 		
-		Position testData = new Position(123, 321, 9775, 546);
+		Position testData = new Position(123, 321, 456, 9775, 546);
 		
 		Channel<Position> c = msForConsumer.channel("test", Position.class);
 		
@@ -45,7 +45,7 @@ public class JmsTest {
 		channelForPub.publish(testData);
 		
 		for(int i = 0; i < 1000; i++) {
-			channelForPub.publish(new Position(Math.random() * 100, Math.random() * 100, (long)(Math.random() * Integer.MAX_VALUE), i));
+			c.publish(new Position((long)(Math.random() * 100), (long)(Math.random() * 100), (long)(Math.random() * 100), (long)(Math.random() * Integer.MAX_VALUE), i));
 		}
 		
 		Thread.sleep(1000);

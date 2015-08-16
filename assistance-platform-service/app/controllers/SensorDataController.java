@@ -7,9 +7,8 @@ import java.util.Map;
 import models.AssistanceAPIErrors;
 import play.Logger;
 import play.libs.Json;
-import play.mvc.Result;
-import play.mvc.Security;
 import play.mvc.WebSocket;
+import sensorhandling.JsonToSensorEventConversion;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -65,32 +64,20 @@ public class SensorDataController extends RestController {
 		}
 	}
 	
-	private void processSensorReading(String type, JsonNode reading) throws JsonProcessingException {
-		Class targetClass = null;
+	private <T> void processSensorReading(String type, JsonNode reading) throws JsonProcessingException {
+		JsonToSensorEventConversion sensorConversion = new JsonToSensorEventConversion();
 		
-		switch(type) {
-			case "position": {
-				targetClass = Position.class;
-				break;
-			}
-			// TODO: weitere Typen einbinden
-		}
+		Class<T> classType = JsonToSensorEventConversion.mapTypeToClass(type);
 		
-		if(targetClass != null) {
-			mapJsonAndDistribute(reading, targetClass);
-		}
-	}
-	
-	private <T> void mapJsonAndDistribute(JsonNode reading, Class<T> targetClass) throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
+		T eventObject = sensorConversion.mapJson(reading, classType);
 		
-		T mappedObject = mapper.treeToValue(reading, targetClass);
-		
-		distributeSensorReading(mappedObject, targetClass);
+		distributeSensorReading(eventObject, classType);
 	}
 	
 	private <T> void distributeSensorReading(T reading, Class<T> targetClass) {
 		ms.channel(targetClass).publish(reading);
+		String test = reading.toString();
+		Logger.info("Test");
 	}
 	
 	private String extractToken(JsonNode json) {

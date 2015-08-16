@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.Position;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Position;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService;
@@ -17,7 +17,7 @@ public class DummyMessagingTest {
 	public void test() throws Exception {
 		MessagingService ms = new DummyMessagingService();
 		
-		Position testData = new Position(123, 321, 9775, 546);
+		Position testData = new Position(1, 123, 321, 9775, 546);
 		
 		Channel<Position> c = ms.channel("test", Position.class);
 		
@@ -38,7 +38,7 @@ public class DummyMessagingTest {
 		int events = 10000;
 		
 		for(int i = 0; i < events; i++) {
-			c.publish(new Position(Math.random() * 100, Math.random() * 100, (long)(Math.random() * Integer.MAX_VALUE), i));
+			c.publish(new Position((long)(Math.random() * 100), (long)(Math.random() * 100), (long)(Math.random() * 100), (long)(Math.random() * Integer.MAX_VALUE), i));
 		}
 		
 		assertEquals(events + 1, receivedData.size());

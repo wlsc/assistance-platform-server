@@ -11,22 +11,31 @@ public abstract class UserEvent extends Event {
 		super(timestamp);
 		this.userId = userId;
 	}
-	
+
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		int hash = super.hashCode();
-		hash = 89 * hash + Long.valueOf(userId).hashCode();
-		
-		return hash;
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if(!(obj instanceof UserEvent)) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
 			return false;
-		}
-		
-		return super.equals(obj) && userId.equals(((UserEvent)obj).userId);
+		if (getClass() != obj.getClass())
+			return false;
+		UserEvent other = (UserEvent) obj;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
+		return true;
 	}
+	
+
 }
