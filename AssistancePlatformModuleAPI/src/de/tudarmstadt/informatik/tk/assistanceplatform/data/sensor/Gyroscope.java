@@ -1,7 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 
 public class Gyroscope extends SensorData {

@@ -1,8 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserDeviceEvent;

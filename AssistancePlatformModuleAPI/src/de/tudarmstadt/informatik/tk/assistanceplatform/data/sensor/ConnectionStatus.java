@@ -1,6 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserDeviceEvent;
 
 public class ConnectionStatus extends SensorData {
 	public boolean isWifi;

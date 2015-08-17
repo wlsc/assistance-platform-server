@@ -2,8 +2,6 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserDeviceEvent;
-
 public class MotionActivity extends SensorData {	
 	public boolean walking;
 	public boolean running;

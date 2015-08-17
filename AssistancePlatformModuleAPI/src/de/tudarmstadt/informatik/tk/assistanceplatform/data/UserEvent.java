@@ -1,7 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 public abstract class UserEvent extends Event {
 	public long userId;

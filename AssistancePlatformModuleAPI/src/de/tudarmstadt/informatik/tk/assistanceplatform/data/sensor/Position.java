@@ -1,7 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
-import java.time.Instant;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Position extends SensorData {

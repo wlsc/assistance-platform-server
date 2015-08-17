@@ -1,9 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class UserDeviceEvent extends UserEvent {
 	public long deviceId;

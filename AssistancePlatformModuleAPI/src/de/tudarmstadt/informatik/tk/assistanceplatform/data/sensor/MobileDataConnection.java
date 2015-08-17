@@ -2,8 +2,6 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserDeviceEvent;
-
 public class MobileDataConnection extends SensorData {
 	public String carriername;
 	public String mobileCarrierCode;
