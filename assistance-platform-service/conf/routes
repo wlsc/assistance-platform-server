@@ -13,12 +13,13 @@ PUT		/users/profile				controllers.UsersController.updateProfile
 
 # Sensor data
 GET		/sensordata/socket			controllers.SensorDataController.socket
+POST	/sensordata/upload			controllers.SensorDataController.upload
 
 # Assistance
 GET		/assistance/list			controllers.AssistanceController.list(lang : String ?= "en")
 GET		/assistance/list/:lang		controllers.AssistanceController.list(lang)
 POST	/assistance/activate		controllers.AssistanceController.activate
-POST	/assistance/dipeactivate		controllers.AssistanceController.deactivate
+POST	/assistance/deactivate	controllers.AssistanceController.deactivate
 
 # Module API
 POST	/modules/register			controllers.ModulesController.register

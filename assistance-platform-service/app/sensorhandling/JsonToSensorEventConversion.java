@@ -51,22 +51,9 @@ public class JsonToSensorEventConversion {
 			return mappedObject;
 		} catch(DateTimeParseException ex) {
 			throw(ex);
-			//
 		}
-		
-		//return null;
-		//distributeSensorReading(mappedObject, targetClass);
 	}
-	
-	/**
-	 * Extracts the timestamp by converting the iso 8601 
-	 * @param reading
-	 * @return
-	 */
-	private long extractTimestamp(JsonNode reading) {
-		return -1;
-	}
-	
+
 	
 	public static Class mapTypeToClass(String type) {
 		Map<String, Class> typeMapping = new HashMap<>();
