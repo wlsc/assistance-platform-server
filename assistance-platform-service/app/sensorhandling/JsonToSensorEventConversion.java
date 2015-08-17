@@ -33,11 +33,26 @@ public class JsonToSensorEventConversion {
 		
 		T mappedObject = mapper.treeToValue(reading, targetClass);
 		
+		
+		JsonNode createdNode = reading.get("created");
+		if(createdNode == null) {
+			
+		}
+		
 		return mappedObject;
 		
 		// TODO: Convert "created" to "timestamp"
 		
 		//distributeSensorReading(mappedObject, targetClass);
+	}
+	
+	/**
+	 * Extracts the timestamp by converting the iso 8601 
+	 * @param reading
+	 * @return
+	 */
+	private long extractTimestamp(JsonNode reading) {
+		return -1;
 	}
 	
 	

@@ -1,10 +1,9 @@
 package controllers;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import models.AssistanceAPIErrors;
+import persistency.DevicePersistency;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.WebSocket;
@@ -12,9 +11,8 @@ import sensorhandling.JsonToSensorEventConversion;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.Position;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
@@ -45,6 +43,12 @@ public class SensorDataController extends RestController {
 	}
 	
 	private void handleData(JsonNode json, WebSocket.Out<JsonNode> out) {
+		long deviceID = processDeviceID(json, out);
+		
+		if(deviceID == -1) {
+			return;
+		}
+		
 		JsonNode sensorreadings = json.get("sensorreadings");
 		
 		if(sensorreadings != null && sensorreadings.isArray()) {
@@ -56,7 +60,7 @@ public class SensorDataController extends RestController {
 				String type = sensorReading.path("type").asText();
 				
 				try {
-					processSensorReading(type, sensorReading);
+					processSensorReading(type, deviceID, sensorReading);
 				} catch (JsonProcessingException e) {
 					Logger.error("Error processing json", e);
 				}
@@ -64,20 +68,43 @@ public class SensorDataController extends RestController {
 		}
 	}
 	
-	private <T> void processSensorReading(String type, JsonNode reading) throws JsonProcessingException {
+	private long processDeviceID(JsonNode json, WebSocket.Out<JsonNode> out) {
+		JsonNode deviceIdNode = json.get("device_id");
+		long deviceID = -1;
+		
+		if(deviceIdNode == null) {
+			out.write(Json.toJson(AssistanceAPIErrors.missingParametersGeneral));
+			out.close();
+		} else {
+			deviceID = deviceIdNode.asLong();
+			
+			if(!DevicePersistency.doesExist(deviceID)) {
+				out.write(Json.toJson(AssistanceAPIErrors.deviceIdNotKnown));
+				out.close();
+			}
+		}
+		
+		return deviceID;
+	}
+	
+	private <T extends SensorData> void processSensorReading(String type, long deviceID, JsonNode reading) throws JsonProcessingException {
 		JsonToSensorEventConversion sensorConversion = new JsonToSensorEventConversion();
 		
 		Class<T> classType = JsonToSensorEventConversion.mapTypeToClass(type);
 		
 		T eventObject = sensorConversion.mapJson(reading, classType);
 		
+		setDeviceIdForSensorReading(deviceID, eventObject);
+		
 		distributeSensorReading(eventObject, classType);
+	}
+	
+	private <T extends SensorData> void setDeviceIdForSensorReading(long deviceID, T data) {
+		data.deviceId = deviceID;
 	}
 	
 	private <T> void distributeSensorReading(T reading, Class<T> targetClass) {
 		ms.channel(targetClass).publish(reading);
-		String test = reading.toString();
-		Logger.info("Test");
 	}
 	
 	private String extractToken(JsonNode json) {
