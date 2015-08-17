@@ -2,8 +2,8 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserDeviceEvent;
 
-public class Loudness extends UserDeviceEvent {
-	public Float loudness;
+public class Loudness extends SensorData {
+	public float loudness;
 	
 	public Loudness() {
 		super();
@@ -13,8 +13,7 @@ public class Loudness extends UserDeviceEvent {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((loudness == null) ? 0 : loudness.hashCode());
+		result = prime * result + Float.floatToIntBits(loudness);
 		return result;
 	}
 
@@ -27,10 +26,8 @@ public class Loudness extends UserDeviceEvent {
 		if (getClass() != obj.getClass())
 			return false;
 		Loudness other = (Loudness) obj;
-		if (loudness == null) {
-			if (other.loudness != null)
-				return false;
-		} else if (!loudness.equals(other.loudness))
+		if (Float.floatToIntBits(loudness) != Float
+				.floatToIntBits(other.loudness))
 			return false;
 		return true;
 	}

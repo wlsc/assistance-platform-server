@@ -1,7 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 public class UserDeviceEvent extends UserEvent {
-	public Long deviceId;
+	public long deviceId;
 	
 	public UserDeviceEvent() {
 		
@@ -16,8 +21,7 @@ public class UserDeviceEvent extends UserEvent {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((deviceId == null) ? 0 : deviceId.hashCode());
+		result = prime * result + (int) (deviceId ^ (deviceId >>> 32));
 		return result;
 	}
 
@@ -30,13 +34,8 @@ public class UserDeviceEvent extends UserEvent {
 		if (getClass() != obj.getClass())
 			return false;
 		UserDeviceEvent other = (UserDeviceEvent) obj;
-		if (deviceId == null) {
-			if (other.deviceId != null)
-				return false;
-		} else if (!deviceId.equals(other.deviceId))
+		if (deviceId != other.deviceId)
 			return false;
 		return true;
 	}
-	
-
 }

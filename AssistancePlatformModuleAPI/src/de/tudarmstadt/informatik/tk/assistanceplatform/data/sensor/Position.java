@@ -1,38 +1,38 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.time.Instant;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Position extends SensorData {
-	public Double latitude;
-	
-	@JsonProperty(required = true)
-	public Double longitude;
-	public Double accuracyHorizontal;
-	public Double speed;
+	public double latitude;
+	public double longitude;
+	public double accuracyHorizontal;
+	public double speed;
 	
 	/**
 	 * Altitude (optional)
 	 */
 	@JsonProperty(value = "altitude")
-	public Double altitudeOptional;
+	public double altitudeOptional;
 	
 	/**
 	 * Vertical accuracy (optional)
 	 */
 	@JsonProperty(value = "accuracyVertical")
-	public Double accuracyVerticalOptional;
+	public double accuracyVerticalOptional;
 	
 	/**
 	 * Course (optional)
 	 */
 	@JsonProperty(value = "course")
-	public Integer courseOptional;
+	public int courseOptional;
 	
 	/**
 	 * Floor (optional)
 	 */
 	@JsonProperty(value = "floor")
-	public Integer floorOptional;
+	public int floorOptional;
 	
 	public Position() {
 		super();
@@ -66,26 +66,21 @@ public class Position extends SensorData {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime
-				* result
-				+ ((accuracyHorizontal == null) ? 0 : accuracyHorizontal
-						.hashCode());
-		result = prime
-				* result
-				+ ((accuracyVerticalOptional == null) ? 0
-						: accuracyVerticalOptional.hashCode());
-		result = prime
-				* result
-				+ ((altitudeOptional == null) ? 0 : altitudeOptional.hashCode());
-		result = prime * result
-				+ ((courseOptional == null) ? 0 : courseOptional.hashCode());
-		result = prime * result
-				+ ((floorOptional == null) ? 0 : floorOptional.hashCode());
-		result = prime * result
-				+ ((latitude == null) ? 0 : latitude.hashCode());
-		result = prime * result
-				+ ((longitude == null) ? 0 : longitude.hashCode());
-		result = prime * result + ((speed == null) ? 0 : speed.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(accuracyHorizontal);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(accuracyVerticalOptional);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(altitudeOptional);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + courseOptional;
+		result = prime * result + floorOptional;
+		temp = Double.doubleToLongBits(latitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(longitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(speed);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -98,46 +93,27 @@ public class Position extends SensorData {
 		if (getClass() != obj.getClass())
 			return false;
 		Position other = (Position) obj;
-		if (accuracyHorizontal == null) {
-			if (other.accuracyHorizontal != null)
-				return false;
-		} else if (!accuracyHorizontal.equals(other.accuracyHorizontal))
+		if (Double.doubleToLongBits(accuracyHorizontal) != Double
+				.doubleToLongBits(other.accuracyHorizontal))
 			return false;
-		if (accuracyVerticalOptional == null) {
-			if (other.accuracyVerticalOptional != null)
-				return false;
-		} else if (!accuracyVerticalOptional
-				.equals(other.accuracyVerticalOptional))
+		if (Double.doubleToLongBits(accuracyVerticalOptional) != Double
+				.doubleToLongBits(other.accuracyVerticalOptional))
 			return false;
-		if (altitudeOptional == null) {
-			if (other.altitudeOptional != null)
-				return false;
-		} else if (!altitudeOptional.equals(other.altitudeOptional))
+		if (Double.doubleToLongBits(altitudeOptional) != Double
+				.doubleToLongBits(other.altitudeOptional))
 			return false;
-		if (courseOptional == null) {
-			if (other.courseOptional != null)
-				return false;
-		} else if (!courseOptional.equals(other.courseOptional))
+		if (courseOptional != other.courseOptional)
 			return false;
-		if (floorOptional == null) {
-			if (other.floorOptional != null)
-				return false;
-		} else if (!floorOptional.equals(other.floorOptional))
+		if (floorOptional != other.floorOptional)
 			return false;
-		if (latitude == null) {
-			if (other.latitude != null)
-				return false;
-		} else if (!latitude.equals(other.latitude))
+		if (Double.doubleToLongBits(latitude) != Double
+				.doubleToLongBits(other.latitude))
 			return false;
-		if (longitude == null) {
-			if (other.longitude != null)
-				return false;
-		} else if (!longitude.equals(other.longitude))
+		if (Double.doubleToLongBits(longitude) != Double
+				.doubleToLongBits(other.longitude))
 			return false;
-		if (speed == null) {
-			if (other.speed != null)
-				return false;
-		} else if (!speed.equals(other.speed))
+		if (Double.doubleToLongBits(speed) != Double
+				.doubleToLongBits(other.speed))
 			return false;
 		return true;
 	}

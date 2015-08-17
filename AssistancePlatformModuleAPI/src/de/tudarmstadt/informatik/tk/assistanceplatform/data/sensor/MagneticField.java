@@ -1,30 +1,43 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserDeviceEvent;
 
-public class MagneticField extends UserDeviceEvent {
-	public Double x;
-    public Double y;
-    public Double z;
+public class MagneticField extends SensorData {
+	public double x;
+    public double y;
+    public double z;
+    
+    @JsonProperty(value = "accuracy")
+    public int accuracyOptional;
     
 	public MagneticField() {
 		super();
 	}
 	
-	public MagneticField(long userId, long deviceId, long timestamp, double x, double y, double z) {
+	public MagneticField(long userId, long deviceId, Long timestamp, double x, double y, double z) {
 		super(userId, deviceId, timestamp);
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
-	
-    @Override
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((x == null) ? 0 : x.hashCode());
-		result = prime * result + ((y == null) ? 0 : y.hashCode());
-		result = prime * result + ((z == null) ? 0 : z.hashCode());
+		result = prime * result + accuracyOptional;
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(y);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(z);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -36,21 +49,14 @@ public class MagneticField extends UserDeviceEvent {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Gyroscope other = (Gyroscope) obj;
-		if (x == null) {
-			if (other.x != null)
-				return false;
-		} else if (!x.equals(other.x))
+		MagneticField other = (MagneticField) obj;
+		if (accuracyOptional != other.accuracyOptional)
 			return false;
-		if (y == null) {
-			if (other.y != null)
-				return false;
-		} else if (!y.equals(other.y))
+		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
 			return false;
-		if (z == null) {
-			if (other.z != null)
-				return false;
-		} else if (!z.equals(other.z))
+		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+			return false;
+		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
 			return false;
 		return true;
 	}

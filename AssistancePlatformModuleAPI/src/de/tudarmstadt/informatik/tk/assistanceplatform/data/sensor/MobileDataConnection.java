@@ -1,13 +1,16 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserDeviceEvent;
 
-public class MobileDataConnection extends UserDeviceEvent {
+public class MobileDataConnection extends SensorData {
 	public String carriername;
 	public String mobileCarrierCode;
 	public String mobileNetworkCode;
 	
-	public Boolean voipAvailableOptional;
+	@JsonProperty(value = "voipAvailable")
+	public boolean voipAvailableOptional;
 	
 	public MobileDataConnection() {
 		super();
@@ -27,10 +30,7 @@ public class MobileDataConnection extends UserDeviceEvent {
 				* result
 				+ ((mobileNetworkCode == null) ? 0 : mobileNetworkCode
 						.hashCode());
-		result = prime
-				* result
-				+ ((voipAvailableOptional == null) ? 0 : voipAvailableOptional
-						.hashCode());
+		result = prime * result + (voipAvailableOptional ? 1231 : 1237);
 		return result;
 	}
 
@@ -58,11 +58,8 @@ public class MobileDataConnection extends UserDeviceEvent {
 				return false;
 		} else if (!mobileNetworkCode.equals(other.mobileNetworkCode))
 			return false;
-		if (voipAvailableOptional == null) {
-			if (other.voipAvailableOptional != null)
-				return false;
-		} else if (!voipAvailableOptional.equals(other.voipAvailableOptional))
+		if (voipAvailableOptional != other.voipAvailableOptional)
 			return false;
 		return true;
-	}	
+	}
 }

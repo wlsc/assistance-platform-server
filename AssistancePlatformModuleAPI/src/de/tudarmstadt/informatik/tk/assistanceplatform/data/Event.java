@@ -1,8 +1,10 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
+import java.time.Instant;
+
 
 public abstract class Event {
-	public Long timestamp;
+	public long timestamp;
 	
 	public Event() {
 		
@@ -12,21 +14,30 @@ public abstract class Event {
 		this.timestamp = timestamp;
 	}
 	
+	public Instant getTimestampAsInstant() {
+		return Instant.ofEpochMilli(timestamp);
+	}
+
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		int hash = super.hashCode();
-		hash = timestamp.hashCode();
-		
-		return hash;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (timestamp ^ (timestamp >>> 32));
+		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		if(!(obj instanceof Event)) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
-		return timestamp.equals( ((Event)obj).timestamp);
+		if (getClass() != obj.getClass())
+			return false;
+		Event other = (Event) obj;
+		if (timestamp != other.timestamp)
+			return false;
+		return true;
 	}
+	
 }

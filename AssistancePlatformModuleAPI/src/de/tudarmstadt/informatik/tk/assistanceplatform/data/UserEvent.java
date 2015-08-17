@@ -1,7 +1,10 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+
 public abstract class UserEvent extends Event {
-	public Long userId;
+	public long userId;
 	
 	public UserEvent() {
 		
@@ -16,7 +19,7 @@ public abstract class UserEvent extends Event {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		result = prime * result + (int) (userId ^ (userId >>> 32));
 		return result;
 	}
 
@@ -29,13 +32,8 @@ public abstract class UserEvent extends Event {
 		if (getClass() != obj.getClass())
 			return false;
 		UserEvent other = (UserEvent) obj;
-		if (userId == null) {
-			if (other.userId != null)
-				return false;
-		} else if (!userId.equals(other.userId))
+		if (userId != other.userId)
 			return false;
 		return true;
 	}
-	
-
 }
