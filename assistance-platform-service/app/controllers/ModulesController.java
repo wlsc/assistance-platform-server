@@ -22,6 +22,26 @@ public class ModulesController extends RestController {
 		return receiveAndProcessAssistanceModuleInformation(true, AssistanceAPIErrors.moduleDoesNotExist, ActiveAssistanceModulePersistency::update);
 	}
 	
+	public Result alive() {
+		JsonNode postData = request().body().asJson();
+		
+		if(postData.has("id")) {
+			String id = postData.get("id").asText();
+			
+			if(!ActiveAssistanceModulePersistency.doesModuleWithIdExist(id)) {
+				return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
+			}
+			
+			if(!ActiveAssistanceModulePersistency.setIsAlive(id)) {
+				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+			}
+		} else {
+			return badRequestJson(AssistanceAPIErrors.missingParametersGeneral);
+		}
+		
+		return ok();
+	}
+	
 	private Result receiveAndProcessAssistanceModuleInformation(boolean expectedExistanceOfModule, APIError errorWhenModuleExistanceOtherThanExpected, Function<ActiveAssistanceModule, Boolean> func) {
 		JsonNode postData = request().body().asJson();
 

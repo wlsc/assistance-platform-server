@@ -77,6 +77,27 @@ public class ActiveAssistanceModulePersistency {
 		});
 	}
 	
+	public static boolean setIsAlive(String moduleId) {
+		if (!doesModuleWithIdExist(moduleId)) {
+			return false;
+		}
+	
+		return DB.withConnection(conn -> {
+			PreparedStatement s = conn.prepareStatement(
+					"UPDATE " + TABLE_NAME + " SET is_alive = TRUE, last_alive_message = CURRENT_TIMESTAMP WHERE id = ?");
+			
+			s.setString(1, moduleId);
+			
+			int affectedRows = s.executeUpdate();
+	
+			if (affectedRows != 0) {
+				return true;
+			}
+			
+			return false;
+		});
+	}
+	
 	public static boolean localize(String languageCode, ActiveAssistanceModule module) {
 		if (!doesModuleWithIdExist(module.id)) {
 			return false;
