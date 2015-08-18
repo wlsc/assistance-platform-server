@@ -6,7 +6,9 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import persistency.UserPersistency;
 
-
+/**
+ * This class represents the platform user.
+ */
 public class User {
 	public Long id = 0L;
 	public String email;

@@ -9,12 +9,12 @@ import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
 
-public class TokenDeserializerImpl implements TokenDeserializer {
+public class JWTTokenDeserializerImpl implements TokenDeserializer {
 	private JWSVerifier verifier;
 	
 	private final String secret;
 	
-	public TokenDeserializerImpl(String secret) {
+	public JWTTokenDeserializerImpl(String secret) {
 		this.secret = secret;
 	}
 	

@@ -21,6 +21,9 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Position;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.WifiConnection;
 
+/**
+ * This class is responsible for converting a sensor reading in JSON representation to the respective Java Sensor Event.
+ */
 public class JsonToSensorEventConversion {
 	public <T extends SensorData> T convertJsonToEventObject(String type, JsonNode reading) throws JsonProcessingException {
 		Class<T> targetClass = mapTypeToClass(type);

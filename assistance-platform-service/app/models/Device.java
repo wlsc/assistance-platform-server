@@ -2,6 +2,11 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * This POJO represents a user device.
+ * @author bjeutter
+ *
+ */
 public class Device {
 	public Long id = 0L;
 	

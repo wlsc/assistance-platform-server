@@ -11,12 +11,12 @@ import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
 
 
-public class TokenSerializerImpl implements TokenSerializer {
+public class JWTTokenSerializerImpl implements TokenSerializer {
 	private JWSSigner signer;
 	
 	private final String secret;
 	
-	public TokenSerializerImpl(String secret) {
+	public JWTTokenSerializerImpl(String secret) {
 		this.secret = secret;
 	}
 	

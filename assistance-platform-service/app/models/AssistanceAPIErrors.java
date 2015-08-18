@@ -1,5 +1,8 @@
 package models;
 
+/**
+ * A "static" list of common REST API errors for the assistance platform
+ */
 public class AssistanceAPIErrors {
 	// USer REST API
 	public static APIError invalidOrExpiredToken = new APIError(1, "The used access token is incorrect or has expired.");

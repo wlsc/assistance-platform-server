@@ -2,6 +2,9 @@ package periodic;
 
 import play.Logger;
 
+/**
+ * This class is responsible for checking the alive status of modules and responding if modules are found dead. 
+ */
 public class ModuleAliveChecker {
 	public ModuleAliveChecker() {
 	}

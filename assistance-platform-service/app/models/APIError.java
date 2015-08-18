@@ -1,5 +1,8 @@
 package models;
 
+/**
+ * Represents an API error by providing an error code and a message.
+ */
 public class APIError {
 	public int code;
 	public String message;

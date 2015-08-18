@@ -5,9 +5,9 @@ import java.util.Map;
 
 import play.libs.Json;
 import token.TokenDeserializer;
-import token.TokenDeserializerImpl;
+import token.JWTTokenDeserializerImpl;
 import token.TokenSerializer;
-import token.TokenSerializerImpl;
+import token.JWTTokenSerializerImpl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
@@ -34,7 +34,7 @@ public class Token {
 	}
 	
 	public static Token buildToken(Long id, int validityInHours) {
-		TokenSerializer gen = new TokenSerializerImpl(SECRET());
+		TokenSerializer gen = new JWTTokenSerializerImpl(SECRET());
 		
 		long timestamp = System.currentTimeMillis() + validityInHours * 60 * 60 * 1000;
 		
@@ -49,7 +49,7 @@ public class Token {
 	}
 	
 	public static Token unpackToken(String token) {
-		TokenDeserializer deserializer = new TokenDeserializerImpl(SECRET());
+		TokenDeserializer deserializer = new JWTTokenDeserializerImpl(SECRET());
 		
 		String payload = deserializer.deserialize(token);
 		

@@ -1,5 +1,8 @@
 package models;
 
+/**
+ * This POJO represents the link betwen user and module.
+ */
 public class UserModuleActivation {
 	public Long userId;
 	

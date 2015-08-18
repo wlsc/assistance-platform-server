@@ -2,6 +2,9 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * This POJO represents an active assistance module. It contains information of modules that work in conjunction with the platform.
+ */
 @JsonIgnoreProperties("administratorEmail")
 public class ActiveAssistanceModule {
 
