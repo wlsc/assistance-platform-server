@@ -3,6 +3,9 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.users;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple set implementation of the activation checker interface.
+ */
 public class UserActivationList implements IUserActivationChecker {
 	private Set<Long> usersWhoActivated = new HashSet<>();
 	

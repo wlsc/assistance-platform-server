@@ -4,6 +4,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
@@ -28,16 +31,23 @@ public abstract class ModuleBundle {
 	private void startPeriodicRegistration() {
 		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 		scheduler.scheduleAtFixedRate(() -> {
-			registerBundleForUsage();
+			try {
+				registerBundleForUsage();
+			} catch (Exception e) {
+				Logger.getLogger(ModuleBundle.class).error("An error occured on module registration with assistance platform", e);
+				
+				// TODO: Error via LOG4J ausgeben
+				
+				scheduler.shutdownNow();
+			}
 		}, 0, 15, TimeUnit.MINUTES);
 	}
 	
-	private void registerBundleForUsage() {
+	private void registerBundleForUsage() throws ModuleBundleInformationMissingException {
 		ModuleBundleInformation bundleInfo = getBundleInformation();
 		
 		if(bundleInfo == null) {
-			//throw new Exception("getBundleInformation() has to be properly implemented.");
-			return;
+			throw new ModuleBundleInformationMissingException("getBundleInformation() has to be properly implemented.");
 		}
 		
 		// TODO: REST API Anfrage an Platform schicken

@@ -6,24 +6,41 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class ModuleBundleInformation {
+	/**
+	 * Localized english module bundle information (base)
+	 */
 	public final LocalizedModuleBundleInformation englishModuleBundleInformation;
 	
+	/**
+	 * Definition of the required capabilites of the client in order to run this module
+	 */
 	public final String[] requiredCapabilities;
+	
+	/**
+	 * Definition of the optional capabilites that can be used to use this module to 100%
+	 */
 	public final String[] optionalCapabilites;
 
+	/**
+	 * Who has the copyright for this module?
+	 */
 	public final String copyright;
+	
+	public final String administratorEmail;
 	
 	private Map<String, LocalizedModuleBundleInformation> localizedModuleBundleInformations;
 	
 	public ModuleBundleInformation(String name, String logoUrl,
 			String descriptionShort, String descriptionLong,
 			String[] requiredCapabilities, String[] optionalCapabilites,
-			String copyright) {
+			String copyright, String administratorEmail) {
 		this.englishModuleBundleInformation = new LocalizedModuleBundleInformation(name, logoUrl, descriptionShort, descriptionLong);
 		
 		this.requiredCapabilities = requiredCapabilities;
 		this.optionalCapabilites = optionalCapabilites;
 		this.copyright = copyright;
+		
+		this.administratorEmail = administratorEmail;
 	}
 	
 	/**

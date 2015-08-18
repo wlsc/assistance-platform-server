@@ -3,6 +3,10 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
+/**
+ * This class is responsible for filtering messages (/ events) via a user activation list. 
+ * Only events of users that are on the activation list are passed through by this class.
+ */
 public class UserFilteredMessagingServiceDecorator extends MessagingService {
 	public MessagingService messagingServiceToFilter;
 

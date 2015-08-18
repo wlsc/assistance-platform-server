@@ -1,5 +1,9 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 
+/**
+ * This class implements a channel of a messaging service, which allows to subscribe and publish data into the channel.
+ * @param <T> The class type that can be found in the channel.
+ */
 public class Channel<T> {
 	private final MessagingService messagingService;
 	private final String name;

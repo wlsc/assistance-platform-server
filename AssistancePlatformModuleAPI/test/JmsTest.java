@@ -7,6 +7,8 @@ import java.util.List;
 import javax.jms.ConnectionFactory;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Position;
@@ -18,6 +20,8 @@ public class JmsTest {
 
 	@Test
 	public void test() throws Exception {
+		BasicConfigurator.configure();
+		
 		ConnectionFactory factory = new ActiveMQConnectionFactory();
 		MessagingService msForConsumer = new JmsMessagingService(factory);
 		
@@ -30,7 +34,7 @@ public class JmsTest {
 		c.subscribeConsumer(
 				(channel, data) -> {
 
-					System.out.println("Channel: " + channel.getName() + " Data: " + data.toString());
+					Logger.getLogger(JmsTest.class).info("Channel: " + channel.getName() + " Data: " + data.toString());
 					if(receivedData.size() == 0) {
 						assertTrue(testData.equals(data));
 					}

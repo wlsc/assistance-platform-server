@@ -16,6 +16,7 @@ import javax.jms.Session;
 import javax.jms.Topic;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.log4j.Logger;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -25,6 +26,9 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channe
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 
+/**
+ * This class uses the JMS classes to implement a messaging service.
+ */
 public class JmsMessagingService extends MessagingService {
 	private Connection connection;
 	
@@ -33,6 +37,8 @@ public class JmsMessagingService extends MessagingService {
 	private Map<Channel, MessageProducer> channelsToProducers = new HashMap<>();
 	
 	private Kryo kryo = new Kryo();
+	
+	private final static Logger logger = Logger.getLogger(JmsMessagingService.class);
 	
 	
 	public JmsMessagingService() {
@@ -47,8 +53,7 @@ public class JmsMessagingService extends MessagingService {
 			connection.start();
 			this.messageCreationSession = createSession();
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("JMS connection establishement failed", e);
 		}
 	}
 	
@@ -56,8 +61,7 @@ public class JmsMessagingService extends MessagingService {
 		try {
 			return connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Session creation failed", e);
 		}
 		
 		return null;
@@ -79,8 +83,7 @@ public class JmsMessagingService extends MessagingService {
 						buff = new byte[(int)bm.getBodyLength()];
 						bm.readBytes(buff);
 					} catch (JMSException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.error("JMS message reading failed", e);
 					}
 
 					
@@ -92,8 +95,7 @@ public class JmsMessagingService extends MessagingService {
 				}
 			});
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("JMS message listener registration failed", e);
 		}
 	}
 
@@ -116,9 +118,8 @@ public class JmsMessagingService extends MessagingService {
 
 			producer.send(bm);
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} // TODO: Proper Serialization!!!!!111!!
+			logger.error("JMS message publishing failed", e);
+		}
 	}
 	
 	private MessageProducer getProducerForChannel(Channel channel) {
@@ -134,8 +135,7 @@ public class JmsMessagingService extends MessagingService {
 				producer = session.createProducer(topic);
 				channelsToProducers.put(channel, producer);
 			} catch (JMSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("JMS channel / topic acitvation failed", e);
 			}
 		}
 		
@@ -152,8 +152,7 @@ public class JmsMessagingService extends MessagingService {
 				topic = session.createTopic(channelName);
 				consumer = session.createConsumer(topic);
 			} catch (JMSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("JMS consumer creation failed", e);
 			}
 		
 		return consumer;

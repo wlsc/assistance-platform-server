@@ -3,6 +3,9 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A messaging service can be used to publish / subscribe typed objects.
+ */
 public abstract class MessagingService {
 	private Map<String, Channel> channels = new HashMap<>();
 	
