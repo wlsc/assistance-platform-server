@@ -1,5 +1,8 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties("administratorEmail")
 public class ActiveAssistanceModule {
 
 	public String name;
@@ -15,11 +18,13 @@ public class ActiveAssistanceModule {
 	public String[] optionalCapabilites;
 
 	public String copyright;
+	
+	public String administratorEmail;
 
 	public ActiveAssistanceModule(String name, String id, String logoUrl,
 			String description_short, String description_long,
 			String[] requiredCapabilites, String[] optionalCapabilities,
-			String copyright) {
+			String copyright, String administratorEmail) {
 
 		this.name = name;
 
@@ -34,5 +39,7 @@ public class ActiveAssistanceModule {
 		this.optionalCapabilites = optionalCapabilities;
 
 		this.copyright = copyright;
+		
+		this.administratorEmail = administratorEmail;
 	}
 }

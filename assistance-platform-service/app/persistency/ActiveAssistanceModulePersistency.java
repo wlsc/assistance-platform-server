@@ -14,7 +14,7 @@ public class ActiveAssistanceModulePersistency {
 	private static String TABLE_NAME = "active_modules";
 	private static String LOCALIZATION_TABLE_NAME = "active_module_localization";
 	
-	private static String allFields = "id, name, logo_url, description_short, description_long, required_capabilities, optional_capabilities, copyright";
+	private static String allFields = "id, name, logo_url, description_short, description_long, required_capabilities, optional_capabilities, copyright, administrator_email";
 	
 	public static boolean create(ActiveAssistanceModule module) {
 		if (doesModuleWithIdExist(module.id)) {
@@ -24,7 +24,7 @@ public class ActiveAssistanceModulePersistency {
 		return DB.withConnection(conn -> {
 			PreparedStatement s = conn.prepareStatement(
 					"INSERT INTO " + TABLE_NAME + " (" + allFields + ") VALUES "
-					+ "(?, ?, ?, ?, ?, ?, ?, ?)");
+					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			
 			s.setString(1, module.id);
 			s.setString(2, module.name);
@@ -34,6 +34,38 @@ public class ActiveAssistanceModulePersistency {
 			s.setString(6, module.requiredCapabilities == null ? "" : String.join(",", module.requiredCapabilities));
 			s.setString(7, module.optionalCapabilites == null ? "" : String.join(",", module.optionalCapabilites));
 			s.setString(8, module.copyright);
+			s.setString(9, module.administratorEmail);
+			
+			int affectedRows = s.executeUpdate();
+	
+			if (affectedRows != 0) {
+				return true;
+			}
+			
+			return false;
+		});
+	}
+	
+	public static boolean update(ActiveAssistanceModule module) {
+		if (!doesModuleWithIdExist(module.id)) {
+			return false;
+		}
+	
+		return DB.withConnection(conn -> {
+			String allFieldsForUpdate = "SET " + allFields.replace("id,", "").replaceAll(",", " = ?, ") + " = ?";
+			
+			PreparedStatement s = conn.prepareStatement(
+					"UPDATE " + TABLE_NAME + " " + allFieldsForUpdate + " WHERE id = ?");
+			
+			s.setString(1, module.name);
+			s.setString(2, module.logoUrl);
+			s.setString(3, module.descriptionShort);
+			s.setString(4, module.descriptionLong);
+			s.setString(5, module.requiredCapabilities == null ? "" : String.join(",", module.requiredCapabilities));
+			s.setString(6, module.optionalCapabilites == null ? "" : String.join(",", module.optionalCapabilites));
+			s.setString(7, module.copyright);
+			s.setString(8, module.administratorEmail);
+			s.setString(9, module.id);
 			
 			int affectedRows = s.executeUpdate();
 	
@@ -121,7 +153,9 @@ public class ActiveAssistanceModulePersistency {
 				
 				String copyright = (String)array[7];
 				
-				return new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilities, optionalCapabilities, copyright);
+				String administratorEmail = (String)array[8];
+				
+				return new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilities, optionalCapabilities, copyright, administratorEmail);
 			}).toArray(ActiveAssistanceModule[]::new);
 
 			

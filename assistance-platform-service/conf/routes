@@ -23,6 +23,7 @@ POST	/assistance/deactivate	controllers.AssistanceController.deactivate
 
 # Module API
 POST	/modules/register			controllers.ModulesController.register
+POST	/modules/update				controllers.ModulesController.update
 POST	/modules/localize			controllers.ModulesController.localize
 
 # API Reference

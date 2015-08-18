@@ -2,7 +2,9 @@ package controllers;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 
+import models.APIError;
 import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
 import persistency.ActiveAssistanceModulePersistency;
@@ -12,15 +14,24 @@ import play.mvc.Result;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class ModulesController extends RestController {
-	public Result register() {
+	public Result register() {		
+		return receiveAndProcessAssistanceModuleInformation(false, AssistanceAPIErrors.moduleAlreadyExists, ActiveAssistanceModulePersistency::create);
+	}
+	
+	public Result update() {
+		return receiveAndProcessAssistanceModuleInformation(true, AssistanceAPIErrors.moduleDoesNotExist, ActiveAssistanceModulePersistency::update);
+	}
+	
+	private Result receiveAndProcessAssistanceModuleInformation(boolean expectedExistanceOfModule, APIError errorWhenModuleExistanceOtherThanExpected, Function<ActiveAssistanceModule, Boolean> func) {
 		JsonNode postData = request().body().asJson();
 
 		if (areAllRequiredRegisterParametersPosted(postData)) {
 			String id = getIdNode(postData).textValue();
 			
-			if(ActiveAssistanceModulePersistency.doesModuleWithIdExist(id)) {
-				return badRequestJson(AssistanceAPIErrors.moduleAlreadyExists);
+			if(ActiveAssistanceModulePersistency.doesModuleWithIdExist(id) != expectedExistanceOfModule) {
+				return badRequestJson(errorWhenModuleExistanceOtherThanExpected);
 			}
+			
 			String name = getNameNode(postData).textValue();
 			String logoUrl = getLogoUrlNode(postData).textValue();
 			String description_short = getDescrShortNode(postData).textValue();
@@ -38,9 +49,13 @@ public class ModulesController extends RestController {
 			
 			String copyright = getCopyrightNode(postData).textValue();
 			
-			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilites.toArray(new String[0]), optionalCapabilities.toArray(new String[0]), copyright);
+			String administratorEmail = getAdminEmailNode(postData).asText();
 			
-			if(ActiveAssistanceModulePersistency.create(module)) {
+			// TODO: Validation der Parameter?
+			
+			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilites.toArray(new String[0]), optionalCapabilities.toArray(new String[0]), copyright, administratorEmail);
+			
+			if(func.apply(module)) {
 				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das nächste mal "Alive" melden soll
 			}
 			
@@ -59,7 +74,8 @@ public class ModulesController extends RestController {
 				&& !getDescrLongNode(postData).isMissingNode()
 				&& !getRequiredCapsNode(postData).isMissingNode()
 				&& !getOptionalCapsNode(postData).isMissingNode()
-				&& !getCopyrightNode(postData).isMissingNode();
+				&& !getCopyrightNode(postData).isMissingNode()
+				&& !getAdminEmailNode(postData).isMissingNode();
 	}
 
 	private JsonNode getIdNode(JsonNode postData) {
@@ -78,6 +94,10 @@ public class ModulesController extends RestController {
 		return postData.findPath("copyright");
 	}
 	
+	private JsonNode getAdminEmailNode(JsonNode postData) {
+		return postData.findPath("administratorEmail");
+	}
+	
 	public Result localize() {
 		JsonNode postData = request().body().asJson();
 
@@ -93,7 +113,7 @@ public class ModulesController extends RestController {
 			String description_short = getDescrShortNode(postData).textValue();
 			String description_long = getDescrLongNode(postData).textValue();
 
-			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, null, null, null);
+			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, null, null, null, null);
 			
 			String languageCode = getLanguageCode(postData).textValue();
 			

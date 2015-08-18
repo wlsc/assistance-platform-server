@@ -24,8 +24,9 @@ public class ActiveAssistanceModuleTest {
     			String[] requiredCaps = new String[] { "1", "2", "3" };
     			String[] optCaps = new String[] { "o1", "o2" };
     			String copyright = "Test Copyright";
+    			String administratorEmail = "bennet@test.de";
     			
-    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright);
+    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright, administratorEmail);
 
     			assertTrue(ActiveAssistanceModulePersistency.create(module));
     			assertFalse(ActiveAssistanceModulePersistency.create(module));
@@ -38,15 +39,36 @@ public class ActiveAssistanceModuleTest {
     	});
     }
     
-    private void compareModule(ActiveAssistanceModule expected, ActiveAssistanceModule actualModul) {
-		assertEquals(expected.name, actualModul.name);
-		assertEquals(expected.id, actualModul.id);
-		assertEquals(expected.logoUrl, actualModul.logoUrl);
-		assertEquals(expected.descriptionShort, actualModul.descriptionShort);
-		assertEquals(expected.descriptionLong, actualModul.descriptionLong);
-		assertEquals(expected.requiredCapabilities, actualModul.requiredCapabilities);
-		assertEquals(expected.optionalCapabilites, actualModul.optionalCapabilites);
-		assertEquals(expected.copyright, actualModul.copyright);
+    @Test
+    public void moduleUpdateTest() {
+    	running(fakeApplication(inMemoryDatabase() ), new Runnable() {
+    		public void run() {
+    			String name = "Test";
+    			String id = "TestID";
+    			String testUrl = "TestURL";
+    			String testDescrShort = "Test descr short";
+    			String testDescrLong = "Test descr long";
+    			String[] requiredCaps = new String[] { "1", "2", "3" };
+    			String[] optCaps = new String[] { "o1", "o2" };
+    			String copyright = "Test Copyright";
+    			String administratorEmail = "bennet@test.de";
+    			
+    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright, administratorEmail);
+
+    			assertFalse(ActiveAssistanceModulePersistency.update(module));
+    			
+    			ActiveAssistanceModulePersistency.create(module);
+    			
+    			module.logoUrl = "testtest";
+    			
+    			assertTrue(ActiveAssistanceModulePersistency.update(module));
+    			
+    			ActiveAssistanceModule[] modules = ActiveAssistanceModulePersistency.list();
+    			ActiveAssistanceModule firstModule = modules[0];
+    			
+    			compareModule(module, firstModule);
+    		}
+    	});
     }
     
     @Test
@@ -65,8 +87,9 @@ public class ActiveAssistanceModuleTest {
 	    			String[] requiredCaps = new String[] { "1"+i, "2"+i, "3"+i };
 	    			String[] optCaps = new String[] { "o1"+i, "o2"+i };
 	    			String copyright = "Test Copyright"+i;
+	    			String administratorEmail = "bennet"+i+"@test.de";
 	    			
-	    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright);
+	    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright, administratorEmail);
 	
 	    			assertTrue(ActiveAssistanceModulePersistency.create(module));
 	    			assertFalse(ActiveAssistanceModulePersistency.create(module));
@@ -90,7 +113,7 @@ public class ActiveAssistanceModuleTest {
     		public void run() {
     			
     			// Create an unlocalized Module
-    			ActiveAssistanceModule unlocalized = new ActiveAssistanceModule("English", "id", "lgoo", "descr", "descr long", new String[] { }, new String[] { }, "xyz");
+    			ActiveAssistanceModule unlocalized = new ActiveAssistanceModule("English", "id", "lgoo", "descr", "descr long", new String[] { }, new String[] { }, "xyz", "bla@bla.de");
     		
     			ActiveAssistanceModulePersistency.create(unlocalized);
     			
@@ -100,7 +123,7 @@ public class ActiveAssistanceModuleTest {
     			
     			// Now create an localization of the previous module
     			
-    			ActiveAssistanceModule localizedDe = new ActiveAssistanceModule("Deutsch", unlocalized.id, "lgoode", "descrde", "descr long de", unlocalized.optionalCapabilites, unlocalized.requiredCapabilities, "xyz");
+    			ActiveAssistanceModule localizedDe = new ActiveAssistanceModule("Deutsch", unlocalized.id, "lgoode", "descrde", "descr long de", unlocalized.optionalCapabilites, unlocalized.requiredCapabilities, "xyz", "bla@bla.de");
     			
     			ActiveAssistanceModulePersistency.localize("de", localizedDe);
     			
@@ -114,5 +137,17 @@ public class ActiveAssistanceModuleTest {
     			compareModule(unlocalized, modules[0]);
     		}
     	});
+    }
+    
+    private void compareModule(ActiveAssistanceModule expected, ActiveAssistanceModule actualModul) {
+		assertEquals(expected.name, actualModul.name);
+		assertEquals(expected.id, actualModul.id);
+		assertEquals(expected.logoUrl, actualModul.logoUrl);
+		assertEquals(expected.descriptionShort, actualModul.descriptionShort);
+		assertEquals(expected.descriptionLong, actualModul.descriptionLong);
+		assertEquals(expected.requiredCapabilities, actualModul.requiredCapabilities);
+		assertEquals(expected.optionalCapabilites, actualModul.optionalCapabilites);
+		assertEquals(expected.copyright, actualModul.copyright);
+		assertEquals(expected.administratorEmail, actualModul.administratorEmail);
     }
 }

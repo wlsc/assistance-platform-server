@@ -26,6 +26,7 @@ public class AssistanceController extends RestController {
 	
 		JsonNode result = Cache.getOrElse("moduleList"+language, () -> {
 			ActiveAssistanceModule[] assiModules = ActiveAssistanceModulePersistency.list(language);
+			
 			JsonNode json = Json.toJson(assiModules);
 			return json;
 		}, 3600);
