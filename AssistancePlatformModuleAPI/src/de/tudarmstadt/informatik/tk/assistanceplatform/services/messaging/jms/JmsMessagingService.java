@@ -25,6 +25,8 @@ import com.esotericsoftware.kryo.io.Output;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingServiceConfiguration;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.MessageSerialization;
 
 /**
  * This class uses the JMS classes to implement a messaging service.
@@ -36,18 +38,34 @@ public class JmsMessagingService extends MessagingService {
 	
 	private Map<Channel, MessageProducer> channelsToProducers = new HashMap<>();
 	
-	private Kryo kryo = new Kryo();
-	
 	private final static Logger logger = Logger.getLogger(JmsMessagingService.class);
 	
 	
 	public JmsMessagingService() {
-		this(new ActiveMQConnectionFactory());
+		this(createDefaultConnectionFactory());
+	}
+	
+	public JmsMessagingService(MessagingServiceConfiguration config) {
+		this(config, createDefaultConnectionFactory());
 	}
 	
 	public JmsMessagingService(ConnectionFactory factory) {
 		super();
 		
+		setupConnection(factory);
+	}
+	
+	public JmsMessagingService(MessagingServiceConfiguration config, ConnectionFactory factory) {
+		super(config);
+		
+		setupConnection(factory);
+	}
+	
+	private static ConnectionFactory createDefaultConnectionFactory() {
+		return new ActiveMQConnectionFactory();
+	}
+	
+	private void setupConnection(ConnectionFactory factory) {
 		try {
 			connection = factory.createConnection();
 			connection.start();
@@ -85,11 +103,8 @@ public class JmsMessagingService extends MessagingService {
 					} catch (JMSException e) {
 						logger.error("JMS message reading failed", e);
 					}
-
 					
-					Input input = new Input(buff);
-					
-					T obj = (T)kryo.readObject(input, channel.getType());
+					T obj = getSerializer().deserialize(buff, channel.getType());
 
 					notifyConsumer(consumer, channel, obj);
 				}
@@ -108,13 +123,10 @@ public class JmsMessagingService extends MessagingService {
 	protected <T> void publish(Channel<T> channel, T data) {
 		MessageProducer producer = getProducerForChannel(channel);
 		try {
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			Output output = new Output(outputStream);
-			
-			kryo.writeObject(output, data);
+			byte[] serializedObject = getSerializer().serialize(data);
 			
 			BytesMessage bm = messageCreationSession.createBytesMessage();
-			bm.writeBytes(output.getBuffer());
+			bm.writeBytes(serializedObject);
 
 			producer.send(bm);
 		} catch (JMSException e) {

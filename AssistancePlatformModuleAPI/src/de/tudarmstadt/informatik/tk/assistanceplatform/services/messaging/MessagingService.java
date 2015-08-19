@@ -3,15 +3,26 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.KryoMessageSerialization;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.MessageSerialization;
+
 /**
  * A messaging service can be used to publish / subscribe typed objects.
  */
 public abstract class MessagingService {
 	private Map<String, Channel> channels = new HashMap<>();
 	
+	private final MessagingServiceConfiguration configuration;
+	
 	public MessagingService() {
-		
+		this( new MessagingServiceConfiguration() );
 	}
+	
+	public MessagingService(MessagingServiceConfiguration config) {
+		this.configuration = config;
+	}
+	
+	//public MessagingService
 	
 	public <T> Channel<T> channel(Class<T> eventType) {
 		String name = eventType.getName();
@@ -40,4 +51,8 @@ public abstract class MessagingService {
 	protected abstract <T> void unsubscribe(Consumer<T> consumer, Channel<T> channel);
 	
 	protected abstract <T> void publish(Channel<T> channel, T data);
+	
+	protected MessageSerialization getSerializer() {
+		return configuration.getMessageSerialization();
+	}
 }
