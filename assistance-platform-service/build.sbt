@@ -4,7 +4,7 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.10.5"
 
 resolvers += (
     "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
@@ -19,6 +19,7 @@ libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % "9.2-1003-jdbc4",
   "com.nimbusds" % "nimbus-jose-jwt" % "3.6",
   "commons-dbutils" % "commons-dbutils" % "1.6",
+  "pl.matisoft" %% "swagger-play24" % "1.4",
   "AssistancePlatformModuleAPI" % "AssistancePlatformModuleAPI" % "0.0.1-SNAPSHOT"
   //"com.wordnik" % "swagger-play2_2.10" % "1.3.12"
 )
