@@ -21,10 +21,14 @@ public abstract class ModuleBundle {
 	private Module containedModules[];
 	
 	private IUserActivationChecker userActivationListChecker;
+	
+	private String platformUrlAndPort;
 
-	public ModuleBundle(MessagingService messagingService, IUserActivationChecker userActivationListChecker) {
+	public ModuleBundle(String platformUrlAndPort, MessagingService messagingService, IUserActivationChecker userActivationListChecker) {
 		this.userActivationListChecker = userActivationListChecker;
 		containedModules = initializeContainedModules(messagingService);
+		
+		this.platformUrlAndPort = platformUrlAndPort;
 		
 		try {
 			registerBundleForUsage(true);
@@ -57,7 +61,7 @@ public abstract class ModuleBundle {
 			throw new ModuleBundleInformationMissingException("getBundleInformation() has to be properly implemented.");
 		}
 		
-		PlatformClient client = new PlatformClient();
+		PlatformClient client = new PlatformClient(platformUrlAndPort);
 		
 		if(startupRequest) {
 			client.registerModule(this, (v) -> {

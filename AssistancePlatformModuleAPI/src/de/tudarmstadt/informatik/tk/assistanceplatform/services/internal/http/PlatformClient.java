@@ -22,26 +22,13 @@ public class PlatformClient {
 	
 	AssistancePlatformService service;
 	
-	public PlatformClient() {
-		RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://localhost:9000").build();
+	public PlatformClient(String urlAndPort) {
+		RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://" + urlAndPort).build();
 		
 		service = restAdapter.create(AssistancePlatformService.class);
 	}
 	
-	public void registerModule(ModuleBundle bundle, Consumer<Void> onError, boolean tryUpdateOnFailure) {
-		String id = bundle.getModuleId();
-		ModuleBundleInformation bundleInfo = bundle.getBundleInformation();
-		
-		ModuleRegistrationRequest request = new ModuleRegistrationRequest(id, 
-				bundleInfo.englishModuleBundleInformation.name,
-				bundleInfo.englishModuleBundleInformation.logoUrl, 
-				bundleInfo.englishModuleBundleInformation.descriptionShort, 
-				bundleInfo.englishModuleBundleInformation.descriptionLong, 
-				bundleInfo.requiredCapabilities, 
-				bundleInfo.optionalCapabilites, 
-				bundleInfo.copyright, 
-				bundleInfo.administratorEmail);
-		
+	public void registerModule(ModuleBundle bundle, Consumer<Void> onError, boolean tryUpdateOnFailure) {		
 		Callback<Void> callback = new Callback<Void>() {
 
 			@Override
