@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
@@ -25,32 +26,50 @@ public abstract class ModuleBundle {
 		this.userActivationListChecker = userActivationListChecker;
 		containedModules = initializeContainedModules(messagingService);
 		
+		try {
+			registerBundleForUsage(true);
+		} catch (ModuleBundleInformationMissingException e) {
+			Logger.getLogger(ModuleBundle.class).error("An error occured on module registration with assistance platform", e);
+		}
+		
 		startPeriodicRegistration();
 	}
 
 	private void startPeriodicRegistration() {
+		long minutesToWaitForUpdate = 15;
+		
 		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 		scheduler.scheduleAtFixedRate(() -> {
 			try {
-				registerBundleForUsage();
+				registerBundleForUsage(false);
 			} catch (Exception e) {
 				Logger.getLogger(ModuleBundle.class).error("An error occured on module registration with assistance platform", e);
 				
-				// TODO: Error via LOG4J ausgeben
-				
 				scheduler.shutdownNow();
 			}
-		}, 0, 15, TimeUnit.MINUTES);
+		}, minutesToWaitForUpdate, minutesToWaitForUpdate, TimeUnit.MINUTES);
 	}
 	
-	private void registerBundleForUsage() throws ModuleBundleInformationMissingException {
+	private void registerBundleForUsage(boolean startupRequest) throws ModuleBundleInformationMissingException {
 		ModuleBundleInformation bundleInfo = getBundleInformation();
 		
 		if(bundleInfo == null) {
 			throw new ModuleBundleInformationMissingException("getBundleInformation() has to be properly implemented.");
 		}
 		
-		// TODO: REST API Anfrage an Platform schicken
+		PlatformClient client = new PlatformClient();
+		
+		if(startupRequest) {
+			client.registerModule(this, (v) -> {
+				Logger.getLogger(ModuleBundle.class).error("Failed to register module bundle. Shutting down.");
+				System.exit(-1);
+			}, true);
+		} else {
+			client.updateModule(this, (v) -> {
+				Logger.getLogger(ModuleBundle.class).error("Failed to update module bundle (keep alive). Shutting down.");
+				System.exit(-1);
+			});	
+		}
 	}
 	
 	public IUserActivationChecker userActivationListChecker() {
@@ -61,13 +80,13 @@ public abstract class ModuleBundle {
 	 * Implement this and return a unique ID for this Module(bundle) - a good candidate is the package name.
 	 * @return
 	 */
-	protected abstract String getModuleId();
+	public abstract String getModuleId();
 	
 	/**
 	 * Implement this and return a object which describes the meta data of this bundle.
 	 * @return
 	 */
-	protected abstract ModuleBundleInformation getBundleInformation();
+	public abstract ModuleBundleInformation getBundleInformation();
 	
 	/**
 	 * Instantiate all used modules in this method and return them.

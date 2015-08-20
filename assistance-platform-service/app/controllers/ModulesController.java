@@ -8,6 +8,7 @@ import models.APIError;
 import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
 import persistency.ActiveAssistanceModulePersistency;
+import play.Logger;
 import play.cache.Cache;
 import play.mvc.Result;
 
@@ -75,7 +76,7 @@ public class ModulesController extends RestController {
 			
 			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilites.toArray(new String[0]), optionalCapabilities.toArray(new String[0]), copyright, administratorEmail);
 			
-			if(func.apply(module)) {
+			if(func.apply(module) && ActiveAssistanceModulePersistency.setIsAlive(module.id)) {
 				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das nächste mal "Alive" melden soll
 			}
 			
