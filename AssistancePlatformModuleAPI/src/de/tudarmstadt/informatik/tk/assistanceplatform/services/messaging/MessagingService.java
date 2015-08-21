@@ -3,13 +3,12 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.KryoMessageSerialization;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.MessageSerialization;
 
 /**
  * A messaging service can be used to publish / subscribe typed objects.
  */
-public abstract class MessagingService {
+public abstract class MessagingService implements IMessagingService {
 	private Map<String, Channel> channels = new HashMap<>();
 	
 	private final MessagingServiceConfiguration configuration;
@@ -22,14 +21,14 @@ public abstract class MessagingService {
 		this.configuration = config;
 	}
 	
-	//public MessagingService
-	
+	@Override
 	public <T> Channel<T> channel(Class<T> eventType) {
 		String name = eventType.getName();
 		
 		return channel(name, eventType);
 	}
 
+	@Override
 	public <T> Channel<T> channel(String name, Class<T> eventType) {
 		Channel<T> result = channels.get(name);
 		

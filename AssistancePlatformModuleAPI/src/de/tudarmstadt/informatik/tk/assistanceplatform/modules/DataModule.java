@@ -1,10 +1,10 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.IMessagingService;
 
 
 public abstract class DataModule extends Module {
-	public DataModule(MessagingService messagingService) {
+	public DataModule(IMessagingService messagingService) {
 		super(messagingService);
 	}
 }

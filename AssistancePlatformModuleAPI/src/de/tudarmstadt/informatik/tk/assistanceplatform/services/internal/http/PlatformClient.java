@@ -2,12 +2,10 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http;
 
 
 import java.util.function.Consumer;
-import java.util.function.Supplier;
-
-import retrofit.Callback;
 
 import org.apache.log4j.Logger;
 
+import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

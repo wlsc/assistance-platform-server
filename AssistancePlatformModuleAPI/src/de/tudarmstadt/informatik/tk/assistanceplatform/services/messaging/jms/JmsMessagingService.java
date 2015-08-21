@@ -1,6 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms;
 
-import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,15 +17,10 @@ import javax.jms.Topic;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.log4j.Logger;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
-
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingServiceConfiguration;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.MessageSerialization;
 
 /**
  * This class uses the JMS classes to implement a messaging service.

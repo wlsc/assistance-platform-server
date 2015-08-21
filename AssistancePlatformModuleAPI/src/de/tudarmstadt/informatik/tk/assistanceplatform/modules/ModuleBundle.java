@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.IMessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
 
@@ -24,7 +24,7 @@ public abstract class ModuleBundle {
 	
 	private String platformUrlAndPort;
 
-	public ModuleBundle(String platformUrlAndPort, MessagingService messagingService, IUserActivationChecker userActivationListChecker) {
+	public ModuleBundle(String platformUrlAndPort, IMessagingService messagingService, IUserActivationChecker userActivationListChecker) {
 		this.userActivationListChecker = userActivationListChecker;
 		containedModules = initializeContainedModules(messagingService);
 		
@@ -95,5 +95,5 @@ public abstract class ModuleBundle {
 	/**
 	 * Instantiate all used modules in this method and return them.
 	 */
-	protected abstract Module[] initializeContainedModules(MessagingService messagingService);
+	protected abstract Module[] initializeContainedModules(IMessagingService messagingService);
 }

@@ -1,16 +1,16 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.IMessagingService;
 
 public abstract class Module {
-	private MessagingService messagingService;
+	private IMessagingService messagingService;
 	
-	public Module(MessagingService messagingService) {
+	public Module(IMessagingService messagingService) {
 		this.messagingService = messagingService;
 		startup();
 	}
 	
-	public MessagingService messagingService() {
+	public IMessagingService messagingService() {
 		return this.messagingService;
 	}
 	
