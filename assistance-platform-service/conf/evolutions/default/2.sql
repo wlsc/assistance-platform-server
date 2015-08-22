@@ -11,7 +11,7 @@ CREATE TABLE active_modules (
     required_capabilities varchar(1024) NOT NULL,
     optional_capabilities varchar(1024) NOT NULL,
     copyright varchar(255) NOT NULL,
-    ALTER TABLE active_module_localization ADD PRIMARY KEY (module_id, language_code)
+    PRIMARY KEY (module_id, language_code)
 );
  
 # --- !Downs
