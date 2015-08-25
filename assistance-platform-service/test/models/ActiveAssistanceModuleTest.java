@@ -9,6 +9,7 @@ import static play.test.Helpers.running;
 
 import org.junit.Test;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 import persistency.ActiveAssistanceModulePersistency;
 
 public class ActiveAssistanceModuleTest {
@@ -21,8 +22,13 @@ public class ActiveAssistanceModuleTest {
     			String testUrl = "TestURL";
     			String testDescrShort = "Test descr short";
     			String testDescrLong = "Test descr long";
-    			String[] requiredCaps = new String[] { "1", "2", "3" };
-    			String[] optCaps = new String[] { "o1", "o2" };
+    			Capability[] requiredCaps = new Capability[] { 
+    					new Capability("cap_1", 1),
+    					new Capability("cap_2", 0.1)
+    			};
+    			Capability[] optCaps = new Capability[] {
+    					new Capability("cap_3", 0.01)
+    			};
     			String copyright = "Test Copyright";
     			String administratorEmail = "bennet@test.de";
     			
@@ -48,8 +54,13 @@ public class ActiveAssistanceModuleTest {
     			String testUrl = "TestURL";
     			String testDescrShort = "Test descr short";
     			String testDescrLong = "Test descr long";
-    			String[] requiredCaps = new String[] { "1", "2", "3" };
-    			String[] optCaps = new String[] { "o1", "o2" };
+    			Capability[] requiredCaps = new Capability[] { 
+    					new Capability("cap_1", 1),
+    					new Capability("cap_2", 0.1)
+    			};
+    			Capability[] optCaps = new Capability[] {
+    					new Capability("cap_3", 0.01)
+    			};
     			String copyright = "Test Copyright";
     			String administratorEmail = "bennet@test.de";
     			
@@ -84,8 +95,13 @@ public class ActiveAssistanceModuleTest {
 	    			String testUrl = "TestURL"+i;
 	    			String testDescrShort = "Test descr short"+i;
 	    			String testDescrLong = "Test descr long"+i;
-	    			String[] requiredCaps = new String[] { "1"+i, "2"+i, "3"+i };
-	    			String[] optCaps = new String[] { "o1"+i, "o2"+i };
+	    			Capability[] requiredCaps = new Capability[] { 
+	    					new Capability("cap_1" +i , 1),
+	    					new Capability("cap_2" +i, 0.1)
+	    			};
+	    			Capability[] optCaps = new Capability[] {
+	    					new Capability("cap_3" +i, 0.01)
+	    			};
 	    			String copyright = "Test Copyright"+i;
 	    			String administratorEmail = "bennet"+i+"@test.de";
 	    			
@@ -113,7 +129,7 @@ public class ActiveAssistanceModuleTest {
     		public void run() {
     			
     			// Create an unlocalized Module
-    			ActiveAssistanceModule unlocalized = new ActiveAssistanceModule("English", "id", "lgoo", "descr", "descr long", new String[] { }, new String[] { }, "xyz", "bla@bla.de");
+    			ActiveAssistanceModule unlocalized = new ActiveAssistanceModule("English", "id", "lgoo", "descr", "descr long", new Capability[] {}, new Capability[] {}, "xyz", "bla@bla.de");
     		
     			ActiveAssistanceModulePersistency.create(unlocalized);
     			
@@ -145,8 +161,27 @@ public class ActiveAssistanceModuleTest {
 		assertEquals(expected.logoUrl, actualModul.logoUrl);
 		assertEquals(expected.descriptionShort, actualModul.descriptionShort);
 		assertEquals(expected.descriptionLong, actualModul.descriptionLong);
-		assertEquals(expected.requiredCapabilities, actualModul.requiredCapabilities);
-		assertEquals(expected.optionalCapabilites, actualModul.optionalCapabilites);
+		
+		if(expected.requiredCapabilities != null) {
+			int i = 0;
+			for(Capability c : expected.requiredCapabilities) {
+				c.equals(actualModul.requiredCapabilities[i]);
+				i++;
+			}
+		} else {
+			assertTrue(actualModul.requiredCapabilities == null);
+		}
+		
+		if(expected.optionalCapabilites != null) {
+			int i = 0;
+			for(Capability c : expected.optionalCapabilites) {
+				c.equals(actualModul.optionalCapabilites[i]);
+				i++;
+			}
+		} else {
+			assertTrue(actualModul.optionalCapabilites == null);
+		}
+		
 		assertEquals(expected.copyright, actualModul.copyright);
 		assertEquals(expected.administratorEmail, actualModul.administratorEmail);
     }

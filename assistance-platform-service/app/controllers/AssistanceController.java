@@ -2,9 +2,6 @@ package controllers;
 
 import java.util.function.Predicate;
 
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.PathParam;
-
 import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
 import models.UserModuleActivation;
@@ -16,11 +13,6 @@ import play.mvc.Result;
 import play.mvc.Security;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiImplicitParam;
-import com.wordnik.swagger.annotations.ApiImplicitParams;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;

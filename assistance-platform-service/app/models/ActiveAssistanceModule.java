@@ -2,6 +2,8 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
+
 /**
  * This POJO represents an active assistance module. It contains information of modules that work in conjunction with the platform.
  */
@@ -17,8 +19,11 @@ public class ActiveAssistanceModule {
 	public String descriptionShort;
 	public String descriptionLong;
 
-	public String[] requiredCapabilities;
-	public String[] optionalCapabilites;
+	//public String[] requiredCapabilities;
+	//public String[] optionalCapabilites;
+	
+	public Capability[] requiredCapabilities;
+	public Capability[] optionalCapabilites;
 
 	public String copyright;
 	
@@ -26,7 +31,7 @@ public class ActiveAssistanceModule {
 
 	public ActiveAssistanceModule(String name, String id, String logoUrl,
 			String description_short, String description_long,
-			String[] requiredCapabilites, String[] optionalCapabilities,
+			Capability[] requiredCapabilites, Capability[] optionalCapabilities,
 			String copyright, String administratorEmail) {
 
 		this.name = name;

@@ -7,8 +7,11 @@ import models.ActiveAssistanceModule;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 import play.db.DB;
+import play.libs.Json;
 
 public class ActiveAssistanceModulePersistency {
 	private static String TABLE_NAME = "active_modules";
@@ -26,13 +29,15 @@ public class ActiveAssistanceModulePersistency {
 					"INSERT INTO " + TABLE_NAME + " (" + allFields + ") VALUES "
 					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			
+			ObjectMapper mapper = new ObjectMapper();
+			
 			s.setString(1, module.id);
 			s.setString(2, module.name);
 			s.setString(3, module.logoUrl);
 			s.setString(4, module.descriptionShort);
 			s.setString(5, module.descriptionLong);
-			s.setString(6, module.requiredCapabilities == null ? "" : String.join(",", module.requiredCapabilities));
-			s.setString(7, module.optionalCapabilites == null ? "" : String.join(",", module.optionalCapabilites));
+			s.setString(6, mapper.valueToTree(module.requiredCapabilities).toString());
+			s.setString(7, mapper.valueToTree(module.optionalCapabilites).toString());
 			s.setString(8, module.copyright);
 			s.setString(9, module.administratorEmail);
 			
@@ -57,12 +62,14 @@ public class ActiveAssistanceModulePersistency {
 			PreparedStatement s = conn.prepareStatement(
 					"UPDATE " + TABLE_NAME + " " + allFieldsForUpdate + " WHERE id = ?");
 			
+			ObjectMapper mapper = new ObjectMapper();
+			
 			s.setString(1, module.name);
 			s.setString(2, module.logoUrl);
 			s.setString(3, module.descriptionShort);
 			s.setString(4, module.descriptionLong);
-			s.setString(5, module.requiredCapabilities == null ? "" : String.join(",", module.requiredCapabilities));
-			s.setString(6, module.optionalCapabilites == null ? "" : String.join(",", module.optionalCapabilites));
+			s.setString(5, mapper.valueToTree(module.requiredCapabilities).toString());
+			s.setString(6, mapper.valueToTree(module.optionalCapabilites).toString());
 			s.setString(7, module.copyright);
 			s.setString(8, module.administratorEmail);
 			s.setString(9, module.id);
@@ -167,10 +174,13 @@ public class ActiveAssistanceModulePersistency {
 				String description_long = (String)array[4];
 				
 				String requiredCapsRaw = (String)array[5];
-				String[] requiredCapabilities = requiredCapsRaw.length() == 0 ? new String[] { } : requiredCapsRaw.split(",");
+				//String[] requiredCapabilities = requiredCapsRaw.length() == 0 ? new String[] { } : requiredCapsRaw.split(",");
+				Capability[] requiredCapabilities = Json.fromJson(Json.parse(requiredCapsRaw), Capability[].class);
+				
 				
 				String optionalCapsRaw = (String)array[6];
-				String[] optionalCapabilities = optionalCapsRaw.length() == 0 ? new String[] { } : optionalCapsRaw.split(",");
+				//String[] optionalCapabilities = optionalCapsRaw.length() == 0 ? new String[] { } : optionalCapsRaw.split(",");
+				Capability[] optionalCapabilities = Json.fromJson(Json.parse(optionalCapsRaw), Capability[].class);
 				
 				String copyright = (String)array[7];
 				

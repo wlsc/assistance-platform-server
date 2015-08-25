@@ -12,7 +12,11 @@ import play.Logger;
 import play.cache.Cache;
 import play.mvc.Result;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 
 public class ModulesController extends RestController {
 	public Result register() {		
@@ -58,7 +62,7 @@ public class ModulesController extends RestController {
 			String description_short = getDescrShortNode(postData).textValue();
 			String description_long = getDescrLongNode(postData).textValue();
 			
-			List<String> requiredCapabilites = new LinkedList<>();
+			/*List<String> requiredCapabilites = new LinkedList<>();
 			getRequiredCapsNode(postData).forEach(n -> {
 				requiredCapabilites.add(n.asText());
 			});
@@ -66,7 +70,19 @@ public class ModulesController extends RestController {
 			List<String> optionalCapabilities = new LinkedList<>();
 			getOptionalCapsNode(postData).forEach(n -> {
 				optionalCapabilities.add(n.asText());
-			});
+			})*/
+			
+			ObjectMapper objectMapper = new ObjectMapper();
+			
+			Capability[] requiredCapabilites = null;
+			Capability[] optionalCapabilities = null;
+			
+			try {
+				requiredCapabilites = objectMapper.treeToValue(getRequiredCapsNode(postData), Capability[].class);
+				optionalCapabilities = objectMapper.treeToValue(getOptionalCapsNode(postData), Capability[].class);
+			} catch (JsonProcessingException e) {
+				Logger.warn("Seems like someone posted malformed JSON for module information", e);
+			}
 			
 			String copyright = getCopyrightNode(postData).textValue();
 			
@@ -74,7 +90,7 @@ public class ModulesController extends RestController {
 			
 			// TODO: Validation der Parameter?
 			
-			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilites.toArray(new String[0]), optionalCapabilities.toArray(new String[0]), copyright, administratorEmail);
+			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilites, optionalCapabilities, copyright, administratorEmail);
 			
 			if(func.apply(module) && ActiveAssistanceModulePersistency.setIsAlive(module.id)) {
 				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das nächste mal "Alive" melden soll

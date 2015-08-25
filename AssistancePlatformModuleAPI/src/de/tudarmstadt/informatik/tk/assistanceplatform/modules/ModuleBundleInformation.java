@@ -14,12 +14,12 @@ public class ModuleBundleInformation {
 	/**
 	 * Definition of the required capabilites of the client in order to run this module
 	 */
-	public final String[] requiredCapabilities;
+	public final Capability[] requiredCapabilities;
 	
 	/**
 	 * Definition of the optional capabilites that can be used to use this module to 100%
 	 */
-	public final String[] optionalCapabilites;
+	public final Capability[] optionalCapabilites;
 
 	/**
 	 * Who has the copyright for this module?
@@ -32,7 +32,7 @@ public class ModuleBundleInformation {
 	
 	public ModuleBundleInformation(String name, String logoUrl,
 			String descriptionShort, String descriptionLong,
-			String[] requiredCapabilities, String[] optionalCapabilites,
+			Capability[] requiredCapabilities, Capability[] optionalCapabilites,
 			String copyright, String administratorEmail) {
 		this.englishModuleBundleInformation = new LocalizedModuleBundleInformation(name, logoUrl, descriptionShort, descriptionLong);
 		
