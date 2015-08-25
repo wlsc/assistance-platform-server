@@ -78,9 +78,11 @@ public class ModulesController extends RestController {
 			
 			String administratorEmail = getAdminEmailNode(postData).asText();
 			
+			String supportEmail = getSupportEmailNode(postData).asText();
+			
 			// TODO: Validation der Parameter?
 			
-			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilites, optionalCapabilities, copyright, administratorEmail);
+			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilites, optionalCapabilities, copyright, administratorEmail, supportEmail);
 			
 			if(func.apply(module) && ActiveAssistanceModulePersistency.setIsAlive(module.id)) {
 				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das nächste mal "Alive" melden soll
@@ -125,6 +127,10 @@ public class ModulesController extends RestController {
 		return postData.findPath("administratorEmail");
 	}
 	
+	private JsonNode getSupportEmailNode(JsonNode postData) {
+		return postData.findPath("supportEmail");
+	}
+	
 	public Result localize() {
 		JsonNode postData = request().body().asJson();
 
@@ -140,7 +146,7 @@ public class ModulesController extends RestController {
 			String description_short = getDescrShortNode(postData).textValue();
 			String description_long = getDescrLongNode(postData).textValue();
 
-			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, null, null, null, null);
+			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, null, null, null, null, null);
 			
 			String languageCode = getLanguageCode(postData).textValue();
 			

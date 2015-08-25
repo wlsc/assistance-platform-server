@@ -27,12 +27,14 @@ public class ActiveAssistanceModule {
 
 	public String copyright;
 	
+	public String supportEmail;
+	
 	public String administratorEmail;
 
 	public ActiveAssistanceModule(String name, String id, String logoUrl,
 			String description_short, String description_long,
 			Capability[] requiredCapabilites, Capability[] optionalCapabilities,
-			String copyright, String administratorEmail) {
+			String copyright, String administratorEmail, String supportEmail) {
 
 		this.name = name;
 
@@ -49,5 +51,6 @@ public class ActiveAssistanceModule {
 		this.copyright = copyright;
 		
 		this.administratorEmail = administratorEmail;
+		this.supportEmail = supportEmail;
 	}
 }

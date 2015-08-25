@@ -31,8 +31,9 @@ public class ActiveAssistanceModuleTest {
     			};
     			String copyright = "Test Copyright";
     			String administratorEmail = "bennet@test.de";
+    			String supportEmail = "support@test.de";
     			
-    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright, administratorEmail);
+    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright, administratorEmail, supportEmail);
 
     			assertTrue(ActiveAssistanceModulePersistency.create(module));
     			assertFalse(ActiveAssistanceModulePersistency.create(module));
@@ -63,8 +64,9 @@ public class ActiveAssistanceModuleTest {
     			};
     			String copyright = "Test Copyright";
     			String administratorEmail = "bennet@test.de";
+    			String supportEmail = "support@test.de";
     			
-    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright, administratorEmail);
+    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright, administratorEmail, supportEmail);
 
     			assertFalse(ActiveAssistanceModulePersistency.update(module));
     			
@@ -104,8 +106,9 @@ public class ActiveAssistanceModuleTest {
 	    			};
 	    			String copyright = "Test Copyright"+i;
 	    			String administratorEmail = "bennet"+i+"@test.de";
+	    			String supportEmail = "support@test.de";
 	    			
-	    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright, administratorEmail);
+	    			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, testUrl, testDescrShort, testDescrLong, requiredCaps, optCaps, copyright, administratorEmail, supportEmail);
 	
 	    			assertTrue(ActiveAssistanceModulePersistency.create(module));
 	    			assertFalse(ActiveAssistanceModulePersistency.create(module));
@@ -129,7 +132,7 @@ public class ActiveAssistanceModuleTest {
     		public void run() {
     			
     			// Create an unlocalized Module
-    			ActiveAssistanceModule unlocalized = new ActiveAssistanceModule("English", "id", "lgoo", "descr", "descr long", new Capability[] {}, new Capability[] {}, "xyz", "bla@bla.de");
+    			ActiveAssistanceModule unlocalized = new ActiveAssistanceModule("English", "id", "lgoo", "descr", "descr long", new Capability[] {}, new Capability[] {}, "xyz", "bla@bla.de", "support@sup.de");
     		
     			ActiveAssistanceModulePersistency.create(unlocalized);
     			
@@ -139,7 +142,7 @@ public class ActiveAssistanceModuleTest {
     			
     			// Now create an localization of the previous module
     			
-    			ActiveAssistanceModule localizedDe = new ActiveAssistanceModule("Deutsch", unlocalized.id, "lgoode", "descrde", "descr long de", unlocalized.optionalCapabilites, unlocalized.requiredCapabilities, "xyz", "bla@bla.de");
+    			ActiveAssistanceModule localizedDe = new ActiveAssistanceModule("Deutsch", unlocalized.id, "lgoode", "descrde", "descr long de", unlocalized.optionalCapabilites, unlocalized.requiredCapabilities, "xyz", "bla@bla.de", "support@sup.de");
     			
     			ActiveAssistanceModulePersistency.localize("de", localizedDe);
     			
