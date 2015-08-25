@@ -28,12 +28,14 @@ public class ModuleBundleInformation {
 	
 	public final String administratorEmail;
 	
+	public final String supportEmail;
+	
 	private Map<String, LocalizedModuleBundleInformation> localizedModuleBundleInformations;
 	
 	public ModuleBundleInformation(String name, String logoUrl,
 			String descriptionShort, String descriptionLong,
 			Capability[] requiredCapabilities, Capability[] optionalCapabilites,
-			String copyright, String administratorEmail) {
+			String copyright, String administratorEmail, String supportEmail) {
 		this.englishModuleBundleInformation = new LocalizedModuleBundleInformation(name, logoUrl, descriptionShort, descriptionLong);
 		
 		this.requiredCapabilities = requiredCapabilities;
@@ -41,6 +43,8 @@ public class ModuleBundleInformation {
 		this.copyright = copyright;
 		
 		this.administratorEmail = administratorEmail;
+		
+		this.supportEmail = supportEmail;
 	}
 	
 	/**

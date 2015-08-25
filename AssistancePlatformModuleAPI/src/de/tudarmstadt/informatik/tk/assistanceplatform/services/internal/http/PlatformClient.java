@@ -112,7 +112,8 @@ public class PlatformClient {
 				bundleInfo.requiredCapabilities, 
 				bundleInfo.optionalCapabilites, 
 				bundleInfo.copyright, 
-				bundleInfo.administratorEmail);
+				bundleInfo.administratorEmail,
+				bundleInfo.supportEmail);
 		
 		return request;
 	}

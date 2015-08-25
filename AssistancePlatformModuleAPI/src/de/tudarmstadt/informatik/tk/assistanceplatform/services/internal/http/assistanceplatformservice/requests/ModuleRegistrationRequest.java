@@ -23,11 +23,13 @@ public class ModuleRegistrationRequest {
 	private String copyright;
 	@Expose
 	private String administratorEmail;
+	@Expose
+	private String supportEmail;
 	
 	public ModuleRegistrationRequest(String id, String name, String logoUrl,
 			String descriptionShort, String descriptionLong,
 			Capability[] requiredCaps, Capability[] optionalCaps, String copyright,
-			String administratoEmail) {
+			String administratoEmail, String supportEmail) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -38,5 +40,6 @@ public class ModuleRegistrationRequest {
 		this.optionalCaps = optionalCaps;
 		this.copyright = copyright;
 		this.administratorEmail = administratoEmail;
+		this.supportEmail = supportEmail;
 	}
 }
