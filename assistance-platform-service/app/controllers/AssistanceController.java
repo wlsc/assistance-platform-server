@@ -26,19 +26,11 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistr
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
-@Api(value = "/assistance", description = "Operations for user assistance, like activation and deactivation of modules.")
 public class AssistanceController extends RestController {
 	MessagingService ms = new JmsMessagingService();
 	
-	@ApiOperation(nickname = "list", value = "List the available assistance modules", httpMethod = "POST")
-	@Security.Authenticated(UserAuthenticator.class)
-	 @ApiImplicitParams({
-		    @ApiImplicitParam(name = "name", value = "User's name", required = true, dataType = "string", paramType = "header"),
-		    @ApiImplicitParam(name = "email", value = "User's email", required = false, dataType = "string", paramType = "query"),
-		    @ApiImplicitParam(name = "id", value = "User ID", required = true, dataType = "long", paramType = "body")
-		  })
 	public Result list(
-			@ApiParam(value = "Language code (iso 639-1) that tells in which language the list should be returned") @PathParam("language") String language) {
+			String language) {
 	
 		JsonNode result = Cache.getOrElse("moduleList"+language, () -> {
 			ActiveAssistanceModule[] assiModules = ActiveAssistanceModulePersistency.list(language);
