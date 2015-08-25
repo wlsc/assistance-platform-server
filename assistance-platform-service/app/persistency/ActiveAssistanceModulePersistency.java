@@ -174,12 +174,10 @@ public class ActiveAssistanceModulePersistency {
 				String description_long = (String)array[4];
 				
 				String requiredCapsRaw = (String)array[5];
-				//String[] requiredCapabilities = requiredCapsRaw.length() == 0 ? new String[] { } : requiredCapsRaw.split(",");
 				Capability[] requiredCapabilities = Json.fromJson(Json.parse(requiredCapsRaw), Capability[].class);
 				
 				
 				String optionalCapsRaw = (String)array[6];
-				//String[] optionalCapabilities = optionalCapsRaw.length() == 0 ? new String[] { } : optionalCapsRaw.split(",");
 				Capability[] optionalCapabilities = Json.fromJson(Json.parse(optionalCapsRaw), Capability[].class);
 				
 				String copyright = (String)array[7];

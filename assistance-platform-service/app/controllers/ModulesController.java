@@ -62,16 +62,6 @@ public class ModulesController extends RestController {
 			String description_short = getDescrShortNode(postData).textValue();
 			String description_long = getDescrLongNode(postData).textValue();
 			
-			/*List<String> requiredCapabilites = new LinkedList<>();
-			getRequiredCapsNode(postData).forEach(n -> {
-				requiredCapabilites.add(n.asText());
-			});
-			
-			List<String> optionalCapabilities = new LinkedList<>();
-			getOptionalCapsNode(postData).forEach(n -> {
-				optionalCapabilities.add(n.asText());
-			})*/
-			
 			ObjectMapper objectMapper = new ObjectMapper();
 			
 			Capability[] requiredCapabilites = null;
