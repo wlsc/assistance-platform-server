@@ -4,8 +4,8 @@
 
 ALTER TABLE active_modules ALTER COLUMN required_capabilities TYPE varchar(2048);
 ALTER TABLE active_modules ALTER COLUMN optional_capabilities TYPE varchar(2048);
-UPDATE active_modules SET required_capabilities = '';
-UPDATE active_modules SET optional_capabilities = '';
+UPDATE active_modules SET required_capabilities = 'null';
+UPDATE active_modules SET optional_capabilities = 'null';
  
 # --- !Downs
  
