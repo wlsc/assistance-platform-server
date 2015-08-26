@@ -53,7 +53,7 @@ public class JmsTest {
 			c.publish(new Position((long)(Math.random() * 100), (long)(Math.random() * 100),  i, (long)(Math.random() * Integer.MAX_VALUE), i));
 		}
 		
-		Thread.sleep(3000);
+		Thread.sleep(1000);
 		
 		assertEquals(1001, receivedData.size());
 
@@ -94,7 +94,7 @@ public class JmsTest {
 			c.publish(new UserRegistrationInformationEvent((long)(Math.random() * 100), true));
 		}
 		
-		Thread.sleep(3000);
+		Thread.sleep(1000);
 		
 		assertEquals(1001, receivedData.size());
 
