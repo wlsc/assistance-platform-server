@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.IMessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
@@ -16,14 +17,25 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActiv
  *
  */
 public abstract class ModuleBundle {
-	private final Module containedModules[];
+	private Module containedModules[];
 	
-	private final IUserActivationChecker userActivationListChecker;
+	private IUserActivationChecker userActivationListChecker;
 	
-	private final String platformUrlAndPort;
+	private String platformUrlAndPort;
+	
+	private IClientActionRunner actionRunner;
 
-	public ModuleBundle(String platformUrlAndPort, IMessagingService messagingService, IUserActivationChecker userActivationListChecker) {
+	/**
+	 * Starts the module and sets the required parameters
+	 * @param platformUrlAndPort
+	 * @param messagingService
+	 * @param userActivationListChecker
+	 * @param actionRunner
+	 */
+	public void bootstrapBundle(String platformUrlAndPort, IMessagingService messagingService, IUserActivationChecker userActivationListChecker, IClientActionRunner actionRunner) {
 		this.platformUrlAndPort = platformUrlAndPort;
+		
+		this.actionRunner = actionRunner;
 		
 		this.userActivationListChecker = userActivationListChecker;
 		
@@ -39,6 +51,10 @@ public abstract class ModuleBundle {
 		
 		for(Module m : containedModules) {
 			executor.submit(() -> { 
+				if(m instanceof AssistanceModule) {
+					((AssistanceModule) m).setActionRunner(actionRunner);
+				}
+				
 				m.start(messagingService);
 			});
 		}

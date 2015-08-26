@@ -19,11 +19,8 @@ public abstract class Module {
 	 * NEVER! call this method, this method gets called by the API.
 	 */
 	public final void start(IMessagingService messagingService) {
+		doBeforeStartup();
 		subscribeRegisteredEventsAndSetMessagingService(messagingService);
-		startup();
-	}
-	
-	private void startup() {
 		doAfterStartup();
 	}
 	
@@ -45,6 +42,11 @@ public abstract class Module {
 		
 		this.eventRegistrations = null;
 	}
+	
+	/**
+	 * This method gets called before all services are set up and events are registered. This is the place to register for events.
+	 */
+	protected abstract void doBeforeStartup();
 	
 	/**
 	 * This method gets called imediately after all services are set up and events are registered. Implement this for one-time initialization routines like pulling latest data.
