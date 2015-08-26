@@ -4,7 +4,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.IMessa
 
 
 public abstract class DataModule extends Module {
-	public DataModule(IMessagingService messagingService) {
-		super(messagingService);
+	public DataModule() {
+		super();
 	}
 }

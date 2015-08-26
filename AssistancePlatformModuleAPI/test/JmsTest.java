@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Position;
+import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
@@ -34,7 +35,7 @@ public class JmsTest {
 		c.subscribeConsumer(
 				(channel, data) -> {
 
-					Logger.getLogger(JmsTest.class).info("Channel: " + channel.getName() + " Data: " + data.toString());
+				//	Logger.getLogger(JmsTest.class).info("Channel: " + channel.getName() + " Data: " + data.toString());
 					if(receivedData.size() == 0) {
 						assertTrue(testData.equals(data));
 					}
@@ -52,7 +53,48 @@ public class JmsTest {
 			c.publish(new Position((long)(Math.random() * 100), (long)(Math.random() * 100),  i, (long)(Math.random() * Integer.MAX_VALUE), i));
 		}
 		
-		Thread.sleep(1000);
+		Thread.sleep(3000);
+		
+		assertEquals(1001, receivedData.size());
+
+		Thread.sleep(500);
+	}
+	
+	@Test
+	public void userRegTest() throws Exception {
+		BasicConfigurator.configure();
+		
+		ConnectionFactory factory = new ActiveMQConnectionFactory();
+		MessagingService msForConsumer = new JmsMessagingService(factory);
+		
+		UserRegistrationInformationEvent testData = new UserRegistrationInformationEvent(123L, true);
+		
+		Channel<UserRegistrationInformationEvent> c = msForConsumer.channel("test2", UserRegistrationInformationEvent.class);
+		
+		List<UserRegistrationInformationEvent> receivedData = new ArrayList<>();
+		
+		c.subscribeConsumer(
+				(channel, data) -> {
+
+					//Logger.getLogger(JmsTest.class).info("Channel: " + channel.getName() + " Data: " + data.toString());
+					if(receivedData.size() == 0) {
+						assertTrue(testData.equals(data));
+					}
+					
+					receivedData.add(data);
+				}
+		);
+		
+		MessagingService msForPub = new JmsMessagingService(factory);
+		Channel<UserRegistrationInformationEvent> channelForPub = msForPub.channel("test2", UserRegistrationInformationEvent.class);
+		
+		channelForPub.publish(testData);
+		
+		for(int i = 0; i < 1000; i++) {
+			c.publish(new UserRegistrationInformationEvent((long)(Math.random() * 100), true));
+		}
+		
+		Thread.sleep(3000);
 		
 		assertEquals(1001, receivedData.size());
 

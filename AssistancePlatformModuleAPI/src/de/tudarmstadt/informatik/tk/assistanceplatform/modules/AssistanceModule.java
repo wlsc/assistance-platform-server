@@ -11,7 +11,7 @@ public abstract class AssistanceModule extends Module {
 	// Dieses Assistenzmodule soll nun auf verschiedene Data Module, bzw. deren Kontext, zugreifen können
 	// WIe Typisierung gestalten?
 	
-	public AssistanceModule(IMessagingService messagingService) {
-		super(messagingService);
+	public AssistanceModule() {
+		super();
 	}
 }

@@ -1,25 +1,53 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.IMessagingService;
 
 public abstract class Module {
+	private Map<Class, Consumer> eventRegistrations = new HashMap<>();
+	
 	private IMessagingService messagingService;
 	
-	public Module(IMessagingService messagingService) {
-		this.messagingService = messagingService;
-		startup();
+	public Module() {
 	}
 	
-	public IMessagingService messagingService() {
-		return this.messagingService;
+	/**
+	 * NEVER! call this method, this method gets called by the API.
+	 */
+	public final void start(IMessagingService messagingService) {
+		subscribeRegisteredEventsAndSetMessagingService(messagingService);
+		startup();
 	}
 	
 	private void startup() {
 		doAfterStartup();
 	}
 	
+	public <T> void registerForEventOfType(Class<T> type, Consumer<T> consumer) {
+		eventRegistrations.put(type, consumer);
+	}
+	
+	public <T> void emitEvent(T event) {
+		Class<T> type = (Class<T>) event.getClass();
+		this.messagingService.channel(type).publish(event);
+	}
+	
+	private void subscribeRegisteredEventsAndSetMessagingService(IMessagingService messagingService) {
+		this.messagingService = messagingService;
+		
+		for(Entry<Class, Consumer> entry : eventRegistrations.entrySet()) {
+			messagingService.channel(entry.getKey()).subscribeConsumer(entry.getValue());
+		}
+		
+		this.eventRegistrations = null;
+	}
+	
 	/**
-	 * This method gets called imediately after all services are set up. Implement this for one-time initialization routines like pulling latest data.
+	 * This method gets called imediately after all services are set up and events are registered. Implement this for one-time initialization routines like pulling latest data.
 	 */
 	protected abstract void doAfterStartup();
 }

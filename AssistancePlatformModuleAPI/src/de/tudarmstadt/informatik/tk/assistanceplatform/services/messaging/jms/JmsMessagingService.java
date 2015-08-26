@@ -99,7 +99,6 @@ public class JmsMessagingService extends MessagingService {
 					}
 					
 					T obj = getSerializer().deserialize(buff, channel.getType());
-
 					notifyConsumer(consumer, channel, obj);
 				}
 			});

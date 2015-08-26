@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.JsonSerialization;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.KryoMessageSerialization;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.MessageSerialization;
 
@@ -8,6 +9,7 @@ public class MessagingServiceConfiguration {
 	
 	public MessagingServiceConfiguration() {
 		setMessageSerialization(new KryoMessageSerialization());
+		//setMessageSerialization(new JsonSerialization());
 	}
 	
 	protected void setMessageSerialization(MessageSerialization serialization) {

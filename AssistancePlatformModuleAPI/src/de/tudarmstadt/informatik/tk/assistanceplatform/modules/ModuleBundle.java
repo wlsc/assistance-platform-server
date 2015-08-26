@@ -1,5 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
@@ -20,11 +23,28 @@ public abstract class ModuleBundle {
 	private final String platformUrlAndPort;
 
 	public ModuleBundle(String platformUrlAndPort, IMessagingService messagingService, IUserActivationChecker userActivationListChecker) {
-		this.userActivationListChecker = userActivationListChecker;
-		containedModules = initializeContainedModules(messagingService);
-		
 		this.platformUrlAndPort = platformUrlAndPort;
 		
+		this.userActivationListChecker = userActivationListChecker;
+		
+		this.containedModules = initializeContainedModules();
+		
+		this.startContainedModules(messagingService);
+		
+		registerBundle();
+	}
+	
+	private void startContainedModules(IMessagingService messagingService) {
+		ExecutorService executor = Executors.newCachedThreadPool();
+		
+		for(Module m : containedModules) {
+			executor.submit(() -> { 
+				m.start(messagingService);
+			});
+		}
+	}
+	
+	private void registerBundle() {
 		ModuleBundleRegistrator registrator = new ModuleBundleRegistrator(this);
 		
 		try {
@@ -35,8 +55,6 @@ public abstract class ModuleBundle {
 		
 		registrator.startPeriodicRegistration();
 	}
-
-
 	
 	public String getPlatformUrlAndPort() {
 		return platformUrlAndPort;
@@ -60,7 +78,7 @@ public abstract class ModuleBundle {
 	public abstract ModuleBundleInformation getBundleInformation();
 	
 	/**
-	 * Instantiate all used modules in this method and return them.
+	 * Instantiate all used modules in this method and return them. NEVER! run them.
 	 */
-	protected abstract Module[] initializeContainedModules(IMessagingService messagingService);
+	protected abstract Module[] initializeContainedModules();
 }

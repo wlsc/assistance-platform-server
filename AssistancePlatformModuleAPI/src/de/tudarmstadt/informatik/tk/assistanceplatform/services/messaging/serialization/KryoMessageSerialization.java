@@ -10,23 +10,27 @@ import com.esotericsoftware.kryo.io.Output;
  * Implements rudimentary binary object serialization via Kryo Library
  */
 public class KryoMessageSerialization implements MessageSerialization {
-	private Kryo kryo = new Kryo();
-	
 	@Override
 	public <T> byte[] serialize(T data) {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		Output output = new Output(outputStream);
 		
-		kryo.writeObject(output, data);
+		new Kryo().writeObject(output, data);
 		
-		return output.getBuffer();
+		byte[] result = output.getBuffer();
+		
+		output.close();
+		
+		return result;
 	}
 
 	@Override
 	public <T> T deserialize(byte[] data, Class<T> type) {		
 		Input input = new Input(data);
 		
-		T obj = (T)kryo.readObject(input, type);
+		T obj = new Kryo().readObject(input, type);
+		
+		input.close();
 		
 		return obj;
 	}
