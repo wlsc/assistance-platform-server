@@ -1,7 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization;
 
-import org.json4s.jackson.Json;
-
 import com.google.gson.Gson;
 
 public class JsonSerialization implements MessageSerialization {

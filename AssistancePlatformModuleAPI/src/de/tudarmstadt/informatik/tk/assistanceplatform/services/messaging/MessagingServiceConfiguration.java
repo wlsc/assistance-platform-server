@@ -1,6 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.JsonSerialization;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.KryoMessageSerialization;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.MessageSerialization;
 

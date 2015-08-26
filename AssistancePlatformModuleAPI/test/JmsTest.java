@@ -8,7 +8,6 @@ import javax.jms.ConnectionFactory;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Position;
