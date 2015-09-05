@@ -25,6 +25,7 @@ public class ClientActionController extends RestController {
 		
 		SendMessageToDeviceRequest request = null;
 		
+		// Convert the JSON to a Request Object
 		try {
 			request = (new ObjectMapper()).treeToValue(jsonRequest, SendMessageToDeviceRequest.class);
 		} catch(Exception ex) {
@@ -32,29 +33,36 @@ public class ClientActionController extends RestController {
 			return badRequestJson(AssistanceAPIErrors.invalidParametersGeneral);
 		}
 		
+		// Validate the request
 		try {
 			validateSendMessageRequest(request);
 		} catch(APIErrorException e) {
 			return badRequestJson(e.getError());
 		}
 		
-		String platformOfDevice = null; // TODO: Platform des Devices auslesen
-		
-		// TODO: In Zukunft ggf. empfangen, von welchem Modul diese Anfrage kommt
-		
-		ClientActionSenderFactory actionSenderFactory = new ClientActionSenderFactory();
-		try {
-			AbstractClientActionSender sender = actionSenderFactory.getClientSender(platformOfDevice);
-			boolean sendResult = sender.sendDataToUserDevices(request.userId, request.deviceIds, request.visibleNotification, request.data);
+		// Iterate through devices and send appropriate messages
+		for(long deviceId : request.deviceIds) {
+			// Get the platform specific receiver / device IDs for all the devices
+			String platformOfDevice = null; // TODO: Platform des Devices auslesen
 			
-			if(sendResult) {
-				return ok();
-			} else {
-				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+			// TODO: In Zukunft ggf. empfangen, von welchem Modul diese Anfrage kommt
+			
+			ClientActionSenderFactory actionSenderFactory = new ClientActionSenderFactory();
+			try {
+				AbstractClientActionSender sender = actionSenderFactory.getClientSender(platformOfDevice);
+				boolean sendResult = sender.sendDataToUserDevices(request.userId, request.deviceIds, request.visibleNotification, request.data);
+				
+				if(sendResult) {
+					return ok();
+				} else {
+					return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+				}
+			} catch (PlatformNotSupportedException e) {
+				return badRequestJson(AssistanceAPIErrors.unsupportedPlatform);
 			}
-		} catch (PlatformNotSupportedException e) {
-			return badRequestJson(AssistanceAPIErrors.unsupportedPlatform);
 		}
+		
+		return ok();
 	}
 	
 	private void validateSendMessageRequest(SendMessageToDeviceRequest request) throws APIErrorException {
@@ -69,6 +77,8 @@ public class ClientActionController extends RestController {
 				if(!DevicePersistency.doesExist(dId)) {
 					throw new APIErrorException(AssistanceAPIErrors.deviceIdNotKnown);
 				}
+				
+				// TODO: Ownership checken
 			}
 		}
 	}
