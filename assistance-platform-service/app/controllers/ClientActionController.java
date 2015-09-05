@@ -1,5 +1,6 @@
 package controllers;
 
+import models.APIErrorException;
 import models.AssistanceAPIErrors;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -8,7 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.AbstractClientActionSender;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.ClientActionSenderFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.PlatformNotSupportedException;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.VisibleNotification;
+import persistency.DevicePersistency;
+import persistency.UserPersistency;
 import play.Logger;
 import play.mvc.Result;
 import requests.SendMessageToDeviceRequest;
@@ -26,8 +28,14 @@ public class ClientActionController extends RestController {
 		try {
 			request = (new ObjectMapper()).treeToValue(jsonRequest, SendMessageToDeviceRequest.class);
 		} catch(Exception ex) {
-			Logger.warn("", ex);
+			Logger.warn("Parsing send message to device request failed", ex);
 			return badRequestJson(AssistanceAPIErrors.invalidParametersGeneral);
+		}
+		
+		try {
+			validateSendMessageRequest(request);
+		} catch(APIErrorException e) {
+			return badRequestJson(e.getError());
 		}
 		
 		String platformOfDevice = null; // TODO: Platform des Devices auslesen
@@ -36,19 +44,32 @@ public class ClientActionController extends RestController {
 		
 		ClientActionSenderFactory actionSenderFactory = new ClientActionSenderFactory();
 		try {
-			// TODO: Ggf. Akka Actor verwenden?
 			AbstractClientActionSender sender = actionSenderFactory.getClientSender(platformOfDevice);
 			boolean sendResult = sender.sendDataToUserDevices(request.userId, request.deviceIds, request.visibleNotification, request.data);
 			
 			if(sendResult) {
 				return ok();
 			} else {
-				// TODO: erorr zurückgegeben
+				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
 			}
 		} catch (PlatformNotSupportedException e) {
-			// TODO: error zurückgeben
+			return badRequestJson(AssistanceAPIErrors.unsupportedPlatform);
+		}
+	}
+	
+	private void validateSendMessageRequest(SendMessageToDeviceRequest request) throws APIErrorException {
+		if(!UserPersistency.doesUserWithIdExist(request.userId)) {
+			throw new APIErrorException(AssistanceAPIErrors.userDoesNotExists);
 		}
 		
-		return TODO;
+		if(request.deviceIds == null) {
+			throw new APIErrorException(AssistanceAPIErrors.missingParametersGeneral);
+		} else {
+			for(long dId : request.deviceIds) {
+				if(!DevicePersistency.doesExist(dId)) {
+					throw new APIErrorException(AssistanceAPIErrors.deviceIdNotKnown);
+				}
+			}
+		}
 	}
 }

@@ -29,10 +29,14 @@ public class AssistanceAPIErrors {
 	
 	public static APIError deviceIdNotKnown = new APIError(12, "Device ID not known.");
 	
+	public static APIError unsupportedPlatform = new APIError(13, "Platform is not supported.");
+	
 	// Module Rest API
 	public static APIError missingModuleParameters = new APIError(995, "Not all required parameters for module registration were provided.");
 	
 	public static APIError moduleAlreadyExists = new APIError(996, "The module with the provided id already exists.");
+	
+	public static APIError userDoesNotExists = new APIError(997, "The user with the provided id does not exists.");
 	
 	public static APIError unknownInternalServerError = new APIError(Integer.MAX_VALUE, "Unknown error.");
 }
