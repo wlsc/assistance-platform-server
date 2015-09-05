@@ -76,6 +76,17 @@ public class UserPersistency {
 		});
 	}
 	
+	public static boolean doesUserWithIdExist(long id) {
+		return DB.withConnection(conn -> {
+			PreparedStatement s = conn
+					.prepareStatement("SELECT email FROM " + TABLE_NAME + " WHERE id = ?");
+			s.setLong(1, id);
+			ResultSet result = s.executeQuery();
+	
+			return result != null && result.next();
+		});
+	}
+	
 	public static String getPasswordFromUserWithMail(String email) {
 		return DB
 				.withConnection(conn -> {
