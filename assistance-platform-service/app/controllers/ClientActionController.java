@@ -1,9 +1,17 @@
 package controllers;
 
+import models.AssistanceAPIErrors;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.AbstractClientActionSender;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.ClientActionSenderFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.PlatformNotSupportedException;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.VisibleNotification;
+import play.Logger;
 import play.mvc.Result;
+import requests.SendMessageToDeviceRequest;
 
 /**
  * This controller is responsible for handling requests by module to provide the way back to the user / client.
@@ -11,14 +19,16 @@ import play.mvc.Result;
  */
 public class ClientActionController extends RestController {
 	public Result sendMessageToDevices() {
-		// TODO: User + Device + Message auslesen
-		long userId = -1;
-		long[] deviceIds = new long[] { };
+		JsonNode jsonRequest = request().body().asJson();
 		
-		// TODO: Prüfen ob User + Device existent
+		SendMessageToDeviceRequest request = null;
 		
-		VisibleNotification visibleNotification = null; // TODO: Daten / Nachricht auslesen
-		String data = null;
+		try {
+			request = (new ObjectMapper()).treeToValue(jsonRequest, SendMessageToDeviceRequest.class);
+		} catch(Exception ex) {
+			Logger.warn("", ex);
+			return badRequestJson(AssistanceAPIErrors.invalidParametersGeneral);
+		}
 		
 		String platformOfDevice = null; // TODO: Platform des Devices auslesen
 		
@@ -27,7 +37,8 @@ public class ClientActionController extends RestController {
 		ClientActionSenderFactory actionSenderFactory = new ClientActionSenderFactory();
 		try {
 			// TODO: Ggf. Akka Actor verwenden?
-			boolean sendResult = actionSenderFactory.getClientSender(platformOfDevice).sendDataToUserDevices(userId, deviceIds, visibleNotification, data);
+			AbstractClientActionSender sender = actionSenderFactory.getClientSender(platformOfDevice);
+			boolean sendResult = sender.sendDataToUserDevices(request.userId, request.deviceIds, request.visibleNotification, request.data);
 			
 			if(sendResult) {
 				return ok();

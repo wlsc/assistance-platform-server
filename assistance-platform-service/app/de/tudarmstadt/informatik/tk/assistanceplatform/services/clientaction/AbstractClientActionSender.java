@@ -12,7 +12,7 @@ public abstract class AbstractClientActionSender {
 	public boolean sendDataToUserDevices(long userId, long[] deviceIds, VisibleNotification notification,  String data) {
 		String[] receiverIds = null; // TODO: receiver ids müssen aus der Datenbank für das Device geholt werden
 		
-		return doPlatformSpecificSend(receiverIds, visibleMessage, data);
+		return doPlatformSpecificSend(receiverIds, notification, data);
 	}
 	
 	/**

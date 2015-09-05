@@ -6,11 +6,13 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.gcm
 
 public class ClientActionSenderFactory {
 	public AbstractClientActionSender getClientSender(String platform) throws PlatformNotSupportedException {
-		switch(platform) {
-		case "android":
-			return gcmActionSender();
-		case "ios":
-			return gcmActionSender();
+		if(platform != null) {
+			switch(platform) {
+			case "android":
+				return gcmActionSender();
+			case "ios":
+				return gcmActionSender();
+			}
 		}
 		
 		throw new PlatformNotSupportedException();
