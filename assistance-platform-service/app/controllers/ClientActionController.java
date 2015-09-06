@@ -74,11 +74,9 @@ public class ClientActionController extends RestController {
 			throw new APIErrorException(AssistanceAPIErrors.missingParametersGeneral);
 		} else {
 			for(long dId : request.deviceIds) {
-				if(!DevicePersistency.doesExist(dId)) {
+				if(!DevicePersistency.ownedByUser(dId, request.userId)) {  // Check if device is owned by user (implicitly also checks if the device exists)
 					throw new APIErrorException(AssistanceAPIErrors.deviceIdNotKnown);
-				}
-				
-				// TODO: Ownership checken
+				} 
 			}
 		}
 	}

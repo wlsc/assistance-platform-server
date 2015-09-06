@@ -11,6 +11,9 @@ POST	/users/login				controllers.UsersController.login
 GET 	/users/profile/:type		controllers.UsersController.myProfile(type)
 PUT		/users/profile				controllers.UsersController.updateProfile
 
+# Device management
+POST	/devices/registerformessaging	controllers.DevicesController.registerDeviceForMessaging
+
 # Sensor data
 GET		/sensordata/socket			controllers.SensorDataController.socket
 POST	/sensordata/upload			controllers.SensorDataController.upload

@@ -17,7 +17,7 @@ public class DevicePersistency {
 	public static void create(Device device) {
 		DB.withConnection(conn -> {
 			PreparedStatement s = conn.prepareStatement(
-					"INSERT INTO " + TABLE_NAME + " (user_id, os, os_version, device_identifier, brand, model) VALUES (?, ?, ?, ?, ?, ?)",
+					"INSERT INTO " + TABLE_NAME + " (user_id, os, os_version, device_identifier, brand, model, messaging_registration_id) VALUES (?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			s.setLong(1, device.userId);
 			s.setString(2, device.operatingSystem);
@@ -48,12 +48,18 @@ public class DevicePersistency {
 			s.setString(3, device.deviceIdentifier);
 			s.setString(4, device.brand);
 			s.setString(5, device.model);
-			s.setLong(6, device.id);
+			
+			s.setLong(7, device.id);
 			
 			s.executeUpdate();
 		});
 	}
 	
+	/**
+	 * Checks if the device with ID {id} exists
+	 * @param id
+	 * @return
+	 */
 	public static boolean doesExist(long id) {
 		return DB.withConnection(conn -> {
 			PreparedStatement s = conn
@@ -67,5 +73,33 @@ public class DevicePersistency {
 	
 	public static boolean doesExist(Device d) {
 		return doesExist(d.id);
+	}
+	
+	/**
+	 * Checks if Device with id {deviceId} is owned by user with id {userId}
+	 * @param deviceId
+	 * @param userId
+	 * @return TRUE if the specified device is owned by the specified user, otherwise FALSE
+	 */
+	public static boolean ownedByUser(long deviceId, long userId) {
+		return DB.withConnection(conn -> {
+			PreparedStatement s = conn
+					.prepareStatement("SELECT id FROM " + TABLE_NAME + " WHERE user_id = ?");
+			s.setLong(1, userId);
+			ResultSet result = s.executeQuery();
+	
+			return result != null && result.next();
+		});
+	}
+	
+	public static boolean linkDeviceToMessagingService(long deviceId, String messagingRegistrationId) {
+		return DB.withConnection(conn -> {
+			PreparedStatement s = conn.prepareStatement(
+					"UPDATE " + TABLE_NAME + " SET messaging_registration_id = ? WHERE id = ?");
+			s.setString(1, messagingRegistrationId);
+			s.setLong(2, deviceId);
+			
+			return s.executeUpdate() != 0;
+		});
 	}
 }

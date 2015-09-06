@@ -21,9 +21,6 @@ public class Device {
 	@JsonProperty(value = "device_identifier")
 	public String deviceIdentifier;
 	
-	@JsonProperty(value = "messaging_registration_id")
-	public String messagingRegistrationId;
-	
 	public String brand;
 	
 	public String model;
