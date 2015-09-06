@@ -17,7 +17,7 @@ public class DevicePersistency {
 	public static void create(Device device) {
 		DB.withConnection(conn -> {
 			PreparedStatement s = conn.prepareStatement(
-					"INSERT INTO " + TABLE_NAME + " (user_id, os, os_version, device_identifier, brand, model, messaging_registration_id) VALUES (?, ?, ?, ?, ?, ?)",
+					"INSERT INTO " + TABLE_NAME + " (user_id, os, os_version, device_identifier, brand, model) VALUES (?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			s.setLong(1, device.userId);
 			s.setString(2, device.operatingSystem);
@@ -84,8 +84,9 @@ public class DevicePersistency {
 	public static boolean ownedByUser(long deviceId, long userId) {
 		return DB.withConnection(conn -> {
 			PreparedStatement s = conn
-					.prepareStatement("SELECT id FROM " + TABLE_NAME + " WHERE user_id = ?");
+					.prepareStatement("SELECT id FROM " + TABLE_NAME + " WHERE user_id = ? AND id = ?");
 			s.setLong(1, userId);
+			s.setLong(2, deviceId);
 			ResultSet result = s.executeQuery();
 	
 			return result != null && result.next();
