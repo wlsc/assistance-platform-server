@@ -1,7 +1,11 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.gcm;
 
-import org.apache.log4j.Logger;
 
+import java.util.Arrays;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+import play.Logger;
 import play.libs.F.Promise;
 import play.libs.Json;
 import play.libs.ws.WS;
@@ -14,6 +18,8 @@ public class GCMClientActionSender extends AbstractClientActionSender {
 	private final String apiKey;
 	
 	public GCMClientActionSender(String apiKey) {
+		Logger.debug(apiKey);
+		
 		this.apiKey = apiKey;
 	}
 	
@@ -22,29 +28,33 @@ public class GCMClientActionSender extends AbstractClientActionSender {
 		
 		WSRequest request = WS.url("https://android.googleapis.com/gcm/send")
 		.setContentType("application/json")
-		.setAuth("key=" + apiKey);
+		.setHeader("Authorization", "key="+apiKey);
 		
 		GCMRequest gcmRequest = new GCMRequest();
-		for(String r : receiverIds) {
-			gcmRequest.addRegId(r);
-		}
 		
+		// Set Registration IDS
+		Arrays.stream(receiverIds).forEach(gcmRequest::addRegId);
+		
+		// Set data
 		gcmRequest.setData(data);
 		
+		// Set notification
 		gcmRequest.setVisibleNotification(notification);
 		
-		Promise<WSResponse> response = request.post(Json.toJson(gcmRequest));
+		// Post the request
+		JsonNode json = Json.toJson(gcmRequest);
+		Promise<WSResponse> response = request.post(json);
 	
 		try {
 			WSResponse wsResponse = response.get(5000);
 			
 			if(wsResponse.getStatus() != 200) {
-				Logger.getLogger(GCMClientActionSender.class).warn("GCM Request wasn't successfull, code: " + wsResponse.getStatus());
+				Logger.warn("GCM Request wasn't successfull, code: " + wsResponse.getStatus());
 				
 				return false;
 			}
 		} catch(Exception ex) {
-			Logger.getLogger(GCMClientActionSender.class).error("GCM Request failed: " + ex);
+			Logger.error("GCM Request failed: " + ex);
 			return false;
 		}
         

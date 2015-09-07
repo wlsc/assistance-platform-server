@@ -8,12 +8,12 @@ import java.util.Map;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.VisibleNotification;
 
 public class GCMRequest {
-    private List<String> registration_ids;
+    public List<String> registration_ids;
     @SuppressWarnings("unused")
-	private long time_to_live;
-    private Map<String,String> data;
+    public long time_to_live;
+    public Map<String,String> data;
     @SuppressWarnings("unused")
-	private VisibleNotification notification;
+    public VisibleNotification notification;
     
     public GCMRequest(long ttl) {
     	this.time_to_live = ttl;
