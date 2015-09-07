@@ -6,4 +6,3 @@ ALTER TABLE devices ALTER COLUMN model TYPE varchar(100);
  
 # --- !Downs
  
-ALTER TABLE devices ALTER COLUMN model TYPE varchar(30);

@@ -6,4 +6,3 @@ ALTER TABLE devices ADD COLUMN messaging_registration_id varchar(4096);
  
 # --- !Downs
  
-ALTER TABLE devices DROP messaging_registration_id;
