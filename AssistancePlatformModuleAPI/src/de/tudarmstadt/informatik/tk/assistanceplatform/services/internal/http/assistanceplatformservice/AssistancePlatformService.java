@@ -5,6 +5,7 @@ import retrofit.http.Body;
 import retrofit.http.POST;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleLocalizationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
 
 public interface AssistancePlatformService {
 	@POST("/modules/register")
@@ -15,4 +16,7 @@ public interface AssistancePlatformService {
 	
 	@POST("/modules/localize")
 	void localize(@Body ModuleLocalizationRequest body, Callback<Void> callback);
+	
+	@POST("/action/sendmessage")
+	void sendMessage(@Body SendMessageRequest body, Callback<Void> callback);
 }

@@ -13,8 +13,11 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.Pl
 class ModuleBundleRegistrator {
 	private final ModuleBundle bundle;
 	
-	public ModuleBundleRegistrator(ModuleBundle bundle) {
+	private PlatformClient client;
+	
+	public ModuleBundleRegistrator(ModuleBundle bundle, PlatformClient platformClient) {
 		this.bundle = bundle;
+		this.client = platformClient;
 	}
 	
 	public void startPeriodicRegistration() {
@@ -38,8 +41,6 @@ class ModuleBundleRegistrator {
 		if(bundleInfo == null) {
 			throw new ModuleBundleInformationMissingException("getBundleInformation() has to be properly implemented.");
 		}
-		
-		PlatformClient client = new PlatformClient(bundle.getPlatformUrlAndPort());
 		
 		Consumer<Void> onSuccess = (v) -> {
 			client.localizeModule(bundle, (v2) -> {

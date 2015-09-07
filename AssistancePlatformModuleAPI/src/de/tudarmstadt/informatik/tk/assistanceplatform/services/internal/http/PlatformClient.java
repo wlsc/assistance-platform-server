@@ -19,6 +19,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.modules.ModuleBundleInfor
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.AssistancePlatformService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleLocalizationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
 
 public class PlatformClient {
 	private final static Logger logger = Logger.getLogger(PlatformClient.class);
@@ -29,6 +30,26 @@ public class PlatformClient {
 		RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://" + urlAndPort).build();
 		
 		service = restAdapter.create(AssistancePlatformService.class);
+	}
+	
+	public void sendMessage(SendMessageRequest request, Consumer<Void> onSuccess, Consumer<Void> onError) {
+		Callback<Void> callback = new Callback<Void>() {
+
+			@Override
+			public void failure(RetrofitError error) {
+				logger.warn("Failed to send action request " + errorFromRetrofit(error));
+				onError.accept(null);
+			}
+
+			@Override
+			public void success(Void arg0, Response arg1) {
+				logger.info("Successfully registered module on platform");
+				
+				onSuccess.accept(null);
+			}
+		};
+		
+		service.sendMessage(request, callback);
 	}
 	
 	public void registerModule(ModuleBundle bundle, Consumer<Void> onSuccess, Consumer<Void> onError, boolean tryUpdateOnFailure) {		

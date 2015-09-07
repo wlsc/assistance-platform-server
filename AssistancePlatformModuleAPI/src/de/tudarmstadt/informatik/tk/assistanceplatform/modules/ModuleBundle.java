@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.IMessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
@@ -21,9 +22,9 @@ public abstract class ModuleBundle {
 	
 	private IUserActivationChecker userActivationListChecker;
 	
-	private String platformUrlAndPort;
-	
 	private IClientActionRunner actionRunner;
+	
+	private PlatformClient platformClient;
 
 	/**
 	 * Starts the module and sets the required parameters
@@ -32,12 +33,12 @@ public abstract class ModuleBundle {
 	 * @param userActivationListChecker
 	 * @param actionRunner
 	 */
-	public void bootstrapBundle(String platformUrlAndPort, IMessagingService messagingService, IUserActivationChecker userActivationListChecker, IClientActionRunner actionRunner) {
-		this.platformUrlAndPort = platformUrlAndPort;
-		
+	public void bootstrapBundle(IMessagingService messagingService, IUserActivationChecker userActivationListChecker, PlatformClient platformClient, IClientActionRunner actionRunner) {
 		this.actionRunner = actionRunner;
 		
 		this.userActivationListChecker = userActivationListChecker;
+		
+		this.platformClient = platformClient;
 		
 		this.containedModules = initializeContainedModules();
 		
@@ -61,7 +62,7 @@ public abstract class ModuleBundle {
 	}
 	
 	private void registerBundle() {
-		ModuleBundleRegistrator registrator = new ModuleBundleRegistrator(this);
+		ModuleBundleRegistrator registrator = new ModuleBundleRegistrator(this, platformClient);
 		
 		try {
 			registrator.registerBundleForUsage(true);
@@ -70,10 +71,6 @@ public abstract class ModuleBundle {
 		}
 		
 		registrator.startPeriodicRegistration();
-	}
-	
-	public String getPlatformUrlAndPort() {
-		return platformUrlAndPort;
 	}
 
 
