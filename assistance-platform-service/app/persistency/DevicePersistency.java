@@ -3,12 +3,25 @@ package persistency;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.ArrayListHandler;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
+import models.ActiveAssistanceModule;
 import models.Device;
+import play.Logger;
 import play.db.DB;
+import play.libs.Json;
 
 public class DevicePersistency {
-	private static String TABLE_NAME = "devices";
+	private static final String TABLE_NAME = "devices";
+	
+	private static final String ALL_FIELDS = "id, user_id, os, os_version, device_identifier, brand, model, messaging_registration_id";
 	
 	/**
 	 * Creates the specified device. If creation was successfull then the {id} property of the device will be set (greater 0).
@@ -48,8 +61,7 @@ public class DevicePersistency {
 			s.setString(3, device.deviceIdentifier);
 			s.setString(4, device.brand);
 			s.setString(5, device.model);
-			
-			s.setLong(7, device.id);
+			s.setLong(6, device.id);
 			
 			s.executeUpdate();
 		});
@@ -101,6 +113,43 @@ public class DevicePersistency {
 			s.setLong(2, deviceId);
 			
 			return s.executeUpdate() != 0;
+		});
+	}
+	
+	public static Device[] findDevicesById(long[] deviceIds) {
+		return DB.withConnection(conn -> {
+			String idsAsString = Arrays.toString(deviceIds).replaceAll("\\[", "(").replaceAll("\\]", ")");
+			
+			Device[] devices = new QueryRunner()
+			.query(conn, "SELECT " + ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE id IN " + idsAsString, new ArrayListHandler())
+			.stream()
+			.map(array -> {
+				//id, user_id, os, os_version, device_identifier, brand, model, messaging_registration_id
+				
+				Long id = (Long)array[0];
+				
+				Long userId = (Long)array[1];
+
+				
+				String operatingSystem = (String)array[2];
+				
+				
+				String osVersion = (String)array[3];
+				
+				
+				String deviceIdentifier = (String)array[4];
+				
+				String brand = (String)array[5];
+				
+				String model = (String)array[6];
+				
+				String messagingRegistrationId = (String)array[7];
+				
+				return new Device(id, userId, operatingSystem, osVersion, deviceIdentifier, brand, model, messagingRegistrationId);
+			}).toArray(Device[]::new);
+
+			
+			return devices;
 		});
 	}
 }
