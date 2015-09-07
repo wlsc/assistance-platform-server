@@ -18,8 +18,6 @@ public class GCMClientActionSender extends AbstractClientActionSender {
 	private final String apiKey;
 	
 	public GCMClientActionSender(String apiKey) {
-		Logger.debug(apiKey);
-		
 		this.apiKey = apiKey;
 	}
 	
