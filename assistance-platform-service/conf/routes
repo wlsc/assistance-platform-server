@@ -24,13 +24,13 @@ GET		/assistance/list/:lang		controllers.AssistanceController.list(lang)
 POST	/assistance/activate		controllers.AssistanceController.activate
 POST	/assistance/deactivate		controllers.AssistanceController.deactivate
 
-# Module API
+# Module API (not intended for client usage!)
 POST	/modules/register			controllers.ModulesController.register
 POST	/modules/localize			controllers.ModulesController.localize
 POST	/modules/update				controllers.ModulesController.update
 POST	/modules/alive				controllers.ModulesController.alive
 
-# Client Action API
+# Client Action API (not intended for client usage!)
 POST 	/action/sendmessage			controllers.ClientActionController.sendMessageToDevices
 
 # Map static resources from the /public folder to the /assets URL path
