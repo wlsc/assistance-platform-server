@@ -18,7 +18,7 @@ public class GCMClientActionSender extends AbstractClientActionSender {
 	}
 	
 	@Override
-	protected boolean doPlatformSpecificSend(String[] receiverIds, VisibleNotification notification, String data) {
+	public boolean platformSpecificSend(String[] receiverIds, VisibleNotification notification, String data) {
 		
 		WSRequest request = WS.url("https://android.googleapis.com/gcm/send")
 		.setContentType("application/json")
