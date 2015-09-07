@@ -1,4 +1,4 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction;
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest;
 
 public class VisibleNotification {
 	public String title;

@@ -1,6 +1,6 @@
 package requests;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.VisibleNotification;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.VisibleNotification;
 
 /**
  * Simple POJO for a request to the platform which contains information about receiver and data etc. 

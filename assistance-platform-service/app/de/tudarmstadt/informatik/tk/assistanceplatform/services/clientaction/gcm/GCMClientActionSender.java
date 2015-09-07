@@ -11,8 +11,8 @@ import play.libs.Json;
 import play.libs.ws.WS;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.VisibleNotification;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.AbstractClientActionSender;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.VisibleNotification;
 
 public class GCMClientActionSender extends AbstractClientActionSender {
 	private final String apiKey;

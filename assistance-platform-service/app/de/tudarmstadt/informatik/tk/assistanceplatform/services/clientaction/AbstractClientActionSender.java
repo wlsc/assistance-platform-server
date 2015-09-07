@@ -1,5 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.VisibleNotification;
+
 public abstract class AbstractClientActionSender {
 	/**
 	 * Implement this to do the actual sending which is specific to the used
