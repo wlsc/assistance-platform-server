@@ -13,7 +13,7 @@ PUT		/users/profile				controllers.UsersController.updateProfile
 
 # Device management
 GET		/devices/list					controllers.DevicesController.listDevices
-POST	/devices/registerformessaging	controllers.DevicesController.registerDeviceForMessaging
+POST	/devices/register_for_messaging	controllers.DevicesController.registerDeviceForMessaging
 POST	/devices/set_user_defined_name	controllers.DevicesController.setUserDefinedName
 
 # Sensor data
