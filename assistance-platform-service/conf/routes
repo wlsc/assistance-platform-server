@@ -13,6 +13,7 @@ PUT		/users/profile				controllers.UsersController.updateProfile
 
 # Device management
 POST	/devices/registerformessaging	controllers.DevicesController.registerDeviceForMessaging
+GET		/devices/list					controllers.DevicesController.listDevices
 
 # Sensor data
 GET		/sensordata/socket			controllers.SensorDataController.socket

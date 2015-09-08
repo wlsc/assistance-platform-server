@@ -2,8 +2,10 @@ package controllers;
 
 import models.APIErrorException;
 import models.AssistanceAPIErrors;
+import models.Device;
 import persistency.DevicePersistency;
 import play.Logger;
+import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
 import requests.RegisterDeviceForMessagingRequest;
@@ -55,5 +57,16 @@ public class DevicesController extends RestController {
 						AssistanceAPIErrors.deviceIdNotKnown);
 			}
 		}
+	}
+	
+	@Security.Authenticated(UserAuthenticator.class)
+	public Result listDevices() {
+		long userId = getUserIdForRequest();
+		
+		Device[] usersDevices = DevicePersistency.findDevicesOfUser(userId);
+		
+		return ok(Json.toJson(usersDevices));
+		
+		//return TODO;
 	}
 }

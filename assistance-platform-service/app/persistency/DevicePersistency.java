@@ -116,40 +116,47 @@ public class DevicePersistency {
 		});
 	}
 	
+	
+	
 	public static Device[] findDevicesById(long[] deviceIds) {
+		String idsAsString = Arrays.toString(deviceIds).replaceAll("\\[", "(").replaceAll("\\]", ")");
+		return findDevices("WHERE id IN " + idsAsString, null);
+	}
+	
+	public static Device[] findDevicesOfUser(long userId) {
+		return findDevices("WHERE user_id = ?", userId);
+	}
+	
+	private static Device[] findDevices(String where, Object... params) {
 		return DB.withConnection(conn -> {
-			String idsAsString = Arrays.toString(deviceIds).replaceAll("\\[", "(").replaceAll("\\]", ")");
-			
 			Device[] devices = new QueryRunner()
-			.query(conn, "SELECT " + ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE id IN " + idsAsString, new ArrayListHandler())
+			.query(conn, "SELECT " + ALL_FIELDS + " FROM " + TABLE_NAME + " " + where, new ArrayListHandler(), params)
 			.stream()
 			.map(array -> {
-				//id, user_id, os, os_version, device_identifier, brand, model, messaging_registration_id
-				
-				Long id = (Long)array[0];
-				
-				Long userId = (Long)array[1];
-
-				
-				String operatingSystem = (String)array[2];
-				
-				
-				String osVersion = (String)array[3];
-				
-				
-				String deviceIdentifier = (String)array[4];
-				
-				String brand = (String)array[5];
-				
-				String model = (String)array[6];
-				
-				String messagingRegistrationId = (String)array[7];
-				
-				return new Device(id, userId, operatingSystem, osVersion, deviceIdentifier, brand, model, messagingRegistrationId);
+				return convertResultArrayToDevice(array);
 			}).toArray(Device[]::new);
-
 			
 			return devices;
 		});
+	}
+	
+	private static Device convertResultArrayToDevice(Object[] array) {
+		Long id = (Long)array[0];
+		
+		Long userId = (Long)array[1];
+		
+		String operatingSystem = (String)array[2];
+		
+		String osVersion = (String)array[3];
+		
+		String deviceIdentifier = (String)array[4];
+		
+		String brand = (String)array[5];
+		
+		String model = (String)array[6];
+		
+		String messagingRegistrationId = (String)array[7];
+		
+		return new Device(id, userId, operatingSystem, osVersion, deviceIdentifier, brand, model, messagingRegistrationId);
 	}
 }
