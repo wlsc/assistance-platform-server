@@ -2,7 +2,7 @@
  
 # --- !Ups
  
-ALTER TABLE devices ADD COLUMN user_defined_name VARCHAR(50);
+ALTER TABLE devices ADD COLUMN user_defined_name VARCHAR(30);
 ALTER TABLE devices ADD COLUMN last_usage TIMESTAMP;
  
 # --- !Downs

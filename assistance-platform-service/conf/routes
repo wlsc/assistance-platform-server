@@ -12,8 +12,9 @@ GET 	/users/profile/:type		controllers.UsersController.myProfile(type)
 PUT		/users/profile				controllers.UsersController.updateProfile
 
 # Device management
-POST	/devices/registerformessaging	controllers.DevicesController.registerDeviceForMessaging
 GET		/devices/list					controllers.DevicesController.listDevices
+POST	/devices/registerformessaging	controllers.DevicesController.registerDeviceForMessaging
+POST	/devices/set_user_defined_name	controllers.DevicesController.setUserDefinedName
 
 # Sensor data
 GET		/sensordata/socket			controllers.SensorDataController.socket

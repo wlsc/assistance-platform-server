@@ -66,7 +66,46 @@ public class DevicesController extends RestController {
 		Device[] usersDevices = DevicePersistency.findDevicesOfUser(userId);
 		
 		return ok(Json.toJson(usersDevices));
+	}
+	
+	@Security.Authenticated(UserAuthenticator.class)
+	public Result setUserDefinedName() {
+		long userId = getUserIdForRequest();
 		
-		//return TODO;
+		JsonNode jsonRequest = request().body().asJson();
+		
+		long deviceId = -1;
+		
+		try {
+			deviceId = getDeviceId(userId, jsonRequest);
+		} catch (APIErrorException e) {
+			return badRequestJson(e.getError());
+		}
+		
+		String userDefinedName = jsonRequest.path("user_defined_name").asText();
+		
+		if(userDefinedName.length() > 30) {
+			userDefinedName = userDefinedName.substring(0, 30);
+		}
+		
+		if(!DevicePersistency.setUserDefinedName(deviceId, userDefinedName)) {
+			return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+		}
+		
+		return ok();
+	}
+	
+	private long getDeviceId(long userId, JsonNode request) throws APIErrorException {
+		if(!request.has("device_id") && !request.has("user_defined_name")) {
+			throw new APIErrorException(AssistanceAPIErrors.missingParametersGeneral);
+		} else {
+			long deviceId = request.path("device_id").asLong();
+			
+			if(!DevicePersistency.ownedByUser(deviceId, userId)) {
+				throw new APIErrorException(AssistanceAPIErrors.deviceIdNotKnown);
+			}
+			
+			return deviceId;
+		}
 	}
 }

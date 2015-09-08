@@ -21,7 +21,7 @@ import play.libs.Json;
 public class DevicePersistency {
 	private static final String TABLE_NAME = "devices";
 	
-	private static final String ALL_FIELDS = "id, user_id, os, os_version, device_identifier, brand, model, messaging_registration_id";
+	private static final String ALL_FIELDS = "id, user_id, os, os_version, device_identifier, brand, model, messaging_registration_id, user_defined_name";
 	
 	/**
 	 * Creates the specified device. If creation was successfull then the {id} property of the device will be set (greater 0).
@@ -116,7 +116,16 @@ public class DevicePersistency {
 		});
 	}
 	
-	
+	public static boolean setUserDefinedName(long deviceId, String name) {
+		return DB.withConnection(conn -> {
+			PreparedStatement s = conn.prepareStatement(
+					"UPDATE " + TABLE_NAME + " SET user_defined_name = ? WHERE id = ?");
+			s.setString(1, name);
+			s.setLong(2, deviceId);
+			
+			return s.executeUpdate() != 0;
+		});
+	}
 	
 	public static Device[] findDevicesById(long[] deviceIds) {
 		String idsAsString = Arrays.toString(deviceIds).replaceAll("\\[", "(").replaceAll("\\]", ")");
@@ -157,6 +166,8 @@ public class DevicePersistency {
 		
 		String messagingRegistrationId = (String)array[7];
 		
-		return new Device(id, userId, operatingSystem, osVersion, deviceIdentifier, brand, model, messagingRegistrationId);
+		String user_defined_name = (String)array[8];
+		
+		return new Device(id, userId, operatingSystem, osVersion, deviceIdentifier, brand, model, messagingRegistrationId, user_defined_name);
 	}
 }

@@ -27,12 +27,14 @@ public class Device {
 	
 	public String messagingRegistrationId;
 	
+	public String userDefinedName;
+	
 	public Device() {
 	}
 	
 	public Device(Long id, Long userId, String operatingSystem,
 			String osVersion, String device_identifier, String brand,
-			String model, String messagingRegistrationId) {
+			String model, String messagingRegistrationId, String userDefinedName) {
 		this.id = id;
 		this.userId = userId;
 		this.operatingSystem = operatingSystem;
@@ -41,12 +43,13 @@ public class Device {
 		this.brand = brand;
 		this.model = model;
 		this.messagingRegistrationId = messagingRegistrationId;
+		this.userDefinedName = userDefinedName;
 	}
 	
 	public Device(Long userId, String operatingSystem,
 			String osVersion, String device_identifier, String brand,
 			String model) {
-		this(0L, userId, operatingSystem, osVersion, device_identifier, brand, model, null);
+		this(0L, userId, operatingSystem, osVersion, device_identifier, brand, model, null, null);
 	}
 	
 	public Device(Long id, Long userId, String operatingSystem,
