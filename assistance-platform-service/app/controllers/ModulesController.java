@@ -85,6 +85,7 @@ public class ModulesController extends RestController {
 			ActiveAssistanceModule module = new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilites, optionalCapabilities, copyright, administratorEmail, supportEmail);
 			
 			if(func.apply(module) && ActiveAssistanceModulePersistency.setIsAlive(module.id)) {
+				clearCacheForLanguage("en");
 				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das nächste mal "Alive" melden soll
 			}
 			
@@ -151,7 +152,7 @@ public class ModulesController extends RestController {
 			String languageCode = getLanguageCode(postData).textValue();
 			
 			if(ActiveAssistanceModulePersistency.localize(languageCode, module)) {
-				Cache.remove("moduleList" + languageCode);
+				clearCacheForLanguage(languageCode);
 				
 				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das nächste mal "Alive" melden soll
 			}
@@ -160,6 +161,10 @@ public class ModulesController extends RestController {
 		} else {
 			return badRequestJson(AssistanceAPIErrors.missingModuleParameters);
 		}
+	}
+	
+	private void clearCacheForLanguage(String languageCode) {
+		Cache.remove("moduleList" + languageCode);
 	}
 	
 	private boolean areAllRequiredLocalizationParametersPosted(JsonNode postData) {
