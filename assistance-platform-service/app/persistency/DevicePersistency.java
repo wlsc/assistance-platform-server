@@ -3,6 +3,7 @@ package persistency;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import play.libs.Json;
 public class DevicePersistency {
 	private static final String TABLE_NAME = "devices";
 	
-	private static final String ALL_FIELDS = "id, user_id, os, os_version, device_identifier, brand, model, messaging_registration_id, user_defined_name";
+	private static final String ALL_FIELDS = "id, user_id, os, os_version, device_identifier, brand, model, messaging_registration_id, user_defined_name, last_usage";
 	
 	/**
 	 * Creates the specified device. If creation was successfull then the {id} property of the device will be set (greater 0).
@@ -127,9 +128,19 @@ public class DevicePersistency {
 		});
 	}
 	
+	public static boolean updateLastActivityOfDevice(long deviceId) {
+		return DB.withConnection(conn -> {
+			PreparedStatement s = conn.prepareStatement(
+					"UPDATE " + TABLE_NAME + " SET last_usage = CURRENT_TIMESTAMP WHERE id = ?");
+			s.setLong(1, deviceId);
+			
+			return s.executeUpdate() != 0;
+		});
+	}
+	
 	public static Device[] findDevicesById(long[] deviceIds) {
 		String idsAsString = Arrays.toString(deviceIds).replaceAll("\\[", "(").replaceAll("\\]", ")");
-		return findDevices("WHERE id IN " + idsAsString, null);
+		return findDevices("WHERE id IN " + idsAsString, (Object[])null);
 	}
 	
 	public static Device[] findDevicesOfUser(long userId) {
@@ -168,6 +179,9 @@ public class DevicePersistency {
 		
 		String user_defined_name = (String)array[8];
 		
-		return new Device(id, userId, operatingSystem, osVersion, deviceIdentifier, brand, model, messagingRegistrationId, user_defined_name);
+		java.sql.Timestamp timestamp = ((java.sql.Timestamp)array[9]);
+		long lastUsage = timestamp == null ? 0 : timestamp.toInstant().getEpochSecond();
+		
+		return new Device(id, userId, operatingSystem, osVersion, deviceIdentifier, brand, model, messagingRegistrationId, user_defined_name, lastUsage);
 	}
 }

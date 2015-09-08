@@ -55,6 +55,8 @@ public class UsersController extends RestController {
 		Map<String, Object> result = new HashMap<>();
 		result.put("token", token);
 		result.put("device_id", d.id);
+		
+		DevicePersistency.updateLastActivityOfDevice(d.id);
 
 		return ok(result);
 	}
