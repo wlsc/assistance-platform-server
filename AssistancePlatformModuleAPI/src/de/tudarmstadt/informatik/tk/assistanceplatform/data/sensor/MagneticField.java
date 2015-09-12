@@ -7,6 +7,20 @@ public class MagneticField extends SensorData {
     public double y;
     public double z;
     
+    @JsonProperty(value = "xUncalibratedNoHardIron")
+	public double xUncalibratedNoHardIronOptional;
+    @JsonProperty(value = "yUncalibratedNoHardIron")
+    public double yUncalibratedNoHardIronOptional;
+    @JsonProperty(value = "zUncalibratedNoHardIron")
+    public double zUncalibratedNoHardIronOptional;
+    
+    @JsonProperty(value = "xUncalibratedEstimatedIronBias")
+	public double xUncalibratedEstimatedIronBiasOptional;
+    @JsonProperty(value = "yUncalibratedEstimatedIronBias")
+    public double yUncalibratedEstimatedIronBiasOptional;
+    @JsonProperty(value = "zUncalibratedEstimatedIronBias")
+    public double zUncalibratedEstimatedIronBiasOptional;
+    
     @JsonProperty(value = "accuracy")
     public int accuracyOptional;
     
