@@ -21,6 +21,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.Jm
 public class AssistanceController extends RestController {
 	MessagingService ms = new JmsMessagingService();
 	
+	@Security.Authenticated(UserAuthenticator.class)
 	public Result list(
 			String language) {
 	
