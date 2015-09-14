@@ -66,7 +66,6 @@ public class AssistanceController extends RestController {
 		UserModuleActivation activation = new UserModuleActivation(userId, moduleId);
 		
 		if(activationCheck.test(activation)) {
-			// TODO: Event in Event Stream pushen, sodass MOdule Aktivierung mitbekommen
 			publishUserRegistrationInformationEvent(userId, endResultOfRegistrationStatus);
 			
 			return ok(); // TODO: Ggf. noch mal mit der Module ID bestätigen oder sogar die Liste aller aktivierten Module (IDs) zurückgeben?

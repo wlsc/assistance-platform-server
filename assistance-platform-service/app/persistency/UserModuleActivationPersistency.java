@@ -14,7 +14,7 @@ public class UserModuleActivationPersistency {
 		String moduleId = activation.moduleId;
 		
 		if (doesActivationExist(userId, moduleId)) {
-			return false;
+			return true;
 		}
 	
 		return DB.withConnection(conn -> {

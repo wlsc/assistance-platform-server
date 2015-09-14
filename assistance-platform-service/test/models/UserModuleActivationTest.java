@@ -16,7 +16,7 @@ public class UserModuleActivationTest {
     	running(fakeApplication(inMemoryDatabase()), new Runnable() {
     		public void run() {
     			assertTrue(UserModuleActivationPersistency.create(new UserModuleActivation(10L, "xyz")));
-    			assertFalse(UserModuleActivationPersistency.create(new UserModuleActivation(10L, "xyz")));
+    			assertTrue(UserModuleActivationPersistency.create(new UserModuleActivation(10L, "xyz")));
     		}
     	});
     }
