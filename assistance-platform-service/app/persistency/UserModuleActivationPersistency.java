@@ -3,8 +3,14 @@ package persistency;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.ArrayListHandler;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
+import models.ActiveAssistanceModule;
 import models.UserModuleActivation;
 import play.db.DB;
+import play.libs.Json;
 
 public class UserModuleActivationPersistency {
 	private static String TABLE_NAME = "users_modules";
@@ -70,5 +76,22 @@ public class UserModuleActivationPersistency {
 	
 	public static boolean doesActivationExist(UserModuleActivation activation) {
 		return doesActivationExist(activation.userId, activation.moduleId);
+	}
+	
+	public static String[] activatedModuleIdsForUser(long userId) {
+		return DB.withConnection(conn -> {
+
+			String[] modules = new QueryRunner()
+			.query(conn, "SELECT module_id FROM " + TABLE_NAME + " WHERE user_id = ?", new ArrayListHandler(), userId)
+			.stream()
+			.map(array -> {
+				String module = (String)array[0];
+				
+				return module;
+			}).toArray(String[]::new);
+
+			
+			return modules;
+		});
 	}
 }

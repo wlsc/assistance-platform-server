@@ -36,6 +36,15 @@ public class AssistanceController extends RestController {
 	}
 	
 	@Security.Authenticated(UserAuthenticator.class)
+	public Result activations() {
+		Long userId = getUserIdForRequest();
+		
+		String[] result = UserModuleActivationPersistency.activatedModuleIdsForUser(userId);
+		
+		return ok(Json.toJson(result));
+	}
+	
+	@Security.Authenticated(UserAuthenticator.class)
 	public Result activate() {
 		return handleActivationStatusChange((a) -> {
 			return UserModuleActivationPersistency.create(a);
