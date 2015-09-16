@@ -15,10 +15,14 @@ public abstract class Module {
 	public Module() {
 	}
 	
+	public final void setMessagingService(IMessagingService messagingService) {
+		this.messagingService = messagingService;
+	}
+	
 	/**
 	 * NEVER! call this method, this method gets called by the API.
 	 */
-	public final void start(IMessagingService messagingService) {
+	public final void start() {
 		doBeforeStartup();
 		subscribeRegisteredEventsAndSetMessagingService(messagingService);
 		doAfterStartup();

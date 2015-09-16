@@ -51,12 +51,14 @@ public abstract class ModuleBundle {
 		ExecutorService executor = Executors.newCachedThreadPool();
 		
 		for(Module m : containedModules) {
+			m.setMessagingService(messagingService);
+			
 			executor.submit(() -> { 
 				if(m instanceof AssistanceModule) {
 					((AssistanceModule) m).setActionRunner(actionRunner);
 				}
 				
-				m.start(messagingService);
+				m.start();
 			});
 		}
 	}
