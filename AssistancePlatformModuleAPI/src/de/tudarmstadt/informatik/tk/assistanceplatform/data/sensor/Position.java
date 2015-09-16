@@ -43,21 +43,24 @@ public class Position extends SensorData {
 	}
 	
 	public double distance(Position pos2) {
+	    return distance(this.latitude, this.longitude, pos2.latitude, pos2.longitude);
+	    //distance = Math.pow(distance, 2);
 
+	   // return Math.sqrt(distance);
+	}
+	
+	public static double distance(double latPos1, double longPos1, double latPos2, double longPos2) {
 	    final int R = 6371; // Radius of the earth
 
-	    Double latDistance = Math.toRadians(pos2.latitude - this.latitude);
-	    Double lonDistance = Math.toRadians(pos2.longitude - this.longitude);
+	    Double latDistance = Math.toRadians(latPos2 - latPos1);
+	    Double lonDistance = Math.toRadians(longPos2 - longPos1);
 	    Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-	            + Math.cos(Math.toRadians(this.latitude)) * Math.cos(Math.toRadians(pos2.latitude))
+	            + Math.cos(Math.toRadians(latPos1)) * Math.cos(Math.toRadians(latPos2))
 	            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
 	    Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 	    double distance = R * c * 1000; // convert to meters
 
 	    return distance;
-	    //distance = Math.pow(distance, 2);
-
-	   // return Math.sqrt(distance);
 	}
 
 	@Override
