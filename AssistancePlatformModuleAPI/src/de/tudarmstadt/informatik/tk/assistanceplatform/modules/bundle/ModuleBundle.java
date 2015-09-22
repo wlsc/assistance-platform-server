@@ -6,9 +6,11 @@ import java.util.concurrent.Executors;
 import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.AssistanceModule;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.DataModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.data.spark.ISparkService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.IMessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
@@ -27,6 +29,8 @@ public abstract class ModuleBundle {
 	private IClientActionRunner actionRunner;
 	
 	private PlatformClient platformClient;
+	
+	private ISparkService sparkService;
 
 	/**
 	 * Starts the module and sets the required parameters
@@ -35,12 +39,14 @@ public abstract class ModuleBundle {
 	 * @param userActivationListChecker
 	 * @param actionRunner
 	 */
-	public void bootstrapBundle(IMessagingService messagingService, IUserActivationChecker userActivationListChecker, PlatformClient platformClient, IClientActionRunner actionRunner) {
+	public void bootstrapBundle(IMessagingService messagingService, IUserActivationChecker userActivationListChecker, PlatformClient platformClient, IClientActionRunner actionRunner, ISparkService sparkService) {
 		this.actionRunner = actionRunner;
 		
 		this.userActivationListChecker = userActivationListChecker;
 		
 		this.platformClient = platformClient;
+		
+		this.sparkService = sparkService;
 		
 		this.containedModules = initializeContainedModules();
 		
@@ -58,6 +64,8 @@ public abstract class ModuleBundle {
 			executor.submit(() -> { 
 				if(m instanceof AssistanceModule) {
 					((AssistanceModule) m).setActionRunner(actionRunner);
+				} else if(m instanceof DataModule) {
+					((DataModule) m).setSparkService(sparkService);
 				}
 				
 				m.start();
