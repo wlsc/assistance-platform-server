@@ -1,7 +1,9 @@
 package controllers;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import models.APIError;
@@ -161,6 +163,15 @@ public class ModulesController extends RestController {
 		} else {
 			return badRequestJson(AssistanceAPIErrors.missingModuleParameters);
 		}
+	}
+	
+	public Result bootstrapConfiguration() {
+		Map<String, Object> result = new HashMap<>();
+		
+		result.put("spark_master", "spark://Bennets-MBP:7077");
+		//result.put("broker_url", "spark://Bennets-MBP:7077");
+		
+		return ok(result);
 	}
 	
 	private void clearCacheForLanguage(String languageCode) {
