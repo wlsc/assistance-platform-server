@@ -2,7 +2,7 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest;
 
 import java.util.function.Consumer;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.ModuleBundle;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundle;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 
 public class ModuleBundleClientActionRunnerProxy implements IClientActionRunner {

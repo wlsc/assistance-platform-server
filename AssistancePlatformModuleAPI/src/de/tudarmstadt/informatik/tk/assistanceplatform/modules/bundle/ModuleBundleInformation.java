@@ -1,9 +1,11 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 
 public class ModuleBundleInformation {
 	/**

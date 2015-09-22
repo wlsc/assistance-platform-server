@@ -1,4 +1,4 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

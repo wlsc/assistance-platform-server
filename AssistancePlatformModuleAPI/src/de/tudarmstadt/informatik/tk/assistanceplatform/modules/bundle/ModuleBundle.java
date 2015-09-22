@@ -1,10 +1,12 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.AssistanceModule;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;

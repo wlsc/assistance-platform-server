@@ -1,4 +1,4 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle;
 
 public class LocalizedModuleBundleInformation {
 	public LocalizedModuleBundleInformation(String name, String logoUrl,
