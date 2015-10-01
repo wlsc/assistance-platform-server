@@ -22,6 +22,7 @@ public class LabelAction extends SensorData {
 	public boolean isModified;
 	public boolean isRemoved;
 	public boolean isUserCreated;
+	public String referenceSplitUUID;
 	public String referenceMergeUUID;
 	
 	public LabelAction() {
