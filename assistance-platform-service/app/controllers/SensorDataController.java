@@ -37,6 +37,7 @@ public class SensorDataController extends RestController {
 		return ok();
 	}
 
+	///// START WEBSOCKET DEPRECATED
 	public WebSocket<JsonNode> socket() {
 		return WebSocket.whenReady((in, out) -> {
 	        // For each event received on the socket,
@@ -68,6 +69,7 @@ public class SensorDataController extends RestController {
 			out.close();
 		}
 	}
+	///// END WEBSOCKET DEPRECATED
 	
 	private APIError handleSensorData(JsonNode json, long userID) {
 		long deviceID;
@@ -92,7 +94,10 @@ public class SensorDataController extends RestController {
 				String type = sensorReading.path("type").asText();
 				
 				try {
-					processSensorReading(type, deviceID, userID, sensorReading);
+					boolean processingResult = processSensorReading(type, deviceID, userID, sensorReading);
+					if(!processingResult) {
+						return AssistanceAPIErrors.unknownInternalServerError;
+					}
 				} catch (JsonProcessingException e) {
 					Logger.warn("Error processing json", e);
 					return AssistanceAPIErrors.invalidParametersGeneral;
@@ -123,7 +128,7 @@ public class SensorDataController extends RestController {
 		return deviceID;
 	}
 	
-	private <T extends SensorData> void processSensorReading(String type, long deviceID, long userID, JsonNode reading) throws JsonProcessingException, DateTimeParseException {
+	private <T extends SensorData> boolean processSensorReading(String type, long deviceID, long userID, JsonNode reading) throws JsonProcessingException, DateTimeParseException {
 		JsonToSensorEventConversion sensorConversion = new JsonToSensorEventConversion();
 		
 		Class<T> classType = JsonToSensorEventConversion.mapTypeToClass(type);
@@ -135,7 +140,8 @@ public class SensorDataController extends RestController {
 			
 			setUserIdForSensorReading(userID, eventObject);
 		
-			distributeSensorReading(eventObject, classType);
+			// TODO: Optimierung: Das hier mittels AKA durchführen
+			return distributeSensorReading(eventObject, classType);
 		} catch(DateTimeParseException e) {
 			throw(e);
 		}
@@ -149,8 +155,8 @@ public class SensorDataController extends RestController {
 		data.userId = userId;
 	}
 	
-	private <T> void distributeSensorReading(T reading, Class<T> targetClass) {
-		ms.channel(targetClass).publish(reading);
+	private <T> boolean distributeSensorReading(T reading, Class<T> targetClass) {
+		return ms.channel(targetClass).publish(reading);
 	}
 	
 	private String extractToken(JsonNode json) {
