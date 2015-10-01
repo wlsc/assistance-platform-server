@@ -16,13 +16,17 @@ public class DeviceTest {
     	running(fakeApplication(inMemoryDatabase()), new Runnable() {
     		public void run() {
     			Device d = new Device(123L, "test", "1.0", "xyz", "TEST", "Tester");
-    			DevicePersistency.create(d);
+    			DevicePersistency.createIfNotExists(d);
     			
     			assertTrue(d.id != 0);
     			
     			Device[] devices = DevicePersistency.findDevicesById(new long[] { d.id });
     			
     			assertTrue(devices[0].equals(d));
+    			
+    			DevicePersistency.createIfNotExists(d);
+    			
+    			assertTrue(devices[0].id.equals(d.id));
     		}
     	});
     }
@@ -37,7 +41,7 @@ public class DeviceTest {
     			
     			for(int i = 0; i < numOfDevices; i++) {
     				Device d = new Device((long)123 + i, "test" + i, "1.0" + i, "xyz" + i, "TEST" + i, "Tester" + i);
-    				DevicePersistency.create(d);
+    				DevicePersistency.createIfNotExists(d);
     				assertTrue(d.id != 0);
     				assertTrue(DevicePersistency.doesExist(d.id));
     				assertFalse(DevicePersistency.doesExist(d.id + numOfDevices * 2));
@@ -60,7 +64,7 @@ public class DeviceTest {
     	running(fakeApplication(inMemoryDatabase()), new Runnable() {
     		public void run() {
     			Device d = new Device(123L, "test", "1.0", "xyz", "TEST", "Tester");
-    			DevicePersistency.create(d);
+    			DevicePersistency.createIfNotExists(d);
     			
     			d.model = "abc";
     			DevicePersistency.update(d);
@@ -77,7 +81,7 @@ public class DeviceTest {
     	running(fakeApplication(inMemoryDatabase()), new Runnable() {
     		public void run() {
     			Device d = new Device(123L, "test", "1.0", "xyz", "TEST", "Tester");
-    			DevicePersistency.create(d);
+    			DevicePersistency.createIfNotExists(d);
     			Device[] devices = DevicePersistency.findDevicesById(new long[] { d.id });
     			assertTrue(devices[0].messagingRegistrationId == null);
     			

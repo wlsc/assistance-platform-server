@@ -31,18 +31,20 @@ public class UsersController extends RestController {
 			return badRequestJson(AssistanceAPIErrors.badAuthenciationData);
 		}
 		
+		JsonNode postData = request().body().asJson();
+		
+		// Find User  and update last login
 		User u = UserPersistency.findUserByEmail(mail, false);
 		UserPersistency.updateLastLogin(u.id);
 		
-		JsonNode postData = request().body().asJson();
-		
+		// Check and process device information
 		Device d = readDeviceInfos(postData);
-
+		
 		if(d == null) {
 			return badRequestJson(AssistanceAPIErrors.missingParametersGeneral);
 		} 
 		
-		d.userId = u.id;
+		d.userId = u.id; // Set user id for device
 		
 		Result updateOrCreateResult = updateOrCreateDeviceInfos(postData, d);
 		
@@ -50,13 +52,15 @@ public class UsersController extends RestController {
 			return updateOrCreateResult;
 		}
 		
+		// Update last activity of device
+		DevicePersistency.updateLastActivityOfDevice(d.id);
+		
+		// Create login token
 		String token = Token.buildToken(u.id, 24).token;
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("token", token);
 		result.put("device_id", d.id);
-		
-		DevicePersistency.updateLastActivityOfDevice(d.id);
 
 		return ok(result);
 	}
@@ -82,16 +86,17 @@ public class UsersController extends RestController {
 	private Result updateOrCreateDeviceInfos(JsonNode postData, Device d) {
 		boolean hasDeviceCreationParameters = hasDeviceCreationParameters(postData);
 		
+		// If no existing ID was passed, than create one
 		if(d.id == 0) {
 			if(!hasDeviceCreationParameters) {
 				return badRequestJson(AssistanceAPIErrors.missingParametersGeneral);
 			}
 			
-			DevicePersistency.create(d);
-		} else {
-			if(hasDeviceCreationParameters) {
+			DevicePersistency.createIfNotExists(d);
+		} else { // If an existing ID was passed
+			if(hasDeviceCreationParameters) { // And a spec was delivered
 				DevicePersistency.update(d);
-			} else if(!DevicePersistency.doesExist(d)) {
+			} else if(!DevicePersistency.doesExist(d)) { // If no spec was delivered
 				return badRequestJson(AssistanceAPIErrors.deviceIdNotKnown);
 			}
 		}
