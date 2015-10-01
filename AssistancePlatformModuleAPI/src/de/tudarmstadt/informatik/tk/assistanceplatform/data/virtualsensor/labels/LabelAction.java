@@ -7,7 +7,9 @@ public class LabelAction extends SensorData {
 	public String startTime;
 	public String endTime;
 	
-	public Location[] locations;
+	public Location startLocation;
+	
+	public Location endLocation;
 	
 	public String[] tags;
 	
