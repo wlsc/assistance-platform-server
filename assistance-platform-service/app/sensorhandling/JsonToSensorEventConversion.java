@@ -20,6 +20,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.MotionActivit
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Position;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.WifiConnection;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.virtualsensor.labels.LabelAction;
 
 /**
  * This class is responsible for converting a sensor reading in JSON representation to the respective Java Sensor Event.
@@ -59,6 +60,7 @@ public class JsonToSensorEventConversion {
 
 	
 	public static Class mapTypeToClass(String type) {
+		// TODO: Kann man das ggf. durch Reflection lösen? Wäre es schneller?
 		Map<String, Class> typeMapping = new HashMap<>();
 		typeMapping.put("position", Position.class);
 		typeMapping.put("gyroscope", Gyroscope.class);
@@ -69,6 +71,7 @@ public class JsonToSensorEventConversion {
 		typeMapping.put("wificonnection", WifiConnection.class);
 		typeMapping.put("mobileconnection", MobileDataConnection.class);
 		typeMapping.put("loudness", Loudness.class);
+		typeMapping.put("label", LabelAction.class);
 		
 		return typeMapping.get(type);
 	}
