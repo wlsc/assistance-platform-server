@@ -47,7 +47,7 @@ public class UserFilteredMessagingServiceDecorator extends MessagingService {
 	}
 
 	@Override
-	protected <T> void publish(Channel<T> channel, T data) {
-		messagingServiceToFilter.publish(channel, data);
+	protected <T> boolean publish(Channel<T> channel, T data) {
+		return messagingServiceToFilter.publish(channel, data);
 	}
 }

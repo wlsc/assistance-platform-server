@@ -32,9 +32,9 @@ public abstract class Module {
 		eventRegistrations.put(type, consumer);
 	}
 	
-	public <T> void emitEvent(T event) {
+	public <T> boolean emitEvent(T event) {
 		Class<T> type = (Class<T>) event.getClass();
-		this.messagingService.channel(type).publish(event);
+		return this.messagingService.channel(type).publish(event);
 	}
 	
 	private void subscribeRegisteredEventsAndSetMessagingService(IMessagingService messagingService) {

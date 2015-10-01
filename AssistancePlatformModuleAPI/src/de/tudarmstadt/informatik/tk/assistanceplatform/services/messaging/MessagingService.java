@@ -49,7 +49,7 @@ public abstract class MessagingService implements IMessagingService {
 	
 	protected abstract <T> void unsubscribe(Consumer<T> consumer, Channel<T> channel);
 	
-	protected abstract <T> void publish(Channel<T> channel, T data);
+	protected abstract <T> boolean publish(Channel<T> channel, T data);
 	
 	protected MessageSerialization getSerializer() {
 		return configuration.getMessageSerialization();

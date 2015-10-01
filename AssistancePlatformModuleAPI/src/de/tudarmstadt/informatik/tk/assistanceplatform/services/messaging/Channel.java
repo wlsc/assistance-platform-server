@@ -31,7 +31,7 @@ public class Channel<T> {
 		this.messagingService.unsubscribe(consumer, this);
 	}
 	
-	public void publish(T data) {
-		this.messagingService.publish(this, data);
+	public boolean publish(T data) {
+		return this.messagingService.publish(this, data);
 	}
 }

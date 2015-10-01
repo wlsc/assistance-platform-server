@@ -113,7 +113,7 @@ public class JmsMessagingService extends MessagingService {
 	}
 
 	@Override
-	protected <T> void publish(Channel<T> channel, T data) {
+	protected <T> boolean publish(Channel<T> channel, T data) {
 		MessageProducer producer = getProducerForChannel(channel);
 		try {
 			byte[] serializedObject = getSerializer().serialize(data);
@@ -124,7 +124,10 @@ public class JmsMessagingService extends MessagingService {
 			producer.send(bm);
 		} catch (JMSException e) {
 			logger.error("JMS message publishing failed", e);
+			return false;
 		}
+		
+		return true;
 	}
 	
 	private MessageProducer getProducerForChannel(Channel channel) {

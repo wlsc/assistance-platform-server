@@ -39,10 +39,11 @@ public class DummyMessagingService extends MessagingService {
 	}
 
 	@Override
-	protected <T> void publish(Channel<T> channel, T data) {
+	protected <T> boolean publish(Channel<T> channel, T data) {
 		Set<Consumer<T>> consumers = getSetForChannel(channel);
 		consumers.forEach((c) -> {
 			notifyConsumer(c, channel, data);
 		});
+		return true;
 	}
 }
