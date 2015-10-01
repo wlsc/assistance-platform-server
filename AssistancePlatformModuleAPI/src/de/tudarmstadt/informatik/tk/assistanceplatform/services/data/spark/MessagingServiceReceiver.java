@@ -19,6 +19,7 @@ public class MessagingServiceReceiver<T> extends Receiver<T> {
 
 	@Override
 	public void onStart() {
+		// TODO: Diesen Initialisierungsteil durch eine Lambda-Closure lösen, sodass auch ein UserFiltered Dings eingefügt werden kann
 		MessagingService s = new JmsMessagingService();
 		
 		this.channel = s.channel(type);
