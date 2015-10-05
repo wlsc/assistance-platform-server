@@ -1,7 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.KryoMessageSerialization;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.MessageSerialization;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.kryo.KryoMessageSerialization;
 
 public class MessagingServiceConfiguration {
 	private MessageSerialization messageSerialization;

@@ -8,7 +8,6 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.Event;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Position;
 
 public class SparkService implements ISparkService {	
 	private final String appName;
