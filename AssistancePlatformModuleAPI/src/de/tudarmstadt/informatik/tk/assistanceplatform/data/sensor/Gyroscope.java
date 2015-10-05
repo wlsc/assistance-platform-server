@@ -1,9 +1,9 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
+@Table(name = "sensor_gyroscope")
 public class Gyroscope extends SensorData {
 	public double x;
     public double y;
@@ -26,6 +26,7 @@ public class Gyroscope extends SensorData {
 	public Gyroscope() {
 		super();
 	}
+	
 	
 	public Gyroscope(long userId, long deviceId, long timestamp, double x, double y, double z) {
 		super(userId, deviceId, timestamp);
@@ -52,6 +53,101 @@ public class Gyroscope extends SensorData {
 		this.yUncalibratedEstimatedDriftOptional = yUncalibratedEstimatedDriftOptional;
 		this.zUncalibratedEstimatedDriftOptional = zUncalibratedEstimatedDriftOptional;
 	}
+	
+	
+
+	public double getX() {
+		return x;
+	}
+
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+
+	public double getY() {
+		return y;
+	}
+
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+
+	public double getZ() {
+		return z;
+	}
+
+
+	public void setZ(double z) {
+		this.z = z;
+	}
+
+
+	public double getXUncalibratedNoDriftOptional() {
+		return xUncalibratedNoDriftOptional;
+	}
+
+
+	public void setXUncalibratedNoDriftOptional(double xUncalibratedNoDriftOptional) {
+		this.xUncalibratedNoDriftOptional = xUncalibratedNoDriftOptional;
+	}
+
+
+	public double getYUncalibratedNoDriftOptional() {
+		return yUncalibratedNoDriftOptional;
+	}
+
+
+	public void setYUncalibratedNoDriftOptional(double yUncalibratedNoDriftOptional) {
+		this.yUncalibratedNoDriftOptional = yUncalibratedNoDriftOptional;
+	}
+
+
+	public double getZUncalibratedNoDriftOptional() {
+		return zUncalibratedNoDriftOptional;
+	}
+
+
+	public void setZUncalibratedNoDriftOptional(double zUncalibratedNoDriftOptional) {
+		this.zUncalibratedNoDriftOptional = zUncalibratedNoDriftOptional;
+	}
+
+
+	public double getXUncalibratedEstimatedDriftOptional() {
+		return xUncalibratedEstimatedDriftOptional;
+	}
+
+
+	public void setXUncalibratedEstimatedDriftOptional(
+			double xUncalibratedEstimatedDriftOptional) {
+		this.xUncalibratedEstimatedDriftOptional = xUncalibratedEstimatedDriftOptional;
+	}
+
+
+	public double getYUncalibratedEstimatedDriftOptional() {
+		return yUncalibratedEstimatedDriftOptional;
+	}
+
+
+	public void setYUncalibratedEstimatedDriftOptional(
+			double yUncalibratedEstimatedDriftOptional) {
+		this.yUncalibratedEstimatedDriftOptional = yUncalibratedEstimatedDriftOptional;
+	}
+
+
+	public double getZUncalibratedEstimatedDriftOptional() {
+		return zUncalibratedEstimatedDriftOptional;
+	}
+
+
+	public void setZUncalibratedEstimatedDriftOptional(
+			double zUncalibratedEstimatedDriftOptional) {
+		this.zUncalibratedEstimatedDriftOptional = zUncalibratedEstimatedDriftOptional;
+	}
+
 
 	@Override
 	public int hashCode() {

@@ -1,6 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.datastax.driver.mapping.annotations.Table;
 
+@Table(name = "sensor_connectionstatus")
 public class ConnectionStatus extends SensorData {
 	public boolean isWifi;
 	public boolean isMobile;
@@ -8,6 +10,32 @@ public class ConnectionStatus extends SensorData {
 	public ConnectionStatus() {
 		super();
 	}
+	
+	
+
+	public boolean getIsWifi() {
+		return isWifi;
+	}
+
+
+
+	public void setIsWifi(boolean isWifi) {
+		this.isWifi = isWifi;
+	}
+
+
+
+	public boolean getIsMobile() {
+		return isMobile;
+	}
+
+
+
+	public void setIsMobile(boolean isMobile) {
+		this.isMobile = isMobile;
+	}
+
+
 
 	@Override
 	public int hashCode() {

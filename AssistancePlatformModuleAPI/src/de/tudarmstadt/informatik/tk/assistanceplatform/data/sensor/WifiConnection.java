@@ -1,7 +1,9 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Table(name = "sensor_wificonnection")
 public class WifiConnection extends SensorData {
 	public String ssid;
 	public String bssid;
@@ -24,6 +26,92 @@ public class WifiConnection extends SensorData {
 	public WifiConnection() {
 		super();
 	}
+	
+	
+
+	public String getSsid() {
+		return ssid;
+	}
+
+
+
+	public void setSsid(String ssid) {
+		this.ssid = ssid;
+	}
+
+
+
+	public String getBssid() {
+		return bssid;
+	}
+
+
+
+	public void setBssid(String bssid) {
+		this.bssid = bssid;
+	}
+
+
+
+	public int getChannelOptional() {
+		return channelOptional;
+	}
+
+
+
+	public void setChannelOptional(int channelOptional) {
+		this.channelOptional = channelOptional;
+	}
+
+
+
+	public int getFrequencyOptional() {
+		return frequencyOptional;
+	}
+
+
+
+	public void setFrequencyOptional(int frequencyOptional) {
+		this.frequencyOptional = frequencyOptional;
+	}
+
+
+
+	public int getLinkSpeedOptional() {
+		return linkSpeedOptional;
+	}
+
+
+
+	public void setLinkSpeedOptional(int linkSpeedOptional) {
+		this.linkSpeedOptional = linkSpeedOptional;
+	}
+
+
+
+	public int getSignalStrenghtOptional() {
+		return signalStrenghtOptional;
+	}
+
+
+
+	public void setSignalStrenghtOptional(int signalStrenghtOptional) {
+		this.signalStrenghtOptional = signalStrenghtOptional;
+	}
+
+
+
+	public int getNetworkIdOptional() {
+		return networkIdOptional;
+	}
+
+
+
+	public void setNetworkIdOptional(int networkIdOptional) {
+		this.networkIdOptional = networkIdOptional;
+	}
+
+
 
 	@Override
 	public int hashCode() {

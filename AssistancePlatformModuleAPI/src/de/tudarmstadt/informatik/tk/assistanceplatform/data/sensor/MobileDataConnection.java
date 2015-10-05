@@ -1,7 +1,9 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Table(name = "sensor_mobileconnection")
 public class MobileDataConnection extends SensorData {
 	public String carriername;
 	public String mobileCarrierCode;
@@ -13,6 +15,56 @@ public class MobileDataConnection extends SensorData {
 	public MobileDataConnection() {
 		super();
 	}
+	
+	
+
+	public String getCarriername() {
+		return carriername;
+	}
+
+
+
+	public void setCarriername(String carriername) {
+		this.carriername = carriername;
+	}
+
+
+
+	public String getMobileCarrierCode() {
+		return mobileCarrierCode;
+	}
+
+
+
+	public void setMobileCarrierCode(String mobileCarrierCode) {
+		this.mobileCarrierCode = mobileCarrierCode;
+	}
+
+
+
+	public String getMobileNetworkCode() {
+		return mobileNetworkCode;
+	}
+
+
+
+	public void setMobileNetworkCode(String mobileNetworkCode) {
+		this.mobileNetworkCode = mobileNetworkCode;
+	}
+
+
+
+	public boolean isVoipAvailableOptional() {
+		return voipAvailableOptional;
+	}
+
+
+
+	public void setVoipAvailableOptional(boolean voipAvailableOptional) {
+		this.voipAvailableOptional = voipAvailableOptional;
+	}
+
+
 
 	@Override
 	public int hashCode() {

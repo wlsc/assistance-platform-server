@@ -1,21 +1,47 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
 import java.time.Instant;
+import java.util.UUID;
+
+import com.datastax.driver.core.utils.UUIDs;
+import com.datastax.driver.mapping.annotations.ClusteringColumn;
 
 
 public abstract class Event {
+	public UUID id;
+	
+	@ClusteringColumn
 	public long timestamp;
 	
 	public Event() {
-		
+		if(id == null) {
+			id = UUIDs.random();
+		}
 	}
 	
 	public Event(long timestamp) {
+		this.id = UUIDs.random();
 		this.timestamp = timestamp;
 	}
 	
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
 	public Instant getTimestampAsInstant() {
 		return Instant.ofEpochMilli(timestamp);
+	}
+
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	@Override

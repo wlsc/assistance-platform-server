@@ -1,7 +1,9 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Table(name = "sensor_accelerometer")
 public class Accelerometer extends SensorData {
     public double x;
     public double y;
@@ -13,10 +15,58 @@ public class Accelerometer extends SensorData {
     @JsonProperty(value = "accuracy")
     public int accuracyOptional;
     
-    
     public Accelerometer() {
     	super();
     }
+    
+    
+
+	public double getX() {
+		return x;
+	}
+
+
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+
+
+	public double getY() {
+		return y;
+	}
+
+
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+
+
+	public double getZ() {
+		return z;
+	}
+
+
+
+	public void setZ(double z) {
+		this.z = z;
+	}
+
+
+
+	public int getAccuracyOptional() {
+		return accuracyOptional;
+	}
+
+
+
+	public void setAccuracyOptional(int accuracyOptional) {
+		this.accuracyOptional = accuracyOptional;
+	}
+
 
 
 	@Override

@@ -1,7 +1,9 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Table(name = "sensor_magneticfield")
 public class MagneticField extends SensorData {
 	public double x;
     public double y;
@@ -33,6 +35,94 @@ public class MagneticField extends SensorData {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+	
+	
+
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public double getZ() {
+		return z;
+	}
+
+	public void setZ(double z) {
+		this.z = z;
+	}
+
+	public double getXUncalibratedNoHardIronOptional() {
+		return xUncalibratedNoHardIronOptional;
+	}
+
+	public void setXUncalibratedNoHardIronOptional(
+			double xUncalibratedNoHardIronOptional) {
+		this.xUncalibratedNoHardIronOptional = xUncalibratedNoHardIronOptional;
+	}
+
+	public double getYUncalibratedNoHardIronOptional() {
+		return yUncalibratedNoHardIronOptional;
+	}
+
+	public void setYUncalibratedNoHardIronOptional(
+			double yUncalibratedNoHardIronOptional) {
+		this.yUncalibratedNoHardIronOptional = yUncalibratedNoHardIronOptional;
+	}
+
+	public double getZUncalibratedNoHardIronOptional() {
+		return zUncalibratedNoHardIronOptional;
+	}
+
+	public void setZUncalibratedNoHardIronOptional(
+			double zUncalibratedNoHardIronOptional) {
+		this.zUncalibratedNoHardIronOptional = zUncalibratedNoHardIronOptional;
+	}
+
+	public double getXUncalibratedEstimatedIronBiasOptional() {
+		return xUncalibratedEstimatedIronBiasOptional;
+	}
+
+	public void setXUncalibratedEstimatedIronBiasOptional(
+			double xUncalibratedEstimatedIronBiasOptional) {
+		this.xUncalibratedEstimatedIronBiasOptional = xUncalibratedEstimatedIronBiasOptional;
+	}
+
+	public double getYUncalibratedEstimatedIronBiasOptional() {
+		return yUncalibratedEstimatedIronBiasOptional;
+	}
+
+	public void setYUncalibratedEstimatedIronBiasOptional(
+			double yUncalibratedEstimatedIronBiasOptional) {
+		this.yUncalibratedEstimatedIronBiasOptional = yUncalibratedEstimatedIronBiasOptional;
+	}
+
+	public double getZUncalibratedEstimatedIronBiasOptional() {
+		return zUncalibratedEstimatedIronBiasOptional;
+	}
+
+	public void setZUncalibratedEstimatedIronBiasOptional(
+			double zUncalibratedEstimatedIronBiasOptional) {
+		this.zUncalibratedEstimatedIronBiasOptional = zUncalibratedEstimatedIronBiasOptional;
+	}
+
+	public int getAccuracyOptional() {
+		return accuracyOptional;
+	}
+
+	public void setAccuracyOptional(int accuracyOptional) {
+		this.accuracyOptional = accuracyOptional;
 	}
 
 	@Override

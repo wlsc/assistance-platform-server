@@ -1,7 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
+import com.datastax.driver.mapping.annotations.Column;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+
 
 public class UserDeviceEvent extends UserEvent {
+	@PartitionKey(1)
+	@Column(name = "device_id")
 	public long deviceId;
 	
 	public UserDeviceEvent() {
@@ -10,6 +15,15 @@ public class UserDeviceEvent extends UserEvent {
 	
 	public UserDeviceEvent(long userId, long deviceId, long timestamp) {
 		super(userId, timestamp);
+		this.deviceId = deviceId;
+	}
+	
+
+	public long getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(long deviceId) {
 		this.deviceId = deviceId;
 	}
 

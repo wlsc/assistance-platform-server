@@ -1,7 +1,9 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Table(name = "sensor_motionactivity")
 public class MotionActivity extends SensorData {	
 	public boolean walking;
 	public boolean running;
@@ -19,6 +21,87 @@ public class MotionActivity extends SensorData {
 	public MotionActivity() {
 		super();
 	}
+
+	
+	public boolean isWalking() {
+		return walking;
+	}
+
+
+	public void setWalking(boolean walking) {
+		this.walking = walking;
+	}
+
+
+	public boolean isRunning() {
+		return running;
+	}
+
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
+
+	public boolean isDriving() {
+		return driving;
+	}
+
+
+	public void setDriving(boolean driving) {
+		this.driving = driving;
+	}
+
+
+	public boolean isStationary() {
+		return stationary;
+	}
+
+
+	public void setStationary(boolean stationary) {
+		this.stationary = stationary;
+	}
+
+
+	public boolean isUnknown() {
+		return unknown;
+	}
+
+
+	public void setUnknown(boolean unknown) {
+		this.unknown = unknown;
+	}
+
+
+	public int getAccuracy() {
+		return accuracy;
+	}
+
+
+	public void setAccuracy(int accuracy) {
+		this.accuracy = accuracy;
+	}
+
+
+	public boolean isOnFootOptional() {
+		return onFootOptional;
+	}
+
+
+	public void setOnFootOptional(boolean onFootOptional) {
+		this.onFootOptional = onFootOptional;
+	}
+
+
+	public boolean isTiltingOptional() {
+		return tiltingOptional;
+	}
+
+
+	public void setTiltingOptional(boolean tiltingOptional) {
+		this.tiltingOptional = tiltingOptional;
+	}
+
 
 	@Override
 	public int hashCode() {

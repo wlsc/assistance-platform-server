@@ -1,12 +1,28 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.datastax.driver.mapping.annotations.Table;
 
+@Table(name = "sensor_loudness")
 public class Loudness extends SensorData {
 	public float loudness;
 	
 	public Loudness() {
 		super();
 	}
+	
+	
+
+	public float getLoudness() {
+		return loudness;
+	}
+
+
+
+	public void setLoudness(float loudness) {
+		this.loudness = loudness;
+	}
+
+
 
 	@Override
 	public int hashCode() {

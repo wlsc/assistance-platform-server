@@ -1,7 +1,9 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Table(name = "sensor_position")
 public class Position extends SensorData {
 	public double latitude;
 	public double longitude;
@@ -61,6 +63,70 @@ public class Position extends SensorData {
 	    double distance = R * c * 1000; // convert to meters
 
 	    return distance;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public double getAccuracyHorizontal() {
+		return accuracyHorizontal;
+	}
+
+	public void setAccuracyHorizontal(double accuracyHorizontal) {
+		this.accuracyHorizontal = accuracyHorizontal;
+	}
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	public double getAltitudeOptional() {
+		return altitudeOptional;
+	}
+
+	public void setAltitudeOptional(double altitudeOptional) {
+		this.altitudeOptional = altitudeOptional;
+	}
+
+	public double getAccuracyVerticalOptional() {
+		return accuracyVerticalOptional;
+	}
+
+	public void setAccuracyVerticalOptional(double accuracyVerticalOptional) {
+		this.accuracyVerticalOptional = accuracyVerticalOptional;
+	}
+
+	public int getCourseOptional() {
+		return courseOptional;
+	}
+
+	public void setCourseOptional(int courseOptional) {
+		this.courseOptional = courseOptional;
+	}
+
+	public int getFloorOptional() {
+		return floorOptional;
+	}
+
+	public void setFloorOptional(int floorOptional) {
+		this.floorOptional = floorOptional;
 	}
 
 	@Override

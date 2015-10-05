@@ -1,15 +1,28 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
+import com.datastax.driver.mapping.annotations.Column;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+
 
 public abstract class UserEvent extends Event {
+	@PartitionKey(0)
+	@Column(name = "user_id")
 	public long userId;
 	
 	public UserEvent() {
-		
 	}
 	
 	public UserEvent(long userId, long timestamp) {
 		super(timestamp);
+		this.userId = userId;
+	}
+	
+	
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 
