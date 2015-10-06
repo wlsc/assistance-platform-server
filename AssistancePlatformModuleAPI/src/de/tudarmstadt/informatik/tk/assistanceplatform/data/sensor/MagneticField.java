@@ -1,6 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
-import java.time.Instant;
 import java.util.Date;
 
 import com.datastax.driver.mapping.annotations.Table;
