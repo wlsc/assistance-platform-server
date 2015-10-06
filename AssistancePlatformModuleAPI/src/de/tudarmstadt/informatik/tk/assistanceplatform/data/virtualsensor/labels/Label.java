@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.virtualsensor.labels;
 
+import java.util.Date;
 import java.util.Set;
 
 import com.datastax.driver.mapping.annotations.Frozen;
@@ -12,8 +13,8 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeName
 @TypeNameForAssistance(name = "label")
 public class Label extends SensorData {
 	public String UUID;
-	public String startTime;
-	public String endTime;
+	public Date startTime;
+	public Date endTime;
 	
 	@Frozen
 	public Location startLocation;
@@ -46,19 +47,19 @@ public class Label extends SensorData {
 		UUID = uUID;
 	}
 
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 
