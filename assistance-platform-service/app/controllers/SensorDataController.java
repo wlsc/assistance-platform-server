@@ -2,10 +2,13 @@ package controllers;
 
 import java.time.format.DateTimeParseException;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import models.APIError;
 import models.APIErrorException;
 import models.AssistanceAPIErrors;
+import persistency.ConfiguredSensorPersistencyProxy;
 import persistency.DevicePersistency;
 import play.Logger;
 import play.libs.Json;
@@ -23,6 +26,8 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.Jm
 
 public class SensorDataController extends RestController {
 	private MessagingService ms = new JmsMessagingService();
+	private ConfiguredSensorPersistencyProxy sensorPersistencyProxy = new ConfiguredSensorPersistencyProxy();
+	private JsonToSensorEventConversion jsonToEvent = new JsonToSensorEventConversion();
 
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result upload() {
@@ -86,29 +91,55 @@ public class SensorDataController extends RestController {
 		JsonNode sensorreadings = json.get("sensorreadings");
 		
 		if(sensorreadings != null && sensorreadings.isArray()) {
-			Iterator<JsonNode> elementIterator = sensorreadings.elements();
-			
-			while(elementIterator.hasNext()) {
-				JsonNode sensorReading = elementIterator.next();
-				
-				String type = sensorReading.path("type").asText();
-				
-				try {
-					boolean processingResult = processSensorReading(type, deviceID, userID, sensorReading);
-					if(!processingResult) {
+			try {
+				List<SensorData> sensorData = convertJsonNodeToSensorData(userID, deviceID, sensorreadings);
+
+				for(SensorData d : sensorData) {
+					boolean result = processSensorReading(d);
+					
+					if(!result) {
 						return AssistanceAPIErrors.unknownInternalServerError;
 					}
-				} catch (JsonProcessingException e) {
-					Logger.warn("Error processing json", e);
-					return AssistanceAPIErrors.invalidParametersGeneral;
-				} catch(DateTimeParseException e) {
-					Logger.warn("Failure on processing created timestamp", e);
-					return AssistanceAPIErrors.invalidParametersGeneral;
 				}
+				
+				boolean result = sensorPersistencyProxy.getSensorDataPersistency().persistMany(sensorData.toArray(new SensorData[sensorData.size()]));
+				
+				if(!result) {
+					return AssistanceAPIErrors.unknownInternalServerError;
+				}
+			} catch (APIErrorException e1) {
+				return e1.getError();
 			}
+
 		}
 		
 		return null;
+	}
+	
+	private List<SensorData> convertJsonNodeToSensorData(long userID, long deviceID, JsonNode sensorreadings) throws APIErrorException {
+		Iterator<JsonNode> elementIterator = sensorreadings.elements();
+		
+		List<SensorData> result = new LinkedList<>();
+		
+		while(elementIterator.hasNext()) {
+			JsonNode sensorReading = elementIterator.next();
+			
+			String type = sensorReading.path("type").asText();
+			
+			
+			try {
+				SensorData data = extractSensorData(type, deviceID, userID, sensorReading);
+				result.add(data);
+			} catch (JsonProcessingException e) {
+				Logger.warn("Error processing json", e);
+				throw new APIErrorException(AssistanceAPIErrors.invalidParametersGeneral);
+			} catch(DateTimeParseException e) {
+				Logger.warn("Failure on processing created timestamp", e);
+				throw new APIErrorException(AssistanceAPIErrors.invalidParametersGeneral);
+			}
+		}
+		
+		return result;
 	}
 	
 	private long processDeviceID(JsonNode json) throws APIErrorException {
@@ -128,20 +159,22 @@ public class SensorDataController extends RestController {
 		return deviceID;
 	}
 	
-	private <T extends SensorData> boolean processSensorReading(String type, long deviceID, long userID, JsonNode reading) throws JsonProcessingException, DateTimeParseException {
-		JsonToSensorEventConversion sensorConversion = new JsonToSensorEventConversion();
-		
-		Class<T> classType = JsonToSensorEventConversion.mapTypeToClass(type);
+	private <T extends SensorData> boolean processSensorReading(T data)  {
+		return distributeSensorReading(data, (Class<T>)data.getClass());
+	}
+	
+	private <T extends SensorData> SensorData extractSensorData(String type, long deviceID, long userID, JsonNode reading) throws JsonProcessingException, DateTimeParseException {
+
+		Class<T> classType = jsonToEvent.mapTypeToClass(type);
 		
 		try {
-			T eventObject = sensorConversion.mapJson(reading, classType);
+			T eventObject = jsonToEvent.mapJson(reading, classType);
 		
 			setDeviceIdForSensorReading(deviceID, eventObject);
 			
 			setUserIdForSensorReading(userID, eventObject);
-		
-			// TODO: Optimierung: Das hier mittels AKA durchführen
-			return distributeSensorReading(eventObject, classType);
+	
+			return eventObject;
 		} catch(DateTimeParseException e) {
 			throw(e);
 		}
@@ -155,7 +188,7 @@ public class SensorDataController extends RestController {
 		data.userId = userId;
 	}
 	
-	private <T> boolean distributeSensorReading(T reading, Class<T> targetClass) {
+	private <T extends SensorData> boolean distributeSensorReading(T reading, Class<T> targetClass) {		
 		return ms.channel(targetClass).publish(reading);
 	}
 	

@@ -6,9 +6,11 @@ import com.datastax.driver.mapping.annotations.Frozen;
 import com.datastax.driver.mapping.annotations.Table;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeNameForAssistance;
 
 @Table(name = "sensor_labelaction")
-public class LabelAction extends SensorData {
+@TypeNameForAssistance(name = "label")
+public class Label extends SensorData {
 	public String UUID;
 	public String startTime;
 	public String endTime;
@@ -33,7 +35,7 @@ public class LabelAction extends SensorData {
 	public String referenceSplitUUID;
 	public String referenceMergeUUID;
 	
-	public LabelAction() {
+	public Label() {
 	}
 
 	public String getUUID() {

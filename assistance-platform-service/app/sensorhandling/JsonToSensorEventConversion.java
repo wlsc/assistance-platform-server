@@ -12,22 +12,15 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Accelerometer;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.ConnectionStatus;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Gyroscope;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Loudness;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.MagneticField;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.MobileDataConnection;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.MotionActivity;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Position;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.WifiConnection;
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.virtualsensor.labels.LabelAction;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.NameToTypeMapper;
 
 /**
  * This class is responsible for converting a sensor reading in JSON representation to the respective Java Sensor Event.
  */
 public class JsonToSensorEventConversion {
+	private NameToTypeMapper typeMapper = new NameToTypeMapper();
+	
 	public <T extends SensorData> T convertJsonToEventObject(String type, JsonNode reading) throws JsonProcessingException {
 		Class<T> targetClass = mapTypeToClass(type);
 		
@@ -61,20 +54,7 @@ public class JsonToSensorEventConversion {
 	}
 
 	
-	public static Class mapTypeToClass(String type) {
-		// TODO: Das ganze durch Annotations / Reflections lösen, dadurch einen "Place of Change" sparen
-		Map<String, Class> typeMapping = new HashMap<>();
-		typeMapping.put("position", Position.class);
-		typeMapping.put("gyroscope", Gyroscope.class);
-		typeMapping.put("accelerometer", Accelerometer.class);
-		typeMapping.put("magneticfield", MagneticField.class);
-		typeMapping.put("motionactivity", MotionActivity.class);
-		typeMapping.put("connection", ConnectionStatus.class);
-		typeMapping.put("wificonnection", WifiConnection.class);
-		typeMapping.put("mobileconnection", MobileDataConnection.class);
-		typeMapping.put("loudness", Loudness.class);
-		typeMapping.put("label", LabelAction.class);
-		
-		return typeMapping.get(type);
+	public Class mapTypeToClass(String type) {
+		return typeMapper.mapTypeToClass(type);
 	}
 }

@@ -3,8 +3,10 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeNameForAssistance;
+
 @Table(name = "sensor_mobileconnection")
-public class MobileDataConnection extends SensorData {
+public class MobileConnection extends SensorData {
 	public String carriername;
 	public String mobileCarrierCode;
 	public String mobileNetworkCode;
@@ -12,7 +14,7 @@ public class MobileDataConnection extends SensorData {
 	@JsonProperty(value = "voipAvailable")
 	public boolean voipAvailableOptional;
 	
-	public MobileDataConnection() {
+	public MobileConnection() {
 		super();
 	}
 	
@@ -92,7 +94,7 @@ public class MobileDataConnection extends SensorData {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MobileDataConnection other = (MobileDataConnection) obj;
+		MobileConnection other = (MobileConnection) obj;
 		if (carriername == null) {
 			if (other.carriername != null)
 				return false;
