@@ -18,6 +18,11 @@ import com.google.common.base.CaseFormat;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 
+/**
+ * This class can be used to create a rough schema for certain (Datastax) annotated POJOs
+ * @author bjeutter
+ *
+ */
 public class CassandraSchemaGenerator {
 	public enum StructureType {
 		TABLE,

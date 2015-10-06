@@ -7,6 +7,11 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+/**
+ * Used to serialize UUIDs for Kryo
+ * @author bjeutter
+ *
+ */
 public class UUIDSerializer extends Serializer<UUID> {
 
 	@Override

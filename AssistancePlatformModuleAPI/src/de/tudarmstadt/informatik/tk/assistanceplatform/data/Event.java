@@ -6,7 +6,11 @@ import java.util.UUID;
 import com.datastax.driver.core.utils.UUIDs;
 import com.datastax.driver.mapping.annotations.ClusteringColumn;
 
+/**
+ * Describes an event by timestamp an an UUID
+ * @author bjeutter
 
+ */
 public abstract class Event {
 	public UUID id;
 	

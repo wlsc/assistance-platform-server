@@ -5,7 +5,11 @@ import java.util.Date;
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 
-
+/**
+ * Extends an UserEvent by adding Device Information
+ * @author bjeutter
+ *
+ */
 public class UserDeviceEvent extends UserEvent {
 	@PartitionKey(1)
 	@Column(name = "device_id")

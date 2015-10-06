@@ -2,6 +2,11 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.seria
 
 import com.google.gson.Gson;
 
+/**
+ * Implements JSON Serialization againts the MessageSerialization interface.
+ * @author bjeutter
+ *
+ */
 public class JsonSerialization implements MessageSerialization {
 
 	@Override

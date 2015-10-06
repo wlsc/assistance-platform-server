@@ -5,6 +5,11 @@ import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Simple console implementation for quick testing of the IClientActionRunner.
+ * @author bjeutter
+ *
+ */
 public class DummyClientActionRunner implements IClientActionRunner {
 
 	@Override

@@ -7,6 +7,11 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+/**
+ * Used to serialize Instants for Kryo
+ * @author bjeutter
+ *
+ */
 public class InstantSerializer extends Serializer<Instant> {
 
 	@Override

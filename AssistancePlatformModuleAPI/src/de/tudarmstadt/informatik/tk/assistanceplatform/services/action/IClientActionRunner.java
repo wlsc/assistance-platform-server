@@ -2,6 +2,11 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.action;
 
 import java.util.function.Consumer;
 
+/**
+ * Describes the functions that can be run against clients, like sending messages etc.
+ * @author bjeutter
+ *
+ */
 public interface IClientActionRunner {
 	void showMessage(long userId, long deviceIds[], String title, String message);
 	

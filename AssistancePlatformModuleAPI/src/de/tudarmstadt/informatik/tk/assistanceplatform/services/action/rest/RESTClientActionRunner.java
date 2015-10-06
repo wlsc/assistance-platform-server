@@ -6,6 +6,11 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientAc
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
 
+/**
+ * Action runner to run actions over the platform via REST Client.
+ * @author bjeutter
+ *
+ */
 public class RESTClientActionRunner implements IClientActionRunner {
 	private PlatformClient platformClient;
 	

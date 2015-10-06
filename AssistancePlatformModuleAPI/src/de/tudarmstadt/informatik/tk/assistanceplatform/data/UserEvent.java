@@ -5,7 +5,11 @@ import java.util.Date;
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 
-
+/**
+ * Extends an Event by adding user specific information
+ * @author bjeutter
+ *
+ */
 public abstract class UserEvent extends Event {
 	@PartitionKey(0)
 	@Column(name = "user_id")

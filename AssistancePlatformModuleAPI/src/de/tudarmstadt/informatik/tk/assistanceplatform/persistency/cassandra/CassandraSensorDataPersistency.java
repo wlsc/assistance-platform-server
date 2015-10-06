@@ -7,6 +7,11 @@ import com.datastax.driver.mapping.MappingManager;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.ISensorDataPersistency;
 
+/**
+ * Implements the sensor data persistency for the explicit Cassandra datatstore
+ * @author bjeutter
+ *
+ */
 public class CassandraSensorDataPersistency implements ISensorDataPersistency {
 	private Session cassandraSession;
 	
