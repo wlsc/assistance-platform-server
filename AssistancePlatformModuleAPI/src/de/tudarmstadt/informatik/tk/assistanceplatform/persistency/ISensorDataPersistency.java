@@ -8,4 +8,6 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
  */
 public interface ISensorDataPersistency {
 	public boolean pesist(SensorData data);
+	
+	public boolean persistMany(SensorData[] data);
 }
