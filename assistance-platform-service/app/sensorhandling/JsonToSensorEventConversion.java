@@ -1,6 +1,7 @@
 package sensorhandling;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,9 +49,9 @@ public class JsonToSensorEventConversion {
 		}
 		
 		try {
-			Instant parsedInstance = Instant.parse(createdNode.asText());
+			OffsetDateTime offsetDateTime = OffsetDateTime.parse(createdNode.asText());
 			
-			mappedObject.timestamp = parsedInstance.getEpochSecond();
+			mappedObject.timestamp = offsetDateTime.toEpochSecond();
 			
 			return mappedObject;
 		} catch(DateTimeParseException ex) {
@@ -60,7 +61,7 @@ public class JsonToSensorEventConversion {
 
 	
 	public static Class mapTypeToClass(String type) {
-		// TODO: Kann man das ggf. durch Reflection lösen? Wäre es schneller?
+		// TODO: Das ganze durch Annotations / Reflections lösen, dadurch einen "Place of Change" sparen
 		Map<String, Class> typeMapping = new HashMap<>();
 		typeMapping.put("position", Position.class);
 		typeMapping.put("gyroscope", Gyroscope.class);
