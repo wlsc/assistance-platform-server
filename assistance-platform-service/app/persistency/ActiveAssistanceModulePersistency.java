@@ -7,11 +7,13 @@ import models.ActiveAssistanceModule;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
+
+import play.db.DB;
+import play.libs.Json;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
-import play.db.DB;
-import play.libs.Json;
 
 public class ActiveAssistanceModulePersistency {
 	private static String TABLE_NAME = "active_modules";

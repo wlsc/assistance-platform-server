@@ -3,14 +3,15 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.gc
 
 import java.util.Arrays;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import play.Logger;
 import play.libs.F.Promise;
 import play.libs.Json;
 import play.libs.ws.WS;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.VisibleNotification;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.AbstractClientActionSender;
 
