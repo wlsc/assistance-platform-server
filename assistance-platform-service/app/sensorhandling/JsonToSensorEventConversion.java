@@ -3,6 +3,7 @@ package sensorhandling;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class JsonToSensorEventConversion {
 		try {
 			OffsetDateTime offsetDateTime = OffsetDateTime.parse(createdNode.asText());
 			
-			mappedObject.timestamp = offsetDateTime.toEpochSecond();
+			mappedObject.timestamp = Date.from(offsetDateTime.toInstant());
 			
 			return mappedObject;
 		} catch(DateTimeParseException ex) {
