@@ -1,5 +1,3 @@
-DROP KEYSPACE assistancedata;
-
 CREATE KEYSPACE assistancedata
   WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
 
