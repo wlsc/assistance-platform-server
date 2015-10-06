@@ -35,8 +35,8 @@ CREATE TYPE location (
 
 CREATE TABLE sensor_labelaction (
 	UUID text,
-	startTime text,
-	endTime text,
+	startTime timestamp,
+	endTime timestamp,
 	startLocation frozen<location>,
 	endLocation frozen<location>,
 	tags set<text>,
