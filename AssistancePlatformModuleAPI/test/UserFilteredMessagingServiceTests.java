@@ -1,6 +1,8 @@
 import static org.junit.Assert.assertEquals;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -38,7 +40,7 @@ public class UserFilteredMessagingServiceTests {
 		
 		for(int i = 0; i < events; i++) {
 			Long userId = i % 2 == 0 ? 2L : 1L; // Every second message is for user 1
-			c.publish(new Position(userId, userId, i, Math.random(), Math.random()));
+			c.publish(new Position(userId, userId, Calendar.getInstance().getTime(), Math.random(), Math.random()));
 		}
 		
 		assertEquals(events / 2, receivedData.size());

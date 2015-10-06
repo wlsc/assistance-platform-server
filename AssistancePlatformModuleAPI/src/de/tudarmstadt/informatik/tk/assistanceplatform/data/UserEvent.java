@@ -1,5 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
+import java.time.Instant;
+import java.util.Date;
+
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 
@@ -12,7 +15,7 @@ public abstract class UserEvent extends Event {
 	public UserEvent() {
 	}
 	
-	public UserEvent(long userId, long timestamp) {
+	public UserEvent(long userId, Date timestamp) {
 		super(timestamp);
 		this.userId = userId;
 	}

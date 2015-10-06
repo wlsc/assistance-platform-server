@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serialization.kryo;
 
 import java.io.ByteArrayOutputStream;
+import java.time.Instant;
 import java.util.UUID;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -22,6 +23,7 @@ public class KryoMessageSerialization implements MessageSerialization {
 			public Kryo create() {
 				Kryo kryo = new Kryo();
 				kryo.addDefaultSerializer(UUID.class, UUIDSerializer.class);
+				kryo.addDefaultSerializer(Instant.class, InstantSerializer.class);
 				// configure kryo instance, customize settings
 				return kryo;
 			}

@@ -1,7 +1,9 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.jms.ConnectionFactory;
@@ -25,7 +27,7 @@ public class JmsTest {
 		ConnectionFactory factory = new ActiveMQConnectionFactory();
 		MessagingService msForConsumer = new JmsMessagingService(factory);
 		
-		Position testData = new Position(123, 321,  1,  9775, 546);
+		Position testData = new Position(123, 321, Calendar.getInstance().getTime(),  9775, 546);
 		
 		Channel<Position> c = msForConsumer.channel("test", Position.class);
 		
@@ -49,7 +51,7 @@ public class JmsTest {
 		channelForPub.publish(testData);
 		
 		for(int i = 0; i < 1000; i++) {
-			c.publish(new Position((long)(Math.random() * 100), (long)(Math.random() * 100),  i, (long)(Math.random() * Integer.MAX_VALUE), i));
+			c.publish(new Position((long)(Math.random() * 100), (long)(Math.random() * 100),  Calendar.getInstance().getTime(), (long)(Math.random() * Integer.MAX_VALUE), i));
 		}
 		
 		Thread.sleep(1000);

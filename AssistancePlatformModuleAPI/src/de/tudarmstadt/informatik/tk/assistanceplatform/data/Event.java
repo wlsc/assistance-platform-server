@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 import com.datastax.driver.core.utils.UUIDs;
@@ -11,7 +12,7 @@ public abstract class Event {
 	public UUID id;
 	
 	@ClusteringColumn
-	public long timestamp;
+	public Date timestamp;
 	
 	public Event() {
 		if(id == null) {
@@ -19,7 +20,7 @@ public abstract class Event {
 		}
 	}
 	
-	public Event(long timestamp) {
+	public Event(Date timestamp) {
 		this.id = UUIDs.random();
 		this.timestamp = timestamp;
 	}
@@ -32,15 +33,11 @@ public abstract class Event {
 		this.id = id;
 	}
 
-	public Instant getTimestampAsInstant() {
-		return Instant.ofEpochMilli(timestamp);
-	}
-
-	public long getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 
@@ -48,7 +45,9 @@ public abstract class Event {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (timestamp ^ (timestamp >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((timestamp == null) ? 0 : timestamp.hashCode());
 		return result;
 	}
 
@@ -61,9 +60,16 @@ public abstract class Event {
 		if (getClass() != obj.getClass())
 			return false;
 		Event other = (Event) obj;
-		if (timestamp != other.timestamp)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (timestamp == null) {
+			if (other.timestamp != null)
+				return false;
+		} else if (!timestamp.equals(other.timestamp))
 			return false;
 		return true;
 	}
-	
 }

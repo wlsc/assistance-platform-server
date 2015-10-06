@@ -202,8 +202,12 @@ public class CassandraSchemaGenerator {
 			case "long":
 				// TODO: Just supports signed longs here, could be quite confusing!
 				return "bigint";
-			case "String[]":
+			case "List<String>":
 				return "list<text>";
+			case "Set<String>":
+				return "set<text>";
+			case "Date":
+				return "timestamp";
 		}
 		
 		if(classToUdtName.containsKey(type)) {

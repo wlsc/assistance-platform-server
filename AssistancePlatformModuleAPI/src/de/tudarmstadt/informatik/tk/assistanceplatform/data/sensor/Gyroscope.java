@@ -1,5 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.time.Instant;
+import java.util.Date;
+
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,7 +31,7 @@ public class Gyroscope extends SensorData {
 	}
 	
 	
-	public Gyroscope(long userId, long deviceId, long timestamp, double x, double y, double z) {
+	public Gyroscope(long userId, long deviceId, Date timestamp, double x, double y, double z) {
 		super(userId, deviceId, timestamp);
 		this.x = x;
 		this.y = y;

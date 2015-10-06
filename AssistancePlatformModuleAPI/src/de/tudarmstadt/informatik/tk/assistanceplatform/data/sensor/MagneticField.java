@@ -1,5 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.time.Instant;
+import java.util.Date;
+
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -30,14 +33,12 @@ public class MagneticField extends SensorData {
 		super();
 	}
 	
-	public MagneticField(long userId, long deviceId, Long timestamp, double x, double y, double z) {
+	public MagneticField(long userId, long deviceId, Date timestamp, double x, double y, double z) {
 		super(userId, deviceId, timestamp);
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
-	
-	
 
 	public double getX() {
 		return x;

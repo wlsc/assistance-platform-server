@@ -1,5 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.time.Instant;
+import java.util.Date;
+
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -38,7 +41,7 @@ public class Position extends SensorData {
 		super();
 	}
 	
-	public Position(long userId, long deviceId, long timestamp, double latitude, double longitude) {
+	public Position(long userId, long deviceId, Date timestamp, double latitude, double longitude) {
 		super(userId, deviceId, timestamp);
 		this.latitude = latitude;
 		this.longitude = longitude;

@@ -1,20 +1,91 @@
+DROP KEYSPACE assistancedata;
+
 CREATE KEYSPACE assistancedata
   WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
 
 USE assistancedata;
 
-CREATE TABLE sensor_wificonnection (
-	ssid text,
-	bssid text,
-	channelOptional int,
-	frequencyOptional int,
-	linkSpeedOptional int,
-	signalStrenghtOptional int,
-	networkIdOptional int,
+CREATE TABLE sensor_motionactivity (
+	walking boolean,
+	running boolean,
+	driving boolean,
+	stationary boolean,
+	unknown boolean,
+	accuracy int,
+	onFootOptional boolean,
+	tiltingOptional boolean,
 	device_id bigint,
 	user_id bigint,
 	id uuid,
-	timestamp bigint,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+);
+
+CREATE TABLE sensor_loudness (
+	loudness float,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+);
+CREATE TYPE location (
+	longitude double,
+	latitude double,
+	accuracy double
+);
+
+CREATE TABLE sensor_labelaction (
+	UUID text,
+	startTime text,
+	endTime text,
+	startLocation frozen<location>,
+	endLocation frozen<location>,
+	tags set<text>,
+	label text,
+	labelClickTime bigint,
+	labelClickIndex int,
+	labelFirstTime text,
+	labelTime text,
+	isStationary boolean,
+	isModified boolean,
+	isRemoved boolean,
+	isUserCreated boolean,
+	referenceSplitUUID text,
+	referenceMergeUUID text,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+);
+
+CREATE TABLE sensor_mobileconnection (
+	carriername text,
+	mobileCarrierCode text,
+	mobileNetworkCode text,
+	voipAvailableOptional boolean,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+);
+
+CREATE TABLE sensor_gyroscope (
+	x double,
+	y double,
+	z double,
+	xUncalibratedNoDriftOptional double,
+	yUncalibratedNoDriftOptional double,
+	zUncalibratedNoDriftOptional double,
+	xUncalibratedEstimatedDriftOptional double,
+	yUncalibratedEstimatedDriftOptional double,
+	zUncalibratedEstimatedDriftOptional double,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 );
 
@@ -24,7 +95,7 @@ CREATE TABLE sensor_connectionstatus (
 	device_id bigint,
 	user_id bigint,
 	id uuid,
-	timestamp bigint,
+	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 );
 
@@ -42,77 +113,7 @@ CREATE TABLE sensor_magneticfield (
 	device_id bigint,
 	user_id bigint,
 	id uuid,
-	timestamp bigint,
-	PRIMARY KEY ((user_id, device_id), timestamp)
-);
-
-CREATE TABLE sensor_motionactivity (
-	walking boolean,
-	running boolean,
-	driving boolean,
-	stationary boolean,
-	unknown boolean,
-	accuracy int,
-	onFootOptional boolean,
-	tiltingOptional boolean,
-	device_id bigint,
-	user_id bigint,
-	id uuid,
-	timestamp bigint,
-	PRIMARY KEY ((user_id, device_id), timestamp)
-);
-
-CREATE TABLE sensor_mobileconnection (
-	carriername text,
-	mobileCarrierCode text,
-	mobileNetworkCode text,
-	voipAvailableOptional boolean,
-	device_id bigint,
-	user_id bigint,
-	id uuid,
-	timestamp bigint,
-	PRIMARY KEY ((user_id, device_id), timestamp)
-);
-CREATE TYPE location (
-	longitude double,
-	latitude double,
-	accuracy double
-);
-
-CREATE TABLE sensor_labelaction (
-	UUID text,
-	startTime text,
-	endTime text,
-	startLocation frozen<location>,
-	endLocation frozen<location>,
-	tags list<text>,
-	label text,
-	labelClickTime bigint,
-	labelClickIndex int,
-	labelFirstTime text,
-	labelTime text,
-	isStationary boolean,
-	isModified boolean,
-	isRemoved boolean,
-	isUserCreated boolean,
-	referenceSplitUUID text,
-	referenceMergeUUID text,
-	device_id bigint,
-	user_id bigint,
-	id uuid,
-	timestamp bigint,
-	PRIMARY KEY ((user_id, device_id), timestamp)
-);
-
-CREATE TABLE sensor_accelerometer (
-	x double,
-	y double,
-	z double,
-	accuracyOptional int,
-	device_id bigint,
-	user_id bigint,
-	id uuid,
-	timestamp bigint,
+	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 );
 
@@ -128,32 +129,34 @@ CREATE TABLE sensor_position (
 	device_id bigint,
 	user_id bigint,
 	id uuid,
-	timestamp bigint,
+	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 );
 
-CREATE TABLE sensor_gyroscope (
+CREATE TABLE sensor_wificonnection (
+	ssid text,
+	bssid text,
+	channelOptional int,
+	frequencyOptional int,
+	linkSpeedOptional int,
+	signalStrenghtOptional int,
+	networkIdOptional int,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+);
+
+CREATE TABLE sensor_accelerometer (
 	x double,
 	y double,
 	z double,
-	xUncalibratedNoDriftOptional double,
-	yUncalibratedNoDriftOptional double,
-	zUncalibratedNoDriftOptional double,
-	xUncalibratedEstimatedDriftOptional double,
-	yUncalibratedEstimatedDriftOptional double,
-	zUncalibratedEstimatedDriftOptional double,
+	accuracyOptional int,
 	device_id bigint,
 	user_id bigint,
 	id uuid,
-	timestamp bigint,
+	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 );
 
-CREATE TABLE sensor_loudness (
-	loudness float,
-	device_id bigint,
-	user_id bigint,
-	id uuid,
-	timestamp bigint,
-	PRIMARY KEY ((user_id, device_id), timestamp)
-);

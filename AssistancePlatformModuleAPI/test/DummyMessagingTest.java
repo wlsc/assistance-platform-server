@@ -1,7 +1,9 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,7 +19,7 @@ public class DummyMessagingTest {
 	public void test() throws Exception {
 		MessagingService ms = new DummyMessagingService();
 
-		Position testData = new Position(1, 123, 1,  9775, 546);
+		Position testData = new Position(1, 123, Calendar.getInstance().getTime(),  9775, 546);
 		
 		Channel<Position> c = ms.channel("test", Position.class);
 		
@@ -38,7 +40,7 @@ public class DummyMessagingTest {
 		int events = 10000;
 		
 		for(int i = 0; i < events; i++) {
-			c.publish(new Position((long)(Math.random() * 100), (long)(Math.random() * 100), i, (long)(Math.random() * Integer.MAX_VALUE), i));
+			c.publish(new Position((long)(Math.random() * 100), (long)(Math.random() * 100), Calendar.getInstance().getTime(), (long)(Math.random() * Integer.MAX_VALUE), i));
 		}
 		
 		assertEquals(events + 1, receivedData.size());

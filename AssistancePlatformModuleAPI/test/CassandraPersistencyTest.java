@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.Set;
 
 import org.junit.Test;
@@ -26,7 +27,9 @@ public class CassandraPersistencyTest {
 		
 		for(Class<? extends SensorData> c : sensorDataClasses) {
 			System.out.println(c.getSimpleName() + " START");
-			persistency.pesist(c.newInstance());
+			SensorData data = c.newInstance();
+			data.timestamp = Calendar.getInstance().getTime();
+			persistency.pesist(data);
 			System.out.println(c.getSimpleName() + " END");
 		}
 	}
