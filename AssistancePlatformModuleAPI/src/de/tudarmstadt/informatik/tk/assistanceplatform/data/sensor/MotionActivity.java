@@ -5,116 +5,89 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_motionactivity")
 public class MotionActivity extends SensorData {	
-	public boolean walking;
-	public boolean running;
-	public boolean driving;
-	public boolean stationary;
-	public boolean unknown;
-	public int accuracy;
+	public int walking;
+	public int running;
+	public int driving;
+	public int stationary;
+	public int unknown;
 	
 	 @JsonProperty(value = "onFoot")
-	public boolean onFootOptional;
+	public int onFootOptional;
 	 
 	 @JsonProperty(value = "tilting")
-	public boolean tiltingOptional;
+	public int tiltingOptional;
 	
 	public MotionActivity() {
 		super();
 	}
 
-	
-	public boolean isWalking() {
+	public int getWalking() {
 		return walking;
 	}
 
-
-	public void setWalking(boolean walking) {
+	public void setWalking(int walking) {
 		this.walking = walking;
 	}
 
-
-	public boolean isRunning() {
+	public int getRunning() {
 		return running;
 	}
 
-
-	public void setRunning(boolean running) {
+	public void setRunning(int running) {
 		this.running = running;
 	}
 
-
-	public boolean isDriving() {
+	public int getDriving() {
 		return driving;
 	}
 
-
-	public void setDriving(boolean driving) {
+	public void setDriving(int driving) {
 		this.driving = driving;
 	}
 
-
-	public boolean isStationary() {
+	public int getStationary() {
 		return stationary;
 	}
 
-
-	public void setStationary(boolean stationary) {
+	public void setStationary(int stationary) {
 		this.stationary = stationary;
 	}
 
-
-	public boolean isUnknown() {
+	public int getUnknown() {
 		return unknown;
 	}
 
-
-	public void setUnknown(boolean unknown) {
+	public void setUnknown(int unknown) {
 		this.unknown = unknown;
 	}
 
-
-	public int getAccuracy() {
-		return accuracy;
-	}
-
-
-	public void setAccuracy(int accuracy) {
-		this.accuracy = accuracy;
-	}
-
-
-	public boolean isOnFootOptional() {
+	public int getOnFootOptional() {
 		return onFootOptional;
 	}
 
-
-	public void setOnFootOptional(boolean onFootOptional) {
+	public void setOnFootOptional(int onFootOptional) {
 		this.onFootOptional = onFootOptional;
 	}
 
-
-	public boolean isTiltingOptional() {
+	public int getTiltingOptional() {
 		return tiltingOptional;
 	}
 
-
-	public void setTiltingOptional(boolean tiltingOptional) {
+	public void setTiltingOptional(int tiltingOptional) {
 		this.tiltingOptional = tiltingOptional;
 	}
-
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + accuracy;
-		result = prime * result + (driving ? 1231 : 1237);
-		result = prime * result + (onFootOptional ? 1231 : 1237);
-		result = prime * result + (running ? 1231 : 1237);
-		result = prime * result + (stationary ? 1231 : 1237);
-		result = prime * result + (tiltingOptional ? 1231 : 1237);
-		result = prime * result + (unknown ? 1231 : 1237);
-		result = prime * result + (walking ? 1231 : 1237);
+		result = prime * result + driving;
+		result = prime * result + onFootOptional;
+		result = prime * result + running;
+		result = prime * result + stationary;
+		result = prime * result + tiltingOptional;
+		result = prime * result + unknown;
+		result = prime * result + walking;
 		return result;
 	}
 
@@ -127,8 +100,6 @@ public class MotionActivity extends SensorData {
 		if (getClass() != obj.getClass())
 			return false;
 		MotionActivity other = (MotionActivity) obj;
-		if (accuracy != other.accuracy)
-			return false;
 		if (driving != other.driving)
 			return false;
 		if (onFootOptional != other.onFootOptional)
