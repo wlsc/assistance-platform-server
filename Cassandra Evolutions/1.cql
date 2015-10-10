@@ -4,14 +4,13 @@ CREATE KEYSPACE assistancedata
 USE assistancedata;
 
 CREATE TABLE sensor_motionactivity (
-	walking boolean,
-	running boolean,
-	driving boolean,
-	stationary boolean,
-	unknown boolean,
-	accuracy int,
-	onFootOptional boolean,
-	tiltingOptional boolean,
+	walking int,
+	running int,
+	driving int,
+	stationary int,
+	unknown int,
+	onFootOptional int,
+	tiltingOptional int,
 	device_id bigint,
 	user_id bigint,
 	id uuid,
@@ -158,3 +157,18 @@ CREATE TABLE sensor_accelerometer (
 	PRIMARY KEY ((user_id, device_id), timestamp)
 );
 
+CREATE TABLE sensor_foreground (
+	packageName text,
+	appName text,
+	className text,
+	activityLabel text,
+	color text,
+	url text,
+	eventType int,
+	keystrokes int,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+);
