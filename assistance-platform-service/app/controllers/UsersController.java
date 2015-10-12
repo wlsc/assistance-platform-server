@@ -10,6 +10,7 @@ import models.User;
 import persistency.DevicePersistency;
 import persistency.UserPersistency;
 import play.Logger;
+import play.libs.F.Promise;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -35,7 +36,6 @@ public class UsersController extends RestController {
 		
 		// Find User  and update last login
 		User u = UserPersistency.findUserByEmail(mail, false);
-		UserPersistency.updateLastLogin(u.id);
 		
 		// Check and process device information
 		Device d = readDeviceInfos(postData);
@@ -52,8 +52,13 @@ public class UsersController extends RestController {
 			return updateOrCreateResult;
 		}
 		
-		// Update last activity of device
-		DevicePersistency.updateLastActivityOfDevice(d.id);
+		// Update last activity of user and device
+		Promise.promise(() -> {
+			UserPersistency.updateLastLogin(u.id);
+			DevicePersistency.updateLastActivityOfDevice(d.id);
+			
+			return null;
+		});
 		
 		// Create login token
 		String token = Token.buildToken(u.id, 24).token;
