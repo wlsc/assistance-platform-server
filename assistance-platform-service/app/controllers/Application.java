@@ -9,8 +9,4 @@ public class Application extends Controller {
        // return ok(index.render("Your new application is ready."));
     	return ok("Your new application is ready.");
     }
-    
-    public Result swagger() {
-    	return ok(views.html.swagger.render());
-    }
 }
