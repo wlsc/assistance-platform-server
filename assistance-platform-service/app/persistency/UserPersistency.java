@@ -42,10 +42,11 @@ public class UserPersistency {
 		});
 	}
 	
-	public static void updateLastLogin(Long id) {
+	public static void updateLastLogin(long id) {
 		DB.withConnection(conn -> {
 			PreparedStatement s = conn.prepareStatement(
-					"UPDATE " + TABLE_NAME + " SET last_login = CURRENT_TIMESTAMP");
+					"UPDATE " + TABLE_NAME + " SET last_login = CURRENT_TIMESTAMP WHERE id = ?");
+			s.setLong(1, id);
 			s.executeUpdate();
 		});
 	}
