@@ -79,7 +79,7 @@ public class SensorDataController extends RestController {
 	private APIError handleSensorData(JsonNode json, long userID) {
 		long deviceID;
 		try {
-			deviceID = processDeviceID(json);
+			deviceID = processDeviceID(json, userID);
 		} catch (APIErrorException e1) {
 			return e1.getError();
 		}
@@ -142,7 +142,7 @@ public class SensorDataController extends RestController {
 		return result;
 	}
 	
-	private long processDeviceID(JsonNode json) throws APIErrorException {
+	private long processDeviceID(JsonNode json, long userID) throws APIErrorException {
 		JsonNode deviceIdNode = json.get("device_id");
 		long deviceID = -1;
 		
@@ -151,7 +151,7 @@ public class SensorDataController extends RestController {
 		} else {
 			deviceID = deviceIdNode.asLong();
 			
-			if(!DevicePersistency.doesExist(deviceID)) {
+			if(!DevicePersistency.ownedByUser(deviceID, userID)) {
 				throw new APIErrorException(AssistanceAPIErrors.deviceIdNotKnown);
 			}
 		}
