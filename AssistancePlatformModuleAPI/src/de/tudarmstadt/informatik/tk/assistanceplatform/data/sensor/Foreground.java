@@ -10,7 +10,7 @@ public class Foreground extends SensorData {
 	public String activityLabel;
 	public String color;
 	public String url;
-	public int eventType;
+	public String eventType;
 	public int keystrokes;
 	
 	public Foreground() {
@@ -65,11 +65,11 @@ public class Foreground extends SensorData {
 		this.url = url;
 	}
 
-	public int getEventType() {
+	public String getEventType() {
 		return eventType;
 	}
 
-	public void setEventType(int eventType) {
+	public void setEventType(String eventType) {
 		this.eventType = eventType;
 	}
 
@@ -91,7 +91,8 @@ public class Foreground extends SensorData {
 		result = prime * result
 				+ ((className == null) ? 0 : className.hashCode());
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
-		result = prime * result + eventType;
+		result = prime * result
+				+ ((eventType == null) ? 0 : eventType.hashCode());
 		result = prime * result + keystrokes;
 		result = prime * result
 				+ ((packageName == null) ? 0 : packageName.hashCode());
@@ -128,7 +129,10 @@ public class Foreground extends SensorData {
 				return false;
 		} else if (!color.equals(other.color))
 			return false;
-		if (eventType != other.eventType)
+		if (eventType == null) {
+			if (other.eventType != null)
+				return false;
+		} else if (!eventType.equals(other.eventType))
 			return false;
 		if (keystrokes != other.keystrokes)
 			return false;
@@ -144,4 +148,6 @@ public class Foreground extends SensorData {
 			return false;
 		return true;
 	}
+
+
 }

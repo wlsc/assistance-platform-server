@@ -164,7 +164,7 @@ CREATE TABLE sensor_foreground (
 	activityLabel text,
 	color text,
 	url text,
-	eventType int,
+	eventType text,
 	keystrokes int,
 	device_id bigint,
 	user_id bigint,
