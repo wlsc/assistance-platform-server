@@ -17,7 +17,7 @@ libraryDependencies ++= Seq(
   evolutions,
   "org.mindrot" % "jbcrypt" % "0.3m",
   "org.postgresql" % "postgresql" % "9.2-1003-jdbc4",
-  "com.nimbusds" % "nimbus-jose-jwt" % "3.6",
+  "com.nimbusds" % "nimbus-jose-jwt" % "4.2",
   "commons-dbutils" % "commons-dbutils" % "1.6",
   "AssistancePlatformModuleAPI" % "AssistancePlatformModuleAPI" % "0.0.1-SNAPSHOT"
 )

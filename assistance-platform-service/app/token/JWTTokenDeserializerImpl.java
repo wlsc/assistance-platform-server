@@ -7,6 +7,7 @@ import play.Logger;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
+import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACVerifier;
 
 public class JWTTokenDeserializerImpl implements TokenDeserializer {
@@ -20,11 +21,12 @@ public class JWTTokenDeserializerImpl implements TokenDeserializer {
 	
 	@Override
 	public String deserialize(String token) {
-		if(verifier == null) {
-			this.verifier = new MACVerifier(secret);
-		}
-		
 		try {
+			if(verifier == null) {
+				this.verifier = new MACVerifier(secret);
+			}
+		
+
 			JWSObject jwsObject = JWSObject.parse(token);
 			if(jwsObject.verify(verifier)) {
 				return jwsObject.getPayload().toString();
@@ -34,7 +36,7 @@ public class JWTTokenDeserializerImpl implements TokenDeserializer {
 		} catch (JOSEException e) {
 			Logger.error("TokenDeserializerImpl", e);
 		} catch (ParseException e) {
-			Logger.error("TokenDeserializerImpl", e);
+			Logger.warn("TokenDeserializerImpl could not parse token with wrong token " + token, e);
 		}
 		
 		return null;

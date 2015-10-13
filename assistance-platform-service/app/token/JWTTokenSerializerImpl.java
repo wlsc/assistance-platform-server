@@ -7,6 +7,7 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
 
@@ -26,11 +27,11 @@ public class JWTTokenSerializerImpl implements TokenSerializer {
 		Payload payloadObj = new Payload(payload);
 		JWSObject jwsObject = new JWSObject(header, payloadObj);
 		
-		if(signer == null) {
-			this.signer = new MACSigner(secret);
-		}
-		
 		try {
+			if(signer == null) {
+				this.signer = new MACSigner(secret);
+			}
+			
 			jwsObject.sign(signer);
 			return jwsObject.serialize();
 		} catch (JOSEException e) {
