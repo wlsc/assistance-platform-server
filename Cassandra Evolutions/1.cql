@@ -16,7 +16,7 @@ CREATE TABLE sensor_motionactivity (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_loudness (
 	loudness float,
@@ -25,7 +25,7 @@ CREATE TABLE sensor_loudness (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 CREATE TYPE location (
 	longitude double,
 	latitude double,
@@ -55,7 +55,7 @@ CREATE TABLE sensor_labelaction (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_mobileconnection (
 	carriername text,
@@ -67,7 +67,7 @@ CREATE TABLE sensor_mobileconnection (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_gyroscope (
 	x double,
@@ -84,7 +84,7 @@ CREATE TABLE sensor_gyroscope (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_connectionstatus (
 	isWifi boolean,
@@ -94,7 +94,7 @@ CREATE TABLE sensor_connectionstatus (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_magneticfield (
 	x double,
@@ -112,7 +112,7 @@ CREATE TABLE sensor_magneticfield (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_position (
 	latitude double,
@@ -128,7 +128,7 @@ CREATE TABLE sensor_position (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_wificonnection (
 	ssid text,
@@ -143,7 +143,7 @@ CREATE TABLE sensor_wificonnection (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_accelerometer (
 	x double,
@@ -155,7 +155,7 @@ CREATE TABLE sensor_accelerometer (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_foreground (
 	packageName text,
@@ -171,4 +171,4 @@ CREATE TABLE sensor_foreground (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
-);
+) WITH CLUSTERING ORDER BY(timestamp DESC);
