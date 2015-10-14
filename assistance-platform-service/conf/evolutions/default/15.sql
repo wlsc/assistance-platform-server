@@ -2,7 +2,7 @@
  
 # --- !Ups
 
-CREATE UNIQUE INDEX devices_user on devices (user_id);
+CREATE INDEX devices_user on devices (user_id);
  
 # --- !Downs
  
