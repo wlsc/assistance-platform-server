@@ -1,11 +1,20 @@
 import java.util.concurrent.TimeUnit;
 
+import models.APIError;
+import controllers.RestController;
 import scala.concurrent.duration.Duration;
+import views.html.defaultpages.badRequest;
 import periodic.ModuleAliveChecker;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import play.libs.Akka;
+import play.libs.F.Promise;
+import play.mvc.Http.RequestHeader;
+import play.libs.F;
+import play.mvc.*;
+import play.mvc.Http.*;
+import play.mvc.Results;
 
 public class Global extends GlobalSettings {
 	@Override
@@ -27,4 +36,27 @@ public class Global extends GlobalSettings {
 	                Akka.system().dispatcher()
 		    	);
 	  }
+
+	@Override
+    public Promise<play.mvc.Result> onError(RequestHeader request, Throwable t) {
+		return F.Promise.promise(() -> {
+			return play.mvc.Results.internalServerError(
+					RestController.errorInJson( new APIError(0, t.getMessage())));
+		});
+    }
+    
+    @Override
+    public Promise<play.mvc.Result> onHandlerNotFound(RequestHeader request) {
+    	return F.Promise.promise(() -> {
+    		return play.mvc.Results.badRequest(
+        		RestController.errorInJson(new APIError(0, "Handler not found. Invalid route.")));
+    	});
+    }
+
+    @Override
+    public Promise<play.mvc.Result> onBadRequest(RequestHeader request, String error) {
+    	return F.Promise.promise(() -> {
+    		return play.mvc.Results.badRequest(RestController.errorInJson(new APIError(0, error)));
+    	});
+    }
 }

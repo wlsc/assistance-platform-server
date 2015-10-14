@@ -1,5 +1,6 @@
 package controllers;
 
+import models.APIError;
 import models.Token;
 import models.User;
 import persistency.UserPersistency;
@@ -53,7 +54,7 @@ public class UserAuthenticator extends Security.Authenticator {
 
 	@Override
 	public Result onUnauthorized(Http.Context context) {
-		return super.onUnauthorized(context);
+		return unauthorized(RestController.errorInJson(new APIError(1, "Unauthorized")));
 	}
 
 	private String getTokenFromHeader(Http.Context ctx) {

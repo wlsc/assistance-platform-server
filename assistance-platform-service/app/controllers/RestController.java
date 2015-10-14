@@ -19,7 +19,7 @@ public abstract class RestController extends Controller {
 		return ok(mappedJson(map));
 	}
 	
-	private JsonNode mappedJson(Map<String, Object> map) {
+	public static JsonNode mappedJson(Map<String, Object> map) {
 		return Json.toJson(map);
 	}
 	
@@ -31,8 +31,7 @@ public abstract class RestController extends Controller {
 		return internalServerError(errorInJson(error));
 	}
 	
-	
-	private JsonNode errorInJson(APIError error) {
+	public static JsonNode errorInJson(APIError error) {
 		return Json.toJson(error);
 	}
 }
