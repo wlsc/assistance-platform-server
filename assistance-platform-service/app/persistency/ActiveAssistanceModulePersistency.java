@@ -45,12 +45,10 @@ public class ActiveAssistanceModulePersistency {
 			s.setString(10, module.supportEmail);
 			
 			int affectedRows = s.executeUpdate();
-	
-			if (affectedRows != 0) {
-				return true;
-			}
 			
-			return false;
+			s.close();
+	
+			return affectedRows != 0;
 		});
 	}
 	
@@ -79,12 +77,10 @@ public class ActiveAssistanceModulePersistency {
 			s.setString(10, module.id);
 			
 			int affectedRows = s.executeUpdate();
-	
-			if (affectedRows != 0) {
-				return true;
-			}
 			
-			return false;
+			s.close();
+	
+			return affectedRows != 0;
 		});
 	}
 	
@@ -100,12 +96,10 @@ public class ActiveAssistanceModulePersistency {
 			s.setString(1, moduleId);
 			
 			int affectedRows = s.executeUpdate();
-	
-			if (affectedRows != 0) {
-				return true;
-			}
 			
-			return false;
+			s.close();
+	
+			return affectedRows != 0;
 		});
 	}
 	
@@ -135,12 +129,10 @@ public class ActiveAssistanceModulePersistency {
 			s.setString(6, module.descriptionLong);
 			
 			int affectedRows = s.executeUpdate();
-	
-			if (affectedRows != 0) {
-				return true;
-			}
 			
-			return false;
+			s.close();
+	
+			return affectedRows != 0;
 		});
 	}
 	
@@ -149,9 +141,14 @@ public class ActiveAssistanceModulePersistency {
 			PreparedStatement s = conn
 					.prepareStatement("SELECT id FROM " + TABLE_NAME + " WHERE id = ?");
 			s.setString(1, id);
+			
 			ResultSet result = s.executeQuery();
-	
-			return result != null && result.next();
+			boolean returnResult = result != null && result.next();
+			
+			s.close();
+			result.close();
+			
+			return returnResult;
 		});
 	}
 	

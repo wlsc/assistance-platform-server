@@ -31,13 +31,11 @@ public class UserModuleActivationPersistency {
 			s.setLong(1, userId);
 			s.setString(2, moduleId);
 			
-			int affectedRows = s.executeUpdate();
-	
-			if (affectedRows != 0) {
-				return true;
-			}
+			boolean result = s.executeUpdate() != 0;
 			
-			return false;
+			s.close();
+			
+			return result;
 		});
 	}
 	
@@ -52,13 +50,11 @@ public class UserModuleActivationPersistency {
 			s.setLong(1, userId);
 			s.setString(2, moduleId);
 			
-			int affectedRows = s.executeUpdate();
-	
-			if (affectedRows != 0) {
-				return true;
-			}
+			boolean result = s.executeUpdate() != 0;
 			
-			return false;
+			s.close();
+			
+			return result;
 		});
 	}
 	
@@ -70,7 +66,12 @@ public class UserModuleActivationPersistency {
 			s.setString(2, moduleId);
 			ResultSet result = s.executeQuery();
 	
-			return result != null && result.next();
+			boolean returnResult = result != null && result.next();
+			
+			result.close();
+			s.close();
+			
+			return returnResult;
 		});
 	}
 	

@@ -57,12 +57,16 @@ public class DevicePersistency {
 			s.setString(4, device.deviceIdentifier);
 			s.setString(5, device.brand);
 			s.setString(6, device.model);
+			
 			int affectedRows = s.executeUpdate();
 
 			if (affectedRows != 0) {
 				ResultSet generatedKeys = s.getGeneratedKeys();
 				generatedKeys.next();
 				device.id = generatedKeys.getLong(1);
+				
+				generatedKeys.close();
+				s.close();
 			}
 		});
 	}
@@ -87,6 +91,8 @@ public class DevicePersistency {
 			s.setLong(6, device.id);
 
 			s.executeUpdate();
+			
+			s.close();
 		});
 	}
 
@@ -103,7 +109,12 @@ public class DevicePersistency {
 			s.setLong(1, id);
 			ResultSet result = s.executeQuery();
 
-			return result != null && result.next();
+			boolean returnResult = result != null && result.next();
+			
+			result.close();
+			s.close();
+			
+			return returnResult;
 		});
 	}
 
@@ -150,12 +161,17 @@ public class DevicePersistency {
 			
 			ResultSet result = s.executeQuery();
 
+			long returnResult = -1L;
+			
 			if (result != null && result.next()) {
 				long id = result.getLong(1);
-				return id;
+				returnResult = id;
+				result.close();
 			}
+			
+			s.close();
 
-			return -1L;
+			return returnResult;
 		});
 	}
 
@@ -175,7 +191,12 @@ public class DevicePersistency {
 			s.setLong(2, deviceId);
 			ResultSet result = s.executeQuery();
 
-			return result != null && result.next();
+			boolean returnResult = result != null && result.next();
+			
+			result.close();
+			s.close();
+			
+			return returnResult;
 		});
 	}
 
@@ -187,7 +208,11 @@ public class DevicePersistency {
 			s.setString(1, messagingRegistrationId);
 			s.setLong(2, deviceId);
 
-			return s.executeUpdate() != 0;
+			boolean result = s.executeUpdate() != 0;
+			
+			s.close();
+			
+			return result;
 		});
 	}
 
@@ -198,7 +223,11 @@ public class DevicePersistency {
 			s.setString(1, name);
 			s.setLong(2, deviceId);
 
-			return s.executeUpdate() != 0;
+			boolean result = s.executeUpdate() != 0;
+			
+			s.close();
+			
+			return result;
 		});
 	}
 
@@ -208,7 +237,11 @@ public class DevicePersistency {
 					+ " SET last_usage = CURRENT_TIMESTAMP WHERE id = ?");
 			s.setLong(1, deviceId);
 
-			return s.executeUpdate() != 0;
+			boolean result = s.executeUpdate() != 0;
+			
+			s.close();
+			
+			return result;
 		});
 	}
 

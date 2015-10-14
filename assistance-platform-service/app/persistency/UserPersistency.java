@@ -38,6 +38,9 @@ public class UserPersistency {
 				ResultSet generatedKeys = s.getGeneratedKeys();
 				generatedKeys.next();
 				user.id = generatedKeys.getLong(1);
+				
+				generatedKeys.close();
+				s.close();
 			}
 		});
 	}
@@ -73,7 +76,12 @@ public class UserPersistency {
 			s.setString(1, email);
 			ResultSet result = s.executeQuery();
 	
-			return result != null && result.next();
+			boolean returnResult = result != null && result.next();
+			
+			result.close();
+			s.close();
+			
+			return returnResult;
 		});
 	}
 	
