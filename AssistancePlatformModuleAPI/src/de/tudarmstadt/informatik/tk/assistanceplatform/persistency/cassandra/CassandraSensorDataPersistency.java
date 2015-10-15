@@ -20,8 +20,12 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.ISensorDataPe
 public class CassandraSensorDataPersistency implements ISensorDataPersistency {
 	private Session cassandraSession;
 	
+	private MappingManager mappingManager;
+	
 	public CassandraSensorDataPersistency(CassandraSessionProxy prox) {
 		this.cassandraSession = prox.getSession();
+		
+		this.mappingManager = new MappingManager(cassandraSession);
 	}
 	
 	public CassandraSensorDataPersistency(Session sess) {
@@ -50,12 +54,10 @@ public class CassandraSensorDataPersistency implements ISensorDataPersistency {
 		return true;
 	}
 	
-	private Statement createSaveStatement(SensorData data) {
-		Mapper sensorMapper = new MappingManager(cassandraSession).mapper(data.getClass());
+	private <T extends SensorData> Statement createSaveStatement(T data) {
+		Mapper<T> sensorMapper = mappingManager.mapper((Class<T>)data.getClass());
 		
-		Object castedData = (Object)data;
-		
-		Statement saveStatement = sensorMapper.saveQuery(castedData);
+		Statement saveStatement = sensorMapper.saveQuery(data);
 		
 		return saveStatement;
 	}
