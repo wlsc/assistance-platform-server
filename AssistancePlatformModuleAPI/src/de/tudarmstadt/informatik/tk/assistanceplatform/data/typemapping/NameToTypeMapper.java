@@ -9,7 +9,7 @@ import org.reflections.Reflections;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 
 public class NameToTypeMapper {
-	private Map<String, Class> typeMapping = new HashMap<>();
+	private Map<String, Class<? extends SensorData>> typeMapping = new HashMap<>();
 	
 	public NameToTypeMapper() {
 		this("de.tudarmstadt.informatik.tk.assistanceplatform.data");
@@ -41,7 +41,7 @@ public class NameToTypeMapper {
 		return simpleName;
 	}
 	
-	public Class mapTypeToClass(String type) {
-		return typeMapping.get(type);
+	public <T extends SensorData> Class<T> mapTypeToClass(String type) {
+		return (Class<T>)typeMapping.get(type);
 	}
 }

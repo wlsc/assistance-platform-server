@@ -1,11 +1,8 @@
 package sensorhandling;
 
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -54,7 +51,7 @@ public class JsonToSensorEventConversion {
 	}
 
 	
-	public Class mapTypeToClass(String type) {
+	public <T extends SensorData> Class<T> mapTypeToClass(String type) {
 		return typeMapper.mapTypeToClass(type);
 	}
 }
