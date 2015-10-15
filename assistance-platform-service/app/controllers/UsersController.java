@@ -116,7 +116,8 @@ public class UsersController extends RestController {
 	
 	public Result register() {
 		UserAuthenticator authenticator = new UserAuthenticator();
-		if(authenticator.getUserId(ctx()) != null) {
+		
+		if(authenticator.getUserId(ctx()) != -1) {
 			return badRequestJson(AssistanceAPIErrors.alreadyLoggedIn);
 		}
 		

@@ -20,13 +20,13 @@ public class UserAuthenticator extends Security.Authenticator {
 		return null;
 	}
 
-	public Long getUserId(Http.Context ctx) {
+	public long getUserId(Http.Context ctx) {
 		String token = getTokenFromHeader(ctx);
 		
 		return getUserIdFromToken(token);
 	}
 	
-	public static Long getUserIdFromToken(String token) {
+	public static long getUserIdFromToken(String token) {
 		if (token != null) {
 			Token unpackedToken = Token.unpackToken(token);
 
@@ -35,13 +35,13 @@ public class UserAuthenticator extends Security.Authenticator {
 			}
 		}
 
-		return null;
+		return -1;
 	}
 
 	private User getUser(Http.Context ctx) {
-		Long userId = getUserId(ctx);
+		long userId = getUserId(ctx);
 
-		if (userId != null) {
+		if (userId != -1) {
 			User user = UserPersistency.findUserById(userId, false);
 
 			if (user != null) {
