@@ -32,7 +32,7 @@ public class CassandraSensorDataPersistency implements ISensorDataPersistency {
 	public boolean pesist(SensorData data) {
 		Statement s = createSaveStatement(data);
 		
-		cassandraSession.executeAsync(s); 
+		cassandraSession.execute(s); 
 		
 		return true;
 	}
