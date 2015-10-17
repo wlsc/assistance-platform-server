@@ -1,9 +1,6 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra;
 
-import java.util.Arrays;
-
 import com.datastax.driver.core.BatchStatement;
-import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.mapping.Mapper;
@@ -33,7 +30,7 @@ public class CassandraSensorDataPersistency implements ISensorDataPersistency {
 	}
 	
 	@Override
-	public boolean pesist(SensorData data) {
+	public boolean persist(SensorData data) {
 		Statement s = createSaveStatement(data);
 		
 		cassandraSession.execute(s); 
@@ -43,13 +40,16 @@ public class CassandraSensorDataPersistency implements ISensorDataPersistency {
 	
 	@Override
 	public boolean persistMany(SensorData[] data) {
-		BatchStatement batch = new BatchStatement();
+		/*BatchStatement batch = new BatchStatement();
 		
 		for(SensorData d : data) {
 			batch.add(createSaveStatement(d));
 		}
 		
-		cassandraSession.execute(batch);
+		cassandraSession.execute(batch);*/
+		for(SensorData d : data) {
+			persist(d);
+		}
 		
 		return true;
 	}

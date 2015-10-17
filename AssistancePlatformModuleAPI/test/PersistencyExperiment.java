@@ -31,6 +31,6 @@ public class PersistencyExperiment {
 		
 		CassandraSensorDataPersistency p = new CassandraSensorDataPersistency(session);
 		
-		p.pesist(data);
+		p.persist(data);
 	}
 }

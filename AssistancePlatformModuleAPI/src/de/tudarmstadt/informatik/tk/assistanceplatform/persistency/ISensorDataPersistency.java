@@ -7,7 +7,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
  * @author bjeutter
  */
 public interface ISensorDataPersistency {
-	public boolean pesist(SensorData data);
+	public boolean persist(SensorData data);
 	
 	public boolean persistMany(SensorData[] data);
 }

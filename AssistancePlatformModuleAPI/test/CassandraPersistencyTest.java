@@ -29,7 +29,7 @@ public class CassandraPersistencyTest {
 			System.out.println(c.getSimpleName() + " START");
 			SensorData data = c.newInstance();
 			data.timestamp = Calendar.getInstance().getTime();
-			persistency.pesist(data);
+			persistency.persist(data);
 			System.out.println(c.getSimpleName() + " END");
 		}
 	}
