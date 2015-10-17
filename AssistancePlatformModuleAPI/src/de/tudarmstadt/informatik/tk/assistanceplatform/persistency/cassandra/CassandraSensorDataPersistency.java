@@ -20,13 +20,13 @@ public class CassandraSensorDataPersistency implements ISensorDataPersistency {
 	private MappingManager mappingManager;
 	
 	public CassandraSensorDataPersistency(CassandraSessionProxy prox) {
-		this.cassandraSession = prox.getSession();
-		
-		this.mappingManager = new MappingManager(cassandraSession);
+		this(prox.getSession());
 	}
 	
 	public CassandraSensorDataPersistency(Session sess) {
 		this.cassandraSession = sess;
+		
+		this.mappingManager = new MappingManager(cassandraSession);
 	}
 	
 	@Override
@@ -40,13 +40,6 @@ public class CassandraSensorDataPersistency implements ISensorDataPersistency {
 	
 	@Override
 	public boolean persistMany(SensorData[] data) {
-		/*BatchStatement batch = new BatchStatement();
-		
-		for(SensorData d : data) {
-			batch.add(createSaveStatement(d));
-		}
-		
-		cassandraSession.execute(batch);*/
 		for(SensorData d : data) {
 			persist(d);
 		}
