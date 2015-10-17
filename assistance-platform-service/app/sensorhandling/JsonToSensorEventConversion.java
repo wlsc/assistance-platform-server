@@ -18,6 +18,13 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.NameToTy
 public class JsonToSensorEventConversion {
 	private NameToTypeMapper typeMapper = new NameToTypeMapper();
 	
+	private ObjectMapper mapper;
+	
+	public JsonToSensorEventConversion() {
+		mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	}
+	
 	public <T extends SensorData> T convertJsonToEventObject(String type, JsonNode reading) throws JsonProcessingException {
 		Class<T> targetClass = mapTypeToClass(type);
 		
@@ -29,9 +36,6 @@ public class JsonToSensorEventConversion {
 	}
 	
 	public <T extends SensorData> T mapJson(JsonNode reading, Class<T> targetClass) throws JsonProcessingException, DateTimeParseException {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		
 		T mappedObject = mapper.treeToValue(reading, targetClass);
 		
 		JsonNode createdNode = reading.get("created");
