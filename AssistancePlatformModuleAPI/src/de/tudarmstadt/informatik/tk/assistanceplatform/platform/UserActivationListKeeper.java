@@ -12,6 +12,8 @@ public class UserActivationListKeeper {
 	public UserActivationListKeeper(MessagingService messagingService) {
 		this.userActivationList = new UserActivationList();
 		
+		// TODO: Initial alle bisherigen Subscriptions pullen
+		
 		new PlatformEventSubscriber<UserRegistrationInformationEvent>(messagingService, this::handleEvent, UserRegistrationInformationEvent.class);
 	}
 	

@@ -1,5 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.data.spark;
 
+import java.util.function.Supplier;
+
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.streaming.Duration;
@@ -8,6 +10,10 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.Event;
+import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
 public class SparkService implements ISparkService {	
 	private final String appName;
@@ -49,8 +55,10 @@ public class SparkService implements ISparkService {
 	}
 
 	@Override
-	public <T extends Event> JavaDStream<T> getEventReceiverStream(JavaStreamingContext sc, Class<T> eventType) {
-		JavaDStream<T> stream = sc.receiverStream(new MessagingServiceReceiver<T>(eventType));
+	public <T extends Event> JavaDStream<T> getEventReceiverStream(JavaStreamingContext sc, Class<T> eventType) {		
+		MessagingServiceReceiver<T> messagingReceiver = new UserFilteredMessagingServiceReceiver<T>(eventType);
+		
+		JavaDStream<T> stream = sc.receiverStream(messagingReceiver);
 		
 		return stream;
 	}

@@ -55,7 +55,7 @@ public class CassandraPersistencyTest {
 		
 		Date timestamp = Calendar.getInstance().getTime();
 		for(Class<? extends SensorData> c : sensorDataClasses) {
-			for(int i = 0; i < 5000; i++) {
+			for(int i = 0; i < 100; i++) {
 				Date d = new Date(timestamp.getTime());
 				d.setTime(d.getTime() + 1000);
 				SensorData data = c.newInstance();
