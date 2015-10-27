@@ -12,18 +12,18 @@ public class MagneticField extends SensorData {
     public double z;
     
     @JsonProperty(value = "xUncalibratedNoHardIron")
-	public double xUncalibratedNoHardIronOptional;
+	public float xUncalibratedNoHardIronOptional;
     @JsonProperty(value = "yUncalibratedNoHardIron")
-    public double yUncalibratedNoHardIronOptional;
+    public float yUncalibratedNoHardIronOptional;
     @JsonProperty(value = "zUncalibratedNoHardIron")
-    public double zUncalibratedNoHardIronOptional;
+    public float zUncalibratedNoHardIronOptional;
     
     @JsonProperty(value = "xUncalibratedEstimatedIronBias")
-	public double xUncalibratedEstimatedIronBiasOptional;
+	public float xUncalibratedEstimatedIronBiasOptional;
     @JsonProperty(value = "yUncalibratedEstimatedIronBias")
-    public double yUncalibratedEstimatedIronBiasOptional;
+    public float yUncalibratedEstimatedIronBiasOptional;
     @JsonProperty(value = "zUncalibratedEstimatedIronBias")
-    public double zUncalibratedEstimatedIronBiasOptional;
+    public float zUncalibratedEstimatedIronBiasOptional;
     
     @JsonProperty(value = "accuracy")
     public int accuracyOptional;
@@ -68,52 +68,52 @@ public class MagneticField extends SensorData {
 	}
 
 	public void setXUncalibratedNoHardIronOptional(
-			double xUncalibratedNoHardIronOptional) {
+			float xUncalibratedNoHardIronOptional) {
 		this.xUncalibratedNoHardIronOptional = xUncalibratedNoHardIronOptional;
 	}
 
-	public double getYUncalibratedNoHardIronOptional() {
+	public float getYUncalibratedNoHardIronOptional() {
 		return yUncalibratedNoHardIronOptional;
 	}
 
 	public void setYUncalibratedNoHardIronOptional(
-			double yUncalibratedNoHardIronOptional) {
+			float yUncalibratedNoHardIronOptional) {
 		this.yUncalibratedNoHardIronOptional = yUncalibratedNoHardIronOptional;
 	}
 
-	public double getZUncalibratedNoHardIronOptional() {
+	public float getZUncalibratedNoHardIronOptional() {
 		return zUncalibratedNoHardIronOptional;
 	}
 
 	public void setZUncalibratedNoHardIronOptional(
-			double zUncalibratedNoHardIronOptional) {
+			float zUncalibratedNoHardIronOptional) {
 		this.zUncalibratedNoHardIronOptional = zUncalibratedNoHardIronOptional;
 	}
 
-	public double getXUncalibratedEstimatedIronBiasOptional() {
+	public float getXUncalibratedEstimatedIronBiasOptional() {
 		return xUncalibratedEstimatedIronBiasOptional;
 	}
 
 	public void setXUncalibratedEstimatedIronBiasOptional(
-			double xUncalibratedEstimatedIronBiasOptional) {
+			float xUncalibratedEstimatedIronBiasOptional) {
 		this.xUncalibratedEstimatedIronBiasOptional = xUncalibratedEstimatedIronBiasOptional;
 	}
 
-	public double getYUncalibratedEstimatedIronBiasOptional() {
+	public float getYUncalibratedEstimatedIronBiasOptional() {
 		return yUncalibratedEstimatedIronBiasOptional;
 	}
 
 	public void setYUncalibratedEstimatedIronBiasOptional(
-			double yUncalibratedEstimatedIronBiasOptional) {
+			float yUncalibratedEstimatedIronBiasOptional) {
 		this.yUncalibratedEstimatedIronBiasOptional = yUncalibratedEstimatedIronBiasOptional;
 	}
 
-	public double getZUncalibratedEstimatedIronBiasOptional() {
+	public float getZUncalibratedEstimatedIronBiasOptional() {
 		return zUncalibratedEstimatedIronBiasOptional;
 	}
 
 	public void setZUncalibratedEstimatedIronBiasOptional(
-			double zUncalibratedEstimatedIronBiasOptional) {
+			float zUncalibratedEstimatedIronBiasOptional) {
 		this.zUncalibratedEstimatedIronBiasOptional = zUncalibratedEstimatedIronBiasOptional;
 	}
 
@@ -133,10 +133,22 @@ public class MagneticField extends SensorData {
 		long temp;
 		temp = Double.doubleToLongBits(x);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result
+				+ Float.floatToIntBits(xUncalibratedEstimatedIronBiasOptional);
+		result = prime * result
+				+ Float.floatToIntBits(xUncalibratedNoHardIronOptional);
 		temp = Double.doubleToLongBits(y);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result
+				+ Float.floatToIntBits(yUncalibratedEstimatedIronBiasOptional);
+		result = prime * result
+				+ Float.floatToIntBits(yUncalibratedNoHardIronOptional);
 		temp = Double.doubleToLongBits(z);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result
+				+ Float.floatToIntBits(zUncalibratedEstimatedIronBiasOptional);
+		result = prime * result
+				+ Float.floatToIntBits(zUncalibratedNoHardIronOptional);
 		return result;
 	}
 
@@ -153,9 +165,27 @@ public class MagneticField extends SensorData {
 			return false;
 		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
 			return false;
+		if (Float.floatToIntBits(xUncalibratedEstimatedIronBiasOptional) != Float
+				.floatToIntBits(other.xUncalibratedEstimatedIronBiasOptional))
+			return false;
+		if (Float.floatToIntBits(xUncalibratedNoHardIronOptional) != Float
+				.floatToIntBits(other.xUncalibratedNoHardIronOptional))
+			return false;
 		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
 			return false;
+		if (Float.floatToIntBits(yUncalibratedEstimatedIronBiasOptional) != Float
+				.floatToIntBits(other.yUncalibratedEstimatedIronBiasOptional))
+			return false;
+		if (Float.floatToIntBits(yUncalibratedNoHardIronOptional) != Float
+				.floatToIntBits(other.yUncalibratedNoHardIronOptional))
+			return false;
 		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
+			return false;
+		if (Float.floatToIntBits(zUncalibratedEstimatedIronBiasOptional) != Float
+				.floatToIntBits(other.zUncalibratedEstimatedIronBiasOptional))
+			return false;
+		if (Float.floatToIntBits(zUncalibratedNoHardIronOptional) != Float
+				.floatToIntBits(other.zUncalibratedNoHardIronOptional))
 			return false;
 		return true;
 	}
