@@ -94,18 +94,20 @@ public class SensorDataController extends RestController {
 			try {
 				List<SensorData> sensorData = convertJsonNodeToSensorData(userID, deviceID, sensorreadings);
 
-				for(SensorData d : sensorData) {
-					boolean result = processSensorReading(d);
-					
-					if(!result) {
-						return AssistanceAPIErrors.unknownInternalServerError;
-					}
-				}
-				
+				// In Datenbank abspeichern
 				boolean result = sensorPersistencyProxy.getSensorDataPersistency().persistMany(sensorData.toArray(new SensorData[sensorData.size()]));
 				
 				if(!result) {
 					return AssistanceAPIErrors.unknownInternalServerError;
+				}
+				
+				// In ActiveMQ distributen
+				for(SensorData d : sensorData) {
+					result = processSensorReading(d);
+					
+					if(!result) {
+						return AssistanceAPIErrors.unknownInternalServerError;
+					}
 				}
 			} catch (APIErrorException e1) {
 				return e1.getError();
