@@ -5,9 +5,9 @@ import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.AssistanceModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.DataModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.AssistanceModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.data.spark.ISparkService;
@@ -40,6 +40,7 @@ public abstract class ModuleBundle {
 	 * @param actionRunner
 	 */
 	public void bootstrapBundle(IMessagingService messagingService, IUserActivationChecker userActivationListChecker, PlatformClient platformClient, IClientActionRunner actionRunner, ISparkService sparkService) {
+		// Save references to all required compopnents
 		this.actionRunner = actionRunner;
 		
 		this.userActivationListChecker = userActivationListChecker;
@@ -48,6 +49,7 @@ public abstract class ModuleBundle {
 		
 		this.sparkService = sparkService;
 		
+		// Initialize and run the contained modules
 		this.containedModules = initializeContainedModules();
 		
 		this.startContainedModules(messagingService);
