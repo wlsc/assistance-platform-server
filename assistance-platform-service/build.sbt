@@ -1,3 +1,7 @@
+maintainer := "Bennet Jeutter"
+// exposing the play ports
+dockerExposedPorts := Seq(9000, 9443)
+
 name := """assistance-platform-service"""
 
 version := "1.0-SNAPSHOT"
