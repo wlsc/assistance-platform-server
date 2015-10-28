@@ -91,4 +91,19 @@ public class AssistanceController extends RestController {
 	private void publishUserRegistrationInformationEvent(Long userId, boolean wantsToBeRegistered) {
 		ms.channel(UserRegistrationInformationEvent.class).publish(new UserRegistrationInformationEvent(userId, wantsToBeRegistered));
 	}
+	
+	@Security.Authenticated(UserAuthenticator.class)
+	public Result current() {
+		// TODO: Frage alle Module an (wie? Interface?), ob sie aktuelle Informationen für den User haben
+		// TODO: Priorisiere, filtere und sortiere und gib es dann in einem einheitlichen FOrmat an den User zurück
+		
+		return TODO;
+	}
+	
+	@Security.Authenticated(UserAuthenticator.class)
+	public Result current(String moduleId) {
+		// TODO: Frage das Module mit der ID {moduleId} nach seinen aktuellen Informationen
+		
+		return TODO;
+	}
 }
