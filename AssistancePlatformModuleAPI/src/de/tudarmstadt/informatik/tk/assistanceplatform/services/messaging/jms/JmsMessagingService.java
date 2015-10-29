@@ -56,7 +56,25 @@ public class JmsMessagingService extends MessagingService {
 	}
 	
 	private static ConnectionFactory createDefaultConnectionFactory() {
+		ConnectionFactory envFactory = createConnectionFactoryFromEnvVariables();
+		if(envFactory != null) {
+			return envFactory;
+		}
+		
 		return new ActiveMQConnectionFactory();
+	}
+	
+	private static ConnectionFactory createConnectionFactoryFromEnvVariables() {
+		Map<String, String> env = System.getenv();
+		
+		String envKey = "ACTIVEMQ_PORT_61616_TCP";
+		if(env.containsKey(envKey)) {
+			String brokerUrl = env.get(envKey);
+			
+			return new ActiveMQConnectionFactory(brokerUrl);
+		}
+		
+		return null;
 	}
 	
 	private void setupConnection(ConnectionFactory factory) {
