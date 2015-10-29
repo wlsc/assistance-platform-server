@@ -101,7 +101,7 @@ public class AssistanceController extends RestController {
 	}
 	
 	@Security.Authenticated(UserAuthenticator.class)
-	public Result current(String moduleId) {
+	public Result currentForModule(String moduleId) {
 		// TODO: Frage das Module mit der ID {moduleId} nach seinen aktuellen Informationen
 		
 		return TODO;
