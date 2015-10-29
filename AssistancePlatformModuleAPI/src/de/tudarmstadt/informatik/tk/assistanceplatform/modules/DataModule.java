@@ -15,6 +15,10 @@ public abstract class DataModule extends Module {
 		super();
 	}
 	
+	@Override
+	protected final void internalDoBeforeStartup() {
+	}
+	
 	public void setSparkService(ISparkService service) {
 		this.sparkService = service;
 	}

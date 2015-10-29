@@ -66,14 +66,14 @@
 			<version>1.9.0</version>
 		</dependency>
 		<dependency>
-		  <groupId>com.datastax.cassandra</groupId>
-		  <artifactId>cassandra-driver-core</artifactId>
-		  <version>2.1.7</version>
+			<groupId>com.datastax.cassandra</groupId>
+			<artifactId>cassandra-driver-core</artifactId>
+			<version>2.1.7</version>
 		</dependency>
 		<dependency>
-		  <groupId>com.datastax.cassandra</groupId>
-		  <artifactId>cassandra-driver-mapping</artifactId>
-		  <version>2.1.7</version>
+			<groupId>com.datastax.cassandra</groupId>
+			<artifactId>cassandra-driver-mapping</artifactId>
+			<version>2.1.7</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -81,9 +81,22 @@
 			<version>18.0</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.reflections</groupId>
-		    <artifactId>reflections</artifactId>
-		    <version>0.9.10</version>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.10</version>
 		</dependency>
+		<!--Jetty dependencies start here -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>9.2.11.v20150529</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>9.2.11.v20150529</version>
+		</dependency>
+		<!--Jetty dependencies end here -->
+
 	</dependencies>
 </project>

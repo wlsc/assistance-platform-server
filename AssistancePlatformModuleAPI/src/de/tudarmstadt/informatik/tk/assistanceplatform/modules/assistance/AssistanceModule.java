@@ -1,7 +1,13 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider;
+package de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance;
+
+import java.util.Collection;
+
+import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.InformationProvider;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServer;
 
 
 /**
@@ -15,7 +21,17 @@ public abstract class AssistanceModule extends Module {
 	
 	private InformationProvider informationProvider;
 	
-	public void setActionRunner(IClientActionRunner actionRunner) {
+	@Override
+	protected final void internalDoBeforeStartup() {
+		try {
+			ModuleRestServer server = new ModuleRestServer(generateCustomServelets());
+			server.start();
+		} catch (Exception e) {
+			Logger.getLogger(AssistanceModule.class).error("An error occured while starting the module rest server", e);
+		}
+	}
+
+	public final void setActionRunner(IClientActionRunner actionRunner) {
 		this.actionRunner = actionRunner;
 	}
 	
@@ -23,11 +39,11 @@ public abstract class AssistanceModule extends Module {
 	 * Gets the action runner which is required to perform actions on the client devices, like sending messages etc.
 	 * @return
 	 */
-	protected IClientActionRunner getActionRunner() {
+	protected final IClientActionRunner getActionRunner() {
 		return actionRunner;
 	}
 	
-	public InformationProvider getInformationProvider() {
+	public final InformationProvider getInformationProvider() {
 		if(informationProvider == null) {
 			informationProvider = generateInformationProvider();
 		}
@@ -41,4 +57,11 @@ public abstract class AssistanceModule extends Module {
 	 * @return
 	 */
 	public abstract InformationProvider generateInformationProvider();
+	
+	/**
+	 * Implement this if your module should provide a custom REST service, e.g. for 3party Apps to communicate directly with your module.
+	 * Otherwise just return null.
+	 * @return
+	 */
+	public abstract Collection<ModuleRestServer.MappedServlet> generateCustomServelets();
 }

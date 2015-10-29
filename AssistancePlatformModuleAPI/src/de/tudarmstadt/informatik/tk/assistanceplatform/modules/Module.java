@@ -23,6 +23,7 @@ public abstract class Module {
 	 * NEVER! call this method, this method gets called by the API.
 	 */
 	public final void start() {
+		internalDoBeforeStartup();
 		doBeforeStartup();
 		subscribeRegisteredEventsAndSetMessagingService(messagingService);
 		doAfterStartup();
@@ -46,6 +47,8 @@ public abstract class Module {
 		
 		this.eventRegistrations = null;
 	}
+	
+	protected abstract void internalDoBeforeStartup();
 	
 	/**
 	 * This method gets called before all services are set up and events are registered. This is the place to register for events.

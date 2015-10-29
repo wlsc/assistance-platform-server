@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.DataModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.AssistanceModule;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.AssistanceModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.ISparkService;
