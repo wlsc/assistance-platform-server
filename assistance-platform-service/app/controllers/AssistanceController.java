@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.function.Predicate;
 
+import messaging.JmsMessagingServiceFactory;
 import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
 import models.UserModuleActivation;
@@ -19,7 +20,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Messag
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
 public class AssistanceController extends RestController {
-	MessagingService ms = new JmsMessagingService();
+	MessagingService ms = JmsMessagingServiceFactory.createServiceFromConfig();
 	
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result list(

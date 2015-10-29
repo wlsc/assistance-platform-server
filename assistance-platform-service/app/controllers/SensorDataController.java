@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import messaging.JmsMessagingServiceFactory;
 import models.APIError;
 import models.APIErrorException;
 import models.AssistanceAPIErrors;
@@ -25,7 +26,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Messag
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
 public class SensorDataController extends RestController {
-	private MessagingService ms = new JmsMessagingService();
+	private MessagingService ms = JmsMessagingServiceFactory.createServiceFromConfig();
 	private ConfiguredSensorPersistencyProxy sensorPersistencyProxy = new ConfiguredSensorPersistencyProxy();
 	private JsonToSensorEventConversion jsonToEvent = new JsonToSensorEventConversion();
 

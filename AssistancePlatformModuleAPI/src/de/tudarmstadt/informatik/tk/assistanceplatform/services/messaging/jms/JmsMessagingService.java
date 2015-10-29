@@ -36,11 +36,15 @@ public class JmsMessagingService extends MessagingService {
 	
 	
 	public JmsMessagingService() {
-		this(createDefaultConnectionFactory());
+		this((String)null, (String)null);
+	}
+	
+	public JmsMessagingService(String user, String password) {
+		this(createDefaultConnectionFactory(user, password));
 	}
 	
 	public JmsMessagingService(MessagingServiceConfiguration config) {
-		this(config, createDefaultConnectionFactory());
+		this(config, createDefaultConnectionFactory(null, null));
 	}
 	
 	public JmsMessagingService(ConnectionFactory factory) {
@@ -55,8 +59,8 @@ public class JmsMessagingService extends MessagingService {
 		setupConnection(factory);
 	}
 	
-	private static ConnectionFactory createDefaultConnectionFactory() {
-		ConnectionFactory envFactory = createConnectionFactoryFromEnvVariables();
+	private static ConnectionFactory createDefaultConnectionFactory(String user, String password) {
+		ConnectionFactory envFactory = createConnectionFactoryFromEnvVariables(user, password);
 		if(envFactory != null) {
 			return envFactory;
 		}
@@ -64,14 +68,14 @@ public class JmsMessagingService extends MessagingService {
 		return new ActiveMQConnectionFactory();
 	}
 	
-	private static ConnectionFactory createConnectionFactoryFromEnvVariables() {
+	private static ConnectionFactory createConnectionFactoryFromEnvVariables(String user, String password) {
 		Map<String, String> env = System.getenv();
 		
 		String envKey = "ACTIVEMQ_PORT_61616_TCP";
 		if(env.containsKey(envKey)) {
 			String brokerUrl = env.get(envKey);
 			
-			return new ActiveMQConnectionFactory(brokerUrl);
+			return new ActiveMQConnectionFactory(user, password, brokerUrl);
 		}
 		
 		return null;
