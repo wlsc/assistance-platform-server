@@ -1,6 +1,7 @@
-maintainer := "Bennet Jeutter"
-// exposing the play ports
-dockerExposedPorts := Seq(9000, 9443)
+/// Docker Stuff
+maintainer := "Bennet Jeutter" // Maintainer
+dockerExposedPorts := Seq(9000, 9443) // Expose Ports
+dockerUpdateLatest := true
 
 name := """assistance-platform-service"""
 
