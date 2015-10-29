@@ -1,4 +1,4 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.services.data.spark;
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark;
 
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.streaming.Duration;

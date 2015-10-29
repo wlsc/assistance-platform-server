@@ -1,4 +1,4 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.services.data;
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing;
 
 /**
  * This class is responsible for initially pulling the required data for modules, e.g. last GPS positions of last 24 hours

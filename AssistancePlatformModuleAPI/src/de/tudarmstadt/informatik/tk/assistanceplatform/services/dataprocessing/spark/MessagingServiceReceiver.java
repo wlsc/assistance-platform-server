@@ -1,4 +1,4 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.services.data.spark;
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark;
 
 import java.util.function.Supplier;
 

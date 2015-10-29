@@ -4,8 +4,8 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationLi
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.ModuleBundleClientActionRunnerProxy;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.RESTClientActionRunner;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.data.spark.ISparkService;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.data.spark.SparkService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.ISparkService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.SparkService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;

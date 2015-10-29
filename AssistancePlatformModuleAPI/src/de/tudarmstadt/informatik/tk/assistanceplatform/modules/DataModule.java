@@ -1,6 +1,6 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.data.spark.ISparkService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.ISparkService;
 
 /**
  * DataModules are responsible for generating / aggregating higher-class data from the "normal" data of the platform.
