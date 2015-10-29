@@ -63,7 +63,7 @@ public class MagneticField extends SensorData {
 		this.z = z;
 	}
 
-	public double getXUncalibratedNoHardIronOptional() {
+	public float getXUncalibratedNoHardIronOptional() {
 		return xUncalibratedNoHardIronOptional;
 	}
 

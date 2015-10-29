@@ -88,7 +88,7 @@ public class Gyroscope extends SensorData {
 	}
 
 
-	public double getXUncalibratedNoDriftOptional() {
+	public float getXUncalibratedNoDriftOptional() {
 		return xUncalibratedNoDriftOptional;
 	}
 
