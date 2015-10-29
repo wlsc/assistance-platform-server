@@ -10,6 +10,7 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Cluster.Builder;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
+import com.datastax.driver.core.exceptions.AlreadyExistsException;
 
 public class CassandraSessionProxy {
 	private Cluster cluster;
@@ -47,8 +48,10 @@ public class CassandraSessionProxy {
 
 				try {
 					tmpSession.execute(s);
-				} catch (Exception ex) {
-					log.warn("No need to wory if the table / keyspace already exists!", ex);
+				} catch (AlreadyExistsException ex) {
+					// No harm, just already exists
+				} catch(Exception ex) {
+					log.error(ex);
 				}
 				
 				// If we created a keyspace then connect to it directly afterwards
