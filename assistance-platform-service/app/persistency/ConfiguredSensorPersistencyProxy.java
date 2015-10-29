@@ -1,8 +1,13 @@
 package persistency;
 
+import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
+
+import play.Play;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -17,7 +22,7 @@ public class ConfiguredSensorPersistencyProxy {
 	public ConfiguredSensorPersistencyProxy() {
 
 		CassandraSessionProxy sessionProxy = new CassandraSessionProxy(
-				getContactPoints(), getKeystoreName());
+				getContactPoints(), getKeystoreName(), getSchemaCQL());
 
 		sensorDataPersistency = new CassandraSensorDataPersistency(sessionProxy);
 	}
@@ -41,6 +46,15 @@ public class ConfiguredSensorPersistencyProxy {
 	private String getKeystoreName() {
 		return ConfigFactory.defaultApplication().getString(
 				"cassandra.keystoreName");
+	}
+	
+	private String getSchemaCQL() {
+		Path evolutionPath = Play.application().getFile("conf/CassandraEvolutions/1.cql").toPath();
+		String schemaCQL = "";
+		try {
+			schemaCQL = new String(Files.readAllBytes(evolutionPath)).replace("\n", "");
+		} catch (IOException e) {}
+		return schemaCQL;
 	}
 
 	public ISensorDataPersistency getSensorDataPersistency() {

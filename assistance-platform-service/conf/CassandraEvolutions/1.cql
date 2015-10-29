@@ -1,7 +1,4 @@
-CREATE KEYSPACE assistancedata
-  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
-
-USE assistancedata;
+CREATE KEYSPACE assistancedata WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
 
 CREATE TABLE sensor_motionactivity (
 	walking int,
