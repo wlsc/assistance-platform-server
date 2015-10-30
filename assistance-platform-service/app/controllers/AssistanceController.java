@@ -21,64 +21,64 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.Jm
 
 public class AssistanceController extends RestController {
 	MessagingService ms = JmsMessagingServiceFactory.createServiceFromConfig();
-	
+
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result list(
 			String language) {
-	
+
 		JsonNode result = Cache.getOrElse("moduleList"+language, () -> {
 			ActiveAssistanceModule[] assiModules = ActiveAssistanceModulePersistency.list(language);
-			
+
 			JsonNode json = Json.toJson(assiModules);
 			return json;
 		}, 3600);
-		
+
 		return ok(result);
 	}
-	
+
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result activations() {
 		Long userId = getUserIdForRequest();
-		
+
 		String[] result = UserModuleActivationPersistency.activatedModuleIdsForUser(userId);
-		
+
 		return ok(Json.toJson(result));
 	}
-	
+
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result activate() {
 		return handleActivationStatusChange((a) -> {
 			return UserModuleActivationPersistency.create(a);
-		}, false);
+		}, true);
 	}
-	
+
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result deactivate() {
 		return handleActivationStatusChange((a) -> {
 			return UserModuleActivationPersistency.remove(a);
 		}, false);
 	}
-	
+
 	private Result handleActivationStatusChange(Predicate<UserModuleActivation> activationCheck, boolean endResultOfRegistrationStatus) {
 		JsonNode postData = request().body()
 				.asJson();
-		
+
 		// Get Module ID to activate from request
 		JsonNode moduleIdNode = postData.findPath("module_id");
 		if(moduleIdNode.isMissingNode()) {
 			return badRequestJson(AssistanceAPIErrors.missingModuleIDParameter);
 		}
-		
+
 		String moduleId = moduleIdNode.textValue();
-		
+
 		// Get User id from request
-		Long userId = getUserIdForRequest();
-		
+		long userId = getUserIdForRequest();
+
 		UserModuleActivation activation = new UserModuleActivation(userId, moduleId);
-		
+
 		if(activationCheck.test(activation)) {
-			publishUserRegistrationInformationEvent(userId, endResultOfRegistrationStatus);
-			
+			publishUserRegistrationInformationEvent(userId, moduleId, endResultOfRegistrationStatus);
+
 			return ok(); // TODO: Ggf. noch mal mit der Module ID bestätigen oder sogar die Liste aller aktivierten Module (IDs) zurückgeben?
 		} else {
 			if(UserModuleActivationPersistency.doesActivationExist(activation) == endResultOfRegistrationStatus) {
@@ -88,23 +88,24 @@ public class AssistanceController extends RestController {
 			}
 		}
 	}
-	
-	private void publishUserRegistrationInformationEvent(Long userId, boolean wantsToBeRegistered) {
-		ms.channel(UserRegistrationInformationEvent.class).publish(new UserRegistrationInformationEvent(userId, wantsToBeRegistered));
+
+	private void publishUserRegistrationInformationEvent(long userId, String moduleId, boolean wantsToBeRegistered) {
+		ms.channel(UserRegistrationInformationEvent.class)
+		.publish(new UserRegistrationInformationEvent(userId, moduleId, wantsToBeRegistered));
 	}
-	
+
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result current() {
 		// TODO: Frage alle Module an (wie? Interface?), ob sie aktuelle Informationen für den User haben
 		// TODO: Priorisiere, filtere und sortiere und gib es dann in einem einheitlichen FOrmat an den User zurück
-		
+
 		return TODO;
 	}
-	
+
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result currentForModule(String moduleId) {
 		// TODO: Frage das Module mit der ID {moduleId} nach seinen aktuellen Informationen
-		
+
 		return TODO;
 	}
 }
