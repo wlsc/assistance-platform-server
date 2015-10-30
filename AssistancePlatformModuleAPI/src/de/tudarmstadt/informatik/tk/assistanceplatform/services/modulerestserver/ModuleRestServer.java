@@ -47,14 +47,18 @@ public class ModuleRestServer {
 	private void bindServletsBehindPath(ServletContextHandler context,
 			Collection<MappedServlet> servlets, String path) {
 		for (MappedServlet s : servlets) {
-			s.getServletHolder().setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
-			context.addServlet(s.getServletHolder(), path + "/*");
+			s.getServletHolder().setInitParameter(
+					"com.sun.jersey.api.json.POJOMappingFeature", "true");
+
+			System.out.println(path + s.getPath());
+			context.addServlet(s.getServletHolder(), path + s.getPath()
+					+ "/*");
 		}
 	}
 
 	private Collection<MappedServlet> createStandardServlets() {
 		List<MappedServlet> mappedServlets = new LinkedList<>();
-		
+		mappedServlets.add(new MappedServlet(ExampleService.class, "/example"));
 		return mappedServlets;
 	}
 }
