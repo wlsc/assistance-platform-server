@@ -67,7 +67,7 @@ public class JmsTest {
 		ConnectionFactory factory = new ActiveMQConnectionFactory();
 		MessagingService msForConsumer = new JmsMessagingService(factory);
 		
-		UserRegistrationInformationEvent testData = new UserRegistrationInformationEvent(123L, true);
+		UserRegistrationInformationEvent testData = new UserRegistrationInformationEvent(123, "modul", true);
 		
 		Channel<UserRegistrationInformationEvent> c = msForConsumer.channel("test2", UserRegistrationInformationEvent.class);
 		
@@ -91,7 +91,7 @@ public class JmsTest {
 		channelForPub.publish(testData);
 		
 		for(int i = 0; i < 1000; i++) {
-			c.publish(new UserRegistrationInformationEvent((long)(Math.random() * 100), true));
+			c.publish(new UserRegistrationInformationEvent((long)(Math.random() * 100), "module", true));
 		}
 		
 		Thread.sleep(1000);

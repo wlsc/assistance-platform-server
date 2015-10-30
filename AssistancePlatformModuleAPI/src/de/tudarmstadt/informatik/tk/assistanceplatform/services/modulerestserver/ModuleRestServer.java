@@ -7,10 +7,6 @@ import java.util.List;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
-import com.google.common.collect.Iterables;
-
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.standard.user.UserModuleActivationService;
-
 /**
  * This class provides the basic structure for the module-owned rest server for
  * serving basic requests from the platform. On top servlets can be set for
@@ -51,20 +47,14 @@ public class ModuleRestServer {
 	private void bindServletsBehindPath(ServletContextHandler context,
 			Collection<MappedServlet> servlets, String path) {
 		for (MappedServlet s : servlets) {
+			s.getServletHolder().setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 			context.addServlet(s.getServletHolder(), path + "/*");
 		}
 	}
 
 	private Collection<MappedServlet> createStandardServlets() {
 		List<MappedServlet> mappedServlets = new LinkedList<>();
-		mappedServlets.add(createUserManagementServlet());
+		
 		return mappedServlets;
-	}
-
-	private MappedServlet createUserManagementServlet() {
-		/*ServletHolder holder = new ServletHolder(new ServletContainer(
-				new PackagesResourceConfig(UserModuleActivationService.class
-						.getPackage().getName())));*/
-		return new MappedServlet(UserModuleActivationService.class, "/user");
 	}
 }

@@ -5,6 +5,11 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 
+/**
+ * Container for passing a mapping from servlet to path to the module rest server.
+ * @author bjeutter
+ *
+ */
 public class MappedServlet {
 	private ServletHolder servletHolder;
 	private String path;

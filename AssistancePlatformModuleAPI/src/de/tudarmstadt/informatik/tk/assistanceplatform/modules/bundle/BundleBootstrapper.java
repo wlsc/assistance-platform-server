@@ -11,6 +11,8 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Messag
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationListFactory;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationList;
 
 /**
  * This class is responsible for bootstrapping the module bundle and providing all needed services. 
@@ -29,12 +31,10 @@ public class BundleBootstrapper {
 		// Prepare Messaging Service and User Activation List
 		MessagingService ms = new JmsMessagingService();
 		// TODO: Fetch configuration from platform
-
-		UserActivationListKeeper activationListKeeper = new UserActivationListKeeper(
-				ms);
-
-		IUserActivationChecker activationChecker = activationListKeeper
-				.getUserActivationChecker();
+		
+		UserActivationListKeeper activationsKeeper = new UserActivationListKeeper(bundle.getModuleId(), ms);
+		
+		IUserActivationChecker activationChecker = activationsKeeper.getUserActivationChecker();
 
 		ms = new UserFilteredMessagingServiceDecorator(ms, activationChecker);
 
@@ -57,7 +57,7 @@ public class BundleBootstrapper {
 		// TODO: Add debug / locale mode
 		String master = localMode ? "local[*]" : "spark://Bennets-MBP:7077"; 
 		String[] jars = new String[] { System.getProperty("user.home") + "/" + bundle.getModuleId() + ".jar" };
-		ISparkService sparkService = new SparkService(appName, master, jars);
+		ISparkService sparkService = new SparkService(bundle.getModuleId(), appName, master, jars);
 		
 		return sparkService;
 	}

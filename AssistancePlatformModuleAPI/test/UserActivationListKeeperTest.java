@@ -5,40 +5,35 @@ import org.junit.Test;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
-
 
 public class UserActivationListKeeperTest {
-
-
 	@Test
 	public void test() throws Exception {
-		MessagingService ms = new DummyMessagingService();
+		DummyMessagingService dummyMs = new DummyMessagingService();
+
+		UserActivationListKeeper keeperToTest1 = new UserActivationListKeeper(
+				"test1", dummyMs);
+		UserActivationListKeeper keeperToTest2 = new UserActivationListKeeper(
+				"test2", dummyMs);
+
+		Channel<UserRegistrationInformationEvent> regInfoChannel = dummyMs
+				.channel(UserRegistrationInformationEvent.class);
 		
-		UserActivationListKeeper activationkeeper = new UserActivationListKeeper(ms);
+		regInfoChannel.publish(new UserRegistrationInformationEvent(1, "test1", true));
 		
-		IUserActivationChecker activationChecker = activationkeeper.getUserActivationChecker();
+		assertTrue(keeperToTest1.getUserActivationChecker().isActivatedForUser(1));
+		assertFalse(keeperToTest1.getUserActivationChecker().isActivatedForUser(2));
+		assertFalse(keeperToTest2.getUserActivationChecker().isActivatedForUser(1));
 		
-		ms.channel(UserRegistrationInformationEvent.class).publish(new UserRegistrationInformationEvent(1L, false));
+		regInfoChannel.publish(new UserRegistrationInformationEvent(1, "test1", false));
 		
-		assertFalse( activationChecker.isActivatedForUser(1L));
-		assertFalse( activationChecker.isActivatedForUser(2L));
+		assertFalse(keeperToTest1.getUserActivationChecker().isActivatedForUser(1));
 		
-		ms.channel(UserRegistrationInformationEvent.class).publish(new UserRegistrationInformationEvent(1L, true));
+		regInfoChannel.publish(new UserRegistrationInformationEvent(2, "test2", true));
 		
-		assertTrue( activationChecker.isActivatedForUser(1L));
-		assertFalse( activationChecker.isActivatedForUser(2L));
-		
-		ms.channel(UserRegistrationInformationEvent.class).publish(new UserRegistrationInformationEvent(2L, true));
-		
-		assertTrue( activationChecker.isActivatedForUser(1L));
-		assertTrue( activationChecker.isActivatedForUser(2L));
-		
-		ms.channel(UserRegistrationInformationEvent.class).publish(new UserRegistrationInformationEvent(2L, false));
-		
-		assertTrue( activationChecker.isActivatedForUser(1L));
-		assertFalse( activationChecker.isActivatedForUser(2L));
+		assertTrue(keeperToTest2.getUserActivationChecker().isActivatedForUser(2));
+		assertFalse(keeperToTest1.getUserActivationChecker().isActivatedForUser(2));
 	}
 }

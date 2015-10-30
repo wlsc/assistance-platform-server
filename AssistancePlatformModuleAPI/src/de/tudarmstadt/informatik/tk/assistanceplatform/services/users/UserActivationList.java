@@ -6,19 +6,21 @@ import java.util.Set;
 /**
  * Simple set implementation of the activation checker interface.
  */
-public class UserActivationList implements IUserActivationChecker {
+public class UserActivationList implements IUserActivationList, IUserActivationChecker {
 	private Set<Long> usersWhoActivated = new HashSet<>();
 	
-	public void addActivationByUser(Long userId) {
+	@Override
+	public void addActivationByUser(long userId) {
 		usersWhoActivated.add(userId);
 	}
-	
-	public void removeActivationFromUser(Long userId) {
+
+	@Override
+	public void removeActivationFromUser(long userId) {
 		usersWhoActivated.remove(userId);
 	}
 	
 	@Override
-	public boolean isActivatedForUser(Long userId) {
+	public boolean isActivatedForUser(long userId) {
 		return usersWhoActivated.contains(userId);
 	}
 }

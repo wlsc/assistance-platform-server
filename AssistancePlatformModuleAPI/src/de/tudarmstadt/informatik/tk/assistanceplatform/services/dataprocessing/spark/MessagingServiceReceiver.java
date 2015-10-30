@@ -1,7 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark;
 
-import java.util.function.Supplier;
-
 import org.apache.spark.storage.StorageLevel;
 import org.apache.spark.streaming.receiver.Receiver;
 
@@ -10,6 +8,11 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Messag
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
 public class MessagingServiceReceiver<T> extends Receiver<T> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3001609774073205524L;
+
 	private Channel<T> channel;
 	
 	private Class<T> type;

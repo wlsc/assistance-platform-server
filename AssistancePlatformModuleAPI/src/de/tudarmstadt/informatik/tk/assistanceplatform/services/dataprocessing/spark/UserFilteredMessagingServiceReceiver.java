@@ -1,41 +1,28 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark;
 
-import java.util.function.Supplier;
-
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
 public class UserFilteredMessagingServiceReceiver<T> extends MessagingServiceReceiver<T> {
+	private static final long serialVersionUID = 5383380291390118768L;
 
-	public UserFilteredMessagingServiceReceiver(Class<T> eventType) {
+	
+	private String moduleIdToFilter;
+	
+	public UserFilteredMessagingServiceReceiver(String moduleIdToFilter, Class<T> eventType) {
 		super(eventType);
-		
-		Supplier<MessagingService> messagingServiceConstructor = () -> {
-			MessagingService ms = new JmsMessagingService();
-			UserActivationListKeeper activationListKeeper = new UserActivationListKeeper(ms);
-			
-			ms = new UserFilteredMessagingServiceDecorator(ms, activationListKeeper.getUserActivationChecker());
-			
-			return ms;
-		};
+		this.moduleIdToFilter = moduleIdToFilter;
 	}
 	
 	@Override
 	protected MessagingService createMessagingService() {
 		MessagingService ms = super.createMessagingService();
 		
-		UserActivationListKeeper activationListKeeper = new UserActivationListKeeper(ms);
+		UserActivationListKeeper activationListKeeper = new UserActivationListKeeper(moduleIdToFilter, ms);
 		
 		ms = new UserFilteredMessagingServiceDecorator(ms, activationListKeeper.getUserActivationChecker());
 		
 		return ms;
 	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5383380291390118768L;
-
 }
