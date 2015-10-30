@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.InformationProvider;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.MappedServlet;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServer;
 
 
@@ -63,5 +64,5 @@ public abstract class AssistanceModule extends Module {
 	 * Otherwise just return null.
 	 * @return
 	 */
-	public abstract Collection<ModuleRestServer.MappedServlet> generateCustomServelets();
+	public abstract Collection<MappedServlet> generateCustomServelets();
 }
