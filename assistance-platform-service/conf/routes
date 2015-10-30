@@ -35,6 +35,7 @@ POST	/modules/localize			controllers.ModulesController.localize
 POST	/modules/update				controllers.ModulesController.update
 POST	/modules/alive				controllers.ModulesController.alive
 GET		/modules/configuration		controllers.ModulesController.bootstrapConfiguration
+GET		/modules/activations/:module controllers.ModulesController.activations(module)
 
 # Client Action API (not intended for client usage!)
 POST 	/action/sendmessage			controllers.ClientActionController.sendMessageToDevices

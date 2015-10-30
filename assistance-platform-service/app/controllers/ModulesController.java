@@ -8,8 +8,10 @@ import models.APIError;
 import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
 import persistency.ActiveAssistanceModulePersistency;
+import persistency.UserModuleActivationPersistency;
 import play.Logger;
 import play.cache.Cache;
+import play.libs.Json;
 import play.mvc.Result;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -45,6 +47,10 @@ public class ModulesController extends RestController {
 		}
 		
 		return ok();
+	}
+	
+	public Result activations(String moduleId) {
+		return ok(Json.toJson(UserModuleActivationPersistency.userActivationsForModule(moduleId)));
 	}
 	
 	private Result receiveAndProcessAssistanceModuleInformation(boolean expectedExistanceOfModule, APIError errorWhenModuleExistanceOtherThanExpected, Function<ActiveAssistanceModule, Boolean> func) {

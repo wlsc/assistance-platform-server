@@ -95,4 +95,21 @@ public class UserModuleActivationPersistency {
 			return modules;
 		});
 	}
+	
+	public static Long[] userActivationsForModule(String moduleId) {
+		return DB.withConnection(conn -> {
+
+			Long[] userIds = new QueryRunner()
+			.query(conn, "SELECT user_id FROM " + TABLE_NAME + " WHERE module_id = ?", new ArrayListHandler(), moduleId)
+			.stream()
+			.map(array -> {
+				long id = (long)array[0];
+				
+				return id;
+			}).toArray(Long[]::new);
+
+			
+			return userIds;
+		});
+	}
 }
