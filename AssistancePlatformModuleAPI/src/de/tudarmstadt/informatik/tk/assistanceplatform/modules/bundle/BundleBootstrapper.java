@@ -7,6 +7,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.REST
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.ISparkService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.SparkService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
@@ -20,7 +21,6 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActiva
  * @author bjeutter
  */
 public class BundleBootstrapper {
-	private static final String defaultPlatformUrlAndPort = "localhost:9000";
 	
 	/**
 	 * Initalizes & starts the bundle
@@ -39,7 +39,7 @@ public class BundleBootstrapper {
 		ms = new UserFilteredMessagingServiceDecorator(ms, activationChecker);
 
 		// Prepare Platform Client & Action Runner
-		PlatformClient client = new PlatformClient("localhost:9000");
+		PlatformClient client = PlatformClientFactory.getInstance(platformUrlAndPort);
 		IClientActionRunner actionRunner = new RESTClientActionRunner(client);
 		actionRunner = new ModuleBundleClientActionRunnerProxy(bundle,
 				actionRunner);
@@ -67,6 +67,6 @@ public class BundleBootstrapper {
 	 * @param bundle The bundle that shall be started
 	 */
 	public static void bootstrap(ModuleBundle bundle) {
-		bootstrap(bundle, defaultPlatformUrlAndPort, false);
+		bootstrap(bundle, PlatformClientFactory.defaultPlatformUrlAndPort, false);
 	}
 }
