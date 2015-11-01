@@ -3,8 +3,11 @@ package persistency;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
+
+import org.apache.commons.lang.ArrayUtils;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 import models.ActiveAssistanceModule;
@@ -96,7 +99,7 @@ public class UserModuleActivationPersistency {
 		});
 	}
 	
-	public static Long[] userActivationsForModule(String moduleId) {
+	public static long[] userActivationsForModule(String moduleId) {
 		return DB.withConnection(conn -> {
 
 			Long[] userIds = new QueryRunner()
@@ -109,7 +112,7 @@ public class UserModuleActivationPersistency {
 			}).toArray(Long[]::new);
 
 			
-			return userIds;
+			return ArrayUtils.toPrimitive( userIds );
 		});
 	}
 }
