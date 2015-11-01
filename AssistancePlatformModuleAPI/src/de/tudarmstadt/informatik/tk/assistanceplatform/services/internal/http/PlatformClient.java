@@ -20,6 +20,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.as
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleLocalizationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
 
 public class PlatformClient {
 	private final static Logger logger = Logger.getLogger(PlatformClient.class);
@@ -119,6 +120,25 @@ public class PlatformClient {
 		for(ModuleLocalizationRequest locRequest : bundleLocalizationRequests(bundle)) {
 			service.localize(locRequest, callback);
 		}
+	}
+	
+	public void getUserActivationsForModule(String moduleId, Consumer<ModuleActivationsResponse> responseCallback) {
+		Callback<ModuleActivationsResponse> callback = new Callback<ModuleActivationsResponse>() {
+
+			@Override
+			public void failure(RetrofitError error) {
+				logger.warn("Failed to pull user who activated the module " + errorFromRetrofit(error));
+			}
+
+			@Override
+			public void success(ModuleActivationsResponse arg0, Response arg1) {
+				logger.info("Pulled " + arg0.activatedUserIds.length + " user activations.");
+				
+				responseCallback.accept(null);
+			}
+		};
+		
+		service.getModuleActivationsByUsers(moduleId , callback);
 	}
 	
 	private ModuleRegistrationRequest bundleToRequest(ModuleBundle bundle) {
