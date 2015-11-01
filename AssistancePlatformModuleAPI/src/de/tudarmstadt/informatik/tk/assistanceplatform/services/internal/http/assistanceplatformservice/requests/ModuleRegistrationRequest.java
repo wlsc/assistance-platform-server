@@ -4,6 +4,11 @@ import com.google.gson.annotations.Expose;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 
+/**
+ * Request data that is sent to the platform to register a module.
+ * @author bjeutter
+ *
+ */
 public class ModuleRegistrationRequest {
 	@Expose
 	private String id;
