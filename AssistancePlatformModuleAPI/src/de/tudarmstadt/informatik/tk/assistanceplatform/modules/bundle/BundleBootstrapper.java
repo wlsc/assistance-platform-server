@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
+import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeperFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.ModuleBundleClientActionRunnerProxy;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.RESTClientActionRunner;
@@ -32,7 +33,7 @@ public class BundleBootstrapper {
 		MessagingService ms = new JmsMessagingService();
 		// TODO: Fetch configuration from platform
 		
-		UserActivationListKeeper activationsKeeper = new UserActivationListKeeper(bundle.getModuleId(), ms);
+		UserActivationListKeeper activationsKeeper = UserActivationListKeeperFactory.getInstance(bundle.getModuleId(), ms, platformUrlAndPort);
 		
 		IUserActivationChecker activationChecker = activationsKeeper.getUserActivationChecker();
 
@@ -57,7 +58,7 @@ public class BundleBootstrapper {
 		// TODO: Add debug / locale mode
 		String master = localMode ? "local[*]" : "spark://Bennets-MBP:7077"; 
 		String[] jars = new String[] { System.getProperty("user.home") + "/" + bundle.getModuleId() + ".jar" };
-		ISparkService sparkService = new SparkService(bundle.getModuleId(), appName, master, jars);
+		ISparkService sparkService = new SparkService(bundle, appName, master, jars);
 		
 		return sparkService;
 	}

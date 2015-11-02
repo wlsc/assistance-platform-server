@@ -33,6 +33,10 @@ public class PlatformClient {
 		service = restAdapter.create(AssistancePlatformService.class);
 	}
 	
+	public PlatformClient(AssistancePlatformService service) {
+		this.service = service;
+	}
+	
 	public void sendMessage(SendMessageRequest request, Consumer<Void> onSuccess, Consumer<Void> onError) {
 		Callback<Void> callback = new Callback<Void>() {
 
@@ -122,7 +126,7 @@ public class PlatformClient {
 		}
 	}
 	
-	public void getUserActivationsForModule(String moduleId, Consumer<ModuleActivationsResponse> responseCallback) {
+	public void getUserActivationsForModule(String moduleId, Consumer<long[]> activatedUserIdsCallback) {
 		Callback<ModuleActivationsResponse> callback = new Callback<ModuleActivationsResponse>() {
 
 			@Override
@@ -134,7 +138,7 @@ public class PlatformClient {
 			public void success(ModuleActivationsResponse arg0, Response arg1) {
 				logger.info("Pulled " + arg0.activatedUserIds.length + " user activations.");
 				
-				responseCallback.accept(null);
+				activatedUserIdsCallback.accept(arg0.activatedUserIds);
 			}
 		};
 		
@@ -182,6 +186,10 @@ public class PlatformClient {
 	}
 	
 	private String errorFromRetrofit(RetrofitError error) {
-		return new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
+		if(error.getResponse() != null) {
+			return new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
+		}
+		
+		return "unknown error";
 	}
 }

@@ -8,20 +8,21 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.Event;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundle;
 
 public class SparkService implements ISparkService {	
 	private final String appName;
 	private final String master;
 	private final String[] jars;
-	private final String moduleId;
+	private final ModuleBundle bundle;
 	
 	private SparkConf sparkConfInstance;
 	
-	public SparkService(String moduleId, String appName, String master, String[] jars) {
+	public SparkService(ModuleBundle bundle, String appName, String master, String[] jars) {
 		this.appName = appName;
 		this.master = master;
 		this.jars = jars;
-		this.moduleId = moduleId;
+		this.bundle = bundle;
 	}
 	
 	public JavaStreamingContext createStreamingContext(Duration batchDuration) {
@@ -52,7 +53,7 @@ public class SparkService implements ISparkService {
 
 	@Override
 	public <T extends Event> JavaDStream<T> getEventReceiverStream(JavaStreamingContext sc, Class<T> eventType) {		
-		MessagingServiceReceiver<T> messagingReceiver = new UserFilteredMessagingServiceReceiver<T>(moduleId, eventType);
+		MessagingServiceReceiver<T> messagingReceiver = new UserFilteredMessagingServiceReceiver<T>(bundle.getModuleId(), eventType);
 		
 		JavaDStream<T> stream = sc.receiverStream(messagingReceiver);
 		

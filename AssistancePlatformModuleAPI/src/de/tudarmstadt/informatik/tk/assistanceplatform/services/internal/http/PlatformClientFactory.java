@@ -16,4 +16,8 @@ public class PlatformClientFactory {
 
 		return instance;
 	}
+	
+	public static void setInstance(PlatformClient mockInstance) {
+		instance = mockInstance; 
+	}
 }
