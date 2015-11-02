@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.commons.lang.math.NumberUtils;
+
 import models.APIError;
 import models.ActiveAssistanceModule;
 import models.AssistanceAPIErrors;
@@ -99,19 +101,20 @@ public class ModulesController extends RestController {
 			String administratorEmail = getAdminEmailNode(postData).asText();
 
 			String supportEmail = getSupportEmailNode(postData).asText();
+			
+			String restContactAddress = getRestContactAddress(postData); 
 
 			// TODO: Validation der Parameter?
 
 			ActiveAssistanceModule module = new ActiveAssistanceModule(name,
 					id, logoUrl, description_short, description_long,
 					requiredCapabilites, optionalCapabilities, copyright,
-					administratorEmail, supportEmail);
+					administratorEmail, supportEmail, restContactAddress);
 
 			if (func.apply(module)
 					&& ActiveAssistanceModulePersistency.setIsAlive(module.id)) {
 				clearCacheForLanguage("en");
-				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das
-								// nächste mal "Alive" melden soll
+				return ok(); 
 			}
 
 			return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
@@ -130,6 +133,19 @@ public class ModulesController extends RestController {
 				&& !getOptionalCapsNode(postData).isMissingNode()
 				&& !getCopyrightNode(postData).isMissingNode()
 				&& !getAdminEmailNode(postData).isMissingNode();
+	}
+	
+	private String getRestContactAddress(JsonNode postData) {
+		String submittedAddressData = postData.findPath("restContactAddress").asText();
+		
+		// If it is just a number, then it is the port
+		if(NumberUtils.isNumber(submittedAddressData)) {
+			String requestorIp = request().remoteAddress();
+			
+			return requestorIp + ":" + submittedAddressData;
+		}
+		
+		return submittedAddressData;
 	}
 
 	private JsonNode getIdNode(JsonNode postData) {
@@ -173,7 +189,7 @@ public class ModulesController extends RestController {
 
 			ActiveAssistanceModule module = new ActiveAssistanceModule(name,
 					id, logoUrl, description_short, description_long, null,
-					null, null, null, null);
+					null, null, null, null, null);
 
 			String languageCode = getLanguageCode(postData).textValue();
 

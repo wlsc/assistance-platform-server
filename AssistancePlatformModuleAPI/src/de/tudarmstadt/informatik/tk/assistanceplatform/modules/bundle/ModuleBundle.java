@@ -3,8 +3,6 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.log4j.Logger;
-
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.DataModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.AssistanceModule;
@@ -13,6 +11,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientAc
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.ISparkService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.IMessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServerFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
 /**
@@ -47,18 +46,13 @@ public abstract class ModuleBundle {
 			ISparkService sparkService) {
 		// Save references to all required compopnents
 		this.actionRunner = actionRunner;
-
 		this.userActivationListChecker = userActivationListChecker;
-
 		this.platformClient = platformClient;
-
 		this.sparkService = sparkService;
 
 		// Initialize and run the contained modules
 		this.containedModules = initializeContainedModules();
-
 		this.startContainedModules(messagingService);
-
 		registerBundle();
 	}
 
@@ -83,14 +77,6 @@ public abstract class ModuleBundle {
 	private void registerBundle() {
 		ModuleBundleRegistrator registrator = new ModuleBundleRegistrator(this,
 				platformClient);
-
-		try {
-			registrator.registerBundleForUsage(true);
-		} catch (ModuleBundleInformationMissingException e) {
-			Logger.getLogger(ModuleBundle.class)
-					.error("An error occured on module registration with assistance platform",
-							e);
-		}
 
 		registrator.startPeriodicRegistration();
 	}
@@ -120,4 +106,9 @@ public abstract class ModuleBundle {
 	 * them.
 	 */
 	protected abstract Module[] initializeContainedModules();
+
+	public String getRestContactAddress() {
+		int port = ModuleRestServerFactory.getInstance().getPort();
+		return Integer.toString( port ); // Lets just use the port so the receiver can resolve the correct IP address
+	}
 }

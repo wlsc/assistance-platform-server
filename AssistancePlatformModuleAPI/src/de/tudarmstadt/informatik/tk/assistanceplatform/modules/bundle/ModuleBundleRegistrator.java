@@ -15,6 +15,8 @@ class ModuleBundleRegistrator {
 	
 	private PlatformClient client;
 	
+	private boolean update = false;
+	
 	public ModuleBundleRegistrator(ModuleBundle bundle, PlatformClient platformClient) {
 		this.bundle = bundle;
 		this.client = platformClient;
@@ -24,15 +26,17 @@ class ModuleBundleRegistrator {
 		long minutesToWaitForUpdate = 15;
 		
 		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
 		scheduler.scheduleAtFixedRate(() -> {
 			try {
-				registerBundleForUsage(false);
+				registerBundleForUsage(!update);
+				update = true;
 			} catch (Exception e) {
 				Logger.getLogger(ModuleBundle.class).error("An error occured on module registration with assistance platform", e);
 				
 				scheduler.shutdownNow();
 			}
-		}, minutesToWaitForUpdate, minutesToWaitForUpdate, TimeUnit.MINUTES);
+		}, 15, minutesToWaitForUpdate * 60, TimeUnit.SECONDS);
 	}
 	
 	public void registerBundleForUsage(boolean startupRequest) throws ModuleBundleInformationMissingException {

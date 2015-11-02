@@ -19,7 +19,7 @@ public class ActiveAssistanceModulePersistency {
 	private static String TABLE_NAME = "active_modules";
 	private static String LOCALIZATION_TABLE_NAME = "active_module_localization";
 	
-	private static String allFields = "id, name, logo_url, description_short, description_long, required_capabilities, optional_capabilities, copyright, administrator_email, support_email";
+	private static String allFields = "id, name, logo_url, description_short, description_long, required_capabilities, optional_capabilities, copyright, administrator_email, support_email, rest_contact_address";
 	
 	public static boolean create(ActiveAssistanceModule module) {
 		if (doesModuleWithIdExist(module.id)) {
@@ -29,7 +29,7 @@ public class ActiveAssistanceModulePersistency {
 		return DB.withConnection(conn -> {
 			PreparedStatement s = conn.prepareStatement(
 					"INSERT INTO " + TABLE_NAME + " (" + allFields + ") VALUES "
-					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			
 			ObjectMapper mapper = new ObjectMapper();
 			
@@ -43,6 +43,7 @@ public class ActiveAssistanceModulePersistency {
 			s.setString(8, module.copyright);
 			s.setString(9, module.administratorEmail);
 			s.setString(10, module.supportEmail);
+			s.setString(11, module.restContactAddress);
 			
 			int affectedRows = s.executeUpdate();
 			
@@ -74,7 +75,8 @@ public class ActiveAssistanceModulePersistency {
 			s.setString(7, module.copyright);
 			s.setString(8, module.administratorEmail);
 			s.setString(9, module.supportEmail);
-			s.setString(10, module.id);
+			s.setString(10, module.restContactAddress);
+			s.setString(11, module.id);
 			
 			int affectedRows = s.executeUpdate();
 			
@@ -116,6 +118,8 @@ public class ActiveAssistanceModulePersistency {
 			tmpDelete.setString(2, languageCode);
 			
 			tmpDelete.executeUpdate();
+			
+			tmpDelete.close();
 			
 			PreparedStatement s = conn.prepareStatement(
 					"INSERT INTO " + LOCALIZATION_TABLE_NAME + " (module_id, language_code, name, logo_url, description_short, description_long) VALUES "
@@ -187,7 +191,9 @@ public class ActiveAssistanceModulePersistency {
 				
 				String supportEmail = (String)array[9];
 				
-				return new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilities, optionalCapabilities, copyright, administratorEmail, supportEmail);
+				String restAddress = (String)array[9];
+				
+				return new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilities, optionalCapabilities, copyright, administratorEmail, supportEmail, restAddress);
 			}).toArray(ActiveAssistanceModule[]::new);
 
 			

@@ -9,6 +9,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.inform
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.MappedServlet;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServer;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServerFactory;
 
 
 /**
@@ -25,7 +26,8 @@ public abstract class AssistanceModule extends Module {
 	@Override
 	protected final void internalDoBeforeStartup() {
 		try {
-			ModuleRestServer server = new ModuleRestServer(generateCustomServelets());
+			ModuleRestServer server = ModuleRestServerFactory.getInstance();
+			server.setCustomServlets(generateCustomServelets());
 			server.start();
 		} catch (Exception e) {
 			Logger.getLogger(AssistanceModule.class).error("An error occured while starting the module rest server", e);

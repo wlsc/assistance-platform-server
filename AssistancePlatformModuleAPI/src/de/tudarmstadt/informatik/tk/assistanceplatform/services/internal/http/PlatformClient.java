@@ -158,7 +158,9 @@ public class PlatformClient {
 				bundleInfo.optionalCapabilites, 
 				bundleInfo.copyright, 
 				bundleInfo.administratorEmail,
-				bundleInfo.supportEmail);
+				bundleInfo.supportEmail,
+				bundle.getRestContactAddress()
+				);
 		
 		return request;
 	}

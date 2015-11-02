@@ -18,9 +18,6 @@ public class ActiveAssistanceModule {
 
 	public String descriptionShort;
 	public String descriptionLong;
-
-	//public String[] requiredCapabilities;
-	//public String[] optionalCapabilites;
 	
 	public Capability[] requiredCapabilities;
 	public Capability[] optionalCapabilites;
@@ -30,11 +27,13 @@ public class ActiveAssistanceModule {
 	public String supportEmail;
 	
 	public String administratorEmail;
+	
+	public String restContactAddress;
 
 	public ActiveAssistanceModule(String name, String id, String logoUrl,
 			String description_short, String description_long,
 			Capability[] requiredCapabilites, Capability[] optionalCapabilities,
-			String copyright, String administratorEmail, String supportEmail) {
+			String copyright, String administratorEmail, String supportEmail, String restContactAddress) {
 
 		this.name = name;
 
@@ -52,5 +51,7 @@ public class ActiveAssistanceModule {
 		
 		this.administratorEmail = administratorEmail;
 		this.supportEmail = supportEmail;
+		
+		this.restContactAddress = restContactAddress;
 	}
 }
