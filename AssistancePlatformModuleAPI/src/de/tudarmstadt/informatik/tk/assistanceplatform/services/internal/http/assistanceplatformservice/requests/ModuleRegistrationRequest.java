@@ -1,7 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests;
 
-import com.google.gson.annotations.Expose;
-
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 
 /**
@@ -10,26 +8,16 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
  *
  */
 public class ModuleRegistrationRequest {
-	@Expose
-	private String id;
-	@Expose
-	private String name;
-	@Expose
-	private String logoUrl;
-	@Expose
-	private String descriptionShort;
-	@Expose
-	private String descriptionLong;
-	@Expose
-	private Capability[] requiredCaps;
-	@Expose
-	private Capability[] optionalCaps;
-	@Expose
-	private String copyright;
-	@Expose
-	private String administratorEmail;
-	@Expose
-	private String supportEmail;
+	public String id;
+	public String name;
+	public String logoUrl;
+	public String descriptionShort;
+	public String descriptionLong;
+	public Capability[] requiredCaps;
+	public Capability[] optionalCaps;
+	public String copyright;
+	public String administratorEmail;
+	public String supportEmail;
 	
 	public ModuleRegistrationRequest(String id, String name, String logoUrl,
 			String descriptionShort, String descriptionLong,
