@@ -1,7 +1,5 @@
 package controllers;
 
-import models.APIErrorException;
-import models.AssistanceAPIErrors;
 import models.Device;
 import persistency.DevicePersistency;
 import play.Logger;
@@ -12,6 +10,9 @@ import requests.RegisterDeviceForMessagingRequest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import errors.APIErrorException;
+import errors.AssistanceAPIErrors;
 
 public class DevicesController extends RestController {
 	@Security.Authenticated(UserAuthenticator.class)

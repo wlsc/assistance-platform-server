@@ -1,4 +1,4 @@
-package models;
+package errors;
 
 /**
  * A exception that is bound to an API error.

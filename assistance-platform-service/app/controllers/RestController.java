@@ -2,12 +2,13 @@ package controllers;
 
 import java.util.Map;
 
-import models.APIError;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import errors.APIError;
 
 public abstract class RestController extends Controller {
 	protected Long getUserIdForRequest() {

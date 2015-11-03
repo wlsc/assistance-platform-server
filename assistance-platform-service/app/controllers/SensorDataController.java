@@ -6,9 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import messaging.JmsMessagingServiceFactory;
-import models.APIError;
-import models.APIErrorException;
-import models.AssistanceAPIErrors;
 import persistency.ConfiguredSensorPersistencyProxy;
 import persistency.DevicePersistency;
 import play.Logger;
@@ -24,6 +21,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
+import errors.APIError;
+import errors.APIErrorException;
+import errors.AssistanceAPIErrors;
 
 public class SensorDataController extends RestController {
 	private MessagingService ms = JmsMessagingServiceFactory.createServiceFromConfig();

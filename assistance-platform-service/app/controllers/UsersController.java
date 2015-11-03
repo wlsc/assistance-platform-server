@@ -3,7 +3,6 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import models.AssistanceAPIErrors;
 import models.Device;
 import models.Token;
 import models.User;
@@ -20,6 +19,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import errors.AssistanceAPIErrors;
 
 //@Api(value = "/users", description = "User authentication / reigstration operations")
 public class UsersController extends RestController {

@@ -4,7 +4,6 @@ import java.util.function.Predicate;
 
 import messaging.JmsMessagingServiceFactory;
 import models.ActiveAssistanceModule;
-import models.AssistanceAPIErrors;
 import models.UserModuleActivation;
 import persistency.ActiveAssistanceModulePersistency;
 import persistency.UserModuleActivationPersistency;
@@ -15,9 +14,11 @@ import play.mvc.Security;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.information.CurrentModuleInformationAggregator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
+import errors.AssistanceAPIErrors;
 
 public class AssistanceController extends RestController {
 	MessagingService ms = JmsMessagingServiceFactory.createServiceFromConfig();
@@ -96,8 +97,16 @@ public class AssistanceController extends RestController {
 
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result current() {
-		// TODO: Frage alle Module an (wie? Interface?), ob sie aktuelle Informationen für den User haben
-		// TODO: Priorisiere, filtere und sortiere und gib es dann in einem einheitlichen FOrmat an den User zurück
+		// Get User id from request
+		long userId = getUserIdForRequest();
+		
+		CurrentModuleInformationAggregator informationAggregator = new CurrentModuleInformationAggregator(userId);
+		
+		// 1. Suche alle aktivierten MOdule von dem User
+		
+		// 2. Schleife den Request an alle gefundenen Module (bzw. deren REST Server) weiter
+		// 3. Sammle die Resultate
+		// 4. Priorisiere die Resultate
 
 		return TODO;
 	}

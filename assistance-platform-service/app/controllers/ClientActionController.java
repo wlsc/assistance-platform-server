@@ -1,7 +1,5 @@
 package controllers;
 
-import models.APIErrorException;
-import models.AssistanceAPIErrors;
 import persistency.DevicePersistency;
 import persistency.UserPersistency;
 import play.Logger;
@@ -12,6 +10,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction.ClientActionSenderDistributor;
+import errors.APIErrorException;
+import errors.AssistanceAPIErrors;
 
 /**
  * This controller is responsible for handling requests by module to provide the

@@ -1,7 +1,7 @@
 import java.util.concurrent.TimeUnit;
 
-import models.APIError;
 import controllers.RestController;
+import errors.APIError;
 import scala.concurrent.duration.Duration;
 import views.html.defaultpages.badRequest;
 import periodic.ModuleAliveChecker;

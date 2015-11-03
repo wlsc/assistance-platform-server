@@ -1,4 +1,5 @@
-package models;
+package errors;
+
 
 /**
  * A "static" list of common REST API errors for the assistance platform

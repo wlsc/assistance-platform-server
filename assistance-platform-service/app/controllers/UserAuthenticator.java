@@ -1,6 +1,6 @@
 package controllers;
 
-import models.APIError;
+import errors.APIError;
 import models.Token;
 import models.User;
 import persistency.UserPersistency;

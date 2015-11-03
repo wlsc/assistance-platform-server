@@ -1,4 +1,4 @@
-package models;
+package errors;
 
 /**
  * Represents an API error by providing an error code and a message.

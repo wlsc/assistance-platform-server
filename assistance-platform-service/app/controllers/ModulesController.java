@@ -6,9 +6,7 @@ import java.util.function.Function;
 
 import org.apache.commons.lang.math.NumberUtils;
 
-import models.APIError;
 import models.ActiveAssistanceModule;
-import models.AssistanceAPIErrors;
 import persistency.ActiveAssistanceModulePersistency;
 import persistency.UserModuleActivationPersistency;
 import play.Logger;
@@ -22,6 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
+import errors.APIError;
+import errors.AssistanceAPIErrors;
 
 public class ModulesController extends RestController {
 	public Result register() {
