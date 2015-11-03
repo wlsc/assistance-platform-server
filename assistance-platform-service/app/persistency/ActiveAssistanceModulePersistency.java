@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 
 public class ActiveAssistanceModulePersistency {
-	private static String TABLE_NAME = "active_modules";
+	public static String TABLE_NAME = "active_modules";
 	private static String LOCALIZATION_TABLE_NAME = "active_module_localization";
 	
 	private static String allFields = "id, name, logo_url, description_short, description_long, required_capabilities, optional_capabilities, copyright, administrator_email, support_email, rest_contact_address";
@@ -38,8 +38,10 @@ public class ActiveAssistanceModulePersistency {
 			s.setString(3, module.logoUrl);
 			s.setString(4, module.descriptionShort);
 			s.setString(5, module.descriptionLong);
-			s.setString(6, mapper.valueToTree(module.requiredCapabilities).toString());
-			s.setString(7, mapper.valueToTree(module.optionalCapabilites).toString());
+			String requiredCapString = module.requiredCapabilities == null ? "null" : mapper.valueToTree(module.requiredCapabilities).toString();
+			s.setString(6, requiredCapString);
+			String optCapString = module.optionalCapabilites == null ? "null" : mapper.valueToTree(module.optionalCapabilites).toString();
+			s.setString(7, optCapString);
 			s.setString(8, module.copyright);
 			s.setString(9, module.administratorEmail);
 			s.setString(10, module.supportEmail);
@@ -191,7 +193,7 @@ public class ActiveAssistanceModulePersistency {
 				
 				String supportEmail = (String)array[9];
 				
-				String restAddress = (String)array[9];
+				String restAddress = (String)array[10];
 				
 				return new ActiveAssistanceModule(name, id, logoUrl, description_short, description_long, requiredCapabilities, optionalCapabilities, copyright, administratorEmail, supportEmail, restAddress);
 			}).toArray(ActiveAssistanceModule[]::new);

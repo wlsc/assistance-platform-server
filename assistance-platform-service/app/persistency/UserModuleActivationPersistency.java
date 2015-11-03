@@ -3,10 +3,8 @@ package persistency;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
-
 import org.apache.commons.lang.ArrayUtils;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
@@ -114,5 +112,23 @@ public class UserModuleActivationPersistency {
 			
 			return ArrayUtils.toPrimitive( userIds );
 		});
+	}
+	
+	public static ActiveAssistanceModule[] activatedModuleEndpointsForUser(long userId) {
+			return DB.withConnection(conn -> {
+				
+				ActiveAssistanceModule[] modules = new QueryRunner()
+				.query(conn, "SELECT m.id, m.rest_contact_address FROM " + TABLE_NAME + " a LEFT JOIN " + ActiveAssistanceModulePersistency.TABLE_NAME + " AS m ON a.module_id = m.id WHERE a.user_id = ?", new ArrayListHandler(), userId)
+				.stream()
+				.map(array -> {
+					String id = (String)array[0];
+					String restAddress = (String)array[1];
+					
+					return new ActiveAssistanceModule(null, id, null, null, null, null, null, null, null, null, restAddress);
+				}).toArray(ActiveAssistanceModule[]::new);
+
+				
+				return modules;
+			});
 	}
 }
