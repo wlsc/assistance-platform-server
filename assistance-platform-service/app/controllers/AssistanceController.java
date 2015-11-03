@@ -1,5 +1,8 @@
 package controllers;
 
+import io.netty.util.internal.SystemPropertyUtil;
+
+import java.util.List;
 import java.util.function.Predicate;
 
 import messaging.JmsMessagingServiceFactory;
@@ -8,6 +11,7 @@ import models.UserModuleActivation;
 import persistency.ActiveAssistanceModulePersistency;
 import persistency.UserModuleActivationPersistency;
 import play.cache.Cache;
+import play.libs.F.Promise;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -15,6 +19,9 @@ import play.mvc.Security;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.CurrentModuleInformationAggregator;
+import de.tudarmstadt.informatik.tk.assistanceplatform.information.IModuleInformationPrioritizer;
+import de.tudarmstadt.informatik.tk.assistanceplatform.information.ModuleInformationPrioritizerImpl;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
@@ -96,25 +103,41 @@ public class AssistanceController extends RestController {
 	}
 
 	@Security.Authenticated(UserAuthenticator.class)
-	public Result current() {
+	public Promise<Result> current() {
 		// Get User id from request
 		long userId = getUserIdForRequest();
 		
-		CurrentModuleInformationAggregator informationAggregator = new CurrentModuleInformationAggregator(userId);
+		System.out.println(userId);
 		
-		// 1. Suche alle aktivierten MOdule von dem User
+		// Get the activated modules
+		ActiveAssistanceModule[] activatedModules = getActivatedModuleEndpoints(userId);
 		
-		// 2. Schleife den Request an alle gefundenen Module (bzw. deren REST Server) weiter
-		// 3. Sammle die Resultate
-		// 4. Priorisiere die Resultate
-
-		return TODO;
+		return requestModuleInformationCards(activatedModules)
+		.map((cards) -> {
+			IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationPrioritizerImpl(cards);
+			return infoPrioritizer.getPrioritizedInformationList();
+		}).
+		map((prioritizedCards) -> {
+			JsonNode jsonResult = Json.toJson(prioritizedCards);
+			
+			return ok(jsonResult);
+		});
+	}
+	
+	private ActiveAssistanceModule[] getActivatedModuleEndpoints(long userId) {
+		return UserModuleActivationPersistency.activatedModuleEndpointsForUser(userId);
 	}
 
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result currentForModule(String moduleId) {
-		// TODO: Frage das Module mit der ID {moduleId} nach seinen aktuellen Informationen
-
 		return TODO;
+	}
+	
+	private Promise<List<ModuleInformationCard>> requestModuleInformationCards(ActiveAssistanceModule[] modules) {
+		CurrentModuleInformationAggregator informationAggregator = new CurrentModuleInformationAggregator(modules);
+		
+		Promise<List<ModuleInformationCard>> result = informationAggregator.requestCurrentInformationCards();
+		
+		return result;
 	}
 }
