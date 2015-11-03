@@ -107,12 +107,10 @@ public class AssistanceController extends RestController {
 		// Get User id from request
 		long userId = getUserIdForRequest();
 		
-		System.out.println(userId);
-		
 		// Get the activated modules
 		ActiveAssistanceModule[] activatedModules = getActivatedModuleEndpoints(userId);
 		
-		return requestModuleInformationCards(activatedModules)
+		return requestModuleInformationCards(userId, activatedModules)
 		.map((cards) -> {
 			IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationPrioritizerImpl(cards);
 			return infoPrioritizer.getPrioritizedInformationList();
@@ -133,8 +131,8 @@ public class AssistanceController extends RestController {
 		return TODO;
 	}
 	
-	private Promise<List<ModuleInformationCard>> requestModuleInformationCards(ActiveAssistanceModule[] modules) {
-		CurrentModuleInformationAggregator informationAggregator = new CurrentModuleInformationAggregator(modules);
+	private Promise<List<ModuleInformationCard>> requestModuleInformationCards(long userId, ActiveAssistanceModule[] modules) {
+		CurrentModuleInformationAggregator informationAggregator = new CurrentModuleInformationAggregator(userId, modules);
 		
 		Promise<List<ModuleInformationCard>> result = informationAggregator.requestCurrentInformationCards();
 		

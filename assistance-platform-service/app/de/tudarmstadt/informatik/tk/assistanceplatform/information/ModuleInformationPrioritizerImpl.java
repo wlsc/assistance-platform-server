@@ -13,6 +13,8 @@ public class ModuleInformationPrioritizerImpl implements IModuleInformationPrior
 	
 	@Override
 	public List<ModuleInformationCard> getPrioritizedInformationList() {
+		// TODO: Do some meaningful prioritization!
+		
 		return unsortedInformations;
 	}
 }
