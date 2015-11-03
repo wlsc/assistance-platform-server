@@ -8,6 +8,9 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.RequiredRestEndpointsFactory;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services.ExampleService;
+
 /**
  * This class provides the basic structure for the module-owned rest server for
  * serving basic requests from the platform. On top servlets can be set for
@@ -45,7 +48,7 @@ public class ModuleRestServer {
 	}
 	
 	private void bindStandardServletsToContext() {
-		Collection<MappedServlet> standardServlets = createStandardServlets();
+		Collection<MappedServlet> standardServlets = new RequiredRestEndpointsFactory().getRequiredServlets();
 
 		bindServletsBehindPath(context, standardServlets, "/rest");
 	}
@@ -63,11 +66,5 @@ public class ModuleRestServer {
 			context.addServlet(s.getServletHolder(), path + s.getPath()
 					+ "/*");
 		}
-	}
-
-	private Collection<MappedServlet> createStandardServlets() {
-		List<MappedServlet> mappedServlets = new LinkedList<>();
-		mappedServlets.add(new MappedServlet(ExampleService.class, "/example"));
-		return mappedServlets;
 	}
 }

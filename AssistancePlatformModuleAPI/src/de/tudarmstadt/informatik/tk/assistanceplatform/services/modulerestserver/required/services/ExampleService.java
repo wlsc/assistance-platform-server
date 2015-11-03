@@ -1,4 +1,4 @@
-package de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver;
+package de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services;
 
 import java.util.Arrays;
 
