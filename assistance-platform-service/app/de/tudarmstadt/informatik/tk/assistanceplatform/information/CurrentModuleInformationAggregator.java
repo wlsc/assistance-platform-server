@@ -12,6 +12,7 @@ import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
@@ -90,12 +91,14 @@ public class CurrentModuleInformationAggregator {
 			.filter((w) -> w != null)
 			.map((wsr) -> {
 			ModuleInformationCard card = null;
-			
+
 			if(wsr.getStatus() == 200) {
+				JsonNode json = wsr.asJson();
 				try {
-					card = objMapper.treeToValue(wsr.asJson(), ModuleInformationCard.class);
+					card = objMapper.treeToValue(json, ModuleInformationCard.class);
 				} catch (Exception e) {
-					Logger.error("Couldn't parse response from module REST server. Expected JSON but got: " + wsr.getBody());
+
+					Logger.error("Couldn't parse response from module REST server. Expected JSON but got: " + json, e);
 				}
 			} else {
 				Logger.error("Errornous response from module REST server: " + wsr.getBody());

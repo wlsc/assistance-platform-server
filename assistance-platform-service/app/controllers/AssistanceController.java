@@ -5,10 +5,14 @@ import io.netty.util.internal.SystemPropertyUtil;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.apache.commons.lang.NumberUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import messaging.JmsMessagingServiceFactory;
 import models.ActiveAssistanceModule;
 import models.UserModuleActivation;
 import persistency.ActiveAssistanceModulePersistency;
+import persistency.DevicePersistency;
 import persistency.UserModuleActivationPersistency;
 import play.cache.Cache;
 import play.libs.F.Promise;
@@ -103,15 +107,22 @@ public class AssistanceController extends RestController {
 	}
 
 	@Security.Authenticated(UserAuthenticator.class)
-	public Promise<Result> current() {
+	public Promise<Result> current(String device_id) {
+		if(!StringUtils.isNumeric(device_id)) {
+			return Promise.pure( badRequestJson(AssistanceAPIErrors.deviceIdNotKnown) );
+		}
+		
+		long deviceId = Long.parseLong(device_id);
+		
+		if(!DevicePersistency.doesExist(deviceId)) {
+			return Promise.pure( badRequestJson(AssistanceAPIErrors.deviceIdNotKnown) );
+		}
+		
 		// Get User id from request
 		long userId = getUserIdForRequest();
-		
+
 		// Get the activated modules
 		ActiveAssistanceModule[] activatedModules = getActivatedModuleEndpoints(userId);
-		
-		// Get the device
-		long deviceId = request().body().asJson().path("device_id").asLong();
 		
 		return requestModuleInformationCards(userId, deviceId, activatedModules)
 		.map((cards) -> {
@@ -130,7 +141,7 @@ public class AssistanceController extends RestController {
 	}
 
 	@Security.Authenticated(UserAuthenticator.class)
-	public Result currentForModule(String moduleId) {
+	public Result currentForModule(String moduleId, String device_id) {
 		return TODO;
 	}
 	

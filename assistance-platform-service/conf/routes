@@ -26,8 +26,8 @@ GET		/assistance/list/:lang		controllers.AssistanceController.list(lang)
 GET		/assistance/activations		controllers.AssistanceController.activations
 POST	/assistance/activate		controllers.AssistanceController.activate
 POST	/assistance/deactivate		controllers.AssistanceController.deactivate
-GET		/assistance/current			controllers.AssistanceController.current
-GET		/assistance/module/:module	controllers.AssistanceController.currentForModule(module)
+GET		/assistance/current/:device			controllers.AssistanceController.current(device)
+GET		/assistance/:module/current/:device	controllers.AssistanceController.currentForModule(module, device)
 
 # Module API (not intended for client usage!)
 POST	/modules/register			controllers.ModulesController.register
