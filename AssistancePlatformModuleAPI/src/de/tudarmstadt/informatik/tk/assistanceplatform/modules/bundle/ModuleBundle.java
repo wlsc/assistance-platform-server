@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.DataModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.AssistanceModule;
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.ModuleBundleInformationMissingException;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.ISparkService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
@@ -21,7 +20,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActiv
  * @author bjeutter
  *
  */
-public abstract class ModuleBundle {
+public abstract class ModuleBundle implements IModuleBundleIdProvider {
 	private Module containedModules[];
 
 	private IUserActivationChecker userActivationListChecker;
@@ -64,7 +63,9 @@ public abstract class ModuleBundle {
 
 			executor.submit(() -> {
 				if (m instanceof AssistanceModule) {
-					((AssistanceModule) m).setActionRunner(actionRunner);
+					AssistanceModule assiModule = ((AssistanceModule) m);
+					assiModule.setActionRunner(actionRunner);
+					assiModule.setModuleIdProvider(this);
 				} else if (m instanceof DataModule) {
 					((DataModule) m).setSparkService(sparkService);
 				}
@@ -91,6 +92,7 @@ public abstract class ModuleBundle {
 	 * 
 	 * @return
 	 */
+	@Override
 	public abstract String getModuleId();
 
 	/**

@@ -1,28 +1,33 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services;
 
-import java.util.Date;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.IInformationProvider;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services.resources.ServiceResourcesFactory;
 
 @Path("/information")
 public class CurrentInformationService {
 	@GET
-	@Path("/current/{userid}")
+	@Path("/current/user:{userid}/device:{deviceid}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String test(@PathParam("userid") long userId ) {
-		ModuleInformationCard card = new ModuleInformationCard();
-		card.moduleId = "test";
-		card.timestamp = new Date();
+	public String current(@PathParam("userid") long userId, @PathParam("deviceid") long deviceId ) {
+		ModuleInformationCard card = getCurrentInformationCard(userId, deviceId);
 		
 		return new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create().toJson(card);
+	}
+	
+	private ModuleInformationCard getCurrentInformationCard(long userId, long deviceId) {
+		return informationProvider().currentModuleInformationForUserAndDevice(userId, deviceId);
+	}
+	
+	private IInformationProvider informationProvider() {
+		return ServiceResourcesFactory.getInstance().getAssistanceModule().getInformationProvider();
 	}
 }

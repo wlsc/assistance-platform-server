@@ -5,6 +5,6 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.infor
  * @author bjeutter
  *
  */
-public interface InformationProvider {
+public interface IInformationProvider {
 	ModuleInformationCard currentModuleInformationForUserAndDevice(long userId, long deviceId);
 }

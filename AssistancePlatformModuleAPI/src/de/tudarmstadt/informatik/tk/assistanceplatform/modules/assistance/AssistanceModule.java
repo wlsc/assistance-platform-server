@@ -5,11 +5,16 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.InformationProvider;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.IInformationCardCustomizer;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.IInformationProvider;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationProvider;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.IModuleBundleIdProvider;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.MappedServlet;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServerFactory;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services.resources.ServiceResources;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services.resources.ServiceResourcesFactory;
 
 
 /**
@@ -19,14 +24,20 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver
  *
  */
 public abstract class AssistanceModule extends Module {
+	private IModuleBundleIdProvider moduleIdProvider;
+	
 	private IClientActionRunner actionRunner;
 	
-	private InformationProvider informationProvider;
+	private IInformationProvider informationProvider;
 	
 	@Override
 	protected final void internalDoBeforeStartup() {
 		try {
 			ModuleRestServer server = ModuleRestServerFactory.getInstance();
+			
+			// Prepapre Resources for REST services
+			ServiceResourcesFactory.setInstance(new ServiceResources(this));
+			
 			server.setCustomServlets(generateCustomServelets());
 			server.start();
 		} catch (Exception e) {
@@ -38,6 +49,11 @@ public abstract class AssistanceModule extends Module {
 		this.actionRunner = actionRunner;
 	}
 	
+	public final void setModuleIdProvider(IModuleBundleIdProvider idProvider) {
+		this.moduleIdProvider = idProvider;
+	}
+	
+	
 	/**
 	 * Gets the action runner which is required to perform actions on the client devices, like sending messages etc.
 	 * @return
@@ -46,12 +62,16 @@ public abstract class AssistanceModule extends Module {
 		return actionRunner;
 	}
 	
-	public final InformationProvider getInformationProvider() {
+	public final IInformationProvider getInformationProvider() {
 		if(informationProvider == null) {
-			informationProvider = generateInformationProvider();
+			informationProvider = new ModuleInformationProvider(getModuleIdProvider(), generateInformationCardCustomizer());
 		}
 		
 		return informationProvider;
+	}
+	
+	protected final IModuleBundleIdProvider getModuleIdProvider() {
+		return this.moduleIdProvider;
 	}
 
 	/**
@@ -59,12 +79,12 @@ public abstract class AssistanceModule extends Module {
 	 * If you don't plan such a feature, then just return null. 
 	 * @return
 	 */
-	public abstract InformationProvider generateInformationProvider();
+	protected abstract IInformationCardCustomizer generateInformationCardCustomizer();
 	
 	/**
 	 * Implement this if your module should provide a custom REST service, e.g. for 3party Apps to communicate directly with your module.
 	 * Otherwise just return null.
 	 * @return
 	 */
-	public abstract Collection<MappedServlet> generateCustomServelets();
+	protected abstract Collection<MappedServlet> generateCustomServelets();
 }
