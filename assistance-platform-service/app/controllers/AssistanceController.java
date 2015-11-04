@@ -110,7 +110,10 @@ public class AssistanceController extends RestController {
 		// Get the activated modules
 		ActiveAssistanceModule[] activatedModules = getActivatedModuleEndpoints(userId);
 		
-		return requestModuleInformationCards(userId, activatedModules)
+		// Get the device
+		long deviceId = request().body().asJson().path("device_id").asLong();
+		
+		return requestModuleInformationCards(userId, deviceId, activatedModules)
 		.map((cards) -> {
 			IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationPrioritizerImpl(cards);
 			return infoPrioritizer.getPrioritizedInformationList();
@@ -131,8 +134,8 @@ public class AssistanceController extends RestController {
 		return TODO;
 	}
 	
-	private Promise<List<ModuleInformationCard>> requestModuleInformationCards(long userId, ActiveAssistanceModule[] modules) {
-		CurrentModuleInformationAggregator informationAggregator = new CurrentModuleInformationAggregator(userId, modules);
+	private Promise<List<ModuleInformationCard>> requestModuleInformationCards(long userId, long deviceId, ActiveAssistanceModule[] modules) {
+		CurrentModuleInformationAggregator informationAggregator = new CurrentModuleInformationAggregator(userId, deviceId, modules);
 		
 		Promise<List<ModuleInformationCard>> result = informationAggregator.requestCurrentInformationCards();
 		

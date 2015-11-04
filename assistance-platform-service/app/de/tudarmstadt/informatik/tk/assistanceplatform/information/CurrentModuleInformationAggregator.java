@@ -1,13 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.information;
 
-import io.netty.util.internal.SystemPropertyUtil;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 
 import models.ActiveAssistanceModule;
 import play.Logger;
@@ -16,17 +11,23 @@ import play.libs.ws.WS;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
 
 public class CurrentModuleInformationAggregator {
 	private long userId;
 	
+	private long deviceId;
+	
 	private ActiveAssistanceModule[] activeModules;
 	
 	private WSClient ws;
 	
-	public CurrentModuleInformationAggregator(long userId, ActiveAssistanceModule[] activeModules) {
+	public CurrentModuleInformationAggregator(long userId, long deviceId, ActiveAssistanceModule[] activeModules) {
 		this.userId = userId;
+		this.deviceId = deviceId;
 		this.activeModules = activeModules;
 		this.ws = WS.client();
 	}
@@ -78,7 +79,7 @@ public class CurrentModuleInformationAggregator {
 	}
 	
 	private String getURLForRequest(ActiveAssistanceModule module) {
-		String url = "http://" + module.restContactAddress + "/rest/information/current/" + userId;
+		String url = "http://" + module.restContactAddress + "/rest/information/current/user:" + userId + "/device:" + deviceId;
 		return url;
 	}
 	
