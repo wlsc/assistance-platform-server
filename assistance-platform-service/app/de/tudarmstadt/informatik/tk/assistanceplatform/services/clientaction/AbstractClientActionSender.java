@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.clientaction;
 
+import play.libs.F.Promise;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.VisibleNotification;
 
 public abstract class AbstractClientActionSender {
@@ -13,6 +14,6 @@ public abstract class AbstractClientActionSender {
 	 *            The data to be sent
 	 * @return
 	 */
-	public abstract boolean platformSpecificSend(String[] receiverIds,
+	public abstract Promise<Boolean> platformSpecificSend(String[] receiverIds,
 			VisibleNotification notification, String data);
 }

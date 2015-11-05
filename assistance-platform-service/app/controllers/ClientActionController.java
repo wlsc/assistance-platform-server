@@ -3,6 +3,7 @@ package controllers;
 import persistency.DevicePersistency;
 import persistency.UserPersistency;
 import play.Logger;
+import play.libs.F.Promise;
 import play.mvc.Result;
 import requests.SendMessageToDeviceRequest;
 
@@ -20,7 +21,7 @@ import errors.AssistanceAPIErrors;
  * @author bjeutter
  */
 public class ClientActionController extends RestController {
-	public Result sendMessageToDevices() {
+	public Promise<Result> sendMessageToDevices() {
 		JsonNode jsonRequest = request().body().asJson();
 
 		SendMessageToDeviceRequest request = null;
@@ -31,27 +32,29 @@ public class ClientActionController extends RestController {
 					SendMessageToDeviceRequest.class);
 		} catch (Exception ex) {
 			Logger.warn("Parsing send message to device request failed", ex);
-			return badRequestJson(AssistanceAPIErrors.invalidParametersGeneral);
+			return Promise.pure(badRequestJson(AssistanceAPIErrors.invalidParametersGeneral));
 		}
 
 		// Validate the request
 		try {
 			validateSendMessageRequest(request);
 		} catch (APIErrorException e) {
-			return badRequestJson(e.getError());
+			return Promise.pure(badRequestJson(e.getError()));
 		}
 
 		ClientActionSenderDistributor actionDistributor = new ClientActionSenderDistributor();
 
-		boolean sendResult = actionDistributor.sendDataToUserDevices(
+		Promise<Boolean> sendResultPromise = actionDistributor.sendDataToUserDevices(
 				request.userId, request.deviceIds, request.visibleNotification,
 				request.data);
-
-		if (sendResult) {
-			return ok();
-		} else {
-			return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
-		}
+		
+		return sendResultPromise.map((sendResult) -> {
+			if (sendResult) {
+				return ok();
+			} else {
+				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+			}
+		});
 	}
 
 	private void validateSendMessageRequest(SendMessageToDeviceRequest request)
