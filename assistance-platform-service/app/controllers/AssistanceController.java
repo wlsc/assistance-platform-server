@@ -136,7 +136,11 @@ public class AssistanceController extends RestController {
 
 	@Security.Authenticated(UserAuthenticator.class)
 	public Promise<Result> currentForModule(String moduleId, String device_id) {
-		// TODO: Check if the module exists!
+		long userId = getUserIdForRequest();
+		
+		if(!UserModuleActivationPersistency.doesActivationExist(userId, moduleId)) {
+			return Promise.pure(badRequestJson(AssistanceAPIErrors.moduleActivationNotActive));
+		}
 		
 		return processCurrentForModules(
 				device_id,
