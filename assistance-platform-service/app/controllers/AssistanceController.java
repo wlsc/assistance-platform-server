@@ -123,9 +123,8 @@ public class AssistanceController extends RestController {
 				device_id,
 				(uId) -> getActivatedModuleEndpoints(uId),
 				(cards) -> {
-					IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationPrioritizerImpl(
-							cards);
-					return infoPrioritizer.getPrioritizedInformationList();
+					IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationPrioritizerImpl();
+					return infoPrioritizer.getPrioritizedInformationList(cards);
 				});
 	}
 
