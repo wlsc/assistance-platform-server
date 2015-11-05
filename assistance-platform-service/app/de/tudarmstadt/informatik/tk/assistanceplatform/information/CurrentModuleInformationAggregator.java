@@ -80,8 +80,7 @@ public class CurrentModuleInformationAggregator {
 	}
 	
 	private String getURLForRequest(ActiveAssistanceModule module) {
-		String url = "http://" + module.restContactAddress + "/rest/information/current/user:" + userId + "/device:" + deviceId;
-		return url;
+		return module.restUrl("/information/current/user:" + userId + "/device:" + deviceId);
 	}
 	
 	private List<ModuleInformationCard> processWebResponses(List<WSResponse> responses) {

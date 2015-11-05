@@ -54,4 +54,12 @@ public class ActiveAssistanceModule {
 		
 		this.restContactAddress = restContactAddress;
 	}
+	
+	public String restUrl() {
+		return "http://" + restContactAddress + "/rest";
+	}
+	
+	public String restUrl(String path) {
+		return restUrl() + path;
+	}
 }
