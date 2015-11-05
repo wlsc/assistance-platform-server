@@ -28,6 +28,8 @@ POST	/assistance/activate		controllers.AssistanceController.activate
 POST	/assistance/deactivate		controllers.AssistanceController.deactivate
 GET		/assistance/current/:device			controllers.AssistanceController.current(device: Long)
 GET		/assistance/:module/current/:device	controllers.AssistanceController.currentForModule(module, device: Long)
+GET		/assistance/:module/custom/*path	controllers.CustomAssistanceProxy.customGet(module, path)
+POST	/assistance/:module/custom/*path	controllers.CustomAssistanceProxy.customPost(module, path)
 
 # Module API (not intended for client usage!)
 POST	/modules/register			controllers.ModulesController.register
