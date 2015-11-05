@@ -118,9 +118,9 @@ public class AssistanceController extends RestController {
 	}
 
 	@Security.Authenticated(UserAuthenticator.class)
-	public Promise<Result> current(String device_id) {
+	public Promise<Result> current(Long deviceId) {
 		return processCurrentForModules(
-				device_id,
+				deviceId,
 				(uId) -> getActivatedModuleEndpoints(uId),
 				(cards) -> {
 					IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationPrioritizerImpl();
@@ -134,7 +134,7 @@ public class AssistanceController extends RestController {
 	}
 
 	@Security.Authenticated(UserAuthenticator.class)
-	public Promise<Result> currentForModule(String moduleId, String device_id) {
+	public Promise<Result> currentForModule(String moduleId, Long deviceId) {
 		long userId = getUserIdForRequest();
 		
 		if(!UserModuleActivationPersistency.doesActivationExist(userId, moduleId)) {
@@ -142,23 +142,21 @@ public class AssistanceController extends RestController {
 		}
 		
 		return processCurrentForModules(
-				device_id,
+				deviceId,
 				(uId) -> UserModuleActivationPersistency.activatedModuleEndpointsForUser(new String[] { moduleId }),
 				(c) -> c
 				);
 	}
 
 	private Promise<Result> processCurrentForModules(
-			String device_id,
+			long deviceId,
 			Function<Long, ActiveAssistanceModule[]> moduleProvider,
 			Function<List<ModuleInformationCard>, List<ModuleInformationCard>> postProcessingStep) {
-		Promise<Result> deviceIdCheckErrror = checkDeviceId(device_id);
+		Promise<Result> deviceIdCheckErrror = checkDeviceId(deviceId);
 
 		if (deviceIdCheckErrror != null) {
 			return deviceIdCheckErrror;
 		}
-
-		long deviceId = Long.parseLong(device_id);
 
 		// Get User id from request
 		long userId = getUserIdForRequest();
@@ -185,14 +183,7 @@ public class AssistanceController extends RestController {
 		});
 	}
 
-	private Promise<Result> checkDeviceId(String device_id) {
-		if (!StringUtils.isNumeric(device_id)) {
-			return Promise
-					.pure(badRequestJson(AssistanceAPIErrors.deviceIdNotKnown));
-		}
-
-		long deviceId = Long.parseLong(device_id);
-
+	private Promise<Result> checkDeviceId(long deviceId) {
 		if (!DevicePersistency.doesExist(deviceId)) {
 			return Promise
 					.pure(badRequestJson(AssistanceAPIErrors.deviceIdNotKnown));
