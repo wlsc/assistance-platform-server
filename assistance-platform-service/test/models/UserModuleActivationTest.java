@@ -110,4 +110,49 @@ public class UserModuleActivationTest {
 			}
 		});
 	}
+	
+	@Test
+	public void getModuleEndpointByIdTest() {
+		running(fakeApplication(inMemoryDatabase()), new Runnable() {
+			public void run() {
+				ActiveAssistanceModule module = new ActiveAssistanceModule(
+						"name", "id", "x", "x", "x", null, null, "x", "x",
+						"x", "ip:port");
+				ActiveAssistanceModule module2 = new ActiveAssistanceModule(
+						"name2", "id2", "x", "x", "x", null, null, "x",
+						"x", "x", "ip2:port");
+				ActiveAssistanceModule module3 = new ActiveAssistanceModule(
+						"name3", "id3", "x", "x", "x", null, null, "x",
+						"x", "x", "ip3:port");
+				
+				ActiveAssistanceModulePersistency.create(module);
+				ActiveAssistanceModulePersistency.create(module2);
+				ActiveAssistanceModulePersistency.create(module3);
+
+				ActiveAssistanceModule[] justModule1 = UserModuleActivationPersistency
+						.activatedModuleEndpointsForUser(new String[] { "id" });
+				
+				assertTrue(justModule1.length == 1);
+				
+				assertTrue(justModule1[0].id.equals("id"));
+				assertTrue(justModule1[0].restContactAddress.equals("ip:port"));
+				
+				ActiveAssistanceModule[] justModule12 = UserModuleActivationPersistency
+						.activatedModuleEndpointsForUser(new String[] {  "id", "id2" });
+				
+				
+				assertTrue(justModule12.length == 2);
+				
+				ActiveAssistanceModule[] justModule123 = UserModuleActivationPersistency
+						.activatedModuleEndpointsForUser(new String[] { "id", "id2", "id3" });
+				
+				assertTrue(justModule123.length == 3);
+				
+				ActiveAssistanceModule[] noModules = UserModuleActivationPersistency
+						.activatedModuleEndpointsForUser(new String[] { "unknown" });
+
+				assertTrue(noModules.length == 0);
+			}
+		});
+	}
 }
