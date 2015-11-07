@@ -1,3 +1,5 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -14,17 +16,21 @@ import com.datastax.driver.mapping.annotations.Table;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSensorDataPersistency;
+import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
 
 
 public class CassandraPersistencyTest {
-
-	@Test
-	public void test() throws InstantiationException, IllegalAccessException {
-		Cluster cluster;
-		Session session;
+	private static Session getSession() throws UnknownHostException {
+		CassandraSessionProxy sessionProxy = new CassandraSessionProxy(new InetAddress[] {
+				InetAddress.getByName("127.0.0.1")
+		}, "assistancedata", "cassandra", "cassandra");
 		
-		cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
-		session = cluster.connect("assistancedata");
+		return sessionProxy.getSession();
+	}
+	
+	@Test
+	public void test() throws InstantiationException, IllegalAccessException, UnknownHostException {
+		Session session = getSession();
 		
 		CassandraSensorDataPersistency persistency = new CassandraSensorDataPersistency(session);
 		
@@ -40,12 +46,8 @@ public class CassandraPersistencyTest {
 	}
 	
 	@Test
-	public void persistMany() throws InstantiationException, IllegalAccessException {
-		Cluster cluster;
-		Session session;
-		
-		cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
-		session = cluster.connect("assistancedata");
+	public void persistMany() throws InstantiationException, IllegalAccessException, UnknownHostException {
+		Session session = getSession();
 		
 		CassandraSensorDataPersistency persistency = new CassandraSensorDataPersistency(session);
 		
@@ -71,15 +73,11 @@ public class CassandraPersistencyTest {
 	}
 
     @AfterClass
-    public static void oneTimeTearDown() {
+    public static void oneTimeTearDown() throws UnknownHostException {
     	long start = System.currentTimeMillis();
     	while((System.currentTimeMillis() - start) < 3000);
     	
-		Cluster cluster;
-		Session session;
-    	
-		cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
-		session = cluster.connect("assistancedata");
+		Session session = getSession();
 		
 		Set<Class<? extends SensorData>> sensorDataClasses = new Reflections("de.tudarmstadt.informatik.tk.assistanceplatform.data").getSubTypesOf(SensorData.class);
 

@@ -111,6 +111,7 @@ public abstract class ModuleBundle implements IModuleBundleIdProvider {
 
 	public String getRestContactAddress() {
 		int port = ModuleRestServerFactory.getInstance().getPort();
-		return Integer.toString( port ); // Lets just use the port so the receiver can resolve the correct IP address
+		return Integer.toString(port); // Lets just use the port so the receiver
+										// can resolve the correct IP address
 	}
 }
