@@ -54,7 +54,9 @@ public class ModuleRestServer {
 	}
 	
 	private void bindCustomServletsToContext(Collection<MappedServlet> customServlets) {
-		bindServletsBehindPath(context, customServlets, "/rest/custom");
+		if(customServlets != null) {
+			bindServletsBehindPath(context, customServlets, "/rest/custom");
+		}
 	}
 
 	private void bindServletsBehindPath(ServletContextHandler context,
