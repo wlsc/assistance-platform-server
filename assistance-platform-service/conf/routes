@@ -38,7 +38,7 @@ POST	/modules/update				controllers.ModulesController.update
 POST	/modules/alive				controllers.ModulesController.alive
 GET		/modules/configuration		controllers.ModulesController.bootstrapConfiguration
 GET		/modules/activations/:module controllers.ModulesController.activations(module)
-GET		/modules/service/database	 controllers.ModuleServicesController.database(module)
+GET		/modules/services/database	 controllers.ModuleServicesController.database(module)
 
 # Client Action API (not intended for client usage!)
 POST 	/action/sendmessage			controllers.ClientActionController.sendMessageToDevices
