@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 
+import persistency.config.CassandraConfig;
 import play.Play;
 
 import com.typesafe.config.Config;
@@ -22,34 +23,10 @@ public class ConfiguredSensorPersistencyProxy {
 	public ConfiguredSensorPersistencyProxy() {
 
 		CassandraSessionProxy sessionProxy = new CassandraSessionProxy(
-				getContactPoints(), getKeystoreName(), getUser(),
-				getPassword(), getSchemaCQL());
+				CassandraConfig.getContactPointsAsAddr(), getKeystoreName(), CassandraConfig.getUser(),
+				CassandraConfig.getPassword(), getSchemaCQL());
 
 		sensorDataPersistency = new CassandraSensorDataPersistency(sessionProxy);
-	}
-	
-	private String getUser() {
-		return ConfigFactory.defaultApplication().getString("cassandra.user");
-	}
-	
-	private String getPassword() {
-		return ConfigFactory.defaultApplication().getString("cassandra.user");
-	}
-
-	private InetAddress[] getContactPoints() {
-		List<String> contactPoints = null;
-
-		Config c = ConfigFactory.defaultApplication().resolve();
-
-		contactPoints = c.getStringList("cassandra.contactPoints");
-
-		return contactPoints.stream().map((s) -> {
-			try {
-				return InetAddress.getByName(s);
-			} catch (Exception e) {
-			}
-			return null;
-		}).toArray(size -> new InetAddress[size]);
 	}
 
 	private String getKeystoreName() {
