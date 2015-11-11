@@ -12,6 +12,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.as
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleLocalizationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.CassandraServiceConfigResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
@@ -83,10 +84,10 @@ public class UserActivationListKeeperTest {
 			}
 
 			@Override
-			public void getDatabaseService(String moduleId,
-					Callback<ServiceConfigResponse> callback) {
+			public CassandraServiceConfigResponse getCassandraServiceConfig(
+					String moduleId) {
 				// TODO Auto-generated method stub
-				
+				return null;
 			}
 		});
 		

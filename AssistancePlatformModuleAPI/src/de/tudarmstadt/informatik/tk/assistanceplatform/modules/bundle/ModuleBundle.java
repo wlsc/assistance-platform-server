@@ -21,6 +21,12 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActiv
  *
  */
 public abstract class ModuleBundle implements IModuleBundleIdProvider {
+	private static ModuleBundle activeBundle;
+	
+	public static ModuleBundle currentBundle() {
+		return activeBundle;
+	}
+	
 	private Module containedModules[];
 
 	private IUserActivationChecker userActivationListChecker;
@@ -43,6 +49,8 @@ public abstract class ModuleBundle implements IModuleBundleIdProvider {
 			IUserActivationChecker userActivationListChecker,
 			PlatformClient platformClient, IClientActionRunner actionRunner,
 			ISparkService sparkService) {
+		activeBundle = this;
+		
 		// Save references to all required compopnents
 		this.actionRunner = actionRunner;
 		this.userActivationListChecker = userActivationListChecker;
@@ -67,8 +75,9 @@ public abstract class ModuleBundle implements IModuleBundleIdProvider {
 					assiModule.setActionRunner(actionRunner);
 					assiModule.setModuleIdProvider(this);
 				} else if (m instanceof DataModule) {
-					((DataModule) m).setSparkService(sparkService);
-					// TODO: Set Persistency Service?
+					DataModule dataModule = ((DataModule) m);
+					
+					dataModule.setSparkService(sparkService);
 				}
 
 				m.start();

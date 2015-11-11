@@ -8,6 +8,7 @@ import retrofit.http.Path;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleLocalizationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.CassandraServiceConfigResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
 
@@ -28,5 +29,5 @@ public interface AssistancePlatformService {
 	void getModuleActivationsByUsers(@Path("moduleId") String moduleId, Callback<ModuleActivationsResponse> callback);
 	
 	@GET("/modules/services/database/{moduleId}")
-	void getDatabaseService(@Path("moduleId") String moduleId, Callback<ServiceConfigResponse> callback);
+	CassandraServiceConfigResponse getCassandraServiceConfig(@Path("moduleId") String moduleId);
 }

@@ -3,7 +3,9 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 import java.security.PrivilegedActionException;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.IUserDeviceEventPersistency;
+import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSensorDataPersistency;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.ISparkService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.persistency.CassandraServiceFactory;
 
 /**
  * DataModules are responsible for generating / aggregating higher-class data from the "normal" data of the platform.
@@ -24,19 +26,23 @@ public abstract class DataModule extends Module {
 	protected final void internalDoBeforeStartup() {
 	}
 	
-	public void setSparkService(ISparkService service) {
+	public final void setSparkService(ISparkService service) {
 		this.sparkService = service;
 	}
 	
-	public ISparkService getSparkService() {
+	public final ISparkService getSparkService() {
 		return sparkService;
 	}
 
-	public IUserDeviceEventPersistency getEventPersistency() {
+	public final IUserDeviceEventPersistency getEventPersistency() {
+		if(eventPersistency == null) {
+			eventPersistency = new CassandraSensorDataPersistency(CassandraServiceFactory.getSessionProxy());
+		}
+		
 		return eventPersistency;
 	}
 
-	public void setEventPersistency(IUserDeviceEventPersistency eventPersistency) {
+	public final void setEventPersistency(IUserDeviceEventPersistency eventPersistency) {
 		this.eventPersistency = eventPersistency;
 	}
 }

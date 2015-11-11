@@ -146,23 +146,13 @@ public class PlatformClient {
 		service.getModuleActivationsByUsers(moduleId , callback);
 	}
 	
-	public void getDatabaseService(String moduleId, Consumer<ServiceConfigResponse> configCallback) {
-		Callback<ServiceConfigResponse> callback = new Callback<ServiceConfigResponse>() {
-
-			@Override
-			public void failure(RetrofitError error) {
-				logger.warn("Failed to pull database config for the module " + errorFromRetrofit(error));
-			}
-
-			@Override
-			public void success(ServiceConfigResponse arg0, Response arg1) {
-				logger.info("Pulled database config.");
-				
-				configCallback.accept(arg0);
-			}
-		};
-		
-		service.getDatabaseService(moduleId , callback);
+	/**
+	 * BLOCKING! Get Service Call for Database Configuration
+	 * @param moduleId
+	 * @return
+	 */
+	public ServiceConfigResponse getDatabaseService(String moduleId) {		
+		return service.getCassandraServiceConfig(moduleId);
 	}
 	
 	private ModuleRegistrationRequest bundleToRequest(ModuleBundle bundle) {

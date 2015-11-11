@@ -4,17 +4,21 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
+import com.datastax.driver.core.Session;
+
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.IInformationCardCustomizer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.IInformationProvider;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationProvider;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.IModuleBundleIdProvider;
+import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.MappedServlet;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServerFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services.resources.ServiceResources;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services.resources.ServiceResourcesFactory;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.persistency.CassandraServiceFactory;
 
 
 /**
@@ -29,6 +33,8 @@ public abstract class AssistanceModule extends Module {
 	private IClientActionRunner actionRunner;
 	
 	private IInformationProvider informationProvider;
+	
+	private CassandraSessionProxy cassandraProxy;
 	
 	@Override
 	protected final void internalDoBeforeStartup() {
@@ -72,6 +78,14 @@ public abstract class AssistanceModule extends Module {
 	
 	protected final IModuleBundleIdProvider getModuleIdProvider() {
 		return this.moduleIdProvider;
+	}
+	
+	protected final Session getCassandraSessionProxy() {
+		if(cassandraProxy == null) {
+			cassandraProxy = CassandraServiceFactory.getSessionProxy();
+		}
+		
+		return cassandraProxy.getSession();
 	}
 
 	/**
