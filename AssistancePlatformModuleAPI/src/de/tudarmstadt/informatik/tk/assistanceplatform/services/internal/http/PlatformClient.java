@@ -21,6 +21,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.as
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
 
 public class PlatformClient {
 	private final static Logger logger = Logger.getLogger(PlatformClient.class);
@@ -143,6 +144,25 @@ public class PlatformClient {
 		};
 		
 		service.getModuleActivationsByUsers(moduleId , callback);
+	}
+	
+	public void getDatabaseService(String moduleId, Consumer<ServiceConfigResponse> configCallback) {
+		Callback<ServiceConfigResponse> callback = new Callback<ServiceConfigResponse>() {
+
+			@Override
+			public void failure(RetrofitError error) {
+				logger.warn("Failed to pull database config for the module " + errorFromRetrofit(error));
+			}
+
+			@Override
+			public void success(ServiceConfigResponse arg0, Response arg1) {
+				logger.info("Pulled database config.");
+				
+				configCallback.accept(arg0);
+			}
+		};
+		
+		service.getDatabaseService(moduleId , callback);
 	}
 	
 	private ModuleRegistrationRequest bundleToRequest(ModuleBundle bundle) {

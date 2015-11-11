@@ -13,6 +13,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.as
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService;
 
@@ -79,6 +80,13 @@ public class UserActivationListKeeperTest {
 			public void getModuleActivationsByUsers(String moduleId,
 					Callback<ModuleActivationsResponse> callback) {
 				callback.success(new ModuleActivationsResponse(new long[] { 1, 2}), null);
+			}
+
+			@Override
+			public void getDatabaseService(String moduleId,
+					Callback<ServiceConfigResponse> callback) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		

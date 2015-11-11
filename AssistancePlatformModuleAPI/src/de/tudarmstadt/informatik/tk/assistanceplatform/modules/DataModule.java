@@ -1,5 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 
+import java.security.PrivilegedActionException;
+
+import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.IUserDeviceEventPersistency;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.ISparkService;
 
 /**
@@ -10,6 +13,8 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.s
  */
 public abstract class DataModule extends Module {
 	private ISparkService sparkService;
+	
+	private IUserDeviceEventPersistency eventPersistency;
 	
 	public DataModule() {
 		super();
@@ -25,5 +30,13 @@ public abstract class DataModule extends Module {
 	
 	public ISparkService getSparkService() {
 		return sparkService;
+	}
+
+	public IUserDeviceEventPersistency getEventPersistency() {
+		return eventPersistency;
+	}
+
+	public void setEventPersistency(IUserDeviceEventPersistency eventPersistency) {
+		this.eventPersistency = eventPersistency;
 	}
 }

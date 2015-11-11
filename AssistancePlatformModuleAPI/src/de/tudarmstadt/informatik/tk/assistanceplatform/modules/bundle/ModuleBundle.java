@@ -68,6 +68,7 @@ public abstract class ModuleBundle implements IModuleBundleIdProvider {
 					assiModule.setModuleIdProvider(this);
 				} else if (m instanceof DataModule) {
 					((DataModule) m).setSparkService(sparkService);
+					// TODO: Set Persistency Service?
 				}
 
 				m.start();
@@ -84,6 +85,12 @@ public abstract class ModuleBundle implements IModuleBundleIdProvider {
 
 	public IUserActivationChecker userActivationListChecker() {
 		return userActivationListChecker;
+	}
+	
+	public String getRestContactAddress() {
+		int port = ModuleRestServerFactory.getInstance().getPort();
+		return Integer.toString(port); // Lets just use the port so the receiver
+										// can resolve the correct IP address
 	}
 
 	/**
@@ -108,10 +115,4 @@ public abstract class ModuleBundle implements IModuleBundleIdProvider {
 	 * them.
 	 */
 	protected abstract Module[] initializeContainedModules();
-
-	public String getRestContactAddress() {
-		int port = ModuleRestServerFactory.getInstance().getPort();
-		return Integer.toString(port); // Lets just use the port so the receiver
-										// can resolve the correct IP address
-	}
 }
