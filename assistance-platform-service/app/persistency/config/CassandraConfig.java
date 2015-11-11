@@ -38,6 +38,6 @@ public class CassandraConfig {
 			} catch (Exception e) {
 			}
 			return null;
-		}).toArray(size -> new InetAddress[size]);
+		}).toArray(InetAddress[]::new);
 	}
 }
