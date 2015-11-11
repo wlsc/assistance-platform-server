@@ -63,6 +63,10 @@ public class ModuleBundleInformation {
 	}
 	
 	public Set<Entry<String, LocalizedModuleBundleInformation>> getLocalizedModuleBundleInformations() {
-		return localizedModuleBundleInformations.entrySet();
+		if(localizedModuleBundleInformations != null) {
+			return localizedModuleBundleInformations.entrySet();
+		}
+		
+		return null;
 	}
 }
