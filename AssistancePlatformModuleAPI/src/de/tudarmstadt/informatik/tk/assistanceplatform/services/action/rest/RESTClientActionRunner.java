@@ -21,7 +21,7 @@ public class RESTClientActionRunner implements IClientActionRunner {
 	@Override
 	public void showMessage(long userId, long[] deviceIds, String title,
 			String message) {
-		// TODO Auto-generated method stub
+		this.sendDataAndMessage(userId, deviceIds, title, message, null, null, null);
 		
 	}
 
