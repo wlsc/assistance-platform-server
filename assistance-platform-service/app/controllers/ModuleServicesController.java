@@ -1,6 +1,6 @@
 package controllers;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.CassandraServiceConfigResponse;
 import errors.AssistanceAPIErrors;
 import persistency.ActiveAssistanceModulePersistency;
 import persistency.config.CassandraConfig;
@@ -13,9 +13,11 @@ public class ModuleServicesController extends RestController {
 			return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
 		}
 
-		ServiceConfigResponse response = new ServiceConfigResponse(
+		CassandraServiceConfigResponse response = new CassandraServiceConfigResponse(
 				CassandraConfig.getUser(), CassandraConfig.getPassword(),
-				CassandraConfig.getContactPointsArray());
+				CassandraConfig.getContactPointsArray(),
+				CassandraConfig.getKeystore()
+				);
 		
 		// TODO: Generate a passowrd for the new user
 		// TODO: Create User in Cassandra

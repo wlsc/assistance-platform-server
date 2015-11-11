@@ -15,6 +15,10 @@ public class CassandraConfig {
 		return ConfigFactory.defaultApplication().getString("cassandra.password");
 	}
 	
+	public static String getKeystore() {
+		return ConfigFactory.defaultApplication().getString("cassandra.keystoreName");
+	}
+	
 	public static List<String> getContactPoints() {
 		Config c = ConfigFactory.defaultApplication().resolve();
 

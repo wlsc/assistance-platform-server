@@ -23,15 +23,10 @@ public class ConfiguredSensorPersistencyProxy {
 	public ConfiguredSensorPersistencyProxy() {
 
 		CassandraSessionProxy sessionProxy = new CassandraSessionProxy(
-				CassandraConfig.getContactPointsAsAddr(), getKeystoreName(), CassandraConfig.getUser(),
+				CassandraConfig.getContactPointsAsAddr(), CassandraConfig.getKeystore(), CassandraConfig.getUser(),
 				CassandraConfig.getPassword(), getSchemaCQL());
 
 		sensorDataPersistency = new CassandraSensorDataPersistency(sessionProxy);
-	}
-
-	private String getKeystoreName() {
-		return ConfigFactory.defaultApplication().getString(
-				"cassandra.keystoreName");
 	}
 
 	private String getSchemaCQL() {
