@@ -80,7 +80,7 @@ public abstract class AssistanceModule extends Module {
 		return this.moduleIdProvider;
 	}
 	
-	protected final Session getCassandraSessionProxy() {
+	protected final Session getCassandraSession() {
 		if(cassandraProxy == null) {
 			cassandraProxy = CassandraServiceFactory.getSessionProxy();
 		}

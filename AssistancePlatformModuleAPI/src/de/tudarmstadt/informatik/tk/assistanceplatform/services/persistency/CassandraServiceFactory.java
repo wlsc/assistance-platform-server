@@ -1,9 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.persistency;
 
+import java.net.InetAddress;
+import java.util.Arrays;
+
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundle;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.CassandraServiceConfigResponse;
 
 /**
  * Modules can use this class to get access to the Cassandra Database.
@@ -22,9 +25,17 @@ public class CassandraServiceFactory {
 	}
 
 	private static void createProxyInstance() {
-		ServiceConfigResponse config = PlatformClientFactory.getInstance().getDatabaseService(
+		CassandraServiceConfigResponse config = PlatformClientFactory.getInstance().getDatabaseService(
 				ModuleBundle.currentBundle().getModuleId());
 		
-		//proxyInstance = new CassandraSessionProxy(contactPoints, keystoreName, user, password)
+		InetAddress[] contactPoitns = Arrays.asList(config.address).stream().map((s) -> {
+			try {
+				return InetAddress.getByName(s);
+			} catch (Exception e) {
+			}
+			return null;
+		}).toArray(InetAddress[]::new);
+		
+		proxyInstance = new CassandraSessionProxy(contactPoitns, config.keystoreName, config.user, config.password);
 	}
 }
