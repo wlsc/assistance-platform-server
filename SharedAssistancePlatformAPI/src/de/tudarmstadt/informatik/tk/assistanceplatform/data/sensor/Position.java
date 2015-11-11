@@ -46,6 +46,11 @@ public class Position extends SensorData {
 		this.longitude = longitude;
 	}
 	
+	/**
+	 * Distnace between two points in meters
+	 * @param pos2
+	 * @return
+	 */
 	public double distance(Position pos2) {
 	    return distance(this.latitude, this.longitude, pos2.latitude, pos2.longitude);
 	    //distance = Math.pow(distance, 2);
@@ -53,6 +58,14 @@ public class Position extends SensorData {
 	   // return Math.sqrt(distance);
 	}
 	
+	/**
+	 * Distance between two poitns (defined by lat / pos) IN METERS!
+	 * @param latPos1
+	 * @param longPos1
+	 * @param latPos2
+	 * @param longPos2
+	 * @return
+	 */
 	public static double distance(double latPos1, double longPos1, double latPos2, double longPos2) {
 	    final int R = 6371; // Radius of the earth
 
