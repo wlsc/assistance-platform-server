@@ -1,12 +1,12 @@
 package controllers;
 
-import errors.APIError;
 import models.Token;
 import models.User;
 import persistency.UserPersistency;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
+import errors.APIError;
 
 public class UserAuthenticator extends Security.Authenticator {
 	@Override

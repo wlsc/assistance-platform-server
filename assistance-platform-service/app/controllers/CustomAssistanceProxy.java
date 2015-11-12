@@ -8,10 +8,10 @@ import play.libs.F.Promise;
 import play.libs.ws.WS;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
+import play.mvc.Http.RequestBody;
 import play.mvc.Result;
 import play.mvc.Results;
 import play.mvc.Security;
-import play.mvc.Http.RequestBody;
 import errors.AssistanceAPIErrors;
 
 /**

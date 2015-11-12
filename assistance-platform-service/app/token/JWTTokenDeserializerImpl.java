@@ -7,7 +7,6 @@ import play.Logger;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
-import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACVerifier;
 
 public class JWTTokenDeserializerImpl implements TokenDeserializer {

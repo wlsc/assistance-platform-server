@@ -9,8 +9,8 @@ import static play.test.Helpers.running;
 
 import org.junit.Test;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 import persistency.ActiveAssistanceModulePersistency;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
 
 public class ActiveAssistanceModuleTest {
     @Test

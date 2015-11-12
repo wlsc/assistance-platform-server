@@ -8,7 +8,6 @@ import static play.test.Helpers.running;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.junit.Test;
 
 import persistency.ActiveAssistanceModulePersistency;

@@ -2,14 +2,10 @@ package controllers;
 
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import messaging.JmsMessagingServiceFactory;
 import models.ActiveAssistanceModule;
 import models.UserModuleActivation;
-
-import org.apache.commons.lang3.StringUtils;
-
 import persistency.ActiveAssistanceModulePersistency;
 import persistency.DevicePersistency;
 import persistency.UserModuleActivationPersistency;

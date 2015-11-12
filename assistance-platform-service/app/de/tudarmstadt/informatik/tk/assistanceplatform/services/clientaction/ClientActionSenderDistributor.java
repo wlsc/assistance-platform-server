@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.VisibleNotification;
 import models.Device;
 import persistency.DevicePersistency;
 import play.Logger;
 import play.libs.F.Promise;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.rest.VisibleNotification;
 
 public class ClientActionSenderDistributor {
 

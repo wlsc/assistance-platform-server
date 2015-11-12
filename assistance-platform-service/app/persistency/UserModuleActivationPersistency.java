@@ -2,17 +2,15 @@ package persistency;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
+
+import models.ActiveAssistanceModule;
+import models.UserModuleActivation;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
-import models.ActiveAssistanceModule;
-import models.UserModuleActivation;
 import play.db.DB;
-import play.libs.Json;
 
 public class UserModuleActivationPersistency {
 	private static String TABLE_NAME = "users_modules";

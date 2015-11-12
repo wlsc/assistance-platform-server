@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import play.libs.Json;
-import token.TokenDeserializer;
 import token.JWTTokenDeserializerImpl;
-import token.TokenSerializer;
 import token.JWTTokenSerializerImpl;
+import token.TokenDeserializer;
+import token.TokenSerializer;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
