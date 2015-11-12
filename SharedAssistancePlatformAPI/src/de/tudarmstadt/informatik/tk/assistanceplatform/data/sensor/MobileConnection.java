@@ -3,8 +3,6 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeNameForAssistance;
-
 @Table(name = "sensor_mobileconnection")
 public class MobileConnection extends SensorData {
 	public String carriername;

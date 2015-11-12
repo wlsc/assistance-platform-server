@@ -10,7 +10,6 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.reflections.Reflections;
 
-import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.annotations.Table;
 
