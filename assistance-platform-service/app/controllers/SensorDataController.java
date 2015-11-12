@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import messaging.JmsMessagingServiceFactory;
-import persistency.ConfiguredSensorPersistencyProxy;
 import persistency.DevicePersistency;
+import persistency.cassandra.ConfiguredSensorPersistencyProxy;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Result;
@@ -20,7 +20,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 import errors.APIError;
 import errors.APIErrorException;
 import errors.AssistanceAPIErrors;

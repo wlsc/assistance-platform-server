@@ -3,26 +3,27 @@ package controllers;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.CassandraServiceConfigResponse;
 import errors.AssistanceAPIErrors;
 import persistency.ActiveAssistanceModulePersistency;
-import persistency.config.CassandraConfig;
+import persistency.cassandra.config.CassandraConfig;
+import persistency.cassandra.usercreation.CassandraModuleUser;
+import persistency.cassandra.usercreation.CassandraModuleUserCreator;
 import play.libs.Json;
 import play.mvc.Result;
 
 public class ModuleServicesController extends RestController {
+	private CassandraModuleUserCreator userCreator = new CassandraModuleUserCreator();
+	
 	public Result database(String moduleId) {
 		if (!ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
 			return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
 		}
 
-		CassandraServiceConfigResponse response = new CassandraServiceConfigResponse(
-				CassandraConfig.getUser(), CassandraConfig.getPassword(),
-				CassandraConfig.getContactPointsArray(),
-				CassandraConfig.getKeystore()
-				);
+		CassandraModuleUser user = userCreator.createUserForModule(moduleId);
 		
-		// TODO: Generate a passowrd for the new user
-		// TODO: Create User in Cassandra
-		// TODO: Grante right permissions to the newly created user
-		// TODO: Return user / password pair
+		CassandraServiceConfigResponse response = new CassandraServiceConfigResponse(
+				user.user, user.password,
+				CassandraConfig.getContactPointsArray(),
+				user.keyspace
+				);
 
 		return ok(Json.toJson(response));
 	}

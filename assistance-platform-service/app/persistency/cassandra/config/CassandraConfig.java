@@ -1,4 +1,4 @@
-package persistency.config;
+package persistency.cassandra.config;
 
 import java.net.InetAddress;
 import java.util.List;
@@ -15,7 +15,7 @@ public class CassandraConfig {
 		return ConfigFactory.defaultApplication().getString("cassandra.password");
 	}
 	
-	public static String getKeystore() {
+	public static String getKeyspace() {
 		return ConfigFactory.defaultApplication().getString("cassandra.keystoreName");
 	}
 	
