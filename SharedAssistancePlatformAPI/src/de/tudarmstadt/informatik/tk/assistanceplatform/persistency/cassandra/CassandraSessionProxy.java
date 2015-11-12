@@ -13,35 +13,58 @@ import com.datastax.driver.core.exceptions.AlreadyExistsException;
 public class CassandraSessionProxy {
 	private Cluster cluster;
 	private Session session;
+	
+	private final String keyspaceName;
 
 	public CassandraSessionProxy(InetAddress[] contactPoints,
-			String keystoreName, String user, String password) {
-		this((b) -> b.addContactPoints(contactPoints), keystoreName, user,
+			String keyspaceName, String user, String password) {
+		this((b) -> b.addContactPoints(contactPoints), keyspaceName, user,
 				password, null);
 	}
 
 	public CassandraSessionProxy(InetAddress[] contactPoints,
-			String keystoreName, String user, String password, String schemaCQL) {
-		this((b) -> b.addContactPoints(contactPoints), keystoreName, user,
+			String keyspaceName, String user, String password, String schemaCQL) {
+		this((b) -> b.addContactPoints(contactPoints), keyspaceName, user,
 				password, schemaCQL);
 	}
 
 	private CassandraSessionProxy(Consumer<Builder> clusterBuilderSetter,
-			String keystoreName, String user, String password, String schemaCQL) {
+			String keyspaceName, String user, String password, String schemaCQL) {
+		this.keyspaceName = keyspaceName;
+		
 		setCluster(clusterBuilderSetter, user, password);
 
-		createSchema(schemaCQL, keystoreName);
+		createSchema(schemaCQL, keyspaceName, true);
 
-		session = cluster.connect(keystoreName);
+		session = cluster.connect(keyspaceName);
+	}
+	
+	/**
+	 * Tries to create the schema. If it already exists it won't do anything.
+	 * @param schemaCQL The schema (can contain multiple create queries)
+	 */
+	public void createScehma(String schemaCQL) {
+		this.createSchema(schemaCQL, this.keyspaceName, false);
 	}
 
-	private void createSchema(String schemaCQL, String keystoreName) {
+	/**
+	 * Tries to create the schema
+	 * @param schemaCQL The schema (can contain multiple creation queries)
+	 * @param keyspaceName If NULL then keyspaceName creation queries will be ignored
+	 */
+	private void createSchema(String schemaCQL, String keyspaceName, boolean allowKeyspaceCreation) {
 		if (schemaCQL != null) {
 			Logger log = Logger.getLogger(CassandraSessionProxy.class);
 
 			log.info("Trying to create Cassandra Schema.");
 
-			Session tmpSession = cluster.connect();
+			Session tmpSession;
+			
+			if(allowKeyspaceCreation) {
+				tmpSession = cluster.connect();
+			} else {
+				tmpSession = cluster.connect(keyspaceName);
+			}
 
 			for (String s : schemaCQL.split(";")) {
 				s = s.replace("\n", "");
@@ -58,9 +81,9 @@ public class CassandraSessionProxy {
 				// afterwards
 				// so the next creation queries can be run on this particula
 				// keyspace
-				if (s.contains("CREATE KEYSPACE")) {
+				if (allowKeyspaceCreation && s.contains("CREATE KEYSPACE")) {
 					tmpSession.close();
-					tmpSession = cluster.connect(keystoreName);
+					tmpSession = cluster.connect(keyspaceName);
 				}
 			}
 
