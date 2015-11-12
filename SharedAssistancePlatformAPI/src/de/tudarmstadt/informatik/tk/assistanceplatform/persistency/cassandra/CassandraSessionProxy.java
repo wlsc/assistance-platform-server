@@ -43,7 +43,7 @@ public class CassandraSessionProxy {
 	 * Tries to create the schema. If it already exists it won't do anything.
 	 * @param schemaCQL The schema (can contain multiple create queries)
 	 */
-	public void createScehma(String schemaCQL) {
+	public void createSchema(String schemaCQL) {
 		this.createSchema(schemaCQL, this.keyspaceName, false);
 	}
 
