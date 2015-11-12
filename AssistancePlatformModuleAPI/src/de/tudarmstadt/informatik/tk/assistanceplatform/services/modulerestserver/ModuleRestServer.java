@@ -1,15 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.RequiredRestEndpointsFactory;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services.ExampleService;
 
 /**
  * This class provides the basic structure for the module-owned rest server for

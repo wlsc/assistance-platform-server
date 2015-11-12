@@ -1,7 +1,5 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules;
 
-import java.security.PrivilegedActionException;
-
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.IUserDeviceEventPersistency;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSensorDataPersistency;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.ISparkService;

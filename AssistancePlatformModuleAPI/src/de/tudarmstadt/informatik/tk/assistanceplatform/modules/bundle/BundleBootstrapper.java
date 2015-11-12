@@ -13,8 +13,6 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Messag
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationListFactory;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationList;
 
 /**
  * This class is responsible for bootstrapping the module bundle and providing all needed services. 
