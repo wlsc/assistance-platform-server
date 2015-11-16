@@ -10,6 +10,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.as
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.CassandraServiceConfigResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
 
 public interface AssistancePlatformService {
 	@POST("/modules/register")
@@ -29,4 +30,7 @@ public interface AssistancePlatformService {
 	
 	@GET("/modules/services/database/{moduleId}")
 	CassandraServiceConfigResponse getCassandraServiceConfig(@Path("moduleId") String moduleId);
+	
+	@GET("/modules/services/{service}/{moduleId}")
+	ServiceConfigResponse getServiceConfig(@Path("moduleId") String moduleId, @Path("service") String service);
 }

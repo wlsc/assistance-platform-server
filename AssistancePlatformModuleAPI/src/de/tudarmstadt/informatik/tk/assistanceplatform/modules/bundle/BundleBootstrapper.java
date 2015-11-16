@@ -15,57 +15,76 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.Jm
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
 /**
- * This class is responsible for bootstrapping the module bundle and providing all needed services. 
- * Use its constructors in a main method to start the bundle.
+ * This class is responsible for bootstrapping the module bundle and providing
+ * all needed services. Use its constructors in a main method to start the
+ * bundle.
+ * 
  * @author bjeutter
  */
 public class BundleBootstrapper {
-	
+
 	/**
 	 * Initalizes & starts the bundle
-	 * @param bundle The bundle that shall be started
-	 * @param platformUrlAndPort The url of the platform
+	 * 
+	 * @param bundle
+	 *            The bundle that shall be started
+	 * @param platformUrlAndPort
+	 *            The url of the platform
 	 */
-	public static void bootstrap(ModuleBundle bundle, String platformUrlAndPort, boolean localMode) {
+	public static void bootstrap(ModuleBundle bundle,
+			String platformUrlAndPort, boolean localMode) {
 		// Prepare Messaging Service and User Activation List
 		MessagingService ms = new JmsMessagingService();
 		// TODO: Fetch configuration from platform
-		
-		UserActivationListKeeper activationsKeeper = UserActivationListKeeperFactory.getInstance(bundle.getModuleId(), ms, platformUrlAndPort);
-		
-		IUserActivationChecker activationChecker = activationsKeeper.getUserActivationChecker();
+
+		UserActivationListKeeper activationsKeeper = UserActivationListKeeperFactory
+				.getInstance(bundle.getModuleId(), ms, platformUrlAndPort);
+
+		IUserActivationChecker activationChecker = activationsKeeper
+				.getUserActivationChecker();
 
 		ms = new UserFilteredMessagingServiceDecorator(ms, activationChecker);
 
 		// Prepare Platform Client & Action Runner
-		PlatformClient client = PlatformClientFactory.getInstance(platformUrlAndPort);
+		PlatformClient client = PlatformClientFactory
+				.getInstance(platformUrlAndPort);
 		IClientActionRunner actionRunner = new RESTClientActionRunner(client);
 		actionRunner = new ModuleBundleClientActionRunnerProxy(bundle,
 				actionRunner);
-		
+
 		// Spark Service
 		ISparkService sparkService = createSparkService(bundle, localMode);
 
 		// Finally start the bundle
-		bundle.bootstrapBundle(ms, activationChecker, client, actionRunner, sparkService);
+		bundle.bootstrapBundle(ms, activationChecker, client, actionRunner,
+				sparkService);
 	}
-	
-	private static ISparkService createSparkService(ModuleBundle bundle, boolean localMode) {
+
+	private static ISparkService createSparkService(ModuleBundle bundle,
+			boolean localMode) {
 		String appName = bundle.getBundleInformation().englishModuleBundleInformation.name;
-		// TODO: Fetch Master information from platform
-		// TODO: Add debug / locale mode
-		String master = localMode ? "local[*]" : "spark://Bennets-MBP:7077"; 
-		String[] jars = new String[] { System.getProperty("user.home") + "/" + bundle.getModuleId() + ".jar" };
-		ISparkService sparkService = new SparkService(bundle, appName, master, jars);
-		
+		String master = localMode ? "local[*]" : sparkMasterURL(bundle);
+		String[] jars = new String[] { System.getProperty("user.home") + "/"
+				+ bundle.getModuleId() + ".jar" };
+		ISparkService sparkService = new SparkService(bundle, appName, master,
+				jars);
+
 		return sparkService;
 	}
-	
+
+	private static String sparkMasterURL(ModuleBundle bundle) {
+		return PlatformClientFactory.getInstance().getServiceConfig(
+				bundle.getModuleId(), "spark").address[0];
+	}
+
 	/**
 	 * Initalizes & starts the bundle (uses default platform url)
-	 * @param bundle The bundle that shall be started
+	 * 
+	 * @param bundle
+	 *            The bundle that shall be started
 	 */
 	public static void bootstrap(ModuleBundle bundle) {
-		bootstrap(bundle, PlatformClientFactory.defaultPlatformUrlAndPort, false);
+		bootstrap(bundle, PlatformClientFactory.defaultPlatformUrlAndPort,
+				false);
 	}
 }

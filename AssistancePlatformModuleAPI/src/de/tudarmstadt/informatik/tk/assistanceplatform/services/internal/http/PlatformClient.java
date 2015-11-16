@@ -22,6 +22,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.as
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.CassandraServiceConfigResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
 
 public class PlatformClient {
 	private final static Logger logger = Logger.getLogger(PlatformClient.class);
@@ -151,8 +152,17 @@ public class PlatformClient {
 	 * @param moduleId
 	 * @return
 	 */
-	public CassandraServiceConfigResponse getDatabaseService(String moduleId) {		
+	public CassandraServiceConfigResponse getDatabaseService(String moduleId) {
 		return service.getCassandraServiceConfig(moduleId);
+	}
+	
+	/**
+	 * BLOCKING! Get Service Call for Service Configuration
+	 * @param moduleId
+	 * @return
+	 */
+	public ServiceConfigResponse getServiceConfig(String moduleId, String serviceName) {		
+		return service.getServiceConfig(moduleId, serviceName);
 	}
 	
 	private ModuleRegistrationRequest bundleToRequest(ModuleBundle bundle) {
