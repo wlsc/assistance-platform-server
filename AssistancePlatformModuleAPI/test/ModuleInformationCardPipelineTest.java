@@ -26,7 +26,7 @@ public class ModuleInformationCardPipelineTest {
 		}, new IInformationCardCustomizer() {
 			
 			@Override
-			public void customizeModuleInformationcard(ModuleInformationCard card,
+			public void customizeModuleInformationCard(ModuleInformationCard card,
 					long userId, long deviceId) {
 				card.payload = testPayload;
 			}

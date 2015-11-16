@@ -16,7 +16,7 @@ public class ModuleInformationProvider implements IInformationProvider {
 	public final ModuleInformationCard currentModuleInformationForUserAndDevice(
 			long userId, long deviceId) {
 		ModuleInformationCard card = new ModuleInformationCard(moduleId);
-		this.customizer.customizeModuleInformationcard(card, userId, deviceId);
+		this.customizer.customizeModuleInformationCard(card, userId, deviceId);
 		return card;
 	}
 }

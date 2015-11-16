@@ -5,5 +5,5 @@ public interface IInformationCardCustomizer {
 	 * OVerride this method to push your module specific information into the card
 	 * @param card
 	 */
-	void customizeModuleInformationcard(ModuleInformationCard card, long userId, long deviceId);
+	void customizeModuleInformationCard(ModuleInformationCard card, long userId, long deviceId);
 }
