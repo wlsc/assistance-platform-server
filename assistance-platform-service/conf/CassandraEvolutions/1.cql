@@ -169,3 +169,43 @@ CREATE TABLE sensor_foreground (
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TABLE sensor_call_log (
+	callId bigint,
+	callType int,
+	name text,
+	number text,
+	date bigint,
+	duration bigint,
+	isNew boolean,
+	isUpdated boolean,
+	isDeleted boolean,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TABLE sensor_networktraffic (
+	rxBytes bigint,
+	txBytes bigint,
+	background boolean,
+	longitude double,
+	latitude double,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TABLE sensor_light (
+	value float,
+	accuracy int,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
