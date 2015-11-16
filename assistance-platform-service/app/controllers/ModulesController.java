@@ -207,15 +207,6 @@ public class ModulesController extends RestController {
 		}
 	}
 
-	public Result bootstrapConfiguration() {
-		Map<String, Object> result = new HashMap<>();
-
-		result.put("spark_master", "spark://Bennets-MBP:7077");
-		// result.put("broker_url", "spark://Bennets-MBP:7077");
-
-		return ok(result);
-	}
-
 	private void clearCacheForLanguage(String languageCode) {
 		Cache.remove("moduleList" + languageCode);
 	}
