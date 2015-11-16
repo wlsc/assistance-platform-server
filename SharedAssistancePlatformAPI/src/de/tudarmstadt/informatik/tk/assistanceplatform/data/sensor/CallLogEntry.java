@@ -84,27 +84,27 @@ public class CallLogEntry extends SensorData {
 		this.duration = duration;
 	}
 
-	public boolean isNew() {
+	public boolean getIsNew() {
 		return isNew;
 	}
 
-	public void setNew(boolean isNew) {
+	public void setIsNew(boolean isNew) {
 		this.isNew = isNew;
 	}
 
-	public boolean isUpdated() {
+	public boolean getIsUpdated() {
 		return isUpdated;
 	}
 
-	public void setUpdated(boolean isUpdated) {
+	public void setIsUpdated(boolean isUpdated) {
 		this.isUpdated = isUpdated;
 	}
 
-	public boolean isDeleted() {
+	public boolean getIsDeleted() {
 		return isDeleted;
 	}
 
-	public void setDeleted(boolean isDeleted) {
+	public void setIsDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 }
