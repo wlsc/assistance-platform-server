@@ -83,6 +83,11 @@ public class AssistanceController extends RestController {
 		}
 
 		String moduleId = moduleIdNode.textValue();
+		
+		// Check if module exists
+		if(ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
+			return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
+		}
 
 		// Get User id from request
 		long userId = getUserIdForRequest();
@@ -94,9 +99,7 @@ public class AssistanceController extends RestController {
 			publishUserRegistrationInformationEvent(userId, moduleId,
 					endResultOfRegistrationStatus);
 
-			return ok(); // TODO: Ggf. noch mal mit der Module ID bestätigen
-							// oder sogar die Liste aller aktivierten Module
-							// (IDs) zurückgeben?
+			return ok();
 		} else {
 			if (UserModuleActivationPersistency.doesActivationExist(activation) == endResultOfRegistrationStatus) {
 				return badRequestJson(AssistanceAPIErrors.moduleActivationNotActive);
