@@ -1,0 +1,21 @@
+postgres:
+  image: postgres
+
+activemq:
+  image: webcenter/activemq
+
+cassandra:
+  image: cassandra
+  ports:
+    - "9160:9160"
+    - "9042:9042"
+
+assistanceplatform:
+  image: assistance-platform-service
+  command: '-Dconfig.resource=docker.conf'
+  ports:
+      - "9000:9000"
+  links:
+      - postgres:db
+      - cassandra
+      - activemq
