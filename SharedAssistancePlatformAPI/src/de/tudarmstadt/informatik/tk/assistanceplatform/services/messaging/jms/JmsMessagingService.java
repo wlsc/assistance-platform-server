@@ -105,8 +105,6 @@ public class JmsMessagingService extends MessagingService {
 	
 	@Override
 	protected <T> void subscribe(Consumer<T> consumer, Channel<T> channel) {
-		System.out.println("JMS " + consumer);
-		
 		MessageConsumer jmsConsumer = createConsumerForChannel(channel);
 
 		try {
@@ -138,8 +136,6 @@ public class JmsMessagingService extends MessagingService {
 
 	@Override
 	protected <T> void unsubscribe(Consumer<T> consumer, Channel<T> channel) {
-		System.out.println("JMS " + consumer);
-		
 		MessageConsumer jmsConsumer = this.consumersToJMSConsumers.get(consumer);
 		
 		if(jmsConsumer != null) {
