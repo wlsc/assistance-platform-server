@@ -32,6 +32,8 @@ public class JmsMessagingService extends MessagingService {
 	
 	private Map<Channel, MessageProducer> channelsToProducers = new HashMap<>();
 	
+	private Map<Consumer, MessageConsumer> consumersToJMSConsumers = new HashMap<>();
+	
 	private final static Logger logger = Logger.getLogger(JmsMessagingService.class);
 	
 	
@@ -103,7 +105,10 @@ public class JmsMessagingService extends MessagingService {
 	
 	@Override
 	protected <T> void subscribe(Consumer<T> consumer, Channel<T> channel) {
+		System.out.println("JMS " + consumer);
+		
 		MessageConsumer jmsConsumer = createConsumerForChannel(channel);
+
 		try {
 			jmsConsumer.setMessageListener(new MessageListener() {
 				
@@ -124,6 +129,8 @@ public class JmsMessagingService extends MessagingService {
 					notifyConsumer(consumer, channel, obj);
 				}
 			});
+			
+			consumersToJMSConsumers.put(consumer, jmsConsumer);
 		} catch (JMSException e) {
 			logger.error("JMS message listener registration failed", e);
 		}
@@ -131,7 +138,21 @@ public class JmsMessagingService extends MessagingService {
 
 	@Override
 	protected <T> void unsubscribe(Consumer<T> consumer, Channel<T> channel) {
-		throw new UnsupportedOperationException();
+		System.out.println("JMS " + consumer);
+		
+		MessageConsumer jmsConsumer = this.consumersToJMSConsumers.get(consumer);
+		
+		if(jmsConsumer != null) {
+			try {
+				this.consumersToJMSConsumers.remove(consumer);
+				
+				jmsConsumer.close();
+			} catch (JMSException e) {
+				logger.warn("Problem on closing JMS consumer", e);
+			}
+		} else {
+			logger.warn("JMS consumer not found - did you register consumer with a proper reference?");
+		}
 	}
 
 	@Override

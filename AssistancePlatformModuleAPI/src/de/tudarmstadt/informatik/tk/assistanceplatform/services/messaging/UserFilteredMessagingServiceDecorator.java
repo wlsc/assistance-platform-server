@@ -1,5 +1,8 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
@@ -11,6 +14,8 @@ public class UserFilteredMessagingServiceDecorator extends MessagingService {
 	public MessagingService messagingServiceToFilter;
 
 	private IUserActivationChecker activationChecker;
+	
+	private Map<Consumer, Consumer> consumersToFilteredConsumers = new HashMap<>();
 	
 	public UserFilteredMessagingServiceDecorator(MessagingService serviceToFilter, IUserActivationChecker activationChecker) {
 		this.messagingServiceToFilter = serviceToFilter;
@@ -26,8 +31,10 @@ public class UserFilteredMessagingServiceDecorator extends MessagingService {
 			
 			consumer.consumeDataOfChannel(c, d);
 		};
-		
+
 		messagingServiceToFilter.subscribe(filterConsumer, channel);
+		
+		consumersToFilteredConsumers.put(consumer, filterConsumer);
 	}
 	
 	private <T> boolean shouldBlockPassthroughOfEvent(T event) {
@@ -43,7 +50,11 @@ public class UserFilteredMessagingServiceDecorator extends MessagingService {
 
 	@Override
 	protected <T> void unsubscribe(Consumer<T> consumer, Channel<T> channel) {
-		messagingServiceToFilter.unsubscribe(consumer, channel);
+		Consumer<T> filteredConsumer = consumersToFilteredConsumers.get(consumer);
+		
+		messagingServiceToFilter.unsubscribe(filteredConsumer, channel);
+		
+		consumersToFilteredConsumers.remove(consumer);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import org.apache.spark.storage.StorageLevel;
 import org.apache.spark.streaming.receiver.Receiver;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
@@ -16,6 +17,8 @@ public class MessagingServiceReceiver<T> extends Receiver<T> {
 	private Channel<T> channel;
 	
 	private Class<T> type;
+	
+	private Consumer<T> consumerForDeregistration;
 	
 	/**
 	 * Creates the messaging service receiver for Spark streaming purposes.
@@ -32,9 +35,10 @@ public class MessagingServiceReceiver<T> extends Receiver<T> {
 	public void onStart() {
 		MessagingService s = createMessagingService();
 		
-		this.channel = s.channel(type);
-		this.channel.subscribeConsumer(this::channelReceiver);
+		consumerForDeregistration = this::channelReceiver;
 		
+		this.channel = s.channel(type);
+		this.channel.subscribeConsumer(consumerForDeregistration);
 	}
 	
 	protected MessagingService createMessagingService() {
@@ -47,6 +51,6 @@ public class MessagingServiceReceiver<T> extends Receiver<T> {
 
 	@Override
 	public void onStop() {
-		this.channel.unsubscribeConsumer(this::channelReceiver);
+		this.channel.unsubscribeConsumer(consumerForDeregistration);
 	}
 }

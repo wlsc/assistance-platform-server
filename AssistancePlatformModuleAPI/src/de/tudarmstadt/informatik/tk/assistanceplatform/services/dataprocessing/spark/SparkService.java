@@ -53,7 +53,7 @@ public class SparkService implements ISparkService {
 
 	@Override
 	public <T extends Event> JavaDStream<T> getEventReceiverStream(JavaStreamingContext sc, Class<T> eventType) {		
-		MessagingServiceReceiver<T> messagingReceiver = new UserFilteredMessagingServiceReceiver<T>(bundle.getModuleId(), eventType);
+		UserFilteredMessagingServiceReceiver<T> messagingReceiver = new UserFilteredMessagingServiceReceiver<T>(bundle.getModuleId(), eventType);
 		
 		JavaDStream<T> stream = sc.receiverStream(messagingReceiver);
 		
