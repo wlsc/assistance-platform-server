@@ -9,9 +9,9 @@ public class PlatformClientFactory {
 		return getInstance(defaultPlatformUrlAndPort);
 	}
 	
-	public static PlatformClient getInstance(String urlAndPort) {
+	public static PlatformClient getInstance(String urlAndPort) {		
 		if (instance == null) {
-			return new PlatformClient(urlAndPort);
+			instance = new PlatformClient(urlAndPort);
 		}
 
 		return instance;
