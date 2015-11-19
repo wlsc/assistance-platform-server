@@ -12,10 +12,13 @@ import com.datastax.driver.core.Session;
 public class CassandraModuleUserCreator {
 	private Session session;
 	
-	public CassandraModuleUserCreator() {
-		this.session = CassandraSessionProxyFactory.getSessionProxy().getSession();
+	public Session getSession() {
+		if(session == null) {
+			this.session = CassandraSessionProxyFactory.getSessionProxy().getSession();
+		}
+		return session;
 	}
-	
+
 	public CassandraModuleUser createUserForModule(String moduleId) {
 		CassandraModuleUser user = new CassandraModuleUser();
 		
@@ -36,18 +39,18 @@ public class CassandraModuleUserCreator {
 	}	
 
 	private boolean doesModuleUserAlreadyExists(String moduleId) {
-		ResultSet users = this.session.execute("LIST USERS");
+		ResultSet users = this.getSession().execute("LIST USERS");
 		
 		return users.all().stream().filter((r) -> r.getString(0).equals(moduleId)).count() == 1;
 	}
 	
 	private void createUser(CassandraModuleUser user) {
-		session.execute( "CREATE USER '" + user.user + "' WITH PASSWORD '" + user.password + "' NOSUPERUSER");
+		getSession().execute( "CREATE USER '" + user.user + "' WITH PASSWORD '" + user.password + "' NOSUPERUSER");
 	}
 	
 	private void createKeyspace(CassandraModuleUser user) {
 		try {
-			session.execute( "CREATE KEYSPACE \"" +  user.keyspace + "\" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 }");
+			getSession().execute( "CREATE KEYSPACE \"" +  user.keyspace + "\" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 }");
 		} catch(Exception e) {
 			Logger.warn("Creating keyspace for module failed.", e);
 		}
@@ -66,7 +69,7 @@ public class CassandraModuleUserCreator {
 			String grantQuery = grant + " TO '" + user.user + "'";
 			
 			try {
-				session.execute(grantQuery);
+				getSession().execute(grantQuery);
 			} catch(Exception ex) {
 				Logger.warn("Granting permission to module user failed. Query: " + grantQuery, ex);
 			}
