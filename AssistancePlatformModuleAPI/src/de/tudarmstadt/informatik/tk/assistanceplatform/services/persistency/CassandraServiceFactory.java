@@ -2,6 +2,7 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.persistency;
 
 import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundle;
@@ -26,12 +27,13 @@ public class CassandraServiceFactory {
 	}
 
 	private static void createProxyInstance() {
+
 		CassandraServiceConfigResponse config = PlatformClientFactory.getInstance().getDatabaseService(
 				ModuleBundle.currentBundle().getModuleId());
-		
-		List<String> adresses = Arrays.asList(config.address);
+
+		List<String> adresses = new LinkedList<String>( Arrays.asList(config.address) );
 		adresses.add(PlatformClientFactory.getInstance().getUsedHostWithoutPort()); // Workaround if module started outside platform machine
-		
+
 		InetAddress[] contactPoints = adresses.stream().map((s) -> {
 			try {
 				return InetAddress.getByName(s);
