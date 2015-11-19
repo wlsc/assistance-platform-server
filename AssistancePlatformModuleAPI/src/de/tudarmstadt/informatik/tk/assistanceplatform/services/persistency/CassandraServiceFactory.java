@@ -2,6 +2,7 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.persistency;
 
 import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.List;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundle;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
@@ -28,7 +29,10 @@ public class CassandraServiceFactory {
 		CassandraServiceConfigResponse config = PlatformClientFactory.getInstance().getDatabaseService(
 				ModuleBundle.currentBundle().getModuleId());
 		
-		InetAddress[] contactPoitns = Arrays.asList(config.address).stream().map((s) -> {
+		List<String> adresses = Arrays.asList(config.address);
+		adresses.add(PlatformClientFactory.getInstance().getUsedUrl()); // Workaround if module started outside platform machine
+		
+		InetAddress[] contactPoints = adresses.stream().map((s) -> {
 			try {
 				return InetAddress.getByName(s);
 			} catch (Exception e) {
@@ -36,6 +40,6 @@ public class CassandraServiceFactory {
 			return null;
 		}).toArray(InetAddress[]::new);
 		
-		proxyInstance = new CassandraSessionProxy(contactPoitns, config.keystoreName, config.user, config.password);
+		proxyInstance = new CassandraSessionProxy(contactPoints, config.keystoreName, config.user, config.password);
 	}
 }
