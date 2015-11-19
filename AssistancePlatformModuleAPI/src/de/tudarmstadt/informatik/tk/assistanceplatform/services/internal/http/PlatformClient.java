@@ -29,10 +29,26 @@ public class PlatformClient {
 	
 	AssistancePlatformService service;
 	
+	private String host;
+	
 	public PlatformClient(String urlAndPort) {
 		RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://" + urlAndPort).build();
 		
 		service = restAdapter.create(AssistancePlatformService.class);
+		
+		host = urlAndPort;
+	}
+	
+	public String getUsedHostWithoutPort() {
+		if(host.contains(":")) {
+			return host.substring(0, host.lastIndexOf(":"));
+		}
+		
+		return host;
+	}
+	
+	public String getUsedHost() {
+		return host;
 	}
 	
 	public PlatformClient(AssistancePlatformService service) {
