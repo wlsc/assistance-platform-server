@@ -30,7 +30,7 @@ public class CassandraServiceFactory {
 				ModuleBundle.currentBundle().getModuleId());
 		
 		List<String> adresses = Arrays.asList(config.address);
-		adresses.add(PlatformClientFactory.getInstance().getUsedUrl()); // Workaround if module started outside platform machine
+		adresses.add(PlatformClientFactory.getInstance().getUsedHostWithoutPort()); // Workaround if module started outside platform machine
 		
 		InetAddress[] contactPoints = adresses.stream().map((s) -> {
 			try {
