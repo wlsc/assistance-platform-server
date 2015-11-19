@@ -36,7 +36,11 @@ public class CassandraSessionProxy {
 
 		createSchema(schemaCQL, keyspaceName, true);
 
-		session = cluster.connect(keyspaceName);
+		try {
+			session = createSessionForKeyspace(keyspaceName);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	/**
@@ -63,7 +67,7 @@ public class CassandraSessionProxy {
 			if(allowKeyspaceCreation) {
 				tmpSession = cluster.connect();
 			} else {
-				tmpSession = cluster.connect(keyspaceName);
+				tmpSession = createSessionForKeyspace(keyspaceName);
 			}
 
 			for (String s : schemaCQL.split(";")) {
@@ -91,6 +95,18 @@ public class CassandraSessionProxy {
 
 			log.info("Finished initializing Cassandra schema");
 		}
+	}
+	
+	private Session createSessionForKeyspace(String keyspace) {
+		Session result;
+		
+		try {
+			result = cluster.connect(keyspace);
+		} catch(Exception ex) {
+			result = cluster.connect("\"" + keyspace + "\"");
+		}
+		
+		return result;
 	}
 
 	private void setCluster(Consumer<Builder> clusterBuilderSetter,
