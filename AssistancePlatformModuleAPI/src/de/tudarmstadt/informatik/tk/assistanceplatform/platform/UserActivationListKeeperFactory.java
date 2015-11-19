@@ -8,7 +8,7 @@ public class UserActivationListKeeperFactory {
 	public static UserActivationListKeeper getInstance(String moduleIdResponsibleFor,
 			MessagingService messagingService, String platformUrl) {
 		if (instance == null) {
-			return new UserActivationListKeeper(moduleIdResponsibleFor, messagingService, platformUrl);
+			instance = new UserActivationListKeeper(moduleIdResponsibleFor, messagingService, platformUrl);
 		}
 
 		return instance;
