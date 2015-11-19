@@ -38,7 +38,7 @@ public class BundleBootstrapper {
 		// TODO: Fetch configuration from platform
 
 		UserActivationListKeeper activationsKeeper = UserActivationListKeeperFactory
-				.getInstance(bundle.getModuleId(), ms, platformUrlAndPort);
+				.createInstance(bundle.getModuleId(), ms, platformUrlAndPort);
 
 		IUserActivationChecker activationChecker = activationsKeeper
 				.getUserActivationChecker();
