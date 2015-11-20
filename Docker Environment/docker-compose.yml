@@ -3,6 +3,8 @@ postgres:
 
 activemq:
   image: webcenter/activemq
+  ports:
+    - "61616:61616"
 
 cassandra:
   image: cassandra
@@ -13,7 +15,7 @@ cassandra:
     - ./cassandra:/etc/cassandra
 
 assistanceplatform:
-  image: assistance-platform-service
+  image: m156/assistance-platform-service
   command: '-Dconfig.resource=docker.conf'
   ports:
       - "9000:9000"
