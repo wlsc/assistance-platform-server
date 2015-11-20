@@ -2,6 +2,7 @@
 maintainer := "Bennet Jeutter" // Maintainer
 dockerExposedPorts := Seq(9000, 9443) // Expose Ports
 dockerUpdateLatest := true
+dockerRepository := Option("m156")
 
 name := """assistance-platform-service"""
 

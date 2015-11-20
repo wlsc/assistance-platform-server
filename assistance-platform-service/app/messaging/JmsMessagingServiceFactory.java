@@ -7,7 +7,8 @@ public class JmsMessagingServiceFactory {
 	public static JmsMessagingService createServiceFromConfig() {
 		String user = Play.application().configuration().getString("activemq.user");
 		String password = Play.application().configuration().getString("activemq.password");
+		String broker = Play.application().configuration().getString("activemq.broker");
 		
-		return new JmsMessagingService(user, password);
+		return new JmsMessagingService(JmsMessagingServiceConfig.getBroker(), JmsMessagingServiceConfig.getUser(), JmsMessagingServiceConfig.getPassword());
 	}
 }

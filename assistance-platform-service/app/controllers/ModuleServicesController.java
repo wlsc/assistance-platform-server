@@ -1,5 +1,7 @@
 package controllers;
 
+import messaging.JmsMessagingServiceConfig;
+
 import com.typesafe.config.ConfigFactory;
 
 import persistency.ActiveAssistanceModulePersistency;
@@ -36,6 +38,19 @@ public class ModuleServicesController extends RestController {
 
 		ServiceConfigResponse response = new ServiceConfigResponse(null, null,
 				new String[] { getSparkMaster() });
+
+		return ok(Json.toJson(response));
+	}
+
+	public Result activemq(String moduleId) {
+		if (!ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
+			return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
+		}
+
+		ServiceConfigResponse response = new ServiceConfigResponse(
+				JmsMessagingServiceConfig.getUser(),
+				JmsMessagingServiceConfig.getPassword(),
+				new String[] { JmsMessagingServiceConfig.getBroker() });
 
 		return ok(Json.toJson(response));
 	}
