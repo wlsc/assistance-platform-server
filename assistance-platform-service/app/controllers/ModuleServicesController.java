@@ -43,10 +43,6 @@ public class ModuleServicesController extends RestController {
 	}
 
 	public Result activemq(String moduleId) {
-		if (!ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
-			return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
-		}
-
 		ServiceConfigResponse response = new ServiceConfigResponse(
 				JmsMessagingServiceConfig.getUser(),
 				JmsMessagingServiceConfig.getPassword(),
