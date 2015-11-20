@@ -35,8 +35,7 @@ public class BundleBootstrapper {
 	public static void bootstrap(ModuleBundle bundle,
 			String platformUrlAndPort, boolean localMode) {
 		// Prepare Messaging Service and User Activation List
-		ConfiguredJmsServiceFactory.createJmsInstance(bundle.getModuleId());
-		MessagingService ms = ConfiguredJmsServiceFactory.getJmsInstance(); 
+		MessagingService ms = createBasicMessagingService(bundle);
 				
 		UserActivationListKeeper activationsKeeper = UserActivationListKeeperFactory
 				.createInstance(bundle.getModuleId(), ms, platformUrlAndPort);
@@ -59,6 +58,13 @@ public class BundleBootstrapper {
 		// Finally start the bundle
 		bundle.bootstrapBundle(ms, activationChecker, client, actionRunner,
 				sparkService);
+	}
+
+	private static MessagingService createBasicMessagingService(ModuleBundle bundle) {
+		ConfiguredJmsServiceFactory.createJmsInstance(bundle.getModuleId());
+		MessagingService ms = ConfiguredJmsServiceFactory.getJmsInstance(); 
+		
+		return ms;
 	}
 
 	private static ISparkService createSparkService(ModuleBundle bundle,
