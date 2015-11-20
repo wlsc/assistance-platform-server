@@ -5,7 +5,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Messag
 public class UserActivationListKeeperFactory {
 	private static UserActivationListKeeper instance;
 	
-	public static UserActivationListKeeper getInstance(String moduleIdResponsibleFor,
+	public static UserActivationListKeeper createInstance(String moduleIdResponsibleFor,
 			MessagingService messagingService, String platformUrl) {
 		if (instance == null) {
 			instance = new UserActivationListKeeper(moduleIdResponsibleFor, messagingService, platformUrl);

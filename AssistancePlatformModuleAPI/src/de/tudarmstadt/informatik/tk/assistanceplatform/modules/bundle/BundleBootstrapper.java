@@ -9,6 +9,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.s
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.spark.SparkService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.ConfiguredJmsServiceFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
@@ -34,9 +35,9 @@ public class BundleBootstrapper {
 	public static void bootstrap(ModuleBundle bundle,
 			String platformUrlAndPort, boolean localMode) {
 		// Prepare Messaging Service and User Activation List
-		MessagingService ms = new JmsMessagingService();
-		// TODO: Fetch configuration from platform
-
+		ConfiguredJmsServiceFactory.createJmsInstance(bundle.getModuleId());
+		MessagingService ms = ConfiguredJmsServiceFactory.getJmsInstance(); 
+				
 		UserActivationListKeeper activationsKeeper = UserActivationListKeeperFactory
 				.createInstance(bundle.getModuleId(), ms, platformUrlAndPort);
 

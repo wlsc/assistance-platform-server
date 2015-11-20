@@ -38,15 +38,15 @@ public class JmsMessagingService extends MessagingService {
 	
 	
 	public JmsMessagingService() {
-		this((String)null, (String)null);
+		this(null, (String)null, (String)null);
 	}
 	
-	public JmsMessagingService(String user, String password) {
-		this(createDefaultConnectionFactory(user, password));
+	public JmsMessagingService(String brokerUrl, String user, String password) {
+		this(createDefaultConnectionFactory(brokerUrl, user, password));
 	}
 	
 	public JmsMessagingService(MessagingServiceConfiguration config) {
-		this(config, createDefaultConnectionFactory(null, null));
+		this(config, createDefaultConnectionFactory(null, null, null));
 	}
 	
 	public JmsMessagingService(ConnectionFactory factory) {
@@ -61,25 +61,22 @@ public class JmsMessagingService extends MessagingService {
 		setupConnection(factory);
 	}
 	
-	private static ConnectionFactory createDefaultConnectionFactory(String user, String password) {
-		ConnectionFactory envFactory = createConnectionFactoryFromEnvVariables(user, password);
-		if(envFactory != null) {
-			return envFactory;
+	private static ConnectionFactory createDefaultConnectionFactory(String brokerUrl, String user, String password) {
+		if(brokerUrl != null) {
+			return new ActiveMQConnectionFactory(user, password, brokerUrl);
 		}
 		
 		return new ActiveMQConnectionFactory();
 	}
 	
-	private static ConnectionFactory createConnectionFactoryFromEnvVariables(String user, String password) {
+	public static String getBrokerUrlFromEnv() {
 		Map<String, String> env = System.getenv();
 		
 		String envKey = "ACTIVEMQ_PORT_61616_TCP";
 		if(env.containsKey(envKey)) {
 			String brokerUrl = env.get(envKey);
-			
-			return new ActiveMQConnectionFactory(user, password, brokerUrl);
+			return brokerUrl;
 		}
-		
 		return null;
 	}
 	

@@ -28,8 +28,6 @@ public class UserActivationListKeeper {
 		// Pull registrations until now
 		PlatformClientFactory.getInstance(platformUrl)
 		.getUserActivationsForModule(moduleIdResponsibleFor, this::initializeExistingActivations);
-		
-		System.out.println(platformUrl);
 
 		// Register for new informations
 		new PlatformEventSubscriber<UserRegistrationInformationEvent>(
