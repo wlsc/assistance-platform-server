@@ -34,6 +34,10 @@ public class BundleBootstrapper {
 	 */
 	public static void bootstrap(ModuleBundle bundle,
 			String platformUrlAndPort, boolean localMode) {
+		// Prepare platform client
+		PlatformClient client = PlatformClientFactory
+				.getInstance(platformUrlAndPort);
+		
 		// Prepare Messaging Service and User Activation List
 		MessagingService ms = createBasicMessagingService(bundle);
 				
@@ -45,9 +49,7 @@ public class BundleBootstrapper {
 
 		ms = new UserFilteredMessagingServiceDecorator(ms, activationChecker);
 
-		// Prepare Platform Client & Action Runner
-		PlatformClient client = PlatformClientFactory
-				.getInstance(platformUrlAndPort);
+		// Prepare Action runner
 		IClientActionRunner actionRunner = new RESTClientActionRunner(client);
 		actionRunner = new ModuleBundleClientActionRunnerProxy(bundle,
 				actionRunner);
