@@ -5,7 +5,12 @@ import java.util.stream.Collectors;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
 
-public class ModuleInformationPrioritizerImpl implements
+/**
+ * This information card prioritizer implementation sorts the module information card by their timestamp / defines the priority be the timestamp.
+ * @author bjeutter
+ *
+ */
+public class ModuleInformationByTimestampPrioritizer implements
 		IModuleInformationPrioritizer {
 	@Override
 	public List<ModuleInformationCard> getPrioritizedInformationList(List<ModuleInformationCard> unsortedInformations) {

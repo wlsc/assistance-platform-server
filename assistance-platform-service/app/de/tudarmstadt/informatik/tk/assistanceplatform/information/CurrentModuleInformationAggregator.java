@@ -17,6 +17,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
 
+/**
+ * This class is responsible for pulling the current module information cards from a set of modules
+ * @author bjeutter
+ *
+ */
 public class CurrentModuleInformationAggregator {
 	private long userId;
 	
@@ -46,9 +51,6 @@ public class CurrentModuleInformationAggregator {
 		});
 		
 		return result;
-		
-		
-		// 4. Priorisiere die Resultate
 	}
 	
 	private List<Promise<WSResponse>> collectResponsePromises(ActiveAssistanceModule[] modules) {

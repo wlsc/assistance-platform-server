@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.IModuleInformationPrioritizer;
-import de.tudarmstadt.informatik.tk.assistanceplatform.information.ModuleInformationPrioritizerImpl;
+import de.tudarmstadt.informatik.tk.assistanceplatform.information.ModuleInformationByTimestampPrioritizer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
 
 
@@ -23,7 +23,7 @@ public class ModuleInformationPriorizationTest {
 		ModuleInformationCard c2 = new ModuleInformationCard("id2", middle);
 		ModuleInformationCard c3 = new ModuleInformationCard("id3", newest);
 		
-		IModuleInformationPrioritizer prioritizer = new ModuleInformationPrioritizerImpl();
+		IModuleInformationPrioritizer prioritizer = new ModuleInformationByTimestampPrioritizer();
 		
 		List<ModuleInformationCard> prioritizedCards = prioritizer.getPrioritizedInformationList(Arrays.asList(c2, c1, c3));
 		

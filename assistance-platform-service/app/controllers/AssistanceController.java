@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.CurrentModuleInformationAggregator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.IModuleInformationPrioritizer;
-import de.tudarmstadt.informatik.tk.assistanceplatform.information.ModuleInformationPrioritizerImpl;
+import de.tudarmstadt.informatik.tk.assistanceplatform.information.ModuleInformationByTimestampPrioritizer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
@@ -122,7 +122,7 @@ public class AssistanceController extends RestController {
 				deviceId,
 				(uId) -> getActivatedModuleEndpoints(uId),
 				(cards) -> {
-					IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationPrioritizerImpl();
+					IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationByTimestampPrioritizer();
 					return infoPrioritizer.getPrioritizedInformationList(cards);
 				});
 	}
