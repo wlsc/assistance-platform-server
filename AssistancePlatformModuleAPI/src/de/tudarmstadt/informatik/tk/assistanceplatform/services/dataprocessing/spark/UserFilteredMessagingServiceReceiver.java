@@ -8,25 +8,19 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFi
 
 public class UserFilteredMessagingServiceReceiver<T> extends
 		MessagingServiceReceiver<T> {
-	private static final long serialVersionUID = 5383380291390118768L;
-
-	private String moduleIdToFilter;
-
-	private String platformUrlAndPort;
-
-	public UserFilteredMessagingServiceReceiver(String moduleIdToFilter,
-			Class<T> eventType, String platformUrlAndPort) {
-		super(eventType);
-		this.moduleIdToFilter = moduleIdToFilter;
-		this.platformUrlAndPort = platformUrlAndPort;
+	public UserFilteredMessagingServiceReceiver(String usingModuleId,
+			String platformUrlAndPort, Class<T> eventType) {
+		super(usingModuleId, platformUrlAndPort, eventType);
 	}
 
+	private static final long serialVersionUID = 5383380291390118768L;
+	
 	@Override
 	protected MessagingService createMessagingService() {
 		MessagingService ms = super.createMessagingService();
-
+		
 		UserActivationListKeeper activationListKeeper = UserActivationListKeeperFactory
-				.createInstance(moduleIdToFilter, ms, platformUrlAndPort);
+				.createInstance(this.usingModuleId, ms, platformUrlAndPort);
 
 		ms = new UserFilteredMessagingServiceDecorator(ms,
 				activationListKeeper.getUserActivationChecker());

@@ -13,7 +13,7 @@ public class ConfiguredJmsServiceFactory {
 		return jmsInstance;
 	}
 
-	public static void createJmsInstance(String moduleID) {
+	public static JmsMessagingService createJmsInstance(String moduleID) {
 		ServiceConfigResponse config = PlatformClientFactory.getInstance().getServiceConfig(moduleID, "activemq");
 
 		String broker = resolveRightBrokerAddress(config.address[0], PlatformClientFactory.getInstance().getUsedHostWithoutPort());
@@ -24,6 +24,8 @@ public class ConfiguredJmsServiceFactory {
 		String password = config.password;
 		
 		jmsInstance = new JmsMessagingService(broker, user, password);
+		
+		return jmsInstance;
 	}
 	
 	private static String resolveRightBrokerAddress(String receivedBrokerAdress, String platformHost) {
