@@ -36,7 +36,7 @@ public class BundleBootstrapper {
 			String platformUrlAndPort, boolean localMode) {
 		// Prepare platform client
 		PlatformClient client = PlatformClientFactory
-				.getInstance(platformUrlAndPort);
+				.createInstance(platformUrlAndPort);
 		
 		// Prepare Messaging Service and User Activation List
 		MessagingService ms = createBasicMessagingService(bundle);

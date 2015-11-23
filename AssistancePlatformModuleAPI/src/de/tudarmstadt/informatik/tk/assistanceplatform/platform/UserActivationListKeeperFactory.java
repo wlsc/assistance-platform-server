@@ -12,7 +12,7 @@ public class UserActivationListKeeperFactory {
 		if (instance == null) {
 			instance = new UserActivationListKeeper(moduleIdResponsibleFor,
 					messagingService,
-					PlatformClientFactory.getInstance(platformUrl));
+					PlatformClientFactory.createInstance(platformUrl));
 		}
 
 		return instance;
