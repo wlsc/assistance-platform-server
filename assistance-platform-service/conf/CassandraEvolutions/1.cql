@@ -209,3 +209,16 @@ CREATE TABLE sensor_light (
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TABLE sensor_powerstate (
+	isCharging boolean,
+	percent float,
+	charingStateOptional int,
+	charingModeOptional int,
+	powerSaveModeOptional boolean,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
