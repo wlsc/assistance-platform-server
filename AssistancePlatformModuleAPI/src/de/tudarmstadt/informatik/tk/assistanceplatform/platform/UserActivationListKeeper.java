@@ -2,6 +2,7 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.platform;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.actions.IGetUserActivationsForModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
@@ -13,21 +14,16 @@ public class UserActivationListKeeper {
 	
 	private String moduleIdResponsibleFor ;
 
-	public UserActivationListKeeper(String moduleIdResponsibleFor,
-			MessagingService messagingService) {
-		this(moduleIdResponsibleFor, messagingService, PlatformClientFactory.defaultPlatformUrlAndPort);
-	}
 	
 	public UserActivationListKeeper(
 			String moduleIdResponsibleFor,
-			MessagingService messagingService, String platformUrl) {
+			MessagingService messagingService, IGetUserActivationsForModule activationsPuller) {
 		this.moduleIdResponsibleFor = moduleIdResponsibleFor;
 		
 		this.userActivationList = UserActivationListFactory.getInstance();
 		
 		// Pull registrations until now
-		PlatformClientFactory.getInstance(platformUrl)
-		.getUserActivationsForModule(moduleIdResponsibleFor, this::initializeExistingActivations);
+		activationsPuller.getUserActivationsForModule(moduleIdResponsibleFor, this::initializeExistingActivations);
 
 		// Register for new informations
 		new PlatformEventSubscriber<UserRegistrationInformationEvent>(

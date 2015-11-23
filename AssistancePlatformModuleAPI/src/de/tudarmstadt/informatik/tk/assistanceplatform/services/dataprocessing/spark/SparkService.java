@@ -9,6 +9,7 @@ import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.Event;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundle;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
 
 public class SparkService implements ISparkService {	
 	private final String appName;
@@ -53,7 +54,7 @@ public class SparkService implements ISparkService {
 
 	@Override
 	public <T extends Event> JavaDStream<T> getEventReceiverStream(JavaStreamingContext sc, Class<T> eventType) {		
-		UserFilteredMessagingServiceReceiver<T> messagingReceiver = new UserFilteredMessagingServiceReceiver<T>(bundle.getModuleId(), eventType);
+		UserFilteredMessagingServiceReceiver<T> messagingReceiver = new UserFilteredMessagingServiceReceiver<T>(bundle.getModuleId(), eventType, PlatformClientFactory.getInstance().getUsedHost());
 		
 		JavaDStream<T> stream = sc.receiverStream(messagingReceiver);
 		

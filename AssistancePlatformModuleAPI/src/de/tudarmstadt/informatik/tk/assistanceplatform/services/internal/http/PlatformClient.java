@@ -16,6 +16,7 @@ import retrofit.mime.TypedByteArray;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.LocalizedModuleBundleInformation;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundle;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundleInformation;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.actions.IGetUserActivationsForModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.AssistancePlatformService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleLocalizationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
@@ -24,7 +25,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.as
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
 
-public class PlatformClient {
+public class PlatformClient implements IGetUserActivationsForModule {
 	private final static Logger logger = Logger.getLogger(PlatformClient.class);
 	
 	AssistancePlatformService service;
@@ -144,6 +145,7 @@ public class PlatformClient {
 		}
 	}
 	
+	@Override
 	public void getUserActivationsForModule(String moduleId, Consumer<long[]> activatedUserIdsCallback) {
 		Callback<ModuleActivationsResponse> callback = new Callback<ModuleActivationsResponse>() {
 

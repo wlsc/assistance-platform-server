@@ -1,6 +1,8 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.function.Consumer;
+
 import org.junit.Test;
 
 import retrofit.Callback;
@@ -8,6 +10,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationLi
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.actions.IGetUserActivationsForModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.AssistancePlatformService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleLocalizationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
@@ -19,14 +22,23 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channe
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.dummy.DummyMessagingService;
 
 public class UserActivationListKeeperTest {
+	class DoNothingUserActivationPuller implements IGetUserActivationsForModule {
+		@Override
+		public void getUserActivationsForModule(String moduleId,
+				Consumer<long[]> activatedUserIdsCallback) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
 	@Test
 	public void moduleSepratationTest() throws Exception {
 		DummyMessagingService dummyMs = new DummyMessagingService();
 
 		UserActivationListKeeper keeperToTest1 = new UserActivationListKeeper(
-				"test1", dummyMs);
+				"test1", dummyMs, new DoNothingUserActivationPuller());
 		UserActivationListKeeper keeperToTest2 = new UserActivationListKeeper(
-				"test2", dummyMs);
+				"test2", dummyMs, new DoNothingUserActivationPuller());
 
 		Channel<UserRegistrationInformationEvent> regInfoChannel = dummyMs
 				.channel(UserRegistrationInformationEvent.class);
@@ -51,57 +63,18 @@ public class UserActivationListKeeperTest {
 	public void initialPullTest() throws Exception {
 		DummyMessagingService dummyMs = new DummyMessagingService();
 		
-		PlatformClient cli = new PlatformClient(new AssistancePlatformService() {
+		IGetUserActivationsForModule cli = new IGetUserActivationsForModule() {
 			
 			@Override
-			public void update(ModuleRegistrationRequest body, Callback<Void> callback) {
-				// TODO Auto-generated method stub
-				
+			public void getUserActivationsForModule(String moduleId,
+					Consumer<long[]> activatedUserIdsCallback) {
+				activatedUserIdsCallback.accept(new long[] { 1, 2});
 			}
-			
-			@Override
-			public void sendMessage(SendMessageRequest body, Callback<Void> callback) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void register(ModuleRegistrationRequest body, Callback<Void> callback) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void localize(ModuleLocalizationRequest body, Callback<Void> callback) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void getModuleActivationsByUsers(String moduleId,
-					Callback<ModuleActivationsResponse> callback) {
-				callback.success(new ModuleActivationsResponse(new long[] { 1, 2}), null);
-			}
-
-			@Override
-			public CassandraServiceConfigResponse getCassandraServiceConfig(
-					String moduleId) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public ServiceConfigResponse getServiceConfig(String moduleId,
-					String service) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		});
+		};
 		
-		PlatformClientFactory.setInstance(cli);
 
 		UserActivationListKeeper keeperToTest1 = new UserActivationListKeeper(
-				"test1", dummyMs);
+				"test1", dummyMs, cli);
 		
 		assertTrue(keeperToTest1.getUserActivationChecker().isActivatedForUser(1));
 		assertTrue(keeperToTest1.getUserActivationChecker().isActivatedForUser(2));

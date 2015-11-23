@@ -1,14 +1,18 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.platform;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 
 public class UserActivationListKeeperFactory {
 	private static UserActivationListKeeper instance;
-	
-	public static UserActivationListKeeper createInstance(String moduleIdResponsibleFor,
-			MessagingService messagingService, String platformUrl) {
+
+	public static UserActivationListKeeper createInstance(
+			String moduleIdResponsibleFor, MessagingService messagingService,
+			String platformUrl) {
 		if (instance == null) {
-			instance = new UserActivationListKeeper(moduleIdResponsibleFor, messagingService, platformUrl);
+			instance = new UserActivationListKeeper(moduleIdResponsibleFor,
+					messagingService,
+					PlatformClientFactory.getInstance(platformUrl));
 		}
 
 		return instance;
