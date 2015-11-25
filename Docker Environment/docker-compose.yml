@@ -1,10 +1,12 @@
 postgres:
   image: postgres
+  hostname: postgres
 
 activemq:
   image: webcenter/activemq
   ports:
     - "61616:61616"
+  hostname: activemq
 
 cassandra:
   image: cassandra
@@ -13,6 +15,7 @@ cassandra:
     - "9042:9042"
   volumes:
     - ./cassandra:/etc/cassandra
+  hostname: cassandra
 
 assistanceplatform:
   image: m156/assistance-platform-service
@@ -23,6 +26,11 @@ assistanceplatform:
       - postgres:db
       - cassandra
       - activemq
+  hostname: assistanceplatform
+  environment:
+      ACTIVEMQ_PORT_61616_TCP_ADDR: activemq
+      DB_PORT_5432_TCP_ADDR: postgres
+      CASSANDRA_PORT_9042_TCP_ADDR: cassandra
 
 spark-master:
   image: gettyimages/spark
