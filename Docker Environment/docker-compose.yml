@@ -15,22 +15,34 @@ cassandra:
     - "9042:9042"
   volumes:
     - ./cassandra:/etc/cassandra
-  hostname: cassandra
+
+loadbalancer:
+  image: jwilder/nginx-proxy
+  ports:
+    - "443:443"
+    - "80:80"
+  volumes:
+    - /path/to/certs:/etc/nginx/certs
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+  environment:
+    DEFAULT_HOST: assi
 
 assistanceplatform:
   image: m156/assistance-platform-service
   command: '-Dconfig.resource=docker.conf'
-  ports:
-      - "9000:9000"
+  expose:
+    - "9000"
   links:
       - postgres:db
       - cassandra
       - activemq
   hostname: assistanceplatform
   environment:
+      VIRTUAL_HOST: assi
+      VIRTUAL_PORT: 9000
+      # override links with hostnames
       ACTIVEMQ_PORT_61616_TCP_ADDR: activemq
       DB_PORT_5432_TCP_ADDR: postgres
-      CASSANDRA_PORT_9042_TCP_ADDR: cassandra
 
 spark-master:
   image: gettyimages/spark
