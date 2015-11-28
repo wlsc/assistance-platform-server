@@ -56,7 +56,7 @@ CREATE TABLE sensor_labelaction (
 
 CREATE TABLE sensor_mobileconnection (
 	carriername text,
-	mobileCarrierCode text,
+	mobileCountryCode text,
 	mobileNetworkCode text,
 	voipAvailableOptional boolean,
 	device_id bigint,
