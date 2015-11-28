@@ -198,7 +198,7 @@ CREATE TABLE sensor_networktraffic (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
-	PRIMARY KEY ((user_id, device_id), timestamp)
+	PRIMARY KEY ((user_id, device_id), timestamp, appName)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_light (
