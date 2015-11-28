@@ -188,11 +188,12 @@ CREATE TABLE sensor_call_log (
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_networktraffic (
+	appName text,
 	rxBytes bigint,
 	txBytes bigint,
 	background boolean,
-	longitude double,
-	latitude double,
+	longitudeOptional double,
+	latitudeOptional double,
 	device_id bigint,
 	user_id bigint,
 	id uuid,

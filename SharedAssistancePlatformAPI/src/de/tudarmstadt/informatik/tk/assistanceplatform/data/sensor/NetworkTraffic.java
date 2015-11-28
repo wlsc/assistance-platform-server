@@ -1,25 +1,40 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
 import com.datastax.driver.mapping.annotations.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_networktraffic")
 public class NetworkTraffic extends SensorData {
+	public String appName;
 	public long rxBytes;
 	public long txBytes;
 	public boolean background;
-	public double longitude;
-	public double latitude;
+	
+	@JsonProperty(value = "longitude")
+	public double longitudeOptional;
+	
+	@JsonProperty(value = "latitude")
+	public double latitudeOptional;
 	
 	public NetworkTraffic() {}
 
-	public NetworkTraffic(long rxBytes, long txBytes, boolean background,
+	public NetworkTraffic(String appName, long rxBytes, long txBytes, boolean background,
 			double longitude, double latitude) {
 		super();
+		this.appName = appName;
 		this.rxBytes = rxBytes;
 		this.txBytes = txBytes;
 		this.background = background;
-		this.longitude = longitude;
-		this.latitude = latitude;
+		this.longitudeOptional = longitude;
+		this.latitudeOptional = latitude;
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 
 	public long getRxBytes() {
@@ -46,19 +61,19 @@ public class NetworkTraffic extends SensorData {
 		this.background = background;
 	}
 
-	public double getLongitude() {
-		return longitude;
+	public double getLongitudeOptional() {
+		return longitudeOptional;
 	}
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setLongitudeOptional(double longitude) {
+		this.longitudeOptional = longitude;
 	}
 
 	public double getLatitude() {
-		return latitude;
+		return latitudeOptional;
 	}
 
 	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+		this.latitudeOptional = latitude;
 	}
 }
