@@ -69,11 +69,11 @@ public class NetworkTraffic extends SensorData {
 		this.longitudeOptional = longitude;
 	}
 
-	public double getLatitude() {
+	public double getLatitudeOptional() {
 		return latitudeOptional;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitudeOptional(double latitude) {
 		this.latitudeOptional = latitude;
 	}
 }
