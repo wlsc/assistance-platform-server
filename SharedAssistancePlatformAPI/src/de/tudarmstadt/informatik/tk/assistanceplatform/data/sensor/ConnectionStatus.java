@@ -2,7 +2,10 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
 import com.datastax.driver.mapping.annotations.Table;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeNameForAssistance;
+
 @Table(name = "sensor_connectionstatus")
+@TypeNameForAssistance(name = "connection")
 public class ConnectionStatus extends SensorData {
 	public boolean isWifi;
 	public boolean isMobile;
