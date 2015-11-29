@@ -23,6 +23,7 @@ public class ModuleInformationCard {
 	 * Just for serialization purpose!
 	 */
 	public ModuleInformationCard() {
+		timestamp = new Date(0);
 	}
 
 	public ModuleInformationCard(String moduleId, Date timestamp) {
@@ -40,5 +41,9 @@ public class ModuleInformationCard {
 
 	public Date getTimestamp() {
 		return timestamp;
+	}
+	
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 }
