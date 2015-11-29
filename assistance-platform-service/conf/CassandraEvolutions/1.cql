@@ -30,7 +30,7 @@ CREATE TYPE location (
 );
 
 CREATE TABLE sensor_labelaction (
-	UUID text,
+	UUID uuid,
 	startTime timestamp,
 	endTime timestamp,
 	startLocation frozen<location>,
@@ -49,10 +49,9 @@ CREATE TABLE sensor_labelaction (
 	referenceMergeUUID text,
 	device_id bigint,
 	user_id bigint,
-	id uuid,
 	timestamp timestamp,
-	PRIMARY KEY ((user_id, device_id), timestamp)
-) WITH CLUSTERING ORDER BY(timestamp DESC);
+	PRIMARY KEY ((user_id, device_id), UUID)
+);
 
 CREATE TABLE sensor_mobileconnection (
 	carriername text,
