@@ -44,13 +44,13 @@ assistanceplatform:
       ACTIVEMQ_PORT_61616_TCP_ADDR: activemq
       DB_PORT_5432_TCP_ADDR: postgres
 
-spark-master:
+sparkmaster:
   image: gettyimages/spark
-  command: /usr/spark/bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
-  hostname: spark-master
+  command: /usr/spark/bin/spark-class org.apache.spark.deploy.master.Master -h sparkmaster
+  hostname: sparkmaster
   environment:
     SPARK_CONF_DIR: /conf
-    MASTER: spark://spark-master:7077
+    MASTER: spark://sparkmaster:7077
   expose:
     - 7001
     - 7002
@@ -69,10 +69,10 @@ spark-master:
     - ./conf/master:/conf
     - ./data:/tmp/data
 
-spark-worker:
+sparkworker:
   image: gettyimages/spark
-  command: /usr/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
-  hostname: spark-worker
+  command: /usr/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://sparkmaster:7077
+  hostname: sparkworker
   environment:
     SPARK_CONF_DIR: /conf
     SPARK_WORKER_CORES: 4
@@ -80,7 +80,7 @@ spark-worker:
     SPARK_WORKER_PORT: 8881
     SPARK_WORKER_WEBUI_PORT: 8081
   links:
-    - spark-master
+    - sparkmaster
   expose:
     - 7012
     - 7013
