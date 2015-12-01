@@ -222,3 +222,12 @@ CREATE TABLE sensor_powerstate (
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TABLE sensor_ringtone (
+	mode int,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
