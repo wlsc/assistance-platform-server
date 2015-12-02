@@ -8,6 +8,7 @@ GET     /                           controllers.Application.index()
 # User management
 POST	/users/register				controllers.UsersController.register
 POST	/users/login				controllers.UsersController.login
+POST	/users/refresh_token		controllers.UsersController.refreshToken
 GET 	/users/profile/:type		controllers.UsersController.myProfile(type)
 PUT		/users/profile				controllers.UsersController.updateProfile
 

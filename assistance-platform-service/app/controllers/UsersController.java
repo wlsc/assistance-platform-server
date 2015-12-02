@@ -28,6 +28,16 @@ public class UsersController extends RestController {
 		return performActionIfEmailAndPasswordAvailable(this::tryToAuthUser);
 	}
 	
+	@Security.Authenticated(UserAuthenticator.class)
+	public Result refreshToken() {
+		String newToken = generateToken(getUserIdForRequest());
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("token", newToken);
+		
+		return ok(result);
+	}
+	
 	private Result tryToAuthUser(String mail, String password) {
 		if(!User.authenticate(mail, password)) {
 			return badRequestJson(AssistanceAPIErrors.badAuthenciationData);
@@ -62,13 +72,17 @@ public class UsersController extends RestController {
 		});
 		
 		// Create login token
-		String token = Token.buildToken(u.id, 24).token;
+		String token = generateToken(u.id);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("token", token);
 		result.put("device_id", d.id);
 
 		return ok(result);
+	}
+	
+	private String generateToken(long userId) {
+		return Token.buildToken(userId, 24).token;
 	}
 	
 	private Device readDeviceInfos(JsonNode postData) {
