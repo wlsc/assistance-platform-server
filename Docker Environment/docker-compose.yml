@@ -22,7 +22,7 @@ loadbalancer:
     - "443:443"
     - "80:80"
   volumes:
-    - /path/to/certs:/etc/nginx/certs
+    - ./nginx/certs:/etc/nginx/certs
     - /var/run/docker.sock:/tmp/docker.sock:ro
   environment:
     DEFAULT_HOST: assi
@@ -36,7 +36,7 @@ assistanceplatform:
       - postgres:db
       - cassandra
       - activemq
-  hostname: assistanceplatform
+  hostname: assi
   environment:
       VIRTUAL_HOST: assi
       VIRTUAL_PORT: 9000
