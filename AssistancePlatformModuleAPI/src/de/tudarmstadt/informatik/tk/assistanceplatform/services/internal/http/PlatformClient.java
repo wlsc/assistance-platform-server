@@ -7,9 +7,12 @@ import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
+import com.squareup.okhttp.OkHttpClient;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.Client;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
@@ -18,6 +21,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBund
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundleInformation;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.actions.IGetUserActivationsForModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.AssistancePlatformService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.UnsafeOkHttpClientFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleLocalizationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.ModuleRegistrationRequest;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.requests.SendMessageRequest;
@@ -33,8 +37,9 @@ public class PlatformClient implements IGetUserActivationsForModule {
 	private String host;
 
 	public PlatformClient(String urlAndPort) {
+		
 		RestAdapter restAdapter = new RestAdapter.Builder()
-		.setClient(new OkClient())
+		.setClient(new OkClient(UnsafeOkHttpClientFactory.getClient()))
 		.setEndpoint("https://" + urlAndPort).build();
 
 		service = restAdapter.create(AssistancePlatformService.class);
