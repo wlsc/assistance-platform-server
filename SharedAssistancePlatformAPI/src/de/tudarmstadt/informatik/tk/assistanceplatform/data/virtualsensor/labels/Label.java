@@ -2,6 +2,7 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.data.virtualsensor.label
 
 import java.util.Date;
 import java.util.Set;
+import java.util.UUID;
 
 import com.datastax.driver.mapping.annotations.Frozen;
 import com.datastax.driver.mapping.annotations.Table;
@@ -12,7 +13,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeName
 @Table(name = "sensor_labelaction")
 @TypeNameForAssistance(name = "label")
 public class Label extends SensorData {
-	public String UUID;
+	public UUID UUID;
 	public Date startTime;
 	public Date endTime;
 	
@@ -39,11 +40,11 @@ public class Label extends SensorData {
 	public Label() {
 	}
 
-	public String getUUID() {
+	public UUID getUUID() {
 		return UUID;
 	}
 
-	public void setUUID(String uUID) {
+	public void setUUID(UUID uUID) {
 		UUID = uUID;
 	}
 
