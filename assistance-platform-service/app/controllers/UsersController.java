@@ -19,6 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.typesafe.config.ConfigFactory;
 
 import errors.AssistanceAPIErrors;
 
@@ -82,7 +83,9 @@ public class UsersController extends RestController {
 	}
 	
 	private String generateToken(long userId) {
-		return Token.buildToken(userId, 24).token;
+		int validityInHours = ConfigFactory.defaultApplication().getInt("token.validityInHours");
+		
+		return Token.buildToken(userId, validityInHours).token;
 	}
 	
 	private Device readDeviceInfos(JsonNode postData) {
