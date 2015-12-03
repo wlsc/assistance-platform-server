@@ -47,6 +47,7 @@ CREATE TABLE sensor_labelaction (
 	isUserCreated boolean,
 	referenceSplitUUID text,
 	referenceMergeUUID text,
+	id uuid,
 	device_id bigint,
 	user_id bigint,
 	timestamp timestamp,
