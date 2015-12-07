@@ -167,7 +167,7 @@ CREATE TABLE sensor_foreground (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
-	PRIMARY KEY ((user_id, device_id), timestamp)
+	PRIMARY KEY ((user_id, device_id), timestamp, appName)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_call_log (
@@ -231,4 +231,13 @@ CREATE TABLE sensor_ringtone (
 	id uuid,
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TABLE sensor_runningprocess (
+	name text,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp, name)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
