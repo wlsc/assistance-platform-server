@@ -241,3 +241,13 @@ CREATE TABLE sensor_runningprocess (
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp, name)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TABLE sensor_runningtask (
+	name text,
+	stackPosition int,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp, name)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
