@@ -6,6 +6,10 @@ import com.datastax.driver.mapping.annotations.Table;
 public class RunningProcess extends SensorData {
 	public String name;
 
+	public RunningProcess() {
+		super();
+	}
+	
 	public RunningProcess(String name) {
 		super();
 		this.name = name;

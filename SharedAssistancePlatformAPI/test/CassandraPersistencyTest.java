@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -13,7 +14,13 @@ import org.reflections.Reflections;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.annotations.Table;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.Foreground;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.NetworkTraffic;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.RunningProcess;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.RunningService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.RunningTask;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.virtualsensor.labels.Label;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSensorDataPersistency;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
 
@@ -39,8 +46,36 @@ public class CassandraPersistencyTest {
 			System.out.println(c.getSimpleName() + " START");
 			SensorData data = c.newInstance();
 			data.timestamp = Calendar.getInstance().getTime();
+			
+			fillNeededFields(data);
+			
 			persistency.persist(data);
 			System.out.println(c.getSimpleName() + " END");
+		}
+	}
+	
+	private void fillNeededFields(SensorData data) {
+		if(data instanceof Label) {
+			Label dataAsLabel = (Label)data;
+			dataAsLabel.UUID = UUID.randomUUID();
+		} else if(data instanceof RunningService) {
+			RunningService dataAsRunningService = (RunningService)data;
+			dataAsRunningService.packageName = UUID.randomUUID().toString();
+			dataAsRunningService.className = UUID.randomUUID().toString();
+		} else if(data instanceof RunningTask) {
+			RunningTask dataAsRunningTask = (RunningTask)data;
+			dataAsRunningTask.name = UUID.randomUUID().toString();
+		}  else if(data instanceof RunningProcess) {
+			RunningProcess dataAsRunningProcess = (RunningProcess)data;
+			dataAsRunningProcess.name = UUID.randomUUID().toString();
+		}  else if(data instanceof Foreground) {
+			Foreground dataAsForeground = (Foreground)data;
+			dataAsForeground.appName =  UUID.randomUUID().toString();
+			dataAsForeground.packageName = UUID.randomUUID().toString();
+			dataAsForeground.className = UUID.randomUUID().toString();
+		} else if(data instanceof NetworkTraffic) {
+			NetworkTraffic dataAsNetworkTraffic = (NetworkTraffic)data;
+			dataAsNetworkTraffic.appName = UUID.randomUUID().toString();
 		}
 	}
 	
@@ -61,6 +96,9 @@ public class CassandraPersistencyTest {
 				d.setTime(d.getTime() + 1000);
 				SensorData data = c.newInstance();
 				data.timestamp = d;
+				
+				fillNeededFields(data);
+				
 				sensorData.add(data);
 				
 				timestamp = d;

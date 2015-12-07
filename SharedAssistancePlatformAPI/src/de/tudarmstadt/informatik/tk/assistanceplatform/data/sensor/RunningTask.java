@@ -7,6 +7,10 @@ public class RunningTask extends SensorData {
 	public String name;
 	public int stackPosition;
 	
+	public RunningTask() {
+		super();
+	}
+	
 	public RunningTask(String name, int stackPosition) {
 		super();
 		this.name = name;

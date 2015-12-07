@@ -7,6 +7,10 @@ public class RunningService extends SensorData {
 	public String packageName;
 	public String className;
 	
+	public RunningService() {
+		super();
+	}
+	
 	public RunningService(String packageName, String className) {
 		super();
 		this.packageName = packageName;

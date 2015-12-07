@@ -6,6 +6,10 @@ import com.datastax.driver.mapping.annotations.Table;
 public class RingtoneEvent extends SensorData {
 	public int mode;
 
+	public RingtoneEvent() {
+		super();
+	}
+	
 	public RingtoneEvent(int mode) {
 		super();
 		this.mode = mode;
