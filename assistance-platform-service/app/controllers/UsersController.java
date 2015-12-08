@@ -117,6 +117,10 @@ public class UsersController extends RestController {
 			
 			DevicePersistency.createIfNotExists(d);
 		} else { // If an existing ID was passed
+			if(!DevicePersistency.ownedByUser(d.id, d.userId)) {
+				return badRequestJson(AssistanceAPIErrors.deviceIdNotKnown);
+			}
+			
 			if(hasDeviceCreationParameters) { // And a spec was delivered
 				DevicePersistency.update(d);
 			} else if(!DevicePersistency.doesExist(d)) { // If no spec was delivered
