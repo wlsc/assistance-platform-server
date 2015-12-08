@@ -66,6 +66,11 @@ public class Token {
 	}
 	
 	public boolean stillValid() {
-		return System.currentTimeMillis() < expirationTimestamp;
+		return stillValid(System.currentTimeMillis());
+	}
+	
+	public boolean stillValid(long currentTimestamp) {
+		return currentTimestamp < expirationTimestamp;
+	}
 	}
 }
