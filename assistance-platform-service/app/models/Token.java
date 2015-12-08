@@ -72,5 +72,4 @@ public class Token {
 	public boolean stillValid(long currentTimestamp) {
 		return currentTimestamp < expirationTimestamp;
 	}
-	}
 }
