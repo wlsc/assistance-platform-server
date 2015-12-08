@@ -32,7 +32,7 @@ public class UserAuthenticator extends Security.Authenticator {
 		if (token != null) {
 			Token unpackedToken = Token.unpackToken(token);
 			
-			long currentTime = System.currentTimeMillis() + backwardsValidityInMillis();
+			long currentTime = System.currentTimeMillis() - backwardsValidityInMillis();
 
 			if (unpackedToken != null && unpackedToken.stillValid(currentTime)) {
 				return Long.parseLong(unpackedToken.associatedId);
