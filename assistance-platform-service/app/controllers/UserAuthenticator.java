@@ -1,5 +1,7 @@
 package controllers;
 
+import com.typesafe.config.ConfigFactory;
+
 import models.Token;
 import models.User;
 import persistency.UserPersistency;
@@ -29,13 +31,21 @@ public class UserAuthenticator extends Security.Authenticator {
 	public static long getUserIdFromToken(String token) {
 		if (token != null) {
 			Token unpackedToken = Token.unpackToken(token);
+			
+			long currentTime = System.currentTimeMillis() + backwardsValidityInMillis();
 
-			if (unpackedToken != null && unpackedToken.stillValid()) {
+			if (unpackedToken != null && unpackedToken.stillValid(currentTime)) {
 				return Long.parseLong(unpackedToken.associatedId);
 			}
 		}
 
 		return -1;
+	}
+	
+	private static long backwardsValidityInMillis() {
+		int backwardsValidityInHours = ConfigFactory.defaultApplication().getInt("token.backwardsValidityInHours");
+		
+		return (long)backwardsValidityInHours * 60 * 60 * 1000;
 	}
 
 	private User getUser(Http.Context ctx) {
