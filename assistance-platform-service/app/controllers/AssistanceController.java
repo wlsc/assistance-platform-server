@@ -85,7 +85,7 @@ public class AssistanceController extends RestController {
 		String moduleId = moduleIdNode.textValue();
 		
 		// Check if module exists
-		if(ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
+		if(!ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
 			return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
 		}
 
