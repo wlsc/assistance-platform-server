@@ -261,3 +261,12 @@ CREATE TABLE sensor_runningservice (
 	timestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp, packageName, className)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TABLE sensor_powerlevel (
+	percent float,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), timestamp)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
