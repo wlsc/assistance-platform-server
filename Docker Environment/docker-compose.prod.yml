@@ -1,0 +1,25 @@
+postgres:
+  restart: unless-stopped
+  volumes:
+    - /var/lib/assistance/postgresql/data:/var/lib/postgresql/data
+
+activemq:
+  restart: unless-stopped
+
+cassandra:
+  restart: unless-stopped
+  volumes:
+    - ./cassandra:/etc/cassandra
+    - /var/lib/assistance/cassandra:/var/lib/cassandra
+
+loadbalancer:
+    restart: unless-stopped
+
+assistanceplatform:
+    restart: unless-stopped
+
+sparkmaster:
+    restart: unless-stopped
+
+sparkworker:
+    restart: unless-stopped
