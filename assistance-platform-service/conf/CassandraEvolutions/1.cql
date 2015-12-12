@@ -12,6 +12,8 @@ CREATE TABLE sensor_motionactivity (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -21,6 +23,7 @@ CREATE TABLE sensor_loudness (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 CREATE TYPE location (
@@ -51,6 +54,7 @@ CREATE TABLE sensor_labelaction (
 	device_id bigint,
 	user_id bigint,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), UUID)
 );
 
@@ -63,6 +67,7 @@ CREATE TABLE sensor_mobileconnection (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -80,6 +85,7 @@ CREATE TABLE sensor_gyroscope (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -90,6 +96,7 @@ CREATE TABLE sensor_connectionstatus (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -108,6 +115,7 @@ CREATE TABLE sensor_magneticfield (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -124,6 +132,7 @@ CREATE TABLE sensor_position (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -139,6 +148,7 @@ CREATE TABLE sensor_wificonnection (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -151,6 +161,7 @@ CREATE TABLE sensor_accelerometer (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -167,6 +178,7 @@ CREATE TABLE sensor_foreground (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp, appName, packageName, className)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -184,6 +196,7 @@ CREATE TABLE sensor_call_log (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -198,6 +211,7 @@ CREATE TABLE sensor_networktraffic (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp, appName)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -208,6 +222,7 @@ CREATE TABLE sensor_light (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -221,6 +236,7 @@ CREATE TABLE sensor_powerstate (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -230,6 +246,7 @@ CREATE TABLE sensor_ringtone (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -239,6 +256,7 @@ CREATE TABLE sensor_runningprocess (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp, name)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -249,6 +267,7 @@ CREATE TABLE sensor_runningtask (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp, name)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -259,6 +278,7 @@ CREATE TABLE sensor_runningservice (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp, packageName, className)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -268,5 +288,6 @@ CREATE TABLE sensor_powerlevel (
 	user_id bigint,
 	id uuid,
 	timestamp timestamp,
+	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);

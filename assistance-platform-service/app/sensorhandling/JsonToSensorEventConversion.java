@@ -48,6 +48,8 @@ public class JsonToSensorEventConversion {
 			
 			mappedObject.timestamp = Date.from(offsetDateTime.toInstant());
 			
+			mappedObject.serverTimestamp = new Date();
+			
 			return mappedObject;
 		} catch(DateTimeParseException ex) {
 			throw(ex);
