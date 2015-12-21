@@ -5,14 +5,15 @@ package de.tudarmstadt.informatik.tk.assistance.model.client.feedback.enums;
 
 /**
  * @author Wladimir Schmidt (wlsc.dev@gmail.com)
- * @date 06.12.2015
+ * @date 17.12.2015
  */
-public enum TextAlignment {
-  LEFT("left"), CENTER("center"), RIGHT("right");
+public enum FeedbackItemType {
+
+  GROUP("group"), BUTTON("button"), IMAGE("image"), MAP("map"), TEXT("text");
 
   private String value;
 
-  private TextAlignment(String value) {
+  private FeedbackItemType(String value) {
     this.value = value;
   }
 
@@ -20,9 +21,9 @@ public enum TextAlignment {
     return this.value;
   }
 
-  public static TextAlignment getEnum(String enumString) {
+  public static FeedbackItemType getEnum(String enumString) {
 
-    for (TextAlignment entry : TextAlignment.values()) {
+    for (FeedbackItemType entry : FeedbackItemType.values()) {
       if (entry.value.equalsIgnoreCase(enumString)) {
         return entry;
       }
