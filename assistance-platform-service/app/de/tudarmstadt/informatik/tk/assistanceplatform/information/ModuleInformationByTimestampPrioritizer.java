@@ -15,7 +15,7 @@ public class ModuleInformationByTimestampPrioritizer implements
 	@Override
 	public List<ModuleInformationCard> getPrioritizedInformationList(List<ModuleInformationCard> unsortedInformations) {
 		return unsortedInformations.parallelStream()
-				.sorted((c1, c2) -> c2.timestamp.compareTo(c1.timestamp))
+				.sorted((c1, c2) -> c2.getTimestamp().compareTo(c1.getTimestamp()))
 				.collect(Collectors.toList());
 	}
 }
