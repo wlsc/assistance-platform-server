@@ -2,6 +2,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.ContentDto;
+import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.ContentFactory;
+import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.item.ButtonDto;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.IInformationCardCustomizer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationProvider;
@@ -14,7 +17,7 @@ public class ModuleInformationCardPipelineTest {
 		long userId = 1;
 		long deviceId = 1;
 		
-		String testPayload = "test" + userId + "" + deviceId;
+		ContentDto testPayload = ContentFactory.createButton("test", "target");
 		String testId = "testid";	
 		
 		ModuleInformationProvider prov = new ModuleInformationProvider(new IModuleBundleIdProvider() {
@@ -28,13 +31,13 @@ public class ModuleInformationCardPipelineTest {
 			@Override
 			public void customizeModuleInformationCard(ModuleInformationCard card,
 					long userId, long deviceId) {
-				card.payload = testPayload;
+				card.setContent(ContentFactory.createButton("test", "target"));
 			}
 		});
 		
 		ModuleInformationCard receivedCard = prov.currentModuleInformationForUserAndDevice(userId, deviceId);
 		
-		assertTrue(receivedCard.payload.equals(testPayload));
+		assertTrue(receivedCard.getContent().toString().equals(testPayload.toString()));
 		assertTrue(receivedCard.getModuleId().equals(testId));		
 	}
 }

@@ -20,7 +20,9 @@ public class CurrentInformationService {
 	public String current(@PathParam("userid") long userId, @PathParam("deviceid") long deviceId ) {
 		ModuleInformationCard card = getCurrentInformationCard(userId, deviceId);
 		
-		return new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create().toJson(card);
+		String result = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create().toJson(card);
+
+		return result;
 	}
 	
 	private ModuleInformationCard getCurrentInformationCard(long userId, long deviceId) {
