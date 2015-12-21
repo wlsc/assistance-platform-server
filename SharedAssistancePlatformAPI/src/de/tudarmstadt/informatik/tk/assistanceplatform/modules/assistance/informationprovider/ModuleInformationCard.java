@@ -4,6 +4,8 @@ import java.util.Date;
 
 import com.google.gson.annotations.Expose;
 
+import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.ContentDto;
+
 /**
  * POJO for providing the current (worthy) information for a user provided by a
  * module.
@@ -15,9 +17,9 @@ public class ModuleInformationCard {
 	@Expose
 	private String moduleId;
 
-	public Date timestamp;
+	private Date timestamp;
 
-	public String payload;
+	private ContentDto content;
 
 	/**
 	 * Just for serialization purpose!
@@ -45,5 +47,13 @@ public class ModuleInformationCard {
 	
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+	
+	public ContentDto getContent() {
+		return this.content;
+	}
+	
+	public void setContent(ContentDto content) {
+		this.content = content;
 	}
 }
