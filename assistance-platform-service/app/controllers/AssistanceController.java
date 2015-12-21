@@ -1,6 +1,8 @@
 package controllers;
 
+import java.text.DateFormat;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.function.Predicate;
 
 import messaging.JmsMessagingServiceFactory;
@@ -19,6 +21,7 @@ import play.mvc.Security;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.ClientFeedbackDto;
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.CurrentModuleInformationAggregator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.IModuleInformationPrioritizer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.ModuleInformationByTimestampPrioritizer;
@@ -176,7 +179,19 @@ public class AssistanceController extends RestController {
 		}
 
 		return cardPromise.map((prioritizedCards) -> {
-			JsonNode jsonResult = Json.toJson(prioritizedCards);
+			// Map to Client format
+			TimeZone tz = TimeZone.getTimeZone("UTC");
+			DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+			df.setTimeZone(tz);
+			
+			ClientFeedbackDto[] feedbackDTOs = prioritizedCards.stream().map((mic) -> {
+				String created = df.format(mic.getTimestamp());
+
+				return new ClientFeedbackDto(mic.getModuleId(), mic.getContent(),created);
+			}).toArray(ClientFeedbackDto[]::new);
+			// End mapping to client format
+			
+			JsonNode jsonResult = Json.toJson(feedbackDTOs);
 
 			return ok(jsonResult);
 		});
