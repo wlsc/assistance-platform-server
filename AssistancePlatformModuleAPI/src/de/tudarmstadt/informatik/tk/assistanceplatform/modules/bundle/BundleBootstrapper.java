@@ -1,5 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle;
 
+import org.apache.log4j.Logger;
+
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeperFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
@@ -38,6 +40,9 @@ public class BundleBootstrapper {
 		PlatformClient client = PlatformClientFactory
 				.createInstance(platformUrlAndPort);
 		
+		registerBundle(client, bundle);
+	
+		
 		// Prepare Messaging Service and User Activation List
 		MessagingService ms = createBasicMessagingService(bundle);
 				
@@ -60,6 +65,17 @@ public class BundleBootstrapper {
 		// Finally start the bundle
 		bundle.bootstrapBundle(ms, activationChecker, client, actionRunner,
 				sparkService);
+	}
+	
+	private static void registerBundle(PlatformClient platformClient, ModuleBundle bundle) {
+		ModuleBundleRegistrator registrator = new ModuleBundleRegistrator(bundle,
+				platformClient);
+
+		registrator.startPeriodicRegistration();
+		
+		Logger.getLogger(BundleBootstrapper.class).warn("Waiting 10secs to propagate module registration.");
+		long start = System.currentTimeMillis();
+		while(System.currentTimeMillis() - start < 10000);
 	}
 
 	private static MessagingService createBasicMessagingService(ModuleBundle bundle) {

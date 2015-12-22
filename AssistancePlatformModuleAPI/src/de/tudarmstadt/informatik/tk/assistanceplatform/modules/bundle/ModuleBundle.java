@@ -60,7 +60,6 @@ public abstract class ModuleBundle implements IModuleBundleIdProvider {
 		// Initialize and run the contained modules
 		this.containedModules = initializeContainedModules();
 		this.startContainedModules(messagingService);
-		registerBundle();
 	}
 
 	private void startContainedModules(IMessagingService messagingService) {
@@ -83,13 +82,6 @@ public abstract class ModuleBundle implements IModuleBundleIdProvider {
 				m.start();
 			});
 		}
-	}
-
-	private void registerBundle() {
-		ModuleBundleRegistrator registrator = new ModuleBundleRegistrator(this,
-				platformClient);
-
-		registrator.startPeriodicRegistration();
 	}
 
 	public IUserActivationChecker userActivationListChecker() {
