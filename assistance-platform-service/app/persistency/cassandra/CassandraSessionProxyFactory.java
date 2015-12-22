@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import persistency.cassandra.config.CassandraConfig;
+import play.Logger;
 import play.Play;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
 

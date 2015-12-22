@@ -1,20 +1,53 @@
 import java.util.concurrent.TimeUnit;
 
+import com.datastax.driver.core.exceptions.AuthenticationException;
+import com.datastax.driver.core.exceptions.NoHostAvailableException;
+
 import periodic.ModuleAliveChecker;
+import persistency.cassandra.CassandraSessionProxyFactory;
+import persistency.cassandra.ConfiguredSensorPersistencyProxy;
 import play.Application;
 import play.GlobalSettings;
+import play.Logger;
 import play.libs.Akka;
 import play.libs.F;
 import play.libs.F.Promise;
 import play.mvc.Http.RequestHeader;
 import scala.concurrent.duration.Duration;
 import controllers.RestController;
+import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
 import errors.APIError;
 
 public class Global extends GlobalSettings {
 	@Override
 	public void onStart(Application app) {
 		schedulePeriodicModuleCheck();
+		
+		while(proxySessionCheck() == null);
+	}
+	
+	private CassandraSessionProxy proxySessionCheck() {
+		CassandraSessionProxy proxy = null;
+
+		try {
+			proxy = CassandraSessionProxyFactory.getSessionProxy();
+		} catch(NoHostAvailableException e) {
+			Logger.warn("Cassandra not up, waiting 2 seconds... ");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		} catch(AuthenticationException e) {
+			Logger.warn("Waiting 2secs for Cassandra to setup auth... ");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		return proxy;
 	}
 
 	private void schedulePeriodicModuleCheck() {
