@@ -40,6 +40,7 @@ public class UserFilteredMessagingServiceDecorator extends MessagingService {
 	private <T> boolean shouldBlockPassthroughOfEvent(T event) {
 		if(event instanceof UserEvent) {
 			UserEvent dataAsUserEvent = (UserEvent)event;
+			
 			if(!activationChecker.isActivatedForUser(dataAsUserEvent.userId)) {
 				return true;
 			}

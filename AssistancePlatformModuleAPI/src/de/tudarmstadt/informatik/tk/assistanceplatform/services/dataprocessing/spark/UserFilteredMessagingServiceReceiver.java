@@ -2,7 +2,6 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeperFactory;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
 

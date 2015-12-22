@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.virtualsensor.labels;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -12,7 +13,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeName
 
 @Table(name = "sensor_labelaction")
 @TypeNameForAssistance(name = "label")
-public class Label extends SensorData {
+public class Label extends SensorData implements Serializable {
 	public UUID UUID;
 	public Date startTime;
 	public Date endTime;

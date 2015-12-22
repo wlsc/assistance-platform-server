@@ -1,10 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_networktraffic")
-public class NetworkTraffic extends SensorData {
+public class NetworkTraffic extends SensorData implements Serializable {
 	public String appName;
 	public long rxBytes;
 	public long txBytes;

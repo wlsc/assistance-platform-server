@@ -1,10 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_accelerometer")
-public class Accelerometer extends SensorData {
+public class Accelerometer extends SensorData implements Serializable {
     public double x;
     public double y;
     public double z;

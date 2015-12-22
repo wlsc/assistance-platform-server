@@ -1,12 +1,13 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_gyroscope")
-public class Gyroscope extends SensorData {
+public class Gyroscope extends SensorData implements Serializable {
 	public double x;
     public double y;
     public double z;

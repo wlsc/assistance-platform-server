@@ -1,9 +1,11 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 
 @Table(name = "sensor_loudness")
-public class Loudness extends SensorData {
+public class Loudness extends SensorData implements Serializable {
 	public float loudness;
 	
 	public Loudness() {

@@ -1,12 +1,13 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_position")
-public class Position extends SensorData {
+public class Position extends SensorData implements Serializable {
 	public double latitude;
 	public double longitude;
 	public double accuracyHorizontal;

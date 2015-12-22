@@ -1,10 +1,13 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.platform;
 
+import org.apache.log4j.Logger;
+
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.actions.IGetUserActivationsForModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channel;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationList;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.UserActivationListFactory;

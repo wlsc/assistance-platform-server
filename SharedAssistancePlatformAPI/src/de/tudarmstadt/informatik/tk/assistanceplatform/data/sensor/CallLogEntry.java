@@ -1,12 +1,14 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeNameForAssistance;
 
 @Table(name = "sensor_call_log")
 @TypeNameForAssistance(name = "call_log")
-public class CallLogEntry extends SensorData {
+public class CallLogEntry extends SensorData implements Serializable {
 	public long callId;
 	public int callType;
 	public String name;

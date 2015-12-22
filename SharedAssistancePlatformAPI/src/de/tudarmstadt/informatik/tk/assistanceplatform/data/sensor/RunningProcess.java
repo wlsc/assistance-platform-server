@@ -1,9 +1,11 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 
 @Table(name = "sensor_runningprocess")
-public class RunningProcess extends SensorData {
+public class RunningProcess extends SensorData implements Serializable {
 	public String name;
 
 	public RunningProcess() {

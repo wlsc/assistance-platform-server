@@ -1,9 +1,11 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 
 @Table(name = "sensor_foreground")
-public class Foreground extends SensorData {
+public class Foreground extends SensorData  implements Serializable{
 	public String packageName;
 	public String appName;
 	public String className;

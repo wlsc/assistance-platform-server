@@ -1,10 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_powerstate")
-public class PowerState extends SensorData {
+public class PowerState extends SensorData implements Serializable {
 	public boolean isCharging;
 	public float percent;
 	

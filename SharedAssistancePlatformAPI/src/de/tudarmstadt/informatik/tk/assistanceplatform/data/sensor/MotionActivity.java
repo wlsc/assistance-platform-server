@@ -1,10 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_motionactivity")
-public class MotionActivity extends SensorData {	
+public class MotionActivity extends SensorData implements Serializable {	
 	public int walking;
 	public int running;
 	public int driving;

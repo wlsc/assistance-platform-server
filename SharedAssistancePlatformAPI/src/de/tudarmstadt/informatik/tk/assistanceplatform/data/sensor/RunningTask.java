@@ -1,9 +1,11 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 
 @Table(name = "sensor_runningtask")
-public class RunningTask extends SensorData {
+public class RunningTask extends SensorData implements Serializable {
 	public String name;
 	public int stackPosition;
 	

@@ -1,10 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_wificonnection")
-public class WifiConnection extends SensorData {
+public class WifiConnection extends SensorData implements Serializable {
 	public String ssid;
 	public String bssid;
 	

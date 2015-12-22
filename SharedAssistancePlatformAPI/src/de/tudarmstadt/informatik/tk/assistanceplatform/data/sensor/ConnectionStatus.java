@@ -1,12 +1,14 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeNameForAssistance;
 
 @Table(name = "sensor_connectionstatus")
 @TypeNameForAssistance(name = "connection")
-public class ConnectionStatus extends SensorData {
+public class ConnectionStatus extends SensorData  implements Serializable{
 	public boolean isWifi;
 	public boolean isMobile;
 	

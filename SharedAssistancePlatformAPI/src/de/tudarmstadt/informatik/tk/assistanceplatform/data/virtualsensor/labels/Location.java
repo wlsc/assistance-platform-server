@@ -1,9 +1,11 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.virtualsensor.labels;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.UDT;
 
 @UDT(name = "location")
-public class Location {
+public class Location implements Serializable {
 	public double longitude;
 	public double latitude;
 	public double accuracy;

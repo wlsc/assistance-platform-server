@@ -1,10 +1,12 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor;
 
+import java.io.Serializable;
+
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_mobileconnection")
-public class MobileConnection extends SensorData {
+public class MobileConnection extends SensorData implements Serializable {
 	public String carriername;
 	public String mobileCountryCode;
 	public String mobileNetworkCode;

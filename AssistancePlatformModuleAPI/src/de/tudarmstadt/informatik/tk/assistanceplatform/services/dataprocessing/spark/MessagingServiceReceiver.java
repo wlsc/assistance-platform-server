@@ -8,7 +8,6 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channe
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.ConfiguredJmsServiceFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Consumer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
 public class MessagingServiceReceiver<T> extends Receiver<T> {
 	/**
