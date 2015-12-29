@@ -13,7 +13,6 @@ CREATE TABLE sensor_motionactivity (
 	id uuid,
 	timestamp timestamp,
 	servertimestamp timestamp,
-	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
@@ -291,3 +290,49 @@ CREATE TABLE sensor_powerlevel (
 	servertimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TYPE alarm (
+	type int,
+	defaultOffset boolean,
+	offsetOptional int,
+	absoluteDateOptional text,
+	proximityOptional int,
+	locationTitleOptional text,
+	locationLatitudeOptional double,
+	locationLongitudeOptional double,
+	locationRadiusOptional double
+);
+
+CREATE TABLE sensor_calendar (
+	eventId text,
+	calendarId text,
+	allDay boolean,
+	availability int,
+	description text,
+	startDate timestamp,
+	endDate timestamp,
+	location text,
+	status int,
+	title text,
+	recurrenceRule text,
+	alarms set<frozen<alarm>>,
+	isDeleted boolean,
+	created text,
+	URLOptional text,
+	isDetachedOptional boolean,
+	lastModifiedDateOptional text,
+	durationOptional text,
+	originalAllDayOptional boolean,
+	originalIdOptional text,
+	originalInstanceTimeOptional bigint,
+	recurrenceExceptionDateOptional text,
+	recurrenceExceptionRuleOptional text,
+	lastDateOptional bigint,
+	recurrenceDateOptional text,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	serverTimestamp timestamp,
+	PRIMARY KEY ((user_id, device_id), eventId, calendarId)
+);
