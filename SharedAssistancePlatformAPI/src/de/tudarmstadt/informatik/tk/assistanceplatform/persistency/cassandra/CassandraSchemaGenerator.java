@@ -68,7 +68,7 @@ public class CassandraSchemaGenerator {
 		String schemaName = extractSchemaName(c);
 		
 		if(schemaName == null) {
-			throw new Exception("No table name defined for type / table: " + schemaName);
+			throw new Exception("No table name defined for type / table: " + c.getName());
 		}
 		
 		Field[] fields = c.getFields();
@@ -207,6 +207,10 @@ public class CassandraSchemaGenerator {
 			case "long":
 				// TODO: Just supports signed longs here, could be quite confusing!
 				return "bigint";
+			case "Long":
+				return "bigint";
+			case "Integer":
+				return "int";
 			case "List<String>":
 				return "list<text>";
 			case "Set<String>":
