@@ -8,6 +8,8 @@ import com.datastax.driver.mapping.annotations.Table;
 public class PowerLevel extends SensorData implements Serializable {
 	public float percent;
 
+	public PowerLevel() {}
+	
 	public PowerLevel(float percent) {
 		super();
 		this.percent = percent;
