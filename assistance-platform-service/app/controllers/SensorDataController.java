@@ -9,11 +9,10 @@ import messaging.JmsMessagingServiceFactory;
 import persistency.DevicePersistency;
 import persistency.cassandra.ConfiguredSensorPersistencyProxy;
 import play.Logger;
-import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
-import play.mvc.WebSocket;
 import sensorhandling.JsonToSensorEventConversion;
+import sensorhandling.preprocessing.SpecialEventPreprocessor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,10 +24,12 @@ import errors.APIErrorException;
 import errors.AssistanceAPIErrors;
 
 public class SensorDataController extends RestController {
-	private MessagingService ms = JmsMessagingServiceFactory
+	private final MessagingService ms = JmsMessagingServiceFactory
 			.createServiceFromConfig();
-	private ConfiguredSensorPersistencyProxy sensorPersistencyProxy = new ConfiguredSensorPersistencyProxy();
-	private JsonToSensorEventConversion jsonToEvent = new JsonToSensorEventConversion();
+	private final ConfiguredSensorPersistencyProxy sensorPersistencyProxy = new ConfiguredSensorPersistencyProxy();
+	private final JsonToSensorEventConversion jsonToEvent = new JsonToSensorEventConversion();
+	private final SpecialEventPreprocessor eventPreprocessor = new SpecialEventPreprocessor();
+	
 
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result upload() {
@@ -149,12 +150,14 @@ public class SensorDataController extends RestController {
 		Class<T> classType = jsonToEvent.mapTypeToClass(type);
 
 		try {
+			// Map json to class
 			T eventObject = jsonToEvent.mapJson(reading, classType);
-
 			setDeviceIdForSensorReading(deviceID, eventObject);
-
 			setUserIdForSensorReading(userID, eventObject);
-
+			
+			// Preprocess special events
+			eventObject = eventPreprocessor.preprocess(eventObject);
+			
 			return eventObject;
 		} catch (DateTimeParseException e) {
 			throw (e);
