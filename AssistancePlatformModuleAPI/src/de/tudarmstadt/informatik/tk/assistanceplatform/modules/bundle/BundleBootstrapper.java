@@ -15,6 +15,8 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Config
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.UserFilteredMessagingServiceDecorator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServer;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.ModuleRestServerFactory;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
 /**
@@ -35,7 +37,10 @@ public class BundleBootstrapper {
 	 *            The url of the platform
 	 */
 	public static void bootstrap(ModuleBundle bundle,
-			String platformUrlAndPort, boolean localMode) {
+			int restPort, String platformUrlAndPort, boolean localMode) {
+		// Prepare Assistance Rest Server
+		ModuleRestServer server = ModuleRestServerFactory.createInstance(restPort);
+		
 		// Prepare platform client
 		PlatformClient client = PlatformClientFactory
 				.createInstance(platformUrlAndPort);
@@ -51,7 +56,7 @@ public class BundleBootstrapper {
 
 		IUserActivationChecker activationChecker = activationsKeeper
 				.getUserActivationChecker();
-
+		
 		ms = new UserFilteredMessagingServiceDecorator(ms, activationChecker);
 
 		// Prepare Action runner
@@ -109,7 +114,7 @@ public class BundleBootstrapper {
 	 *            The bundle that shall be started
 	 */
 	public static void bootstrap(ModuleBundle bundle) {
-		bootstrap(bundle, PlatformClientFactory.defaultPlatformUrlAndPort,
+		bootstrap(bundle, ModuleRestServer.DEFAULT_PORT,  PlatformClientFactory.defaultPlatformUrlAndPort,
 				false);
 	}
 }

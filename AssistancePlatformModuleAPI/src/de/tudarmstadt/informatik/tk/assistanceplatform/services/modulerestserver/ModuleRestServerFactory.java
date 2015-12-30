@@ -5,8 +5,12 @@ public class ModuleRestServerFactory {
 	private static ModuleRestServer instance;
 	
 	public static ModuleRestServer getInstance() {
+		return instance;
+	}
+	
+	public static ModuleRestServer createInstance(int port) {
 		if (instance == null) {
-			return new ModuleRestServer();
+			instance = new ModuleRestServer(port);
 		}
 
 		return instance;

@@ -17,13 +17,17 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver
  *
  */
 public class ModuleRestServer {
-	private static final int DEFAULT_PORT = 21314;
+	public static final int DEFAULT_PORT = 21314;
 	
 	private Server server;
 	private ServletContextHandler context;
 
 	public ModuleRestServer() {
-		server = new Server(DEFAULT_PORT);
+		this(DEFAULT_PORT);
+	}
+	
+	public ModuleRestServer(int port) {
+		server = new Server(port);
 		
 		context = new ServletContextHandler();
 		context.setContextPath("/");
