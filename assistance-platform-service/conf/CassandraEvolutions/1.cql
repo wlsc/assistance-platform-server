@@ -336,3 +336,15 @@ CREATE TABLE sensor_calendar (
 	serverTimestamp timestamp,
 	PRIMARY KEY ((user_id, device_id), eventId, calendarId)
 );
+
+CREATE TABLE sensor_facebooktoken (
+	oauthToken text,
+	permissions set<text>,
+	declinedPermissions set<text>,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	serverTimestamp timestamp,
+	PRIMARY KEY (user_id, timestamp)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
