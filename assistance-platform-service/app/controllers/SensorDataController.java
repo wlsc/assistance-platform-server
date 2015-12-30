@@ -175,22 +175,4 @@ public class SensorDataController extends RestController {
 			Class<T> targetClass) {
 		return ms.channel(targetClass).publish(reading);
 	}
-
-	private String extractToken(JsonNode json) {
-		JsonNode tokenNode = json.get("token");
-
-		if (tokenNode == null) {
-			return null;
-		}
-
-		return tokenNode.asText();
-	}
-
-	private void handleInvalidToken(WebSocket.Out<JsonNode> out) {
-		JsonNode result = Json
-				.toJson(AssistanceAPIErrors.invalidOrExpiredToken);
-
-		out.write(result);
-		out.close();
-	}
 }
