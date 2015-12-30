@@ -19,7 +19,6 @@ POST	/devices/register_for_messaging	controllers.DevicesController.registerDevic
 POST	/devices/set_user_defined_name	controllers.DevicesController.setUserDefinedName
 
 # Sensor data
-GET		/sensordata/socket			controllers.SensorDataController.socket
 POST	/sensordata/upload			controllers.SensorDataController.upload
 
 # Assistance
