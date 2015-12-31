@@ -113,6 +113,10 @@ public class SensorDataController extends RestController {
 				Logger.warn("Failure on processing created timestamp", e);
 				throw new APIErrorException(
 						AssistanceAPIErrors.invalidParametersGeneral);
+			} catch(Exception e) {
+				Logger.warn("Failure on processing json to event conversion", e);
+				throw new APIErrorException(
+						AssistanceAPIErrors.unknownInternalServerError);
 			}
 		}
 
@@ -145,7 +149,7 @@ public class SensorDataController extends RestController {
 
 	private <T extends SensorData> SensorData extractSensorData(String type,
 			long deviceID, long userID, JsonNode reading)
-			throws JsonProcessingException, DateTimeParseException {
+			throws Exception {
 
 		Class<T> classType = jsonToEvent.mapTypeToClass(type);
 
@@ -157,6 +161,10 @@ public class SensorDataController extends RestController {
 			
 			// Preprocess special events
 			eventObject = eventPreprocessor.preprocess(eventObject);
+			
+			if(eventObject == null) {
+				throw(new Exception("Failed preprocessing event"));
+			}
 			
 			return eventObject;
 		} catch (DateTimeParseException e) {

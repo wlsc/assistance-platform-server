@@ -1,10 +1,11 @@
 package sensorhandling.preprocessing;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import scala.actors.threadpool.Arrays;
+import sensorhandling.tucan.TucanTokenEventPreprocessor;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 
 /**
@@ -46,6 +47,12 @@ public class SpecialEventPreprocessor {
 			return data;
 		}
 
-		return p.preprocessEvent(data);
+		try {
+			return (T) p.preprocessEvent(data);
+		} catch (Exception e) {
+			play.Logger.error("Preprossing with " + p + " failed", e);
+			
+			return null;
+		}
 	}
 }

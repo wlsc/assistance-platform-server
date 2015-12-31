@@ -11,5 +11,5 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 public interface IEventPreprocessor<T extends SensorData> {
 	public Class<T> eventClassResponsibleFor();
 	
-	public T preprocessEvent(T event); 
+	public T preprocessEvent(T event) throws Exception; 
 }

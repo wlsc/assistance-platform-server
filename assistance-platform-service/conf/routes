@@ -43,6 +43,7 @@ GET		/modules/activations/:module controllers.ModulesController.activations(modu
 GET		/modules/services/database/:module	 controllers.ModuleServicesController.database(module)
 GET		/modules/services/spark/:module	 controllers.ModuleServicesController.spark(module)
 GET		/modules/services/activemq/:module	 controllers.ModuleServicesController.activemq(module)
+GET		/modules/services/tucan/:module	 controllers.ModuleServicesController.tucan(module)
 
 # Client Action API (not intended for client usage!)
 POST 	/action/sendmessage			controllers.ClientActionController.sendMessageToDevices

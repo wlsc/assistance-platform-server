@@ -348,3 +348,14 @@ CREATE TABLE sensor_facebooktoken (
 	serverTimestamp timestamp,
 	PRIMARY KEY (user_id, timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TABLE sensor_tucancredentials (
+	username text,
+	password text,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	serverTimestamp timestamp,
+	PRIMARY KEY (user_id, timestamp)
+) WITH CLUSTERING ORDER BY(timestamp DESC);
