@@ -12,7 +12,7 @@ public class TucanTokenEventPreprocessor implements IEventPreprocessor<TucanCred
 	}
 
 	@Override
-	public TucanCredentials preprocessEvent(TucanCredentials event) {
+	public TucanCredentials preprocessEvent(TucanCredentials event) throws Exception {
 		return TucanCredentialSecurity.encrpytCredentials(event, TucanSecurityConfig.getTucanSecret());
 	}
 
