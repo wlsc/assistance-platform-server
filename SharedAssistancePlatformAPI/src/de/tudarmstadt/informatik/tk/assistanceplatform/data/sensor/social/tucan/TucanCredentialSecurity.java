@@ -15,7 +15,12 @@ public class TucanCredentialSecurity {
 		
 		String encryptedPassword = AesEncryption.encrypt(clearText.password, secret);
 		
-		return new TucanCredentials(encryptedUsername, encryptedPassword);
+		// TODO: Maybe do proper cloning?
+		TucanCredentials result = clearText;
+		result.username = encryptedUsername;
+		result.password = encryptedPassword;
+		
+		return result;
 	}
 
 	public static TucanCredentials decrpytCredentials(
@@ -24,6 +29,11 @@ public class TucanCredentialSecurity {
 		
 		String decryptedPassword = AesEncryption.decrypt(cryptedCredentials.password, secret);
 		
-		return new TucanCredentials(decryptedUsername, decryptedPassword);
+		// TODO: Maybe do proper cloning?
+		TucanCredentials result = cryptedCredentials;
+		result.username = decryptedUsername;
+		result.password = decryptedPassword;
+		
+		return result;
 	}
 }

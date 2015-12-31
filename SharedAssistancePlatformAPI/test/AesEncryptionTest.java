@@ -32,4 +32,19 @@ public class AesEncryptionTest {
 		assertEquals( AesEncryption.decrypt(AesEncryption.encrypt(longdata, secret), secret), longdata );
 		assertEquals( AesEncryption.decrypt(AesEncryption.encrypt(longdata, longdata), longdata), longdata );
 	}
+	
+	@Test
+	public void decrypttest() throws Exception {
+		String data = "hR9WEkRH0We8jenKD2x7hQ==";
+		
+		String longdata = data;
+		
+		for(int i = 0; i < 1000; i++) {
+			longdata += data;
+		}
+		
+		String secret = "9#WcTaken=d3P=?h!G@=dpLY_F_fVTt=yn=ACs_4-P7yS+H&MeJ^B&yWneCy_==kbNggeTBtc9#6MHD2cH$5Y=aPcX!ZmH##%fQTmttn^BSD!Z$!NNA&NXLbPz3DqEab";
+		
+		assertEquals("user", AesEncryption.decrypt(data, secret ));
+	}
 }
