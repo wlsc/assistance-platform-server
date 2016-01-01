@@ -359,3 +359,40 @@ CREATE TABLE sensor_tucancredentials (
 	serverTimestamp timestamp,
 	PRIMARY KEY (user_id, timestamp)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
+
+CREATE TYPE labeledvalue (
+	label text,
+	value text
+);
+
+CREATE TABLE sensor_contact (
+	globalContactId text,
+	givenName text,
+	familyName text,
+	note text,
+	isDeleted boolean,
+	displayNameOptional text,
+	starredOptional int,
+	lastTimeContactedOptional int,
+	timesContactedOptional int,
+	contactTypeOptional int,
+	namePrefixOptional text,
+	middleNameOptional text,
+	previousFamilyNameOptional text,
+	nameSuffixOptional text,
+	nicknameOptional text,
+	phoneticGivenNameOptional text,
+	phoneticMiddleNameOptional text,
+	phoneticFamilyNameOptional text,
+	organizationNameOptional text,
+	departmentNameOptional text,
+	jobTitleOptional text,
+	phoneNumbersOptional set<frozen<labeledvalue>>,
+	emailAddressesOptional set<frozen<labeledvalue>>,
+	device_id bigint,
+	user_id bigint,
+	id uuid,
+	timestamp timestamp,
+	serverTimestamp timestamp,
+	PRIMARY KEY ((user_id, globalContactId))
+);

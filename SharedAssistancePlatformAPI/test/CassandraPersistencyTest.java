@@ -20,6 +20,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.RunningProces
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.RunningService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.RunningTask;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
+import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.contact.Contact;
 import de.tudarmstadt.informatik.tk.assistanceplatform.data.virtualsensor.labels.Label;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSensorDataPersistency;
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
@@ -82,6 +83,9 @@ public class CassandraPersistencyTest {
 		} else if (data instanceof de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.calendar.Calendar) {
 			de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.calendar.Calendar dataAsCalendar = (de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.calendar.Calendar) data;
 			dataAsCalendar.eventId = dataAsCalendar.calendarId = "abc";
+		}  else if (data instanceof Contact) {
+			Contact dataAsContact = (Contact)data;
+			dataAsContact.globalContactId = "123";
 		}
 	}
 
