@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.google.gson.annotations.Expose;
 
-import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.ContentDto;
+import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.content.ContentDto;
 
 /**
  * POJO for providing the current (worthy) information for a user provided by a

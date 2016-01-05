@@ -2,9 +2,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.ContentDto;
 import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.ContentFactory;
-import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.item.ButtonDto;
+import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.content.ContentDto;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.IInformationCardCustomizer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationProvider;

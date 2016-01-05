@@ -21,7 +21,7 @@ import play.mvc.Security;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.ClientFeedbackDto;
+import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.content.ClientFeedbackDto;
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.CurrentModuleInformationAggregator;
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.IModuleInformationPrioritizer;
 import de.tudarmstadt.informatik.tk.assistanceplatform.information.ModuleInformationByTimestampPrioritizer;
