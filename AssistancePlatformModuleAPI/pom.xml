@@ -87,4 +87,16 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://46.101.151.208:10000/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://46.101.151.208:10000/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
