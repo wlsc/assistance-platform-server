@@ -7,30 +7,40 @@ public class Capability {
 	public String type;
 	
 	/**
-	 * The frequency of needed event readings of this type (per second). Readings can be cached on the client.
+	 * The maximum interval between event readings of this type (in seconds). Readings can be cached on the client. (in seconds) double; 1.0 = 1 measurement per second, 60.0 = 1 measurement per minute
 	 */
-	public double collection_frequency;
+	public double collection_interval;
 	
 	/**
-	 * The frequency in which at least {@link #min_required_readings_on_update} have to be sent to the platform.
+	 * The maximum interval in seconds after which the sensor readings have to be sent to the platform. -1.0 means that that the readings are only sent when the device is connected via WiFi or hasn't sent any updates for 24 hours. 
 	 */
-	public double required_update_frequency;
+	public double update_interval;
 	
 	/**
-	 * The minimum number that has to be sent in {@link #required_update_frequency} so the module can keep up with processing.
+	 * The required accuracy (currently only needed for iOS Positions)
 	 */
-	public int min_required_readings_on_update;
+	public int accuracy;
+	
+	/**
+	 * The permissions to request from e.g. facebook for this module. e.g. ["email", "public_profile", "user_friends"] 
+	 */
+	public String[] permissions;
 
 	public Capability() {
 	}
+	
+	public Capability(String type, double collection_interval,
+			double update_interval) {
+		this(type, collection_interval, update_interval, -1, null);
+	}
 
-	public Capability(String type, double collection_frequency,
-			double required_update_frequency,
-			int min_required_readings_on_update) {
+	public Capability(String type, double collection_interval,
+			double update_interval, int accuracy, String[] permissions) {
 		super();
 		this.type = type;
-		this.collection_frequency = collection_frequency;
-		this.required_update_frequency = required_update_frequency;
-		this.min_required_readings_on_update = min_required_readings_on_update;
+		this.collection_interval = collection_interval;
+		this.update_interval = update_interval;
+		this.accuracy = accuracy;
+		this.permissions = permissions;
 	}
 }

@@ -23,11 +23,11 @@ public class ActiveAssistanceModuleTest {
     			String testDescrShort = "Test descr short";
     			String testDescrLong = "Test descr long";
     			Capability[] requiredCaps = new Capability[] { 
-    					new Capability("cap_1", 1, 0.5, 1),
-    					new Capability("cap_2", 0.1, 0.05, 1)
+    					new Capability("cap_1", 1, 2),
+    					new Capability("cap_2", 10, 0.05)
     			};
     			Capability[] optCaps = new Capability[] {
-    					new Capability("cap_3", 0.01, 0.005, 2)
+    					new Capability("cap_3", 0.01, 0.005)
     			};
     			String copyright = "Test Copyright";
     			String administratorEmail = "bennet@test.de";
@@ -57,11 +57,11 @@ public class ActiveAssistanceModuleTest {
     			String testDescrShort = "Test descr short";
     			String testDescrLong = "Test descr long";
     			Capability[] requiredCaps = new Capability[] { 
-    					new Capability("cap_1", 1, 0.5, 1),
-    					new Capability("cap_2", 0.1, 0.005, 1)
+    					new Capability("cap_1", 1, 0.5, 1, new String[] { "a", "b", "c"}),
+    					new Capability("cap_2", 0.1, 0.005)
     			};
     			Capability[] optCaps = new Capability[] {
-    					new Capability("cap_3", 0.01, 0.005, 2)
+    					new Capability("cap_3", 0.01, 0.005)
     			};
     			String copyright = "Test Copyright";
     			String administratorEmail = "bennet@test.de";
@@ -100,11 +100,11 @@ public class ActiveAssistanceModuleTest {
 	    			String testDescrShort = "Test descr short"+i;
 	    			String testDescrLong = "Test descr long"+i;
 	    			Capability[] requiredCaps = new Capability[] { 
-	    					new Capability("cap_1" +i , 1, 0.5, 1),
-	    					new Capability("cap_2" +i, 0.1, 0.005, 1)
+	    					new Capability("cap_1" +i , 1, 0.5),
+	    					new Capability("cap_2" +i, 0.1, 0.005)
 	    			};
 	    			Capability[] optCaps = new Capability[] {
-	    					new Capability("cap_3" +i, 0.01, 0.005, 1)
+	    					new Capability("cap_3" +i, 0.01, 0.005)
 	    			};
 	    			String copyright = "Test Copyright"+i;
 	    			String administratorEmail = "bennet"+i+"@test.de";
