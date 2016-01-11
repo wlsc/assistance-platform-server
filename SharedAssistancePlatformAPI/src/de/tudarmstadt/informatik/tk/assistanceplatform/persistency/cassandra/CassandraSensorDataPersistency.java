@@ -1,5 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra;
 
+import java.util.Date;
+
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.mapping.Mapper;
@@ -30,6 +32,8 @@ public class CassandraSensorDataPersistency implements IUserDeviceEventPersisten
 	
 	@Override
 	public boolean persist(UserDeviceEvent data) {
+		data.setServerTimestamp(new Date());
+		
 		Statement s = createSaveStatement(data);
 		
 		cassandraSession.execute(s); 
@@ -40,6 +44,7 @@ public class CassandraSensorDataPersistency implements IUserDeviceEventPersisten
 	@Override
 	public boolean persistMany(UserDeviceEvent[] data) {
 		for(UserDeviceEvent d : data) {
+			d.setServerTimestamp(new Date());
 			persist(d);
 		}
 		
