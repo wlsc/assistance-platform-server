@@ -1,5 +1,7 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 import de.tudarmstadt.informatik.tk.assistanceplatform.platform.UserActivationListKeeper;
@@ -94,8 +96,13 @@ public class BundleBootstrapper {
 			boolean localMode) {
 		String appName = bundle.getBundleInformation().englishModuleBundleInformation.name;
 		String master = localMode ? "local[*]" : sparkMasterURL(bundle);
-		String[] jars = new String[] { System.getProperty("user.home") + "/"
-				+ bundle.getModuleId() + ".jar" };
+		
+		String defaultJarPath = System.getProperty("user.home") + "/"
+				+ bundle.getModuleId() + ".jar";
+		
+		String envJarPath = findModuleJarByEnv();
+		
+		String[] jars = new String[] { defaultJarPath, envJarPath };
 		ISparkService sparkService = new SparkService(bundle, appName, master,
 				jars);
 
@@ -105,6 +112,18 @@ public class BundleBootstrapper {
 	private static String sparkMasterURL(ModuleBundle bundle) {
 		return PlatformClientFactory.getInstance().getServiceConfig(
 				bundle.getModuleId(), "spark").address[0];
+	}
+	
+	private static String findModuleJarByEnv() {
+		Map<String, String> env = System.getenv();
+		
+		String key = "MODULE_FAT_JAR_PATH";
+		
+		if(env.containsKey(key)) {
+			return env.get(key);
+		}
+		
+		return null;
 	}
 
 	/**
