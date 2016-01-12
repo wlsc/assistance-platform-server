@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ import com.datastax.driver.mapping.annotations.ClusteringColumn;
  * @author bjeutter
 
  */
-public abstract class Event {
+public abstract class Event implements Serializable {
 	public UUID id;
 	
 	@ClusteringColumn

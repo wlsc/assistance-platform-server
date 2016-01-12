@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.datastax.driver.mapping.annotations.Column;
@@ -10,7 +11,7 @@ import com.datastax.driver.mapping.annotations.PartitionKey;
  * @author bjeutter
  *
  */
-public class UserDeviceEvent extends UserEvent {
+public class UserDeviceEvent extends UserEvent implements Serializable {
 	@PartitionKey(1)
 	@Column(name = "device_id")
 	public long deviceId;

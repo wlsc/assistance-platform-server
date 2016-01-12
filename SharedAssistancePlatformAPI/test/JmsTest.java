@@ -17,6 +17,11 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.Channe
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.jms.JmsMessagingService;
 
+/**
+ * REQUIRES activeMq locally to be started
+ * @author bjeutter
+ *
+ */
 public class JmsTest {
 
 	@Test

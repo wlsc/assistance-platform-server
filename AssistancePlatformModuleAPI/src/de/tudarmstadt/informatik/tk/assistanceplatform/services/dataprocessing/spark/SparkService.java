@@ -48,9 +48,9 @@ public class SparkService implements ISparkService {
 		return new SparkConf()
 				.setAppName(appName)
 				.setMaster(master)
-				.setJars(jars)
-				.set("spark.serializer",
-						"org.apache.spark.serializer.KryoSerializer");
+				.setJars(jars);
+				/*.set("spark.serializer",
+						"org.apache.spark.serializer.KryoSerializer");*/
 	}
 
 	@Override
