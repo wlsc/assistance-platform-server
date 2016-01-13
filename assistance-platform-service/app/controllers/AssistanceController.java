@@ -66,6 +66,23 @@ public class AssistanceController extends RestController {
 			return UserModuleActivationPersistency.create(a);
 		}, true);
 	}
+	
+
+	/**
+	 * JUST for Load Test
+	 * @return
+	 */
+	@Security.Authenticated(UserAuthenticator.class)
+	public Result activateAll() {
+		ActiveAssistanceModule[] modules = ActiveAssistanceModulePersistency.list();
+		
+		for(ActiveAssistanceModule m : modules) {
+			long userId = getUserIdForRequest();
+			UserModuleActivationPersistency.create(new UserModuleActivation(userId, m.id));
+		}
+		
+		return ok();
+	}
 
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result deactivate() {

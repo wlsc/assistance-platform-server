@@ -26,6 +26,7 @@ GET		/assistance/list			controllers.AssistanceController.list(lang : String ?= "
 GET		/assistance/list/:lang		controllers.AssistanceController.list(lang)
 GET		/assistance/activations		controllers.AssistanceController.activations
 POST	/assistance/activate		controllers.AssistanceController.activate
+POST	/assistance/activateAll		controllers.AssistanceController.activateAll
 POST	/assistance/deactivate		controllers.AssistanceController.deactivate
 GET		/assistance/current/:device			controllers.AssistanceController.current(device: Long)
 GET		/assistance/:module/current/:device	controllers.AssistanceController.currentForModule(module, device: Long)
