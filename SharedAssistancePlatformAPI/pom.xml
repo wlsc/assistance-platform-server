@@ -74,12 +74,12 @@
 		<repository>
 			<id>deployment</id>
 			<name>Internal Releases</name>
-			<url>http://46.101.151.208:10000/content/repositories/releases/</url>
+			<url>http://130.83.163.56:9001/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>deployment</id>
 			<name>Internal Releases</name>
-			<url>http://46.101.151.208:10000/content/repositories/snapshots/</url>
+			<url>http://130.83.163.56:9001/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
