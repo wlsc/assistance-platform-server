@@ -112,4 +112,5 @@
 			<url>http://130.83.163.56:9001/content/repositories/snapshots</url>
 			<layout>default</layout>
 		</repository>
+	</repositories>
 </project>
