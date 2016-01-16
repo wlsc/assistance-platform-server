@@ -13,7 +13,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 scalaVersion := "2.10.5"
 
 resolvers += (
-    "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+    "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository",
+    "Assi nexus" at "http://130.83.163.56:9001/content/repositories/snapshots/"
 )
 
 libraryDependencies ++= Seq(
