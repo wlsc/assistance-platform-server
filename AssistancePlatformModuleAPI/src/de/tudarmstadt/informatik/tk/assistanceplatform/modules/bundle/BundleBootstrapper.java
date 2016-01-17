@@ -102,7 +102,11 @@ public class BundleBootstrapper {
 		
 		String envJarPath = findModuleJarByEnv();
 		
-		String[] jars = new String[] { defaultJarPath, envJarPath };
+		String[] jars = new String[] { defaultJarPath };
+		if(envJarPath != null) {
+			jars = new String[] { envJarPath };
+		} 
+		
 		ISparkService sparkService = new SparkService(bundle, appName, master,
 				jars);
 
