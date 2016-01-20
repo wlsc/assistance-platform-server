@@ -20,7 +20,7 @@ public class UserFilteredMessagingServiceReceiver<T> extends
 		
 		UserActivationListKeeper activationListKeeper = UserActivationListKeeperFactory
 				.createInstance(this.usingModuleId, ms, platformUrlAndPort);
-
+		
 		ms = new UserFilteredMessagingServiceDecorator(ms,
 				activationListKeeper.getUserActivationChecker());
 
