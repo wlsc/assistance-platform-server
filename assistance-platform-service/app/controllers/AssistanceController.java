@@ -79,6 +79,7 @@ public class AssistanceController extends RestController {
 		for(ActiveAssistanceModule m : modules) {
 			long userId = getUserIdForRequest();
 			UserModuleActivationPersistency.create(new UserModuleActivation(userId, m.id));
+			publishUserRegistrationInformationEvent(userId, m.id, true);
 		}
 		
 		return ok();
