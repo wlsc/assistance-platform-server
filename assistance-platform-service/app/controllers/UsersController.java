@@ -308,7 +308,7 @@ public class UsersController extends RestController {
 		Result result = Cache.getOrElse(
 				"jmeterusers",
 				() -> {
-					String csvResult = "token,device_id";
+					String csvResult = "";
 					
 					for (int i = 0; i < 2000; i++) {
 						String email = "jmeter_" + i + "@test.de";
@@ -340,8 +340,8 @@ public class UsersController extends RestController {
 							deviceId = d.id;
 						}
 
-						csvResult += "\n" + email + "," + token + ","
-								+ deviceId;
+						csvResult += email + "," + token + ","
+								+ deviceId + "\n";
 					}
 
 					return ok(csvResult);
