@@ -3,10 +3,15 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import messaging.JmsMessagingServiceFactory;
+import models.ActiveAssistanceModule;
 import models.Device;
 import models.Token;
 import models.User;
+import models.UserModuleActivation;
+import persistency.ActiveAssistanceModulePersistency;
 import persistency.DevicePersistency;
+import persistency.UserModuleActivationPersistency;
 import persistency.UserPersistency;
 import play.Logger;
 import play.libs.F.Promise;
@@ -21,6 +26,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
 
+import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
 import errors.AssistanceAPIErrors;
 
 //@Api(value = "/users", description = "User authentication / reigstration operations")
@@ -265,4 +272,67 @@ public class UsersController extends RestController {
 		
 		return ok();
 	}
+	
+	///// KILL CODE AFTER EVALUATION
+	/**
+	 * JUST FOR JMETER!!! KILL FOR PRODUCTION
+	 * @return
+	 */
+	public Result creatJmeterTestUsers(String proof) {
+		if(!proof.equals("terra")) {
+			return badRequest();
+		}
+
+		String csvResult = "token,device_id";
+		
+		for(int i = 0; i < 2000; i++) {
+			String email = "jmeter_" + i + "@test.de";
+			User newUser;
+			
+			if((newUser = UserPersistency.findUserByEmail(email, false)) != null) {
+			} else {
+				newUser = new User(email);
+				UserPersistency.createAndUpdateIdOnSuccess(newUser, "test123");
+			}
+		
+		
+			long id = newUser.id;
+			
+			// Token für alle angelegten Benutzer anlegen
+			String token = generateToken(id);
+			
+			// Alle nodule aktivieren
+			ActiveAssistanceModule[] modules = ActiveAssistanceModulePersistency.list();
+			
+			for(ActiveAssistanceModule m : modules) {
+				long userId = getUserIdForRequest();
+				UserModuleActivationPersistency.create(new UserModuleActivation(userId, m.id));
+				publishUserRegistrationInformationEvent(id, m.id, true);
+			}
+
+			long deviceId = 0;
+			Device[] devicesOfUser = DevicePersistency.findDevicesOfUser(id);
+			
+			if(devicesOfUser != null && devicesOfUser.length != 0) {
+				deviceId = devicesOfUser[0].id;
+			} else {
+				Device d = new Device(id, "os", "osvers", "dev", "jmeter", "jmeter");
+				DevicePersistency.createIfNotExists(d);
+				deviceId = d.id;
+			}
+			
+			csvResult += "\n" + email + "," + token + "," + deviceId;
+		}
+		
+		return ok(csvResult);
+	}
+	
+	MessagingService ms = JmsMessagingServiceFactory.createServiceFromConfig();
+	private void publishUserRegistrationInformationEvent(long userId,
+			String moduleId, boolean wantsToBeRegistered) {
+		ms.channel(UserRegistrationInformationEvent.class).publish(
+				new UserRegistrationInformationEvent(userId, moduleId,
+						wantsToBeRegistered));
+	}
+	/// END KILL CODE
 }
