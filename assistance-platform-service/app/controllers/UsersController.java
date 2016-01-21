@@ -305,56 +305,60 @@ public class UsersController extends RestController {
 			return badRequest();
 		}
 
-		/*
-		 * Result result = Cache.getOrElse( "jmeterusers", () -> {
-		 */
-		String csvResult = "token,device_id";
+		Result result = Cache.getOrElse(
+				"jmeterusers",
+				() -> {
+					String csvResult = "token,device_id";
+					
+					for (int i = 0; i < 2000; i++) {
+						String email = "jmeter_" + i + "@test.de";
+						User newUser;
 
+						if ((newUser = UserPersistency.findUserByEmail(email,
+								false)) != null) {
+						} else {
+							newUser = new User(email);
+							UserPersistency.createAndUpdateIdOnSuccess(newUser,
+									"test123");
+						}
+
+						long id = newUser.id;
+
+						// Token für alle angelegten Benutzer anlegen
+						String token = generateToken(id);
+
+						long deviceId = 0;
+						Device[] devicesOfUser = DevicePersistency
+								.findDevicesOfUser(id);
+
+						if (devicesOfUser != null && devicesOfUser.length != 0) {
+							deviceId = devicesOfUser[0].id;
+						} else {
+							Device d = new Device(id, "os", "osvers", "dev",
+									"jmeter", "jmeter");
+							DevicePersistency.createIfNotExists(d);
+							deviceId = d.id;
+						}
+
+						csvResult += "\n" + email + "," + token + ","
+								+ deviceId;
+					}
+
+					return ok(csvResult);
+				}, 36000);
+		
 		ActiveAssistanceModule[] modules = ActiveAssistanceModulePersistency
 				.list();
-
-		for (int i = 0; i < 2000; i++) {
-			String email = "jmeter_" + i + "@test.de";
-			User newUser;
-
-			if ((newUser = UserPersistency.findUserByEmail(email, false)) != null) {
-			} else {
-				newUser = new User(email);
-				UserPersistency.createAndUpdateIdOnSuccess(newUser, "test123");
-			}
-
-			long id = newUser.id;
-
-			// Token für alle angelegten Benutzer anlegen
-			String token = generateToken(id);
-
+		
+		for (int i = 0; i < 20000; i++) {
 			// Alle nodule aktivieren
 			for (ActiveAssistanceModule m : modules) {
-				long userId = getUserIdForRequest();
-				UserModuleActivationPersistency
-						.create(new UserModuleActivation(userId, m.id));
-				publishUserRegistrationInformationEvent(id, m.id, true);
+				publishUserRegistrationInformationEvent(i, m.id,
+						true);
 			}
-
-			long deviceId = 0;
-			Device[] devicesOfUser = DevicePersistency.findDevicesOfUser(id);
-
-			if (devicesOfUser != null && devicesOfUser.length != 0) {
-				deviceId = devicesOfUser[0].id;
-			} else {
-				Device d = new Device(id, "os", "osvers", "dev", "jmeter",
-						"jmeter");
-				DevicePersistency.createIfNotExists(d);
-				deviceId = d.id;
-			}
-
-			csvResult += "\n" + email + "," + token + "," + deviceId;
 		}
-
-		return ok(csvResult);
-		// }, 36000);
-
-		// return result;
+		
+		return result;
 	}
 
 	MessagingService ms = JmsMessagingServiceFactory.createServiceFromConfig();
