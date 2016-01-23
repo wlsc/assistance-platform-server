@@ -5,14 +5,14 @@ import java.io.Serializable;
 import com.datastax.driver.mapping.annotations.Table;
 
 @Table(name = "sensor_ringtone")
-public class RingtoneEvent extends SensorData implements Serializable {
+public class Ringtone extends SensorData implements Serializable {
 	public int mode;
 
-	public RingtoneEvent() {
+	public Ringtone() {
 		super();
 	}
 	
-	public RingtoneEvent(int mode) {
+	public Ringtone(int mode) {
 		super();
 		this.mode = mode;
 	}
