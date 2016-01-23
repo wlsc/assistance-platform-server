@@ -178,7 +178,7 @@ CREATE TABLE sensor_foreground (
 	id uuid,
 	timestamp timestamp,
 	servertimestamp timestamp,
-	PRIMARY KEY ((user_id, device_id), timestamp, appName, packageName, className)
+	PRIMARY KEY ((user_id, device_id), timestamp, eventType, appName, packageName, className)
 ) WITH CLUSTERING ORDER BY(timestamp DESC);
 
 CREATE TABLE sensor_call_log (
