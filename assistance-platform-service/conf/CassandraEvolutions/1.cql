@@ -396,3 +396,17 @@ CREATE TABLE sensor_contact (
 	serverTimestamp timestamp,
 	PRIMARY KEY ((user_id, globalContactId))
 );
+
+CREATE TABLE responsetimes (
+	user_id bigint,
+	device_id bigint,
+	serverTimestamp timestamp,
+	startTime bigint,
+	responseTime bigint,
+	processingTime bigint,
+	networkTime bigint,
+	bodySize bigint,
+	eventsNumber int,
+	networkType text,
+	PRIMARY KEY ((user_id, device_id), startTime)
+) WITH CLUSTERING ORDER BY(startTime DESC);

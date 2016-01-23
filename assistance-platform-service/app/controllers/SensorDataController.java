@@ -1,9 +1,11 @@
 package controllers;
 
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import messaging.JmsMessagingServiceFactory;
 import persistency.DevicePersistency;
@@ -33,6 +35,7 @@ public class SensorDataController extends RestController {
 
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result upload() {
+		long start = System.currentTimeMillis();
 		JsonNode postData = request().body().asJson();
 
 		APIError result = handleSensorData(postData, getUserIdForRequest());
@@ -40,8 +43,13 @@ public class SensorDataController extends RestController {
 		if (result != null) {
 			return badRequestJson(result);
 		}
+		
+		long processingTime = System.currentTimeMillis() - start;
+		
+		Map<String, Object> r = new HashMap<>();
+		r.put("processingTime", processingTime);
 
-		return ok();
+		return ok(r);
 	}
 
 	private APIError handleSensorData(JsonNode json, long userID) {

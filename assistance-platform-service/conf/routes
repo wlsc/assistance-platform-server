@@ -6,6 +6,7 @@
 GET     /                           controllers.Application.index()
 GET     /ip                           controllers.Application.ip()
 GET     /jmeterusers/:proof                 controllers.UsersController.creatJmeterTestUsers(proof)
+POST		/evaluation/log_responsetime	controllers.Application.log_responsetimes
 
 # User management
 POST	/users/register				controllers.UsersController.register
@@ -21,6 +22,7 @@ POST	/devices/set_user_defined_name	controllers.DevicesController.setUserDefined
 
 # Sensor data
 POST	/sensordata/upload			controllers.SensorDataController.upload
+POST	/sensordata/log_responsetime controllers.Application.log_responsetimes
 
 # Assistance
 GET		/assistance/list			controllers.AssistanceController.list(lang : String ?= "en")
