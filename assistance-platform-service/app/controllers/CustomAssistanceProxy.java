@@ -64,6 +64,7 @@ public class CustomAssistanceProxy extends RestController {
 		ActiveAssistanceModule module = UserModuleActivationPersistency.activatedModuleEndpointsForUser(new String[] { moduleId })[0];
 
 		WSRequest request = WS.url( module.restUrl("/custom/" + path) );
+		request.setHeader("ASSISTANCE-USER-ID", Long.toString(userId));
 		Promise<WSResponse> responsePromise = prepareAndFireRequest.apply(request);
 
 		return responsePromise.map((response) -> {
