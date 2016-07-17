@@ -18,8 +18,8 @@ loadbalancer:
 assistanceplatform:
     restart: unless-stopped
 
-sparkmaster:
-    restart: unless-stopped
+#sparkmaster:
+#    restart: unless-stopped
 
-sparkworker:
-    restart: unless-stopped
+# sparkworker:
+#     restart: unless-stopped
