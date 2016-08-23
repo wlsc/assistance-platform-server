@@ -1,0 +1,19 @@
+---
+- name: Install Postgresql and its dependencies
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - postgresql
+    - postgresql-contrib
+    - libpq-dev
+    - python-psycopg2
+
+- name: Add user
+  user: name=assistance-postgres
+
+- name: Create postgres user (role)
+  postgresql_user: name=assistance-postgres
+  become_user: postgres
+  
+- name: Create postgres database
+  postgresql_db: name=assistance-postgres
+  become_user: postgres

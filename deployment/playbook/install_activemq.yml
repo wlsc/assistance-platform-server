@@ -1,0 +1,24 @@
+---
+- name: Create directory for ActiveMQ user
+  file: path=/opt/activemq state=directory
+
+- name: Create ActiveMQ user
+  user: name=activemq home=/opt/activemq
+
+- name: Download ActiveMQ
+  get_url: url=http://www.apache.org/dyn/closer.cgi?filename=/activemq/{{ ACTIVEMQ_VERSION }}/apache-activemq-{{ ACTIVEMQ_VERSION }}-bin.tar.gz&action=download dest=/opt/activemq checksum=sha1:1bff4945f9a55bbb11374fd8205f2e919e605abf
+
+- name: Unpack ActiveMQ
+  unarchive: src=/opt/activemq/apache-activemq-{{ ACTIVEMQ_VERSION }}-bin.tar.gz dest=/opt/activemq/
+
+- name: Create symlink to current dir
+  file: src=/opt/activemq/apache-activemq-{{ ACTIVEMQ_VERSION }} dest=/opt/activemq/current owner=activemq group=users state=link
+
+- name: Copy ENV of ActiveMQ
+  copy: src=/opt/activemq/current/bin/env dest=/etc/default/activemq mode=0644
+
+- name: Change user name and password
+  lineinfile: dest=/etc/default/activemq regexp=~s/^ACTIVEMQ_USER= line=ACTIVEMQ_USER="activemq" state=present
+
+- name: Create symlink for service
+  file: src=/opt/activemq/current/bin/activemq dest=/etc/init.d/activemq state=link

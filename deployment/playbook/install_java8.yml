@@ -1,0 +1,9 @@
+---
+- name: python-software-properties
+  apt: name=python-software-properties state=present update_cache=yes
+
+- name: Repo install
+  apt_repository: repo='ppa:webupd8team/java'
+
+- name: Oracle Java 8 install
+  apt: name=oracle-java8-installer state=present update_cache=yes
