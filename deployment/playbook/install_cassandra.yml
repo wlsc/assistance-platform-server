@@ -1,6 +1,6 @@
 ---
 - name: Install Cassandra source
-  command: echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+  lineinfile: dest=/etc/apt/sources.list.d/cassandra.sources.list state=present insertafter=EOF create=yes line="deb http://debian.datastax.com/community stable main"
 
 - name: Add Cassandra repo key
   apt_key: url=http://debian.datastax.com/debian/repo_key state=present
