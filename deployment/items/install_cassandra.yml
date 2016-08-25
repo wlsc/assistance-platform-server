@@ -1,0 +1,32 @@
+---
+- name: Cassandra | Install source entry
+  lineinfile: 
+    dest=/etc/apt/sources.list.d/cassandra.sources.list
+    line="deb http://debian.datastax.com/community stable main"
+    state=present 
+    insertafter=EOF 
+    create=yes 
+  tags:
+    [install, cassandra]
+
+- name: Cassandra | Add repo key
+  apt_key: 
+    url=http://debian.datastax.com/debian/repo_key 
+    state=present
+  tags:
+    [install, cassandra]
+
+- name: Cassandra | Install
+  apt: 
+    name=cassandra 
+    state=present 
+    update_cache=yes
+  tags:
+    [install, cassandra]
+
+- name: Cassandra | Copy config file
+  copy: 
+    src={{ PROJECT_ROOT }}/deployment/files/cassandra/cassandra.yaml 
+    dest=/etc/cassandra/cassandra.yaml
+  tags:
+    [install, cassandra]

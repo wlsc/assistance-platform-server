@@ -1,3 +1,0 @@
----
-- name: Install NGINX
-  apt: name=nginx state=present update_cache=yes

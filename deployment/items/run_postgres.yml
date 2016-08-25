@@ -1,0 +1,8 @@
+---
+- name: Postgres | Start and enable at boot
+  service: 
+    name=postgresql 
+    state=started 
+    enabled=yes
+  tags:
+    [run, postgres]

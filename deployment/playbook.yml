@@ -1,0 +1,26 @@
+---
+- hosts: local
+
+  gather_facts: false
+  become: yes
+
+  vars_files:
+    - config/config.yml
+
+  tasks:
+    - include: items/install_first.yml
+    - include: items/install_java8.yml
+    - include: items/install_sbt.yml
+    - include: items/install_postgres.yml
+    - include: items/install_cassandra.yml
+    - include: items/install_activemq.yml
+    - include: items/install_nginx.yml
+    - include: items/run_nginx.yml
+    - include: items/run_cassandra.yml
+    - include: items/run_postgres.yml
+
+  handlers:
+   - name: Postgres | Restart service
+     service: 
+      name=postgresql 
+      state=restarted

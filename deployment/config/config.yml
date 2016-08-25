@@ -1,0 +1,16 @@
+---
+# General
+PROJECT_NAME: assistance
+PROJECT_ROOT: ~/dev/server_platform_assistance
+PROJECT_REPO: git@github.com:Telecooperation/server_platform_assistance.git
+
+# ActiveMQ
+ACTIVEMQ_VERSION: "5.14.0"
+
+# Postgres
+POSTGRES_DB_NAME: assistance-postgres
+POSTGRES_DB_USER: assistance
+POSTGRES_DB_PASS:
+
+# Cassandra
+CASSANDRA_IP: 127.0.0.1 # TODO: replace in config
