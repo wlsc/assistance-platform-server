@@ -18,6 +18,7 @@
     - include: items/run_nginx.yml
     - include: items/run_cassandra.yml
     - include: items/run_postgres.yml
+    - include: items/run_assistance.yml
 
   handlers:
    - name: Postgres | Restart service

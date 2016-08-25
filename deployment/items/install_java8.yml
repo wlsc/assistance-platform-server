@@ -2,8 +2,7 @@
 - name: Java8 | python-software-properties
   apt: 
     name=python-software-properties 
-    state=present 
-    update_cache=yes
+    state=present
   tags:
     [install, java8, python]
 

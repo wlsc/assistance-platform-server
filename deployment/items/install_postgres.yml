@@ -46,3 +46,5 @@
     state=present
   become_user: 
     postgres
+  tags:
+    [install, postgres]
