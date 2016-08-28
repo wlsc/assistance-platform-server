@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+    <url>
+     <loc>None/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>None/client/Client-Feedback-Channel-Format/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/client/Client-actions-and-commands/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/client/REST-API-for-Clients/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/client/Sensor-Types-and-API-mapping/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>None/deploy/Deploying-via-Docker/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>None/load testing/Z.-Internal-Deployment-Notes/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/load testing/Z2.-Load-Test---Deployment/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/load testing/Z2.-Load-Test-Get-Performance-Metrics/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/load testing/Z4.-Load-Test-Setup-JMeter/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>None/module developers/Module-Developers.-1.-Getting-started-for-Module-Developers-(WIP)/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/module developers/Module-Developers.-2.-Advanced.-Providing-custom-REST-extension/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/module developers/Module-Developers.-3.-Dockerize-your-module/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/module developers/Preprocess-events-before-save-and-distribution/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/module developers/REST-API-for-Modules-(internal)/</loc>
+     <lastmod>2016-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+</urlset>

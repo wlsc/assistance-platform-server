@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+
+	<title>REST API for Modules (internal) - Assistance Platform</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">Assistance Platform</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Client <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../client/Client-Feedback-Channel-Format/">Client Feedback Channel Format</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../client/Client-actions-and-commands/">Client actions and commands</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../client/REST-API-for-Clients/">REST API for Clients</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../client/Sensor-Types-and-API-mapping/">Sensor Types and API mapping</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Deploy <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../deploy/Deploying-via-Docker/">Deploying via Docker</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Load testing <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../load%20testing/Z.-Internal-Deployment-Notes/">Z. Internal Deployment Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../load%20testing/Z2.-Load-Test---Deployment/">Z2. Load Test   Deployment</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../load%20testing/Z2.-Load-Test-Get-Performance-Metrics/">Z2. Load Test Get Performance Metrics</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../load%20testing/Z4.-Load-Test-Setup-JMeter/">Z4. Load Test Setup JMeter</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Module developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../Module-Developers.-1.-Getting-started-for-Module-Developers-%28WIP%29/">Module Developers. 1. Getting started for Module Developers (WIP)</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../Module-Developers.-2.-Advanced.-Providing-custom-REST-extension/">Module Developers. 2. Advanced. Providing custom REST extension</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../Module-Developers.-3.-Dockerize-your-module/">Module Developers. 3. Dockerize your module</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../Preprocess-events-before-save-and-distribution/">Preprocess events before save and distribution</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">REST API for Modules (internal)</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../Preprocess-events-before-save-and-distribution/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="prev" >
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#quick-access">Quick access</a></li>
+        
+            <li><a href="#modules-not-intended-to-be-used-by-any-client-just-by-modules">MODULES (not intended to be used by any client! Just by modules!)</a></li>
+        
+            <li><a href="#update-module-information">UPDATE MODULE INFORMATION</a></li>
+        
+            <li><a href="#send-message-data-to-client">Send message / data to client</a></li>
+        
+            <li><a href="#get-list-of-activations-for-module">Get list of activations for module</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="quick-access">Quick access</h2>
+<ul>
+<li><a href="../REST-API#client-erorrs">Error messages</a></li>
+<li><a href="#registering-a-module">Module: Register new module</a></li>
+<li>[Module: Localize module information] (#localizing-module-information)</li>
+<li><a href="#update-module-information">Module: Update module information</a></li>
+</ul>
+<h3 id="modules-not-intended-to-be-used-by-any-client-just-by-modules">MODULES (not intended to be used by any client! Just by modules!)</h3>
+<h4 id="registering-a-module">REGISTERING A MODULE</h4>
+<ul>
+<li>REQUEST</li>
+</ul>
+<pre><code class="javascript">POST /modules/register
+
+{
+        &quot;id&quot; : &quot;de.tudarmstadt.tk.assistance.hotzones&quot;,
+        &quot;name&quot; : &quot;Hotzones&quot;,
+        &quot;logoUrl&quot; : &quot;http://urlToLogo&quot;,
+        &quot;descriptionShort&quot; : &quot;Short Description (255 chars)&quot;,
+        &quot;descriptionLong&quot; : &quot;Long (2048 chars)&quot;,
+        &quot;requiredCaps&quot; : [
+           { 
+              &quot;type&quot; : &quot;position&quot;,
+ &quot;collection_interval&quot;: double, /* The maximum interval between event readings of this type (in seconds). Readings can be cached on the client. (in seconds) double; 1.0 = 1 measurement per second, 60.0 = 1 measurement per minute */
+                &quot;update_interval&quot;: double, /* The maximum interval in seconds after which the sensor readings have to be sent to the platform. -1.0 means that that the readings are only sent when the device is connected via WiFi or hasn't sent any updates for 24 hours. */
+            }
+        ]
+        &quot;optionalCaps&quot; : []
+        &quot;copyright&quot; : &quot;TK Informtik TU Darmstadt&quot;,
+        &quot;administratorEmail&quot; : &quot;email of administrator&quot;,
+        &quot;supportEmail&quot; : &quot;email of support&quot;,
+        &quot;restContactAddress&quot; : &quot;address or just port of module rest server (e.g. 127.0.0.1:8123 or 8123)&quot;
+}
+</code></pre>
+
+<ul>
+<li>RESPONSE</li>
+</ul>
+<pre><code class="javascript">HTTP/1.1 200 OK
+
+</code></pre>
+
+<h4 id="localizing-module-information">LOCALIZING MODULE INFORMATION</h4>
+<ul>
+<li>REQUEST</li>
+</ul>
+<pre><code class="javascript">POST /modules/localize
+
+{
+        &quot;languageCode&quot; : &quot;de&quot;,
+        &quot;id&quot; : &quot;de.tudarmstadt.tk.assistance.hotzones&quot;,
+        &quot;name&quot; : &quot;Beliebte Orte&quot;,
+        &quot;logoUrl&quot; : &quot;http://urlToGermanLogo&quot;,
+        &quot;descriptionShort&quot; : &quot;Kurze Beschreibung (255 chars)&quot;,
+        &quot;descriptionLong&quot; : &quot;Lange Beschreibung (2048 chars)&quot;
+}
+</code></pre>
+
+<ul>
+<li>RESPONSE</li>
+</ul>
+<pre><code class="javascript">HTTP/1.1 200 OK
+
+</code></pre>
+
+<h3 id="update-module-information">UPDATE MODULE INFORMATION</h3>
+<ul>
+<li>REQUEST</li>
+</ul>
+<pre><code class="javascript">POST /modules/update
+
+{
+        &quot;id&quot; : &quot;de.tudarmstadt.tk.assistance.hotzones&quot;,
+        &quot;name&quot; : &quot;Hotzones&quot;,
+        &quot;logoUrl&quot; : &quot;http://urlToLogo&quot;,
+        &quot;descriptionShort&quot; : &quot;Short Description (255 chars)&quot;,
+        &quot;descriptionLong&quot; : &quot;Long (2048 chars)&quot;,
+        &quot;requiredCaps&quot; : [
+            {
+ &quot;type&quot; : &quot;position&quot;,
+ &quot;collection_interval&quot;: double, /* The maximum interval between event readings of this type (in seconds). Readings can be cached on the client. (in seconds) double; 1.0 = 1 measurement per second, 60.0 = 1 measurement per minute */
+                &quot;update_interval&quot;: double, /* The maximum interval in seconds after which the sensor readings have to be sent to the platform. -1.0 means that that the readings are only sent when the device is connected via WiFi or hasn't sent any updates for 24 hours. */
+            }
+        ],
+        &quot;optionalCaps&quot; : [],
+        &quot;copyright&quot; : &quot;TK Informtik TU Darmstadt&quot;,
+        &quot;administratorEmail&quot; : &quot;email of administrator&quot;,
+        &quot;supportEmail&quot; : &quot;email of support&quot;,
+        &quot;restContactAddress&quot; : &quot;address or just port of module rest server (e.g. 127.0.0.1:8123 or 8123)&quot;
+}
+</code></pre>
+
+<ul>
+<li>RESPONSE</li>
+</ul>
+<pre><code class="javascript">HTTP/1.1 200 OK
+
+</code></pre>
+
+<h3 id="send-message-data-to-client">Send message / data to client</h3>
+<ul>
+<li>REQUEST</li>
+</ul>
+<pre><code class="javascript">POST /action/sendmessage
+
+{
+  &quot;userId&quot; : long,
+  &quot;deviceIds&quot; : [ long values ],
+  &quot;visibleNotification&quot; : { /* optional */
+    &quot;title&quot; : string,
+    &quot;body&quot; : string
+  },
+  &quot;data&quot; : string /* Payload like action command in JSON format - TBD */
+}
+</code></pre>
+
+<ul>
+<li>RESPONSE</li>
+</ul>
+<pre><code class="javascript">HTTP/1.1 200 OK
+
+</code></pre>
+
+<h3 id="get-list-of-activations-for-module">Get list of activations for module</h3>
+<ul>
+<li>REQUEST</li>
+</ul>
+<pre><code class="javascript">GET /modules/activations/:moduleId
+
+</code></pre>
+
+<ul>
+<li>RESPONSE</li>
+</ul>
+<pre><code class="javascript">HTTP/1.1 200 OK
+
+[ /* Array of user IDs that are registered for module with ID :moduleId */
+id_1,
+...,
+id_n
+]
+</code></pre>
+
+<h4 id="tbd">tbd</h4></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
