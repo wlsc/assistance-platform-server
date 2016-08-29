@@ -23,7 +23,6 @@ project/plugins/project/
  .recommenders/
  **/.recommenders/
 *.pydevproject
-.project
 **/.metadata
 **/bin/**
 **/tmp/**
@@ -33,8 +32,6 @@ project/plugins/project/
 *.swp
 *~.nib
 local.properties
-.classpath
-.settings/
 .loadpath
 /src/main/resources/rebel.xml
 # External tool builders
