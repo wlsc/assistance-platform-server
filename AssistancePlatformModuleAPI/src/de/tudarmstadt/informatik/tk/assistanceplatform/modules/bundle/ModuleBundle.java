@@ -14,106 +14,102 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.users.IUserActivationChecker;
 
 /**
- * Module bundles are containers of together deployed modules. They bootstrap
- * the module.
+ * Module bundles are containers of together deployed modules. They bootstrap the module.
  * 
  * @author bjeutter
  *
  */
 public abstract class ModuleBundle implements IModuleBundleIdProvider {
-	private static ModuleBundle activeBundle;
-	
-	public static ModuleBundle currentBundle() {
-		return activeBundle;
-	}
-	
-	private Module containedModules[];
+  private static ModuleBundle activeBundle;
 
-	private IUserActivationChecker userActivationListChecker;
+  public static ModuleBundle currentBundle() {
+    return activeBundle;
+  }
 
-	private IClientActionRunner actionRunner;
+  private Module containedModules[];
 
-	private PlatformClient platformClient;
+  private IUserActivationChecker userActivationListChecker;
 
-	private ISparkService sparkService;
+  private IClientActionRunner actionRunner;
 
-	/**
-	 * Starts the module and sets the required parameters
-	 * 
-	 * @param platformUrlAndPort
-	 * @param messagingService
-	 * @param userActivationListChecker
-	 * @param actionRunner
-	 */
-	public void bootstrapBundle(IMessagingService messagingService,
-			IUserActivationChecker userActivationListChecker,
-			PlatformClient platformClient, IClientActionRunner actionRunner,
-			ISparkService sparkService) {
-		activeBundle = this;
-		
-		// Save references to all required compopnents
-		this.actionRunner = actionRunner;
-		this.userActivationListChecker = userActivationListChecker;
-		this.platformClient = platformClient;
-		this.sparkService = sparkService;
+  private PlatformClient platformClient;
 
-		// Initialize and run the contained modules
-		this.containedModules = initializeContainedModules();
-		this.startContainedModules(messagingService);
-	}
+  private ISparkService sparkService;
 
-	private void startContainedModules(IMessagingService messagingService) {
-		ExecutorService executor = Executors.newCachedThreadPool();
+  /**
+   * Starts the module and sets the required parameters
+   * 
+   * @param platformUrlAndPort
+   * @param messagingService
+   * @param userActivationListChecker
+   * @param actionRunner
+   */
+  public void bootstrapBundle(IMessagingService messagingService,
+      IUserActivationChecker userActivationListChecker, PlatformClient platformClient,
+      IClientActionRunner actionRunner, ISparkService sparkService) {
+    activeBundle = this;
 
-		for (Module m : containedModules) {
-			m.setMessagingService(messagingService);
+    // Save references to all required compopnents
+    this.actionRunner = actionRunner;
+    this.userActivationListChecker = userActivationListChecker;
+    this.platformClient = platformClient;
+    this.sparkService = sparkService;
 
-			executor.submit(() -> {
-				if (m instanceof AssistanceModule) {
-					AssistanceModule assiModule = ((AssistanceModule) m);
-					assiModule.setActionRunner(actionRunner);
-					assiModule.setModuleIdProvider(this);
-				} else if (m instanceof DataModule) {
-					DataModule dataModule = ((DataModule) m);
-					
-					dataModule.setSparkService(sparkService);
-				}
+    // Initialize and run the contained modules
+    this.containedModules = initializeContainedModules();
+    this.startContainedModules(messagingService);
+  }
 
-				m.start();
-			});
-		}
-	}
+  private void startContainedModules(IMessagingService messagingService) {
+    ExecutorService executor = Executors.newCachedThreadPool();
 
-	public IUserActivationChecker userActivationListChecker() {
-		return userActivationListChecker;
-	}
-	
-	public String getRestContactAddress() {
-		int port = ModuleRestServerFactory.getInstance().getPort();
-		return Integer.toString(port); // Lets just use the port so the receiver
-										// can resolve the correct IP address
-	}
+    for (Module m : containedModules) {
+      m.setMessagingService(messagingService);
 
-	/**
-	 * Implement this and return a unique ID for this Module(bundle) - a good
-	 * candidate is the package name.
-	 * 
-	 * @return
-	 */
-	@Override
-	public abstract String getModuleId();
+      executor.submit(() -> {
+        if (m instanceof AssistanceModule) {
+          AssistanceModule assiModule = ((AssistanceModule) m);
+          assiModule.setActionRunner(actionRunner);
+          assiModule.setModuleIdProvider(this);
+        } else if (m instanceof DataModule) {
+          DataModule dataModule = ((DataModule) m);
 
-	/**
-	 * Implement this and return a object which describes the meta data of this
-	 * bundle.
-	 * 
-	 * @return
-	 */
-	public abstract ModuleBundleInformation getBundleInformation();
+          dataModule.setSparkService(sparkService);
+        }
 
-	/**
-	 * Instantiate all used modules in this method and return them. NEVER! run
-	 * them.
-	 */
-	protected abstract Module[] initializeContainedModules();
+        m.start();
+      });
+    }
+  }
+
+  public IUserActivationChecker userActivationListChecker() {
+    return userActivationListChecker;
+  }
+
+  public String getRestContactAddress() {
+    int port = ModuleRestServerFactory.getInstance().getPort();
+    return Integer.toString(port); // Lets just use the port so the receiver
+                                   // can resolve the correct IP address
+  }
+
+  /**
+   * Implement this and return a unique ID for this Module(bundle) - a good candidate is the package
+   * name.
+   * 
+   * @return
+   */
+  @Override
+  public abstract String getModuleId();
+
+  /**
+   * Implement this and return a object which describes the meta data of this bundle.
+   * 
+   * @return
+   */
+  public abstract ModuleBundleInformation getBundleInformation();
+
+  /**
+   * Instantiate all used modules in this method and return them. NEVER! run them.
+   */
+  protected abstract Module[] initializeContainedModules();
 }

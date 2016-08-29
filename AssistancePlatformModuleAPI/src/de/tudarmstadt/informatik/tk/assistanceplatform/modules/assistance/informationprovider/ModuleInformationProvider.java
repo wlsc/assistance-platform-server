@@ -3,20 +3,21 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.infor
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.IModuleBundleIdProvider;
 
 public class ModuleInformationProvider implements IInformationProvider {
-	private final String moduleId;
-	
-	private final IInformationCardCustomizer customizer;
-	
-	public ModuleInformationProvider(IModuleBundleIdProvider bundleIdProvider, IInformationCardCustomizer customizer) {
-		this.moduleId = bundleIdProvider.getModuleId();
-		this.customizer = customizer;
-	}
-	
-	@Override
-	public final ModuleInformationCard currentModuleInformationForUserAndDevice(
-			long userId, long deviceId) {
-		ModuleInformationCard card = new ModuleInformationCard(moduleId);
-		this.customizer.customizeModuleInformationCard(card, userId, deviceId);
-		return card;
-	}
+  private final String moduleId;
+
+  private final IInformationCardCustomizer customizer;
+
+  public ModuleInformationProvider(IModuleBundleIdProvider bundleIdProvider,
+      IInformationCardCustomizer customizer) {
+    this.moduleId = bundleIdProvider.getModuleId();
+    this.customizer = customizer;
+  }
+
+  @Override
+  public final ModuleInformationCard currentModuleInformationForUserAndDevice(long userId,
+      long deviceId) {
+    ModuleInformationCard card = new ModuleInformationCard(moduleId);
+    this.customizer.customizeModuleInformationCard(card, userId, deviceId);
+    return card;
+  }
 }

@@ -7,75 +7,75 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_networktraffic")
 public class NetworkTraffic extends SensorData implements Serializable {
-	public String appName;
-	public long rxBytes;
-	public long txBytes;
-	public boolean background;
-	
-	@JsonProperty(value = "longitude")
-	public double longitudeOptional;
-	
-	@JsonProperty(value = "latitude")
-	public double latitudeOptional;
-	
-	public NetworkTraffic() {}
+  public String appName;
+  public long rxBytes;
+  public long txBytes;
+  public boolean background;
 
-	public NetworkTraffic(String appName, long rxBytes, long txBytes, boolean background,
-			double longitude, double latitude) {
-		super();
-		this.appName = appName;
-		this.rxBytes = rxBytes;
-		this.txBytes = txBytes;
-		this.background = background;
-		this.longitudeOptional = longitude;
-		this.latitudeOptional = latitude;
-	}
+  @JsonProperty(value = "longitude")
+  public double longitudeOptional;
 
-	public String getAppName() {
-		return appName;
-	}
+  @JsonProperty(value = "latitude")
+  public double latitudeOptional;
 
-	public void setAppName(String appName) {
-		this.appName = appName;
-	}
+  public NetworkTraffic() {}
 
-	public long getRxBytes() {
-		return rxBytes;
-	}
+  public NetworkTraffic(String appName, long rxBytes, long txBytes, boolean background,
+      double longitude, double latitude) {
+    super();
+    this.appName = appName;
+    this.rxBytes = rxBytes;
+    this.txBytes = txBytes;
+    this.background = background;
+    this.longitudeOptional = longitude;
+    this.latitudeOptional = latitude;
+  }
 
-	public void setRxBytes(long rxBytes) {
-		this.rxBytes = rxBytes;
-	}
+  public String getAppName() {
+    return appName;
+  }
 
-	public long getTxBytes() {
-		return txBytes;
-	}
+  public void setAppName(String appName) {
+    this.appName = appName;
+  }
 
-	public void setTxBytes(long txBytes) {
-		this.txBytes = txBytes;
-	}
+  public long getRxBytes() {
+    return rxBytes;
+  }
 
-	public boolean isBackground() {
-		return background;
-	}
+  public void setRxBytes(long rxBytes) {
+    this.rxBytes = rxBytes;
+  }
 
-	public void setBackground(boolean background) {
-		this.background = background;
-	}
+  public long getTxBytes() {
+    return txBytes;
+  }
 
-	public double getLongitudeOptional() {
-		return longitudeOptional;
-	}
+  public void setTxBytes(long txBytes) {
+    this.txBytes = txBytes;
+  }
 
-	public void setLongitudeOptional(double longitude) {
-		this.longitudeOptional = longitude;
-	}
+  public boolean isBackground() {
+    return background;
+  }
 
-	public double getLatitudeOptional() {
-		return latitudeOptional;
-	}
+  public void setBackground(boolean background) {
+    this.background = background;
+  }
 
-	public void setLatitudeOptional(double latitude) {
-		this.latitudeOptional = latitude;
-	}
+  public double getLongitudeOptional() {
+    return longitudeOptional;
+  }
+
+  public void setLongitudeOptional(double longitude) {
+    this.longitudeOptional = longitude;
+  }
+
+  public double getLatitudeOptional() {
+    return latitudeOptional;
+  }
+
+  public void setLatitudeOptional(double latitude) {
+    this.latitudeOptional = latitude;
+  }
 }

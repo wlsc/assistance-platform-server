@@ -11,32 +11,33 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.IModuleBun
 
 
 public class ModuleInformationCardPipelineTest {
-	@Test
-	public void test() throws Exception {
-		long userId = 1;
-		long deviceId = 1;
-		
-		ContentDto testPayload = ContentFactory.createButton("test", "target");
-		String testId = "testid";	
-		
-		ModuleInformationProvider prov = new ModuleInformationProvider(new IModuleBundleIdProvider() {
-			
-			@Override
-			public String getModuleId() {
-				return testId;
-			}
-		}, new IInformationCardCustomizer() {
-			
-			@Override
-			public void customizeModuleInformationCard(ModuleInformationCard card,
-					long userId, long deviceId) {
-				card.setContent(ContentFactory.createButton("test", "target"));
-			}
-		});
-		
-		ModuleInformationCard receivedCard = prov.currentModuleInformationForUserAndDevice(userId, deviceId);
-		
-		assertTrue(receivedCard.getContent().toString().equals(testPayload.toString()));
-		assertTrue(receivedCard.getModuleId().equals(testId));		
-	}
+  @Test
+  public void test() throws Exception {
+    long userId = 1;
+    long deviceId = 1;
+
+    ContentDto testPayload = ContentFactory.createButton("test", "target");
+    String testId = "testid";
+
+    ModuleInformationProvider prov = new ModuleInformationProvider(new IModuleBundleIdProvider() {
+
+      @Override
+      public String getModuleId() {
+        return testId;
+      }
+    }, new IInformationCardCustomizer() {
+
+      @Override
+      public void customizeModuleInformationCard(ModuleInformationCard card, long userId,
+          long deviceId) {
+        card.setContent(ContentFactory.createButton("test", "target"));
+      }
+    });
+
+    ModuleInformationCard receivedCard =
+        prov.currentModuleInformationForUserAndDevice(userId, deviceId);
+
+    assertTrue(receivedCard.getContent().toString().equals(testPayload.toString()));
+    assertTrue(receivedCard.getModuleId().equals(testId));
+  }
 }

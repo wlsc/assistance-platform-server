@@ -11,114 +11,113 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.exceptions.AlreadyExistsException;
 
 public class CassandraSessionProxy {
-	private Cluster cluster;
-	private Session session;
-	
-	private final String keyspaceName;
+  private Cluster cluster;
+  private Session session;
 
-	public CassandraSessionProxy(InetAddress[] contactPoints,
-			String keyspaceName, String user, String password) {
-		this((b) -> b.addContactPoints(contactPoints), keyspaceName, user,
-				password, null);
-	}
+  private final String keyspaceName;
 
-	public CassandraSessionProxy(InetAddress[] contactPoints,
-			String keyspaceName, String user, String password, String schemaCQL) {
-		this((b) -> b.addContactPoints(contactPoints), keyspaceName, user,
-				password, schemaCQL);
-	}
+  public CassandraSessionProxy(InetAddress[] contactPoints, String keyspaceName, String user,
+      String password) {
+    this((b) -> b.addContactPoints(contactPoints), keyspaceName, user, password, null);
+  }
 
-	private CassandraSessionProxy(Consumer<Builder> clusterBuilderSetter,
-			String keyspaceName, String user, String password, String schemaCQL) {
-		this.keyspaceName = keyspaceName;
-		
-		setCluster(clusterBuilderSetter, user, password);
+  public CassandraSessionProxy(InetAddress[] contactPoints, String keyspaceName, String user,
+      String password, String schemaCQL) {
+    this((b) -> b.addContactPoints(contactPoints), keyspaceName, user, password, schemaCQL);
+  }
 
-		createSchema(schemaCQL, keyspaceName, true);
+  private CassandraSessionProxy(Consumer<Builder> clusterBuilderSetter, String keyspaceName,
+      String user, String password, String schemaCQL) {
+    this.keyspaceName = keyspaceName;
 
-		try {
-			session = createSessionForKeyspace(keyspaceName);
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Tries to create the schema. If it already exists it won't do anything.
-	 * @param schemaCQL The schema (can contain multiple create queries)
-	 */
-	public void createSchema(String schemaCQL) {
-		this.createSchema(schemaCQL, this.keyspaceName, false);
-	}
+    setCluster(clusterBuilderSetter, user, password);
 
-	/**
-	 * Tries to create the schema
-	 * @param schemaCQL The schema (can contain multiple creation queries)
-	 * @param keyspaceName If NULL then keyspaceName creation queries will be ignored
-	 */
-	private void createSchema(String schemaCQL, String keyspaceName, boolean allowKeyspaceCreation) {
-		if (schemaCQL != null) {
-			Logger log = Logger.getLogger(CassandraSessionProxy.class);
+    createSchema(schemaCQL, keyspaceName, true);
 
-			log.info("Trying to create Cassandra Schema.");
+    try {
+      session = createSessionForKeyspace(keyspaceName);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+  }
 
-			Session tmpSession;
-			
-			if(allowKeyspaceCreation) {
-				tmpSession = cluster.connect();
-			} else {
-				tmpSession = createSessionForKeyspace(keyspaceName);
-			}
+  /**
+   * Tries to create the schema. If it already exists it won't do anything.
+   * 
+   * @param schemaCQL The schema (can contain multiple create queries)
+   */
+  public void createSchema(String schemaCQL) {
+    this.createSchema(schemaCQL, this.keyspaceName, false);
+  }
 
-			for (String s : schemaCQL.split(";")) {
-				s = s.replace("\n", "");
+  /**
+   * Tries to create the schema
+   * 
+   * @param schemaCQL The schema (can contain multiple creation queries)
+   * @param keyspaceName If NULL then keyspaceName creation queries will be ignored
+   */
+  private void createSchema(String schemaCQL, String keyspaceName, boolean allowKeyspaceCreation) {
+    if (schemaCQL != null) {
+      Logger log = Logger.getLogger(CassandraSessionProxy.class);
 
-				try {
-					tmpSession.execute(s);
-				} catch (AlreadyExistsException ex) {
-					// No harm, just already exists
-				} catch (Exception ex) {
-					log.error(ex);
-				}
+      log.info("Trying to create Cassandra Schema.");
 
-				// If we created a keyspace then connect to it directly
-				// afterwards
-				// so the next creation queries can be run on this particula
-				// keyspace
-				if (allowKeyspaceCreation && s.contains("CREATE KEYSPACE")) {
-					tmpSession.close();
-					tmpSession = cluster.connect(keyspaceName);
-				}
-			}
+      Session tmpSession;
 
-			tmpSession.close();
+      if (allowKeyspaceCreation) {
+        tmpSession = cluster.connect();
+      } else {
+        tmpSession = createSessionForKeyspace(keyspaceName);
+      }
 
-			log.info("Finished initializing Cassandra schema");
-		}
-	}
-	
-	private Session createSessionForKeyspace(String keyspace) {
-		Session result;
-		
-		try {
-			result = cluster.connect(keyspace);
-		} catch(Exception ex) {
-			result = cluster.connect("\"" + keyspace + "\"");
-		}
-		
-		return result;
-	}
+      for (String s : schemaCQL.split(";")) {
+        s = s.replace("\n", "");
 
-	private void setCluster(Consumer<Builder> clusterBuilderSetter,
-			String user, String password) {
-		Builder b = Cluster.builder().withCredentials(user, password);
+        try {
+          tmpSession.execute(s);
+        } catch (AlreadyExistsException ex) {
+          // No harm, just already exists
+        } catch (Exception ex) {
+          log.error(ex);
+        }
 
-		clusterBuilderSetter.accept(b);
+        // If we created a keyspace then connect to it directly
+        // afterwards
+        // so the next creation queries can be run on this particula
+        // keyspace
+        if (allowKeyspaceCreation && s.contains("CREATE KEYSPACE")) {
+          tmpSession.close();
+          tmpSession = cluster.connect(keyspaceName);
+        }
+      }
 
-		cluster = b.build();
-	}
+      tmpSession.close();
 
-	public Session getSession() {
-		return session;
-	}
+      log.info("Finished initializing Cassandra schema");
+    }
+  }
+
+  private Session createSessionForKeyspace(String keyspace) {
+    Session result;
+
+    try {
+      result = cluster.connect(keyspace);
+    } catch (Exception ex) {
+      result = cluster.connect("\"" + keyspace + "\"");
+    }
+
+    return result;
+  }
+
+  private void setCluster(Consumer<Builder> clusterBuilderSetter, String user, String password) {
+    Builder b = Cluster.builder().withCredentials(user, password);
+
+    clusterBuilderSetter.accept(b);
+
+    cluster = b.build();
+  }
+
+  public Session getSession() {
+    return session;
+  }
 }

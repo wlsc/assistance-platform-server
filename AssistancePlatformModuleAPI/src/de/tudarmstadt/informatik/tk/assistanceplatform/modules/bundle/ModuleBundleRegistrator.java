@@ -11,57 +11,62 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.modules.exceptions.Module
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClient;
 
 class ModuleBundleRegistrator {
-	private final ModuleBundle bundle;
-	
-	private PlatformClient client;
-	
-	private boolean update = false;
-	
-	public ModuleBundleRegistrator(ModuleBundle bundle, PlatformClient platformClient) {
-		this.bundle = bundle;
-		this.client = platformClient;
-	}
-	
-	public void startPeriodicRegistration() {
-		long minutesToWaitForUpdate = 15;
-		
-		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+  private final ModuleBundle bundle;
 
-		scheduler.scheduleAtFixedRate(() -> {
-			try {
-				registerBundleForUsage(!update);
-				update = true;
-			} catch (Exception e) {
-				Logger.getLogger(ModuleBundle.class).error("An error occured on module registration with assistance platform", e);
-				
-				scheduler.shutdownNow();
-			}
-		}, 15, minutesToWaitForUpdate * 60, TimeUnit.SECONDS);
-	}
-	
-	public void registerBundleForUsage(boolean startupRequest) throws ModuleBundleInformationMissingException {
-		ModuleBundleInformation bundleInfo = bundle.getBundleInformation();
-		
-		if(bundleInfo == null) {
-			throw new ModuleBundleInformationMissingException("getBundleInformation() has to be properly implemented.");
-		}
-		
-		Consumer<Void> onSuccess = (v) -> {
-			client.localizeModule(bundle, (v2) -> {
-				Logger.getLogger(ModuleBundle.class).error("Failed to localize module bundle.");
-			});
-		};
-		
-		if(startupRequest) {
-			client.registerModule(bundle, onSuccess, (v) -> {
-				Logger.getLogger(ModuleBundle.class).error("Failed to register module bundle. Shutting down.");
-				System.exit(-1);
-			}, true);
-		} else {
-			client.updateModule(bundle, onSuccess, (v) -> {
-				Logger.getLogger(ModuleBundle.class).error("Failed to update module bundle (keep alive). Shutting down.");
-				System.exit(-1);
-			});	
-		}
-	}
+  private PlatformClient client;
+
+  private boolean update = false;
+
+  public ModuleBundleRegistrator(ModuleBundle bundle, PlatformClient platformClient) {
+    this.bundle = bundle;
+    this.client = platformClient;
+  }
+
+  public void startPeriodicRegistration() {
+    long minutesToWaitForUpdate = 15;
+
+    ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+    scheduler.scheduleAtFixedRate(() -> {
+      try {
+        registerBundleForUsage(!update);
+        update = true;
+      } catch (Exception e) {
+        Logger.getLogger(ModuleBundle.class)
+            .error("An error occured on module registration with assistance platform", e);
+
+        scheduler.shutdownNow();
+      }
+    }, 15, minutesToWaitForUpdate * 60, TimeUnit.SECONDS);
+  }
+
+  public void registerBundleForUsage(boolean startupRequest)
+      throws ModuleBundleInformationMissingException {
+    ModuleBundleInformation bundleInfo = bundle.getBundleInformation();
+
+    if (bundleInfo == null) {
+      throw new ModuleBundleInformationMissingException(
+          "getBundleInformation() has to be properly implemented.");
+    }
+
+    Consumer<Void> onSuccess = (v) -> {
+      client.localizeModule(bundle, (v2) -> {
+        Logger.getLogger(ModuleBundle.class).error("Failed to localize module bundle.");
+      });
+    };
+
+    if (startupRequest) {
+      client.registerModule(bundle, onSuccess, (v) -> {
+        Logger.getLogger(ModuleBundle.class)
+            .error("Failed to register module bundle. Shutting down.");
+        System.exit(-1);
+      }, true);
+    } else {
+      client.updateModule(bundle, onSuccess, (v) -> {
+        Logger.getLogger(ModuleBundle.class)
+            .error("Failed to update module bundle (keep alive). Shutting down.");
+        System.exit(-1);
+      });
+    }
+  }
 }

@@ -12,36 +12,41 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.as
 
 /**
  * Modules can use this class to get access to the Cassandra Database.
+ * 
  * @author bjeutter
  *
  */
 public class CassandraServiceFactory {
-	private static CassandraSessionProxy proxyInstance;
+  private static CassandraSessionProxy proxyInstance;
 
-	public static CassandraSessionProxy getSessionProxy() {
-		if (proxyInstance == null) {
-			createProxyInstance();
-		}
+  public static CassandraSessionProxy getSessionProxy() {
+    if (proxyInstance == null) {
+      createProxyInstance();
+    }
 
-		return proxyInstance;
-	}
+    return proxyInstance;
+  }
 
-	private static void createProxyInstance() {
+  private static void createProxyInstance() {
 
-		CassandraServiceConfigResponse config = PlatformClientFactory.getInstance().getDatabaseService(
-				ModuleBundle.currentBundle().getModuleId());
+    CassandraServiceConfigResponse config = PlatformClientFactory.getInstance()
+        .getDatabaseService(ModuleBundle.currentBundle().getModuleId());
 
-		List<String> adresses = new LinkedList<String>( Arrays.asList(config.address) );
-		adresses.add(PlatformClientFactory.getInstance().getUsedHostWithoutPort()); // Workaround if module started outside platform machine
+    List<String> adresses = new LinkedList<String>(Arrays.asList(config.address));
+    adresses.add(PlatformClientFactory.getInstance().getUsedHostWithoutPort()); // Workaround if
+                                                                                // module started
+                                                                                // outside platform
+                                                                                // machine
 
-		InetAddress[] contactPoints = adresses.stream().map((s) -> {
-			try {
-				return InetAddress.getByName(s);
-			} catch (Exception e) {
-			}
-			return null;
-		}).toArray(InetAddress[]::new);
-		
-		proxyInstance = new CassandraSessionProxy(contactPoints, config.keystoreName, config.user, config.password);
-	}
+    InetAddress[] contactPoints = adresses.stream().map((s) -> {
+      try {
+        return InetAddress.getByName(s);
+      } catch (Exception e) {
+      }
+      return null;
+    }).toArray(InetAddress[]::new);
+
+    proxyInstance =
+        new CassandraSessionProxy(contactPoints, config.keystoreName, config.user, config.password);
+  }
 }

@@ -6,22 +6,22 @@ import com.datastax.driver.mapping.annotations.Table;
 
 @Table(name = "sensor_ringtone")
 public class Ringtone extends SensorData implements Serializable {
-	public int mode;
+  public int mode;
 
-	public Ringtone() {
-		super();
-	}
-	
-	public Ringtone(int mode) {
-		super();
-		this.mode = mode;
-	}
+  public Ringtone() {
+    super();
+  }
 
-	public int getMode() {
-		return mode;
-	}
+  public Ringtone(int mode) {
+    super();
+    this.mode = mode;
+  }
 
-	public void setMode(int mode) {
-		this.mode = mode;
-	}
+  public int getMode() {
+    return mode;
+  }
+
+  public void setMode(int mode) {
+    this.mode = mode;
+  }
 }

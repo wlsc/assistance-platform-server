@@ -9,15 +9,14 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.modulerestserver.required.services.ExampleService;
 
 public class RequiredRestEndpointsFactory {
-	public RequiredRestEndpointsFactory() {
-	}
+  public RequiredRestEndpointsFactory() {}
 
-	public Collection<MappedServlet> getRequiredServlets() {
-		List<MappedServlet> mappedServlets = new LinkedList<>();
+  public Collection<MappedServlet> getRequiredServlets() {
+    List<MappedServlet> mappedServlets = new LinkedList<>();
 
-		mappedServlets.add(new MappedServlet("", ExampleService.class,
-				CurrentInformationService.class));
+    mappedServlets
+        .add(new MappedServlet("", ExampleService.class, CurrentInformationService.class));
 
-		return mappedServlets;
-	}
+    return mappedServlets;
+  }
 }

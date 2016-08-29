@@ -11,14 +11,10 @@ import org.codehaus.jettison.json.JSONArray;
 
 @Path("/example")
 public class ExampleService {
-	@GET
-	@Path("/test")
-	@Produces(MediaType.APPLICATION_JSON)
-	public JSONArray test() {
-		return new JSONArray( Arrays.asList(
-			"a",
-			"simple",
-			"example"
-		));
-	}
+  @GET
+  @Path("/test")
+  @Produces(MediaType.APPLICATION_JSON)
+  public JSONArray test() {
+    return new JSONArray(Arrays.asList("a", "simple", "example"));
+  }
 }

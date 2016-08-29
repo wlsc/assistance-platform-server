@@ -16,53 +16,53 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.serial
  * Implements rudimentary binary object serialization via Kryo Library
  */
 public class KryoMessageSerialization implements MessageSerialization {
-	private final KryoPool pool;
+  private final KryoPool pool;
 
-	public KryoMessageSerialization() {
-		KryoFactory factory = new KryoFactory() {
-			public Kryo create() {
-				Kryo kryo = new Kryo();
-				kryo.addDefaultSerializer(UUID.class, UUIDSerializer.class);
-				kryo.addDefaultSerializer(Instant.class, InstantSerializer.class);
-				// configure kryo instance, customize settings
-				return kryo;
-			}
-		};
-		// Build pool with SoftReferences enabled (optional)
-		pool = new KryoPool.Builder(factory).softReferences().build();
-	}
+  public KryoMessageSerialization() {
+    KryoFactory factory = new KryoFactory() {
+      public Kryo create() {
+        Kryo kryo = new Kryo();
+        kryo.addDefaultSerializer(UUID.class, UUIDSerializer.class);
+        kryo.addDefaultSerializer(Instant.class, InstantSerializer.class);
+        // configure kryo instance, customize settings
+        return kryo;
+      }
+    };
+    // Build pool with SoftReferences enabled (optional)
+    pool = new KryoPool.Builder(factory).softReferences().build();
+  }
 
-	@Override
-	public <T> byte[] serialize(T data) {
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		Output output = new Output(outputStream);
+  @Override
+  public <T> byte[] serialize(T data) {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    Output output = new Output(outputStream);
 
-		Kryo kryo = pool.borrow();
+    Kryo kryo = pool.borrow();
 
-		kryo.writeObject(output, data);
+    kryo.writeObject(output, data);
 
-		pool.release(kryo);
+    pool.release(kryo);
 
-		byte[] result = output.getBuffer();
+    byte[] result = output.getBuffer();
 
-		output.close();
+    output.close();
 
-		return result;
-	}
+    return result;
+  }
 
-	@Override
-	public <T> T deserialize(byte[] data, Class<T> type) {
-		Input input = new Input(data);
+  @Override
+  public <T> T deserialize(byte[] data, Class<T> type) {
+    Input input = new Input(data);
 
-		Kryo kryo = pool.borrow();
+    Kryo kryo = pool.borrow();
 
-		T obj = kryo.readObject(input, type);
+    T obj = kryo.readObject(input, type);
 
-		pool.release(kryo);
+    pool.release(kryo);
 
-		input.close();
+    input.close();
 
-		return obj;
-	}
+    return obj;
+  }
 
 }

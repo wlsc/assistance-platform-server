@@ -9,38 +9,37 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AesEncryption {
-	private static final String ALGO = "AES";
+  private static final String ALGO = "AES";
 
-	public static String encrypt(String data, String secret) throws Exception {
-		Key key = generateKey(secret);
-		Cipher c = Cipher.getInstance(ALGO);
-		c.init(Cipher.ENCRYPT_MODE, key);
-		byte[] encVal = c.doFinal(data.getBytes());
-		String encryptedValue = Base64.getEncoder().encodeToString(encVal);
-		return encryptedValue;
-	}
+  public static String encrypt(String data, String secret) throws Exception {
+    Key key = generateKey(secret);
+    Cipher c = Cipher.getInstance(ALGO);
+    c.init(Cipher.ENCRYPT_MODE, key);
+    byte[] encVal = c.doFinal(data.getBytes());
+    String encryptedValue = Base64.getEncoder().encodeToString(encVal);
+    return encryptedValue;
+  }
 
-	public static String decrypt(String encryptedData, String secret)
-			throws Exception {
-		Key key = generateKey(secret);
-		Cipher c = Cipher.getInstance(ALGO);
-		c.init(Cipher.DECRYPT_MODE, key);
+  public static String decrypt(String encryptedData, String secret) throws Exception {
+    Key key = generateKey(secret);
+    Cipher c = Cipher.getInstance(ALGO);
+    c.init(Cipher.DECRYPT_MODE, key);
 
-		byte[] decordedValue = Base64.getDecoder().decode(encryptedData);
-		byte[] decValue = c.doFinal(decordedValue);
-		String decryptedValue = new String(decValue);
-		return decryptedValue;
-	}
+    byte[] decordedValue = Base64.getDecoder().decode(encryptedData);
+    byte[] decValue = c.doFinal(decordedValue);
+    String decryptedValue = new String(decValue);
+    return decryptedValue;
+  }
 
-	private static Key generateKey(String secret) throws Exception {
-		byte[] secretAsBytes = secret.getBytes();
-		
-		MessageDigest sha = MessageDigest.getInstance("SHA1");
-		secretAsBytes = sha.digest(secretAsBytes);
-		
-		// nur die ersten 128 bit nutzen
-		secretAsBytes = Arrays.copyOf(secretAsBytes, 16); 
+  private static Key generateKey(String secret) throws Exception {
+    byte[] secretAsBytes = secret.getBytes();
 
-		return new SecretKeySpec(secretAsBytes, ALGO);
-	}
+    MessageDigest sha = MessageDigest.getInstance("SHA1");
+    secretAsBytes = sha.digest(secretAsBytes);
+
+    // nur die ersten 128 bit nutzen
+    secretAsBytes = Arrays.copyOf(secretAsBytes, 16);
+
+    return new SecretKeySpec(secretAsBytes, ALGO);
+  }
 }

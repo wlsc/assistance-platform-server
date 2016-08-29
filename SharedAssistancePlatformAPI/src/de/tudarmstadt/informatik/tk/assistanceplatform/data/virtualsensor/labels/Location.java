@@ -6,36 +6,35 @@ import com.datastax.driver.mapping.annotations.UDT;
 
 @UDT(name = "location")
 public class Location implements Serializable {
-	public double longitude;
-	public double latitude;
-	public double accuracy;
-	
-	public Location() {
-	}
+  public double longitude;
+  public double latitude;
+  public double accuracy;
 
-	public double getLongitude() {
-		return longitude;
-	}
+  public Location() {}
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
+  public double getLongitude() {
+    return longitude;
+  }
 
-	public double getLatitude() {
-		return latitude;
-	}
+  public void setLongitude(double longitude) {
+    this.longitude = longitude;
+  }
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
+  public double getLatitude() {
+    return latitude;
+  }
 
-	public double getAccuracy() {
-		return accuracy;
-	}
+  public void setLatitude(double latitude) {
+    this.latitude = latitude;
+  }
 
-	public void setAccuracy(double accuracy) {
-		this.accuracy = accuracy;
-	}
-	
-	
+  public double getAccuracy() {
+    return accuracy;
+  }
+
+  public void setAccuracy(double accuracy) {
+    this.accuracy = accuracy;
+  }
+
+
 }

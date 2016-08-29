@@ -14,166 +14,165 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.typemapping.TypeName
 @Table(name = "sensor_labelaction")
 @TypeNameForAssistance(name = "label")
 public class Label extends SensorData implements Serializable {
-	public UUID UUID;
-	public Date startTime;
-	public Date endTime;
-	
-	@Frozen
-	public Location startLocation;
-	
-	@Frozen
-	public Location endLocation;
-	
-	public Set<String> tags;
-	
-	public String label;
-	public long labelClickTime;
-	public int labelClickIndex;
-	public String labelFirstTime;
-	public String labelTime;
-	public boolean isStationary;
-	public boolean isModified;
-	public boolean isRemoved;
-	public boolean isUserCreated;
-	public String referenceSplitUUID;
-	public String referenceMergeUUID;
-	
-	public Label() {
-	}
+  public UUID UUID;
+  public Date startTime;
+  public Date endTime;
 
-	public UUID getUUID() {
-		return UUID;
-	}
+  @Frozen
+  public Location startLocation;
 
-	public void setUUID(UUID uUID) {
-		UUID = uUID;
-	}
+  @Frozen
+  public Location endLocation;
 
-	public Date getStartTime() {
-		return startTime;
-	}
+  public Set<String> tags;
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
+  public String label;
+  public long labelClickTime;
+  public int labelClickIndex;
+  public String labelFirstTime;
+  public String labelTime;
+  public boolean isStationary;
+  public boolean isModified;
+  public boolean isRemoved;
+  public boolean isUserCreated;
+  public String referenceSplitUUID;
+  public String referenceMergeUUID;
 
-	public Date getEndTime() {
-		return endTime;
-	}
+  public Label() {}
 
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
+  public UUID getUUID() {
+    return UUID;
+  }
 
-	public Location getStartLocation() {
-		return startLocation;
-	}
+  public void setUUID(UUID uUID) {
+    UUID = uUID;
+  }
 
-	public void setStartLocation(Location startLocation) {
-		this.startLocation = startLocation;
-	}
+  public Date getStartTime() {
+    return startTime;
+  }
 
-	public Location getEndLocation() {
-		return endLocation;
-	}
+  public void setStartTime(Date startTime) {
+    this.startTime = startTime;
+  }
 
-	public void setEndLocation(Location endLocation) {
-		this.endLocation = endLocation;
-	}
+  public Date getEndTime() {
+    return endTime;
+  }
 
-	public String getLabel() {
-		return label;
-	}
+  public void setEndTime(Date endTime) {
+    this.endTime = endTime;
+  }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+  public Location getStartLocation() {
+    return startLocation;
+  }
 
-	public long getLabelClickTime() {
-		return labelClickTime;
-	}
+  public void setStartLocation(Location startLocation) {
+    this.startLocation = startLocation;
+  }
 
-	public void setLabelClickTime(long labelClickTime) {
-		this.labelClickTime = labelClickTime;
-	}
+  public Location getEndLocation() {
+    return endLocation;
+  }
 
-	public int getLabelClickIndex() {
-		return labelClickIndex;
-	}
+  public void setEndLocation(Location endLocation) {
+    this.endLocation = endLocation;
+  }
 
-	public void setLabelClickIndex(int labelClickIndex) {
-		this.labelClickIndex = labelClickIndex;
-	}
+  public String getLabel() {
+    return label;
+  }
 
-	public String getLabelFirstTime() {
-		return labelFirstTime;
-	}
+  public void setLabel(String label) {
+    this.label = label;
+  }
 
-	public void setLabelFirstTime(String labelFirstTime) {
-		this.labelFirstTime = labelFirstTime;
-	}
+  public long getLabelClickTime() {
+    return labelClickTime;
+  }
 
-	public String getLabelTime() {
-		return labelTime;
-	}
+  public void setLabelClickTime(long labelClickTime) {
+    this.labelClickTime = labelClickTime;
+  }
 
-	public void setLabelTime(String labelTime) {
-		this.labelTime = labelTime;
-	}
+  public int getLabelClickIndex() {
+    return labelClickIndex;
+  }
 
-	public boolean getIsStationary() {
-		return isStationary;
-	}
+  public void setLabelClickIndex(int labelClickIndex) {
+    this.labelClickIndex = labelClickIndex;
+  }
 
-	public void setIsStationary(boolean isStationary) {
-		this.isStationary = isStationary;
-	}
+  public String getLabelFirstTime() {
+    return labelFirstTime;
+  }
 
-	public boolean getIsModified() {
-		return isModified;
-	}
+  public void setLabelFirstTime(String labelFirstTime) {
+    this.labelFirstTime = labelFirstTime;
+  }
 
-	public void setIsModified(boolean isModified) {
-		this.isModified = isModified;
-	}
+  public String getLabelTime() {
+    return labelTime;
+  }
 
-	public boolean getIsRemoved() {
-		return isRemoved;
-	}
+  public void setLabelTime(String labelTime) {
+    this.labelTime = labelTime;
+  }
 
-	public void setIsRemoved(boolean isRemoved) {
-		this.isRemoved = isRemoved;
-	}
+  public boolean getIsStationary() {
+    return isStationary;
+  }
 
-	public boolean getIsUserCreated() {
-		return isUserCreated;
-	}
+  public void setIsStationary(boolean isStationary) {
+    this.isStationary = isStationary;
+  }
 
-	public void setIsUserCreated(boolean isUserCreated) {
-		this.isUserCreated = isUserCreated;
-	}
+  public boolean getIsModified() {
+    return isModified;
+  }
 
-	public String getReferenceSplitUUID() {
-		return referenceSplitUUID;
-	}
+  public void setIsModified(boolean isModified) {
+    this.isModified = isModified;
+  }
 
-	public void setReferenceSplitUUID(String referenceSplitUUID) {
-		this.referenceSplitUUID = referenceSplitUUID;
-	}
+  public boolean getIsRemoved() {
+    return isRemoved;
+  }
 
-	public String getReferenceMergeUUID() {
-		return referenceMergeUUID;
-	}
+  public void setIsRemoved(boolean isRemoved) {
+    this.isRemoved = isRemoved;
+  }
 
-	public void setReferenceMergeUUID(String referenceMergeUUID) {
-		this.referenceMergeUUID = referenceMergeUUID;
-	}
+  public boolean getIsUserCreated() {
+    return isUserCreated;
+  }
 
-	public Set<String> getTags() {
-		return tags;
-	}
+  public void setIsUserCreated(boolean isUserCreated) {
+    this.isUserCreated = isUserCreated;
+  }
 
-	public void setTags(Set<String> tags) {
-		this.tags = tags;
-	}
+  public String getReferenceSplitUUID() {
+    return referenceSplitUUID;
+  }
+
+  public void setReferenceSplitUUID(String referenceSplitUUID) {
+    this.referenceSplitUUID = referenceSplitUUID;
+  }
+
+  public String getReferenceMergeUUID() {
+    return referenceMergeUUID;
+  }
+
+  public void setReferenceMergeUUID(String referenceMergeUUID) {
+    this.referenceMergeUUID = referenceMergeUUID;
+  }
+
+  public Set<String> getTags() {
+    return tags;
+  }
+
+  public void setTags(Set<String> tags) {
+    this.tags = tags;
+  }
 }

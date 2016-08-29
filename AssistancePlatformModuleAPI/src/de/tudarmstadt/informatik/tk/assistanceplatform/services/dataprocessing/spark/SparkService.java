@@ -12,56 +12,52 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBund
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.PlatformClientFactory;
 
 public class SparkService implements ISparkService {
-	private final String appName;
-	private final String master;
-	private final String[] jars;
-	private final ModuleBundle bundle;
+  private final String appName;
+  private final String master;
+  private final String[] jars;
+  private final ModuleBundle bundle;
 
-	private SparkConf sparkConfInstance;
+  private SparkConf sparkConfInstance;
 
-	public SparkService(ModuleBundle bundle, String appName, String master,
-			String[] jars) {
-		this.appName = appName;
-		this.master = master;
-		this.jars = jars;
-		this.bundle = bundle;
-	}
+  public SparkService(ModuleBundle bundle, String appName, String master, String[] jars) {
+    this.appName = appName;
+    this.master = master;
+    this.jars = jars;
+    this.bundle = bundle;
+  }
 
-	public JavaStreamingContext createStreamingContext(Duration batchDuration) {
-		return new JavaStreamingContext(getSparkConf(), Durations.seconds(10));
-	}
+  public JavaStreamingContext createStreamingContext(Duration batchDuration) {
+    return new JavaStreamingContext(getSparkConf(), Durations.seconds(10));
+  }
 
-	public JavaSparkContext createContext() {
-		return new JavaSparkContext(getSparkConf());
-	}
+  public JavaSparkContext createContext() {
+    return new JavaSparkContext(getSparkConf());
+  }
 
-	public SparkConf getSparkConf() {
-		// Lazily initialize the configuration
-		if (sparkConfInstance == null) {
-			sparkConfInstance = createSparkConf(appName, master, jars);
-		}
-		return sparkConfInstance;
-	}
+  public SparkConf getSparkConf() {
+    // Lazily initialize the configuration
+    if (sparkConfInstance == null) {
+      sparkConfInstance = createSparkConf(appName, master, jars);
+    }
+    return sparkConfInstance;
+  }
 
-	private SparkConf createSparkConf(String appName, String master,
-			String[] jars) {
-		return new SparkConf()
-				.setAppName(appName)
-				.setMaster(master)
-				.setJars(jars);
-				/*.set("spark.serializer",
-						"org.apache.spark.serializer.KryoSerializer");*/
-	}
+  private SparkConf createSparkConf(String appName, String master, String[] jars) {
+    return new SparkConf().setAppName(appName).setMaster(master).setJars(jars);
+    /*
+     * .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer");
+     */
+  }
 
-	@Override
-	public <T extends Event> JavaDStream<T> getEventReceiverStream(
-			JavaStreamingContext sc, Class<T> eventType) {
-		UserFilteredMessagingServiceReceiver<T> messagingReceiver = new UserFilteredMessagingServiceReceiver<T>(
-				bundle.getModuleId(), PlatformClientFactory.getInstance()
-						.getUsedHost(), eventType);
+  @Override
+  public <T extends Event> JavaDStream<T> getEventReceiverStream(JavaStreamingContext sc,
+      Class<T> eventType) {
+    UserFilteredMessagingServiceReceiver<T> messagingReceiver =
+        new UserFilteredMessagingServiceReceiver<T>(bundle.getModuleId(),
+            PlatformClientFactory.getInstance().getUsedHost(), eventType);
 
-		JavaDStream<T> stream = sc.receiverStream(messagingReceiver);
+    JavaDStream<T> stream = sc.receiverStream(messagingReceiver);
 
-		return stream;
-	}
+    return stream;
+  }
 }

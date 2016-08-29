@@ -6,20 +6,20 @@ import com.datastax.driver.mapping.annotations.Table;
 
 @Table(name = "sensor_powerlevel")
 public class PowerLevel extends SensorData implements Serializable {
-	public float percent;
+  public float percent;
 
-	public PowerLevel() {}
-	
-	public PowerLevel(float percent) {
-		super();
-		this.percent = percent;
-	}
+  public PowerLevel() {}
 
-	public float getPercent() {
-		return percent;
-	}
+  public PowerLevel(float percent) {
+    super();
+    this.percent = percent;
+  }
 
-	public void setPercent(float percent) {
-		this.percent = percent;
-	}
+  public float getPercent() {
+    return percent;
+  }
+
+  public void setPercent(float percent) {
+    this.percent = percent;
+  }
 }

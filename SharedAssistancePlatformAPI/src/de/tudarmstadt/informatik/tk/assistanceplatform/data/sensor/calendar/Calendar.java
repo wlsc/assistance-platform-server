@@ -11,260 +11,259 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 
 @Table(name = "sensor_calendar")
 public class Calendar extends SensorData {
-	public String eventId;
-	public String calendarId;
-	public Boolean allDay;
-	public Integer availability; // -1: NotSupported, 0: Busy, 1: Free, 2: Tentative und 3: Unavailable.
-	public String description;
-	public Date startDate;
-	public Date endDate; 
-	public String location;
-	public Integer status; // -1: none, 0: Tentative, 1: Confirmed, 2: Canceled,
-	public String title;
-	public String recurrenceRule;
-	
-	@Frozen
-	public Set<Alarm> alarms; 
+  public String eventId;
+  public String calendarId;
+  public Boolean allDay;
+  public Integer availability; // -1: NotSupported, 0: Busy, 1: Free, 2: Tentative und 3:
+                               // Unavailable.
+  public String description;
+  public Date startDate;
+  public Date endDate;
+  public String location;
+  public Integer status; // -1: none, 0: Tentative, 1: Confirmed, 2: Canceled,
+  public String title;
+  public String recurrenceRule;
 
-	public Boolean isDeleted;
-	public String created;
+  @Frozen
+  public Set<Alarm> alarms;
 
-	// Optional
-	
-	@JsonProperty(value = "URL")
-	public String URLOptional;
-	
-	@JsonProperty(value = "isDetached")
-	public Boolean isDetachedOptional;
-	
-	@JsonProperty(value = "lastModifiedDate")
-	public String lastModifiedDateOptional;
-	
-	@JsonProperty(value = "duration")
-	public String durationOptional;
-	
-	@JsonProperty(value = "originalAllDay")
-	public Boolean originalAllDayOptional;
-	
-	@JsonProperty(value = "originalId")
-	public String originalIdOptional;
-	
-	@JsonProperty(value = "originalInstanceTime")
-	public Long originalInstanceTimeOptional;
-	
-	@JsonProperty(value = "recurrenceExceptionDate")
-	public String recurrenceExceptionDateOptional;
-	
-	@JsonProperty(value = "recurrenceExceptionRule")
-	public String recurrenceExceptionRuleOptional;
-	
-	@JsonProperty(value = "lastDate")
-	public Long lastDateOptional;
-	
-	@JsonProperty(value = "recurrenceDate")
-	public String recurrenceDateOptional;
-	
-	public Calendar() {}
+  public Boolean isDeleted;
+  public String created;
 
-	public String getEventId() {
-		return eventId;
-	}
+  // Optional
 
-	public void setEventId(String eventId) {
-		this.eventId = eventId;
-	}
+  @JsonProperty(value = "URL")
+  public String URLOptional;
 
-	public String getCalendarId() {
-		return calendarId;
-	}
+  @JsonProperty(value = "isDetached")
+  public Boolean isDetachedOptional;
 
-	public void setCalendarId(String calendarId) {
-		this.calendarId = calendarId;
-	}
+  @JsonProperty(value = "lastModifiedDate")
+  public String lastModifiedDateOptional;
 
-	public Boolean getAllDay() {
-		return allDay;
-	}
+  @JsonProperty(value = "duration")
+  public String durationOptional;
 
-	public void setAllDay(Boolean allDay) {
-		this.allDay = allDay;
-	}
+  @JsonProperty(value = "originalAllDay")
+  public Boolean originalAllDayOptional;
 
-	public Integer getAvailability() {
-		return availability;
-	}
+  @JsonProperty(value = "originalId")
+  public String originalIdOptional;
 
-	public void setAvailability(Integer availability) {
-		this.availability = availability;
-	}
+  @JsonProperty(value = "originalInstanceTime")
+  public Long originalInstanceTimeOptional;
 
-	public String getDescription() {
-		return description;
-	}
+  @JsonProperty(value = "recurrenceExceptionDate")
+  public String recurrenceExceptionDateOptional;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  @JsonProperty(value = "recurrenceExceptionRule")
+  public String recurrenceExceptionRuleOptional;
 
-	public Date getStartDate() {
-		return startDate;
-	}
+  @JsonProperty(value = "lastDate")
+  public Long lastDateOptional;
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+  @JsonProperty(value = "recurrenceDate")
+  public String recurrenceDateOptional;
 
-	public Date getEndDate() {
-		return endDate;
-	}
+  public Calendar() {}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+  public String getEventId() {
+    return eventId;
+  }
 
-	public String getLocation() {
-		return location;
-	}
+  public void setEventId(String eventId) {
+    this.eventId = eventId;
+  }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+  public String getCalendarId() {
+    return calendarId;
+  }
 
-	public Integer getStatus() {
-		return status;
-	}
+  public void setCalendarId(String calendarId) {
+    this.calendarId = calendarId;
+  }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+  public Boolean getAllDay() {
+    return allDay;
+  }
 
-	public String getTitle() {
-		return title;
-	}
+  public void setAllDay(Boolean allDay) {
+    this.allDay = allDay;
+  }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  public Integer getAvailability() {
+    return availability;
+  }
 
-	public String getRecurrenceRule() {
-		return recurrenceRule;
-	}
+  public void setAvailability(Integer availability) {
+    this.availability = availability;
+  }
 
-	public void setRecurrenceRule(String recurrenceRule) {
-		this.recurrenceRule = recurrenceRule;
-	}
+  public String getDescription() {
+    return description;
+  }
 
-	public Set<Alarm> getAlarms() {
-		return alarms;
-	}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-	public void setAlarms(Set<Alarm> alarms) {
-		this.alarms = alarms;
-	}
+  public Date getStartDate() {
+    return startDate;
+  }
 
-	public Boolean getIsDeleted() {
-		return isDeleted;
-	}
+  public void setStartDate(Date startDate) {
+    this.startDate = startDate;
+  }
 
-	public void setIsDeleted(Boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
+  public Date getEndDate() {
+    return endDate;
+  }
 
-	public String getCreated() {
-		return created;
-	}
+  public void setEndDate(Date endDate) {
+    this.endDate = endDate;
+  }
 
-	public void setCreated(String created) {
-		this.created = created;
-	}
+  public String getLocation() {
+    return location;
+  }
 
-	public String getURLOptional() {
-		return URLOptional;
-	}
+  public void setLocation(String location) {
+    this.location = location;
+  }
 
-	public void setURLOptional(String uRLOptional) {
-		URLOptional = uRLOptional;
-	}
+  public Integer getStatus() {
+    return status;
+  }
 
-	public Boolean getIsDetachedOptional() {
-		return isDetachedOptional;
-	}
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
 
-	public void setIsDetachedOptional(Boolean isDetachedOptional) {
-		this.isDetachedOptional = isDetachedOptional;
-	}
+  public String getTitle() {
+    return title;
+  }
 
-	public String getLastModifiedDateOptional() {
-		return lastModifiedDateOptional;
-	}
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-	public void setLastModifiedDateOptional(String lastModifiedDateOptional) {
-		this.lastModifiedDateOptional = lastModifiedDateOptional;
-	}
+  public String getRecurrenceRule() {
+    return recurrenceRule;
+  }
 
-	public String getDurationOptional() {
-		return durationOptional;
-	}
+  public void setRecurrenceRule(String recurrenceRule) {
+    this.recurrenceRule = recurrenceRule;
+  }
 
-	public void setDurationOptional(String durationOptional) {
-		this.durationOptional = durationOptional;
-	}
+  public Set<Alarm> getAlarms() {
+    return alarms;
+  }
 
-	public Boolean getOriginalAllDayOptional() {
-		return originalAllDayOptional;
-	}
+  public void setAlarms(Set<Alarm> alarms) {
+    this.alarms = alarms;
+  }
 
-	public void setOriginalAllDayOptional(Boolean originalAllDayOptional) {
-		this.originalAllDayOptional = originalAllDayOptional;
-	}
+  public Boolean getIsDeleted() {
+    return isDeleted;
+  }
 
-	public String getOriginalIdOptional() {
-		return originalIdOptional;
-	}
+  public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
 
-	public void setOriginalIdOptional(String originalIdOptional) {
-		this.originalIdOptional = originalIdOptional;
-	}
+  public String getCreated() {
+    return created;
+  }
 
-	public Long getOriginalInstanceTimeOptional() {
-		return originalInstanceTimeOptional;
-	}
+  public void setCreated(String created) {
+    this.created = created;
+  }
 
-	public void setOriginalInstanceTimeOptional(Long originalInstanceTimeOptional) {
-		this.originalInstanceTimeOptional = originalInstanceTimeOptional;
-	}
+  public String getURLOptional() {
+    return URLOptional;
+  }
 
-	public String getRecurrenceExceptionDateOptional() {
-		return recurrenceExceptionDateOptional;
-	}
+  public void setURLOptional(String uRLOptional) {
+    URLOptional = uRLOptional;
+  }
 
-	public void setRecurrenceExceptionDateOptional(
-			String recurrenceExceptionDateOptional) {
-		this.recurrenceExceptionDateOptional = recurrenceExceptionDateOptional;
-	}
+  public Boolean getIsDetachedOptional() {
+    return isDetachedOptional;
+  }
 
-	public String getRecurrenceExceptionRuleOptional() {
-		return recurrenceExceptionRuleOptional;
-	}
+  public void setIsDetachedOptional(Boolean isDetachedOptional) {
+    this.isDetachedOptional = isDetachedOptional;
+  }
 
-	public void setRecurrenceExceptionRuleOptional(
-			String recurrenceExceptionRuleOptional) {
-		this.recurrenceExceptionRuleOptional = recurrenceExceptionRuleOptional;
-	}
+  public String getLastModifiedDateOptional() {
+    return lastModifiedDateOptional;
+  }
 
-	public Long getLastDateOptional() {
-		return lastDateOptional;
-	}
+  public void setLastModifiedDateOptional(String lastModifiedDateOptional) {
+    this.lastModifiedDateOptional = lastModifiedDateOptional;
+  }
 
-	public void setLastDateOptional(Long lastDateOptional) {
-		this.lastDateOptional = lastDateOptional;
-	}
+  public String getDurationOptional() {
+    return durationOptional;
+  }
 
-	public String getRecurrenceDateOptional() {
-		return recurrenceDateOptional;
-	}
+  public void setDurationOptional(String durationOptional) {
+    this.durationOptional = durationOptional;
+  }
 
-	public void setRecurrenceDateOptional(String recurrenceDateOptional) {
-		this.recurrenceDateOptional = recurrenceDateOptional;
-	}
+  public Boolean getOriginalAllDayOptional() {
+    return originalAllDayOptional;
+  }
+
+  public void setOriginalAllDayOptional(Boolean originalAllDayOptional) {
+    this.originalAllDayOptional = originalAllDayOptional;
+  }
+
+  public String getOriginalIdOptional() {
+    return originalIdOptional;
+  }
+
+  public void setOriginalIdOptional(String originalIdOptional) {
+    this.originalIdOptional = originalIdOptional;
+  }
+
+  public Long getOriginalInstanceTimeOptional() {
+    return originalInstanceTimeOptional;
+  }
+
+  public void setOriginalInstanceTimeOptional(Long originalInstanceTimeOptional) {
+    this.originalInstanceTimeOptional = originalInstanceTimeOptional;
+  }
+
+  public String getRecurrenceExceptionDateOptional() {
+    return recurrenceExceptionDateOptional;
+  }
+
+  public void setRecurrenceExceptionDateOptional(String recurrenceExceptionDateOptional) {
+    this.recurrenceExceptionDateOptional = recurrenceExceptionDateOptional;
+  }
+
+  public String getRecurrenceExceptionRuleOptional() {
+    return recurrenceExceptionRuleOptional;
+  }
+
+  public void setRecurrenceExceptionRuleOptional(String recurrenceExceptionRuleOptional) {
+    this.recurrenceExceptionRuleOptional = recurrenceExceptionRuleOptional;
+  }
+
+  public Long getLastDateOptional() {
+    return lastDateOptional;
+  }
+
+  public void setLastDateOptional(Long lastDateOptional) {
+    this.lastDateOptional = lastDateOptional;
+  }
+
+  public String getRecurrenceDateOptional() {
+    return recurrenceDateOptional;
+  }
+
+  public void setRecurrenceDateOptional(String recurrenceDateOptional) {
+    this.recurrenceDateOptional = recurrenceDateOptional;
+  }
 }

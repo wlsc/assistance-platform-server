@@ -9,19 +9,20 @@ import com.esotericsoftware.kryo.io.Output;
 
 /**
  * Used to serialize Instants for Kryo
+ * 
  * @author bjeutter
  *
  */
 public class InstantSerializer extends Serializer<Instant> {
 
-	@Override
-	public Instant read(Kryo arg0, Input arg1, Class<Instant> arg2) {
-		return Instant.ofEpochMilli(arg1.readLong());
-	}
+  @Override
+  public Instant read(Kryo arg0, Input arg1, Class<Instant> arg2) {
+    return Instant.ofEpochMilli(arg1.readLong());
+  }
 
-	@Override
-	public void write(Kryo arg0, Output arg1, Instant arg2) {
-		arg1.writeLong(arg2.toEpochMilli());
-	}
+  @Override
+  public void write(Kryo arg0, Output arg1, Instant arg2) {
+    arg1.writeLong(arg2.toEpochMilli());
+  }
 
 }

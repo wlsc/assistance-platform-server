@@ -9,37 +9,37 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 
 @Table(name = "sensor_facebooktoken")
 public class FacebookToken extends SensorData {
-	public String oauthToken;
-	
-	@Frozen
-	public Set<String> permissions;
-	
-	@Frozen
-	public Set<String> declinedPermissions;
-	
-	public FacebookToken() {}
+  public String oauthToken;
 
-	public String getOauthToken() {
-		return oauthToken;
-	}
+  @Frozen
+  public Set<String> permissions;
 
-	public void setOauthToken(String oauthToken) {
-		this.oauthToken = oauthToken;
-	}
+  @Frozen
+  public Set<String> declinedPermissions;
 
-	public Set<String> getPermissions() {
-		return permissions;
-	}
+  public FacebookToken() {}
 
-	public void setPermissions(Set<String> permissions) {
-		this.permissions = permissions;
-	}
+  public String getOauthToken() {
+    return oauthToken;
+  }
 
-	public Set<String> getDeclinedPermissions() {
-		return declinedPermissions;
-	}
+  public void setOauthToken(String oauthToken) {
+    this.oauthToken = oauthToken;
+  }
 
-	public void setDeclinedPermissions(Set<String> declinedPermissions) {
-		this.declinedPermissions = declinedPermissions;
-	}
+  public Set<String> getPermissions() {
+    return permissions;
+  }
+
+  public void setPermissions(Set<String> permissions) {
+    this.permissions = permissions;
+  }
+
+  public Set<String> getDeclinedPermissions() {
+    return declinedPermissions;
+  }
+
+  public void setDeclinedPermissions(Set<String> declinedPermissions) {
+    this.declinedPermissions = declinedPermissions;
+  }
 }

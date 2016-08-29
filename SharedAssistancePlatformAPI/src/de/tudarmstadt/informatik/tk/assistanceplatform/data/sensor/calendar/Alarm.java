@@ -8,106 +8,106 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @UDT(name = "alarm")
 public class Alarm implements Serializable {
 
-	public Integer type; // <- 0: Default, 1: Alert, 2: Email, 3: SMS, 4: Alarm,
-							// 5: Display 6: Audio, 7: Procedure/Method
+  public Integer type; // <- 0: Default, 1: Alert, 2: Email, 3: SMS, 4: Alarm,
+                       // 5: Display 6: Audio, 7: Procedure/Method
 
-	public Boolean defaultOffset;
+  public Boolean defaultOffset;
 
-	// Optional
+  // Optional
 
-	@JsonProperty(value = "offset")
-	public Integer offsetOptional; // <- Sekunden vom Startzeitpunkt des Events:
-									// negativ
-	// = vorher, musst du also deins Mal -1 nehmen.
-	// Falls bei dir -1 gespeichert ist (default)
-	// stattdessen defaultOffset auf true setzen und
-	// offset weglassen
-	@JsonProperty(value = "absoluteDate")
-	public String absoluteDateOptional; // <- fester Alarm-Zeitpunkt in ISO 8601
-	@JsonProperty(value = "proximity")
-	public Integer proximityOptional; // <- 0: None, 1: Enter, 2: Leave (Typen
-										// für
-	// Location-basierten Alarm)
-	@JsonProperty(value = "locationTitle")
-	public String locationTitleOptional;
-	@JsonProperty(value = "locationLatitude")
-	public Double locationLatitudeOptional;
-	@JsonProperty(value = "locationLongitude")
-	public Double locationLongitudeOptional;
-	@JsonProperty(value = "locationRadius")
-	public Double locationRadiusOptional; // (in Metern, 0 = default)
-	
-	public Alarm() {}
+  @JsonProperty(value = "offset")
+  public Integer offsetOptional; // <- Sekunden vom Startzeitpunkt des Events:
+                                 // negativ
+  // = vorher, musst du also deins Mal -1 nehmen.
+  // Falls bei dir -1 gespeichert ist (default)
+  // stattdessen defaultOffset auf true setzen und
+  // offset weglassen
+  @JsonProperty(value = "absoluteDate")
+  public String absoluteDateOptional; // <- fester Alarm-Zeitpunkt in ISO 8601
+  @JsonProperty(value = "proximity")
+  public Integer proximityOptional; // <- 0: None, 1: Enter, 2: Leave (Typen
+                                    // für
+  // Location-basierten Alarm)
+  @JsonProperty(value = "locationTitle")
+  public String locationTitleOptional;
+  @JsonProperty(value = "locationLatitude")
+  public Double locationLatitudeOptional;
+  @JsonProperty(value = "locationLongitude")
+  public Double locationLongitudeOptional;
+  @JsonProperty(value = "locationRadius")
+  public Double locationRadiusOptional; // (in Metern, 0 = default)
 
-	public Integer getType() {
-		return type;
-	}
+  public Alarm() {}
 
-	public void setType(Integer type) {
-		this.type = type;
-	}
+  public Integer getType() {
+    return type;
+  }
 
-	public Boolean getDefaultOffset() {
-		return defaultOffset;
-	}
+  public void setType(Integer type) {
+    this.type = type;
+  }
 
-	public void setDefaultOffset(Boolean defaultOffset) {
-		this.defaultOffset = defaultOffset;
-	}
+  public Boolean getDefaultOffset() {
+    return defaultOffset;
+  }
 
-	public Integer getOffsetOptional() {
-		return offsetOptional;
-	}
+  public void setDefaultOffset(Boolean defaultOffset) {
+    this.defaultOffset = defaultOffset;
+  }
 
-	public void setOffsetOptional(Integer offsetOptional) {
-		this.offsetOptional = offsetOptional;
-	}
+  public Integer getOffsetOptional() {
+    return offsetOptional;
+  }
 
-	public String getAbsoluteDateOptional() {
-		return absoluteDateOptional;
-	}
+  public void setOffsetOptional(Integer offsetOptional) {
+    this.offsetOptional = offsetOptional;
+  }
 
-	public void setAbsoluteDateOptional(String absoluteDateOptional) {
-		this.absoluteDateOptional = absoluteDateOptional;
-	}
+  public String getAbsoluteDateOptional() {
+    return absoluteDateOptional;
+  }
 
-	public Integer getProximityOptional() {
-		return proximityOptional;
-	}
+  public void setAbsoluteDateOptional(String absoluteDateOptional) {
+    this.absoluteDateOptional = absoluteDateOptional;
+  }
 
-	public void setProximityOptional(Integer proximityOptional) {
-		this.proximityOptional = proximityOptional;
-	}
+  public Integer getProximityOptional() {
+    return proximityOptional;
+  }
 
-	public String getLocationTitleOptional() {
-		return locationTitleOptional;
-	}
+  public void setProximityOptional(Integer proximityOptional) {
+    this.proximityOptional = proximityOptional;
+  }
 
-	public void setLocationTitleOptional(String locationTitleOptional) {
-		this.locationTitleOptional = locationTitleOptional;
-	}
+  public String getLocationTitleOptional() {
+    return locationTitleOptional;
+  }
 
-	public Double getLocationLatitudeOptional() {
-		return locationLatitudeOptional;
-	}
+  public void setLocationTitleOptional(String locationTitleOptional) {
+    this.locationTitleOptional = locationTitleOptional;
+  }
 
-	public void setLocationLatitudeOptional(Double locationLatitudeOptional) {
-		this.locationLatitudeOptional = locationLatitudeOptional;
-	}
+  public Double getLocationLatitudeOptional() {
+    return locationLatitudeOptional;
+  }
 
-	public Double getLocationLongitudeOptional() {
-		return locationLongitudeOptional;
-	}
+  public void setLocationLatitudeOptional(Double locationLatitudeOptional) {
+    this.locationLatitudeOptional = locationLatitudeOptional;
+  }
 
-	public void setLocationLongitudeOptional(Double locationLongitudeOptional) {
-		this.locationLongitudeOptional = locationLongitudeOptional;
-	}
+  public Double getLocationLongitudeOptional() {
+    return locationLongitudeOptional;
+  }
 
-	public Double getLocationRadiusOptional() {
-		return locationRadiusOptional;
-	}
+  public void setLocationLongitudeOptional(Double locationLongitudeOptional) {
+    this.locationLongitudeOptional = locationLongitudeOptional;
+  }
 
-	public void setLocationRadiusOptional(Double locationRadiusOptional) {
-		this.locationRadiusOptional = locationRadiusOptional;
-	}
+  public Double getLocationRadiusOptional() {
+    return locationRadiusOptional;
+  }
+
+  public void setLocationRadiusOptional(Double locationRadiusOptional) {
+    this.locationRadiusOptional = locationRadiusOptional;
+  }
 }

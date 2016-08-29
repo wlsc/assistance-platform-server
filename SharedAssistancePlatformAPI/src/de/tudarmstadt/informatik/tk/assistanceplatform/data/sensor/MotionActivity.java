@@ -6,116 +6,116 @@ import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "sensor_motionactivity")
-public class MotionActivity extends SensorData implements Serializable {	
-	public int walking;
-	public int running;
-	public int driving;
-	public int stationary;
-	public int unknown;
-	
-	 @JsonProperty(value = "onFoot")
-	public int onFootOptional;
-	 
-	 @JsonProperty(value = "tilting")
-	public int tiltingOptional;
-	
-	public MotionActivity() {
-		super();
-	}
+public class MotionActivity extends SensorData implements Serializable {
+  public int walking;
+  public int running;
+  public int driving;
+  public int stationary;
+  public int unknown;
 
-	public int getWalking() {
-		return walking;
-	}
+  @JsonProperty(value = "onFoot")
+  public int onFootOptional;
 
-	public void setWalking(int walking) {
-		this.walking = walking;
-	}
+  @JsonProperty(value = "tilting")
+  public int tiltingOptional;
 
-	public int getRunning() {
-		return running;
-	}
+  public MotionActivity() {
+    super();
+  }
 
-	public void setRunning(int running) {
-		this.running = running;
-	}
+  public int getWalking() {
+    return walking;
+  }
 
-	public int getDriving() {
-		return driving;
-	}
+  public void setWalking(int walking) {
+    this.walking = walking;
+  }
 
-	public void setDriving(int driving) {
-		this.driving = driving;
-	}
+  public int getRunning() {
+    return running;
+  }
 
-	public int getStationary() {
-		return stationary;
-	}
+  public void setRunning(int running) {
+    this.running = running;
+  }
 
-	public void setStationary(int stationary) {
-		this.stationary = stationary;
-	}
+  public int getDriving() {
+    return driving;
+  }
 
-	public int getUnknown() {
-		return unknown;
-	}
+  public void setDriving(int driving) {
+    this.driving = driving;
+  }
 
-	public void setUnknown(int unknown) {
-		this.unknown = unknown;
-	}
+  public int getStationary() {
+    return stationary;
+  }
 
-	public int getOnFootOptional() {
-		return onFootOptional;
-	}
+  public void setStationary(int stationary) {
+    this.stationary = stationary;
+  }
 
-	public void setOnFootOptional(int onFootOptional) {
-		this.onFootOptional = onFootOptional;
-	}
+  public int getUnknown() {
+    return unknown;
+  }
 
-	public int getTiltingOptional() {
-		return tiltingOptional;
-	}
+  public void setUnknown(int unknown) {
+    this.unknown = unknown;
+  }
 
-	public void setTiltingOptional(int tiltingOptional) {
-		this.tiltingOptional = tiltingOptional;
-	}
+  public int getOnFootOptional() {
+    return onFootOptional;
+  }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + driving;
-		result = prime * result + onFootOptional;
-		result = prime * result + running;
-		result = prime * result + stationary;
-		result = prime * result + tiltingOptional;
-		result = prime * result + unknown;
-		result = prime * result + walking;
-		return result;
-	}
+  public void setOnFootOptional(int onFootOptional) {
+    this.onFootOptional = onFootOptional;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MotionActivity other = (MotionActivity) obj;
-		if (driving != other.driving)
-			return false;
-		if (onFootOptional != other.onFootOptional)
-			return false;
-		if (running != other.running)
-			return false;
-		if (stationary != other.stationary)
-			return false;
-		if (tiltingOptional != other.tiltingOptional)
-			return false;
-		if (unknown != other.unknown)
-			return false;
-		if (walking != other.walking)
-			return false;
-		return true;
-	}
+  public int getTiltingOptional() {
+    return tiltingOptional;
+  }
+
+  public void setTiltingOptional(int tiltingOptional) {
+    this.tiltingOptional = tiltingOptional;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + driving;
+    result = prime * result + onFootOptional;
+    result = prime * result + running;
+    result = prime * result + stationary;
+    result = prime * result + tiltingOptional;
+    result = prime * result + unknown;
+    result = prime * result + walking;
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (!super.equals(obj))
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    MotionActivity other = (MotionActivity) obj;
+    if (driving != other.driving)
+      return false;
+    if (onFootOptional != other.onFootOptional)
+      return false;
+    if (running != other.running)
+      return false;
+    if (stationary != other.stationary)
+      return false;
+    if (tiltingOptional != other.tiltingOptional)
+      return false;
+    if (unknown != other.unknown)
+      return false;
+    if (walking != other.walking)
+      return false;
+    return true;
+  }
 }

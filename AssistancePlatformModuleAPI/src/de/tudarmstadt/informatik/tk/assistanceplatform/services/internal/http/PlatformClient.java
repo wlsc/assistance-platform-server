@@ -7,15 +7,6 @@ import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
-import com.squareup.okhttp.OkHttpClient;
-
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Client;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.LocalizedModuleBundleInformation;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundle;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle.ModuleBundleInformation;
@@ -28,224 +19,218 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.as
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.CassandraServiceConfigResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ServiceConfigResponse;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.OkClient;
+import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
 
 public class PlatformClient implements IGetUserActivationsForModule {
-	private final static Logger logger = Logger.getLogger(PlatformClient.class);
+  private final static Logger logger = Logger.getLogger(PlatformClient.class);
 
-	AssistancePlatformService service;
+  AssistancePlatformService service;
 
-	private String host;
+  private String host;
 
-	public PlatformClient(String urlAndPort) {
-		
-		RestAdapter restAdapter = new RestAdapter.Builder()
-		.setClient(new OkClient(UnsafeOkHttpClientFactory.getClient()))
-		.setEndpoint("https://" + urlAndPort).build();
+  public PlatformClient(String urlAndPort) {
 
-		service = restAdapter.create(AssistancePlatformService.class);
+    RestAdapter restAdapter =
+        new RestAdapter.Builder().setClient(new OkClient(UnsafeOkHttpClientFactory.getClient()))
+            .setEndpoint("https://" + urlAndPort).build();
 
-		host = urlAndPort;
-	}
+    service = restAdapter.create(AssistancePlatformService.class);
 
-	public String getUsedHostWithoutPort() {
-		if (host.contains(":")) {
-			return host.substring(0, host.lastIndexOf(":"));
-		}
+    host = urlAndPort;
+  }
 
-		return host;
-	}
+  public String getUsedHostWithoutPort() {
+    if (host.contains(":")) {
+      return host.substring(0, host.lastIndexOf(":"));
+    }
 
-	public String getUsedHost() {
-		return host;
-	}
+    return host;
+  }
 
-	public PlatformClient(AssistancePlatformService service) {
-		this.service = service;
-	}
+  public String getUsedHost() {
+    return host;
+  }
 
-	public void sendMessage(SendMessageRequest request,
-			Consumer<Void> onSuccess, Consumer<Void> onError) {
-		Callback<Void> callback = new Callback<Void>() {
+  public PlatformClient(AssistancePlatformService service) {
+    this.service = service;
+  }
 
-			@Override
-			public void failure(RetrofitError error) {
-				logger.warn("Failed to send action request "
-						+ errorFromRetrofit(error));
-				onError.accept(null);
-			}
+  public void sendMessage(SendMessageRequest request, Consumer<Void> onSuccess,
+      Consumer<Void> onError) {
+    Callback<Void> callback = new Callback<Void>() {
 
-			@Override
-			public void success(Void arg0, Response arg1) {
-				logger.info("Successfully registered module on platform");
+      @Override
+      public void failure(RetrofitError error) {
+        logger.warn("Failed to send action request " + errorFromRetrofit(error));
+        onError.accept(null);
+      }
 
-				onSuccess.accept(null);
-			}
-		};
+      @Override
+      public void success(Void arg0, Response arg1) {
+        logger.info("Successfully registered module on platform");
 
-		service.sendMessage(request, callback);
-	}
+        onSuccess.accept(null);
+      }
+    };
 
-	public void registerModule(ModuleBundle bundle, Consumer<Void> onSuccess,
-			Consumer<Void> onError, boolean tryUpdateOnFailure) {
-		Callback<Void> callback = new Callback<Void>() {
+    service.sendMessage(request, callback);
+  }
 
-			@Override
-			public void failure(RetrofitError error) {
-				logger.warn("Failed to register module on platform "
-						+ errorFromRetrofit(error));
+  public void registerModule(ModuleBundle bundle, Consumer<Void> onSuccess, Consumer<Void> onError,
+      boolean tryUpdateOnFailure) {
+    Callback<Void> callback = new Callback<Void>() {
 
-				if (tryUpdateOnFailure) {
-					logger.info("-> Try update module information");
+      @Override
+      public void failure(RetrofitError error) {
+        logger.warn("Failed to register module on platform " + errorFromRetrofit(error));
 
-					updateModule(bundle, onSuccess, onError);
-				} else {
-					onError.accept(null);
-				}
-			}
+        if (tryUpdateOnFailure) {
+          logger.info("-> Try update module information");
 
-			@Override
-			public void success(Void arg0, Response arg1) {
-				logger.info("Successfully registered module on platform");
+          updateModule(bundle, onSuccess, onError);
+        } else {
+          onError.accept(null);
+        }
+      }
 
-				onSuccess.accept(null);
-			}
-		};
+      @Override
+      public void success(Void arg0, Response arg1) {
+        logger.info("Successfully registered module on platform");
 
-		service.register(bundleToRequest(bundle), callback);
-	}
+        onSuccess.accept(null);
+      }
+    };
 
-	public void updateModule(ModuleBundle bundle, Consumer<Void> onSuccess,
-			Consumer<Void> onError) {
-		Callback<Void> callback = new Callback<Void>() {
+    service.register(bundleToRequest(bundle), callback);
+  }
 
-			@Override
-			public void failure(RetrofitError error) {
-				logger.warn("Failed to update module information on platform "
-						+ errorFromRetrofit(error));
+  public void updateModule(ModuleBundle bundle, Consumer<Void> onSuccess, Consumer<Void> onError) {
+    Callback<Void> callback = new Callback<Void>() {
 
-				onError.accept(null);
-			}
+      @Override
+      public void failure(RetrofitError error) {
+        logger.warn("Failed to update module information on platform " + errorFromRetrofit(error));
 
-			@Override
-			public void success(Void arg0, Response arg1) {
-				logger.info("Successfully updated module information on platform");
+        onError.accept(null);
+      }
 
-				onSuccess.accept(null);
-			}
-		};
+      @Override
+      public void success(Void arg0, Response arg1) {
+        logger.info("Successfully updated module information on platform");
 
-		service.update(bundleToRequest(bundle), callback);
-	}
+        onSuccess.accept(null);
+      }
+    };
 
-	public void localizeModule(ModuleBundle bundle, Consumer<Void> onError) {
-		Callback<Void> callback = new Callback<Void>() {
+    service.update(bundleToRequest(bundle), callback);
+  }
 
-			@Override
-			public void failure(RetrofitError error) {
-				logger.warn("Failed to localize module information on platform "
-						+ errorFromRetrofit(error));
+  public void localizeModule(ModuleBundle bundle, Consumer<Void> onError) {
+    Callback<Void> callback = new Callback<Void>() {
 
-				onError.accept(null);
-			}
+      @Override
+      public void failure(RetrofitError error) {
+        logger
+            .warn("Failed to localize module information on platform " + errorFromRetrofit(error));
 
-			@Override
-			public void success(Void arg0, Response arg1) {
-				logger.info("Successfully localized module information on platform");
-			}
-		};
+        onError.accept(null);
+      }
 
-		for (ModuleLocalizationRequest locRequest : bundleLocalizationRequests(bundle)) {
-			service.localize(locRequest, callback);
-		}
-	}
+      @Override
+      public void success(Void arg0, Response arg1) {
+        logger.info("Successfully localized module information on platform");
+      }
+    };
 
-	@Override
-	public void getUserActivationsForModule(String moduleId,
-			Consumer<long[]> activatedUserIdsCallback) {
-		Callback<ModuleActivationsResponse> callback = new Callback<ModuleActivationsResponse>() {
+    for (ModuleLocalizationRequest locRequest : bundleLocalizationRequests(bundle)) {
+      service.localize(locRequest, callback);
+    }
+  }
 
-			@Override
-			public void failure(RetrofitError error) {
-				logger.warn("Failed to pull user who activated the module "
-						+ errorFromRetrofit(error));
-			}
+  @Override
+  public void getUserActivationsForModule(String moduleId,
+      Consumer<long[]> activatedUserIdsCallback) {
+    Callback<ModuleActivationsResponse> callback = new Callback<ModuleActivationsResponse>() {
 
-			@Override
-			public void success(ModuleActivationsResponse arg0, Response arg1) {
-				logger.info("Pulled " + arg0.activatedUserIds.length
-						+ " user activations.");
+      @Override
+      public void failure(RetrofitError error) {
+        logger.warn("Failed to pull user who activated the module " + errorFromRetrofit(error));
+      }
 
-				activatedUserIdsCallback.accept(arg0.activatedUserIds);
-			}
-		};
+      @Override
+      public void success(ModuleActivationsResponse arg0, Response arg1) {
+        logger.info("Pulled " + arg0.activatedUserIds.length + " user activations.");
 
-		service.getModuleActivationsByUsers(moduleId, callback);
-	}
+        activatedUserIdsCallback.accept(arg0.activatedUserIds);
+      }
+    };
 
-	/**
-	 * BLOCKING! Get Service Call for Database Configuration
-	 * 
-	 * @param moduleId
-	 * @return
-	 */
-	public CassandraServiceConfigResponse getDatabaseService(String moduleId) {
-		return service.getCassandraServiceConfig(moduleId);
-	}
+    service.getModuleActivationsByUsers(moduleId, callback);
+  }
 
-	/**
-	 * BLOCKING! Get Service Call for Service Configuration
-	 * 
-	 * @param moduleId
-	 * @return
-	 */
-	public ServiceConfigResponse getServiceConfig(String moduleId,
-			String serviceName) {
-		return service.getServiceConfig(moduleId, serviceName);
-	}
+  /**
+   * BLOCKING! Get Service Call for Database Configuration
+   * 
+   * @param moduleId
+   * @return
+   */
+  public CassandraServiceConfigResponse getDatabaseService(String moduleId) {
+    return service.getCassandraServiceConfig(moduleId);
+  }
 
-	private ModuleRegistrationRequest bundleToRequest(ModuleBundle bundle) {
-		String id = bundle.getModuleId();
-		ModuleBundleInformation bundleInfo = bundle.getBundleInformation();
+  /**
+   * BLOCKING! Get Service Call for Service Configuration
+   * 
+   * @param moduleId
+   * @return
+   */
+  public ServiceConfigResponse getServiceConfig(String moduleId, String serviceName) {
+    return service.getServiceConfig(moduleId, serviceName);
+  }
 
-		ModuleRegistrationRequest request = new ModuleRegistrationRequest(id,
-				bundleInfo.englishModuleBundleInformation.name,
-				bundleInfo.englishModuleBundleInformation.logoUrl,
-				bundleInfo.englishModuleBundleInformation.descriptionShort,
-				bundleInfo.englishModuleBundleInformation.descriptionLong,
-				bundleInfo.requiredCapabilities,
-				bundleInfo.optionalCapabilites, bundleInfo.copyright,
-				bundleInfo.administratorEmail, bundleInfo.supportEmail,
-				bundle.getRestContactAddress());
+  private ModuleRegistrationRequest bundleToRequest(ModuleBundle bundle) {
+    String id = bundle.getModuleId();
+    ModuleBundleInformation bundleInfo = bundle.getBundleInformation();
 
-		return request;
-	}
+    ModuleRegistrationRequest request =
+        new ModuleRegistrationRequest(id, bundleInfo.englishModuleBundleInformation.name,
+            bundleInfo.englishModuleBundleInformation.logoUrl,
+            bundleInfo.englishModuleBundleInformation.descriptionShort,
+            bundleInfo.englishModuleBundleInformation.descriptionLong,
+            bundleInfo.requiredCapabilities, bundleInfo.optionalCapabilites, bundleInfo.copyright,
+            bundleInfo.administratorEmail, bundleInfo.supportEmail, bundle.getRestContactAddress());
 
-	private Set<ModuleLocalizationRequest> bundleLocalizationRequests(
-			ModuleBundle bundle) {
-		Set<Entry<String, LocalizedModuleBundleInformation>> localizations = bundle
-				.getBundleInformation().getLocalizedModuleBundleInformations();
+    return request;
+  }
 
-		Set<ModuleLocalizationRequest> requests = new HashSet<>();
+  private Set<ModuleLocalizationRequest> bundleLocalizationRequests(ModuleBundle bundle) {
+    Set<Entry<String, LocalizedModuleBundleInformation>> localizations =
+        bundle.getBundleInformation().getLocalizedModuleBundleInformations();
 
-		if (localizations != null) {
-			for (Entry<String, LocalizedModuleBundleInformation> localization : localizations) {
-				String languageCode = localization.getKey();
-				LocalizedModuleBundleInformation loc = localization.getValue();
-				requests.add(new ModuleLocalizationRequest(languageCode, bundle
-						.getModuleId(), loc.name, loc.logoUrl,
-						loc.descriptionShort, loc.descriptionLong));
-			}
-		}
+    Set<ModuleLocalizationRequest> requests = new HashSet<>();
 
-		return requests;
-	}
+    if (localizations != null) {
+      for (Entry<String, LocalizedModuleBundleInformation> localization : localizations) {
+        String languageCode = localization.getKey();
+        LocalizedModuleBundleInformation loc = localization.getValue();
+        requests.add(new ModuleLocalizationRequest(languageCode, bundle.getModuleId(), loc.name,
+            loc.logoUrl, loc.descriptionShort, loc.descriptionLong));
+      }
+    }
 
-	private String errorFromRetrofit(RetrofitError error) {
-		if (error.getResponse() != null) {
-			return new String(
-					((TypedByteArray) error.getResponse().getBody()).getBytes());
-		}
+    return requests;
+  }
 
-		return "unknown error";
-	}
+  private String errorFromRetrofit(RetrofitError error) {
+    if (error.getResponse() != null) {
+      return new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
+    }
+
+    return "unknown error";
+  }
 }

@@ -6,25 +6,25 @@ import com.datastax.driver.mapping.annotations.UDT;
 
 @UDT(name = "labeledvalue")
 public class LabeledContactValue implements Serializable {
-	public String label;
-	
-	public String value;
-	
-	public LabeledContactValue() {}
+  public String label;
 
-	public String getLabel() {
-		return label;
-	}
+  public String value;
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+  public LabeledContactValue() {}
 
-	public String getValue() {
-		return value;
-	}
+  public String getLabel() {
+    return label;
+  }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+  public void setLabel(String label) {
+    this.label = label;
+  }
+
+  public String getValue() {
+    return value;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
+  }
 }

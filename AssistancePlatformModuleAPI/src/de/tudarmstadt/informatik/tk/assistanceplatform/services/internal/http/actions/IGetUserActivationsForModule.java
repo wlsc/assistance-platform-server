@@ -3,5 +3,5 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.a
 import java.util.function.Consumer;
 
 public interface IGetUserActivationsForModule {
-	void getUserActivationsForModule(String moduleId, Consumer<long[]> activatedUserIdsCallback);
+  void getUserActivationsForModule(String moduleId, Consumer<long[]> activatedUserIdsCallback);
 }

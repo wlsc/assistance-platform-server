@@ -10,257 +10,255 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.sensor.SensorData;
 
 @Table(name = "sensor_contact")
 public class Contact extends SensorData {
-	// Required
-	public String globalContactId;
-	public String givenName;
-	public String familyName;
-	public String note;
-	public Boolean isDeleted;
+  // Required
+  public String globalContactId;
+  public String givenName;
+  public String familyName;
+  public String note;
+  public Boolean isDeleted;
 
-	// Optional
-	@JsonProperty(value = "displayName")
-	public String displayNameOptional;
-	
-	@JsonProperty(value = "starred")
-	public Integer starredOptional;
-	
-	@JsonProperty(value = "lastTimeContacted")
-	public Integer lastTimeContactedOptional;
-	
-	@JsonProperty(value = "timesContacted")
-	public Integer timesContactedOptional;
-	
-	@JsonProperty(value = "contactType")
-	public Integer contactTypeOptional; // <- 0: Person, 1: Organisation
-	
-	@JsonProperty(value = "namePrefix")
-	public String namePrefixOptional;
-	
-	@JsonProperty(value = "middleName")
-	public String middleNameOptional;
-	
-	@JsonProperty(value = "previousFamilyName")
-	public String previousFamilyNameOptional;
-	
-	@JsonProperty(value = "nameSuffix")
-	public String nameSuffixOptional;
-	
-	@JsonProperty(value = "nickname")
-	public String nicknameOptional;
-	
-	@JsonProperty(value = "phoneticGivenName")
-	public String phoneticGivenNameOptional;
-	
-	@JsonProperty(value = "phoneticMiddleName")
-	public String phoneticMiddleNameOptional;
-	
-	@JsonProperty(value = "phoneticFamilyName")
-	public String phoneticFamilyNameOptional;
-	
-	@JsonProperty(value = "organizationName")
-	public String organizationNameOptional;
-	
-	@JsonProperty(value = "departmentName")
-	public String departmentNameOptional;
-	
-	@JsonProperty(value = "jobTitle")
-	public String jobTitleOptional;
-	
-	@JsonProperty(value = "phoneNumbers")
-	@Frozen
-	public Set<LabeledContactValue> phoneNumbersOptional; 
-	
-	@JsonProperty(value = "emailAddresses")
-	@Frozen
-	public Set<LabeledContactValue> emailAddressesOptional;
-	
-	public Contact() {}
+  // Optional
+  @JsonProperty(value = "displayName")
+  public String displayNameOptional;
 
-	public String getGlobalContactId() {
-		return globalContactId;
-	}
+  @JsonProperty(value = "starred")
+  public Integer starredOptional;
 
-	public void setGlobalContactId(String globalContactId) {
-		this.globalContactId = globalContactId;
-	}
+  @JsonProperty(value = "lastTimeContacted")
+  public Integer lastTimeContactedOptional;
 
-	public String getGivenName() {
-		return givenName;
-	}
+  @JsonProperty(value = "timesContacted")
+  public Integer timesContactedOptional;
 
-	public void setGivenName(String givenName) {
-		this.givenName = givenName;
-	}
+  @JsonProperty(value = "contactType")
+  public Integer contactTypeOptional; // <- 0: Person, 1: Organisation
 
-	public String getFamilyName() {
-		return familyName;
-	}
+  @JsonProperty(value = "namePrefix")
+  public String namePrefixOptional;
 
-	public void setFamilyName(String familyName) {
-		this.familyName = familyName;
-	}
+  @JsonProperty(value = "middleName")
+  public String middleNameOptional;
 
-	public String getNote() {
-		return note;
-	}
+  @JsonProperty(value = "previousFamilyName")
+  public String previousFamilyNameOptional;
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+  @JsonProperty(value = "nameSuffix")
+  public String nameSuffixOptional;
 
-	public Boolean getIsDeleted() {
-		return isDeleted;
-	}
+  @JsonProperty(value = "nickname")
+  public String nicknameOptional;
 
-	public void setIsDeleted(Boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
+  @JsonProperty(value = "phoneticGivenName")
+  public String phoneticGivenNameOptional;
 
-	public String getDisplayNameOptional() {
-		return displayNameOptional;
-	}
+  @JsonProperty(value = "phoneticMiddleName")
+  public String phoneticMiddleNameOptional;
 
-	public void setDisplayNameOptional(String displayNameOptional) {
-		this.displayNameOptional = displayNameOptional;
-	}
+  @JsonProperty(value = "phoneticFamilyName")
+  public String phoneticFamilyNameOptional;
 
-	public Integer getStarredOptional() {
-		return starredOptional;
-	}
+  @JsonProperty(value = "organizationName")
+  public String organizationNameOptional;
 
-	public void setStarredOptional(Integer starredOptional) {
-		this.starredOptional = starredOptional;
-	}
+  @JsonProperty(value = "departmentName")
+  public String departmentNameOptional;
 
-	public Integer getLastTimeContactedOptional() {
-		return lastTimeContactedOptional;
-	}
+  @JsonProperty(value = "jobTitle")
+  public String jobTitleOptional;
 
-	public void setLastTimeContactedOptional(Integer lastTimeContactedOptional) {
-		this.lastTimeContactedOptional = lastTimeContactedOptional;
-	}
+  @JsonProperty(value = "phoneNumbers")
+  @Frozen
+  public Set<LabeledContactValue> phoneNumbersOptional;
 
-	public Integer getTimesContactedOptional() {
-		return timesContactedOptional;
-	}
+  @JsonProperty(value = "emailAddresses")
+  @Frozen
+  public Set<LabeledContactValue> emailAddressesOptional;
 
-	public void setTimesContactedOptional(Integer timesContactedOptional) {
-		this.timesContactedOptional = timesContactedOptional;
-	}
+  public Contact() {}
 
-	public Integer getContactTypeOptional() {
-		return contactTypeOptional;
-	}
+  public String getGlobalContactId() {
+    return globalContactId;
+  }
 
-	public void setContactTypeOptional(Integer contactTypeOptional) {
-		this.contactTypeOptional = contactTypeOptional;
-	}
+  public void setGlobalContactId(String globalContactId) {
+    this.globalContactId = globalContactId;
+  }
 
-	public String getNamePrefixOptional() {
-		return namePrefixOptional;
-	}
+  public String getGivenName() {
+    return givenName;
+  }
 
-	public void setNamePrefixOptional(String namePrefixOptional) {
-		this.namePrefixOptional = namePrefixOptional;
-	}
+  public void setGivenName(String givenName) {
+    this.givenName = givenName;
+  }
 
-	public String getMiddleNameOptional() {
-		return middleNameOptional;
-	}
+  public String getFamilyName() {
+    return familyName;
+  }
 
-	public void setMiddleNameOptional(String middleNameOptional) {
-		this.middleNameOptional = middleNameOptional;
-	}
+  public void setFamilyName(String familyName) {
+    this.familyName = familyName;
+  }
 
-	public String getPreviousFamilyNameOptional() {
-		return previousFamilyNameOptional;
-	}
+  public String getNote() {
+    return note;
+  }
 
-	public void setPreviousFamilyNameOptional(String previousFamilyNameOptional) {
-		this.previousFamilyNameOptional = previousFamilyNameOptional;
-	}
+  public void setNote(String note) {
+    this.note = note;
+  }
 
-	public String getNameSuffixOptional() {
-		return nameSuffixOptional;
-	}
+  public Boolean getIsDeleted() {
+    return isDeleted;
+  }
 
-	public void setNameSuffixOptional(String nameSuffixOptional) {
-		this.nameSuffixOptional = nameSuffixOptional;
-	}
+  public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
 
-	public String getNicknameOptional() {
-		return nicknameOptional;
-	}
+  public String getDisplayNameOptional() {
+    return displayNameOptional;
+  }
 
-	public void setNicknameOptional(String nicknameOptional) {
-		this.nicknameOptional = nicknameOptional;
-	}
+  public void setDisplayNameOptional(String displayNameOptional) {
+    this.displayNameOptional = displayNameOptional;
+  }
 
-	public String getPhoneticGivenNameOptional() {
-		return phoneticGivenNameOptional;
-	}
+  public Integer getStarredOptional() {
+    return starredOptional;
+  }
 
-	public void setPhoneticGivenNameOptional(String phoneticGivenNameOptional) {
-		this.phoneticGivenNameOptional = phoneticGivenNameOptional;
-	}
+  public void setStarredOptional(Integer starredOptional) {
+    this.starredOptional = starredOptional;
+  }
 
-	public String getPhoneticMiddleNameOptional() {
-		return phoneticMiddleNameOptional;
-	}
+  public Integer getLastTimeContactedOptional() {
+    return lastTimeContactedOptional;
+  }
 
-	public void setPhoneticMiddleNameOptional(String phoneticMiddleNameOptional) {
-		this.phoneticMiddleNameOptional = phoneticMiddleNameOptional;
-	}
+  public void setLastTimeContactedOptional(Integer lastTimeContactedOptional) {
+    this.lastTimeContactedOptional = lastTimeContactedOptional;
+  }
 
-	public String getPhoneticFamilyNameOptional() {
-		return phoneticFamilyNameOptional;
-	}
+  public Integer getTimesContactedOptional() {
+    return timesContactedOptional;
+  }
 
-	public void setPhoneticFamilyNameOptional(String phoneticFamilyNameOptional) {
-		this.phoneticFamilyNameOptional = phoneticFamilyNameOptional;
-	}
+  public void setTimesContactedOptional(Integer timesContactedOptional) {
+    this.timesContactedOptional = timesContactedOptional;
+  }
 
-	public String getOrganizationNameOptional() {
-		return organizationNameOptional;
-	}
+  public Integer getContactTypeOptional() {
+    return contactTypeOptional;
+  }
 
-	public void setOrganizationNameOptional(String organizationNameOptional) {
-		this.organizationNameOptional = organizationNameOptional;
-	}
+  public void setContactTypeOptional(Integer contactTypeOptional) {
+    this.contactTypeOptional = contactTypeOptional;
+  }
 
-	public String getDepartmentNameOptional() {
-		return departmentNameOptional;
-	}
+  public String getNamePrefixOptional() {
+    return namePrefixOptional;
+  }
 
-	public void setDepartmentNameOptional(String departmentNameOptional) {
-		this.departmentNameOptional = departmentNameOptional;
-	}
+  public void setNamePrefixOptional(String namePrefixOptional) {
+    this.namePrefixOptional = namePrefixOptional;
+  }
 
-	public String getJobTitleOptional() {
-		return jobTitleOptional;
-	}
+  public String getMiddleNameOptional() {
+    return middleNameOptional;
+  }
 
-	public void setJobTitleOptional(String jobTitleOptional) {
-		this.jobTitleOptional = jobTitleOptional;
-	}
+  public void setMiddleNameOptional(String middleNameOptional) {
+    this.middleNameOptional = middleNameOptional;
+  }
 
-	public Set<LabeledContactValue> getPhoneNumbersOptional() {
-		return phoneNumbersOptional;
-	}
+  public String getPreviousFamilyNameOptional() {
+    return previousFamilyNameOptional;
+  }
 
-	public void setPhoneNumbersOptional(
-			Set<LabeledContactValue> phoneNumbersOptional) {
-		this.phoneNumbersOptional = phoneNumbersOptional;
-	}
+  public void setPreviousFamilyNameOptional(String previousFamilyNameOptional) {
+    this.previousFamilyNameOptional = previousFamilyNameOptional;
+  }
 
-	public Set<LabeledContactValue> getEmailAddressesOptional() {
-		return emailAddressesOptional;
-	}
+  public String getNameSuffixOptional() {
+    return nameSuffixOptional;
+  }
 
-	public void setEmailAddressesOptional(
-			Set<LabeledContactValue> emailAddressesOptional) {
-		this.emailAddressesOptional = emailAddressesOptional;
-	}
-	
-	
+  public void setNameSuffixOptional(String nameSuffixOptional) {
+    this.nameSuffixOptional = nameSuffixOptional;
+  }
+
+  public String getNicknameOptional() {
+    return nicknameOptional;
+  }
+
+  public void setNicknameOptional(String nicknameOptional) {
+    this.nicknameOptional = nicknameOptional;
+  }
+
+  public String getPhoneticGivenNameOptional() {
+    return phoneticGivenNameOptional;
+  }
+
+  public void setPhoneticGivenNameOptional(String phoneticGivenNameOptional) {
+    this.phoneticGivenNameOptional = phoneticGivenNameOptional;
+  }
+
+  public String getPhoneticMiddleNameOptional() {
+    return phoneticMiddleNameOptional;
+  }
+
+  public void setPhoneticMiddleNameOptional(String phoneticMiddleNameOptional) {
+    this.phoneticMiddleNameOptional = phoneticMiddleNameOptional;
+  }
+
+  public String getPhoneticFamilyNameOptional() {
+    return phoneticFamilyNameOptional;
+  }
+
+  public void setPhoneticFamilyNameOptional(String phoneticFamilyNameOptional) {
+    this.phoneticFamilyNameOptional = phoneticFamilyNameOptional;
+  }
+
+  public String getOrganizationNameOptional() {
+    return organizationNameOptional;
+  }
+
+  public void setOrganizationNameOptional(String organizationNameOptional) {
+    this.organizationNameOptional = organizationNameOptional;
+  }
+
+  public String getDepartmentNameOptional() {
+    return departmentNameOptional;
+  }
+
+  public void setDepartmentNameOptional(String departmentNameOptional) {
+    this.departmentNameOptional = departmentNameOptional;
+  }
+
+  public String getJobTitleOptional() {
+    return jobTitleOptional;
+  }
+
+  public void setJobTitleOptional(String jobTitleOptional) {
+    this.jobTitleOptional = jobTitleOptional;
+  }
+
+  public Set<LabeledContactValue> getPhoneNumbersOptional() {
+    return phoneNumbersOptional;
+  }
+
+  public void setPhoneNumbersOptional(Set<LabeledContactValue> phoneNumbersOptional) {
+    this.phoneNumbersOptional = phoneNumbersOptional;
+  }
+
+  public Set<LabeledContactValue> getEmailAddressesOptional() {
+    return emailAddressesOptional;
+  }
+
+  public void setEmailAddressesOptional(Set<LabeledContactValue> emailAddressesOptional) {
+    this.emailAddressesOptional = emailAddressesOptional;
+  }
+
+
 }
