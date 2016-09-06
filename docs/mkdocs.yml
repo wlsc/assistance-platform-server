@@ -1,0 +1,11 @@
+theme: yeti
+site_name: Assistance Platform
+repo_url: https://github.com/Telecooperation/assistance-platform-server
+repo_name: GitHub
+site_description: The Assistance Platform is a project which aims on providing assistance to users in all thinkable situations.
+site_author: Wladimir Schmidt (https://github.com/wlsc)
+copyright: <a href="https://telecooperation.github.io/" alt="Telecooperation Lab">Telecooperation Lab @ TU Darmstadt</a>
+markdown_extensions:
+    - smarty
+    - toc:
+        permalink: true

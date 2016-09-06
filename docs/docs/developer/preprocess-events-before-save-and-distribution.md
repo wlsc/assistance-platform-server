@@ -1,0 +1,3 @@
+Sometimes it is needed to preprocess an event that was sent by user. An example for this is the "TuCan Credentials" Event which contains plaintext user / password. Before storing and distributing this to the modules, the credentials need to be encrypted.
+
+This can be done by implementing the `IEventPreprocessor` interface and passing a instance to the `SpecialEventPreprocessor` instance (currently instantiated in `SensorDataController`)
