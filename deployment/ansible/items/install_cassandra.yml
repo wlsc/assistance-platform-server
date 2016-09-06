@@ -26,7 +26,9 @@
 
 - name: Cassandra | Copy config file
   copy: 
-    src={{ PROJECT_ROOT }}/deployment/files/cassandra/cassandra.yaml 
+    src={{ PROJECT_ROOT }}/deployment/ansible/files/cassandra/cassandra.yaml 
     dest=/etc/cassandra/cassandra.yaml
+  notify:
+    - Postgres | Restart service
   tags:
     [install, cassandra]

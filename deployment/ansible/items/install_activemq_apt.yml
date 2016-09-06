@@ -1,0 +1,57 @@
+---
+- name: ActiveMQ | Install
+  apt: 
+    name=activemq
+    state=present 
+  tags:
+    [install, activemq]
+  
+- name: ActiveMQ | Create directory for user
+  file: 
+    path=/opt/{{ ACTIVEMQ_USER }} 
+    state=directory
+    owner={{ ACTIVEMQ_USER }}
+    group=users
+    mode=0644
+  tags:
+    [install, activemq]
+
+- name: ActiveMQ | Create user
+  user: 
+    name={{ ACTIVEMQ_USER }}
+    home=/opt/{{ ACTIVEMQ_USER }}
+  tags:
+    [install, activemq]
+
+- name: ActiveMQ | Enable default configuration
+  file:
+    src=/etc/activemq/instances-available/main 
+    dest=/etc/activemq/instances-enabled/main
+    owner={{ ACTIVEMQ_USER }}
+    group=users 
+    state=link
+  tags:
+    [install, activemq]
+
+- name: ActiveMQ | Copy configuration file
+  template:
+    src=files/activemq/activemq 
+    dest=/var/lib/activemq/config 
+    owner={{ ACTIVEMQ_USER }}
+    group=users
+    mode=0644
+  notify:
+    - ActiveMQ | Restart service
+  tags:
+    [install, activemq]
+
+- name: ActiveMQ | Create symlink for service
+  file:
+    src=/opt/{{ ACTIVEMQ_USER }}/current/bin/activemq 
+    dest=/etc/init.d/activemq 
+    state=link
+    owner={{ ACTIVEMQ_USER }}
+    group=users
+    mode=0644
+  tags:
+    [install, activemq]

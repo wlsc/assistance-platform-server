@@ -1,0 +1,14 @@
+# Time to wait for the server to start, in seconds
+STARTTIME=5
+
+# !!! Use a specific data directory for each instance
+ACTIVEMQ_BASE="{{ ACTIVEMQ_INSTALLATION_DIR }}"
+
+# Use the default Java runtime
+JAVA_HOME="/usr/lib/jvm/java-8-oracle/"
+
+# Set some JVM memory options
+ACTIVEMQ_OPTS="-Xms512M -Xmx512M -Dorg.apache.activemq.UseDedicatedTaskRunner=true"
+
+# Arguments to launch /usr/bin/activemq
+ACTIVEMQ_ARGS="start xbean:activemq.xml"

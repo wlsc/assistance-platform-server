@@ -6,10 +6,13 @@ PROJECT_REPO: "git@github.com:Telecooperation/server_platform_assistance.git"
 
 # ActiveMQ
 ACTIVEMQ_VERSION: "5.14.0"
+ACTIVEMQ_USER: "activemq"
+ACTIVEMQ_INSTALLATION_DIR: "/usr/share/activemq"
 ACTIVEMQ_PORT_61616_TCP_ADDR: "127.0.0.1"
 ACTIVEMQ_PORT_61616_TCP_PORT: "61616"
 
 # Postgres
+POSTGRES_SYSTEM_USER: "assistance-postgres"
 POSTGRES_DB_NAME: "assistance-postgres"
 POSTGRES_DB_USER: "assistance-postgres"
 POSTGRES_DB_PASS: "assistancepass"

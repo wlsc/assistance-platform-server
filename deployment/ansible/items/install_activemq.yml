@@ -1,64 +1,64 @@
 ---
 - name: ActiveMQ | Create directory for user
   file: 
-    path=/opt/activemq 
+    path=/home/{{ ACTIVEMQ_USER }} 
     state=directory
+    group=users
+    owner={{ ACTIVEMQ_USER }}
   tags:
     [install, activemq]
 
 - name: ActiveMQ | Create user
   user: 
-    name=activemq 
-    home=/opt/activemq
+    name={{ ACTIVEMQ_USER }}
+    home=/home/{{ ACTIVEMQ_USER }}
   tags:
     [install, activemq]
 
 - name: ActiveMQ | Download
   get_url:
     url=http://www.apache.org/dyn/closer.cgi?filename=/activemq/{{ ACTIVEMQ_VERSION }}/apache-activemq-{{ ACTIVEMQ_VERSION }}-bin.tar.gz&action=download 
-    dest=/opt/activemq 
+    dest=/home/{{ ACTIVEMQ_USER }}/
     checksum=sha1:1bff4945f9a55bbb11374fd8205f2e919e605abf
   tags:
     [install, activemq]
 
 - name: ActiveMQ | Unpack
   unarchive: 
-    src=/opt/activemq/apache-activemq-{{ ACTIVEMQ_VERSION }}-bin.tar.gz 
-    dest=/opt/activemq/
+    src=/home/{{ ACTIVEMQ_USER }}/apache-activemq-{{ ACTIVEMQ_VERSION }}-bin.tar.gz 
+    dest=/usr/share/
   tags:
     [install, activemq]
 
-- name: ActiveMQ | Create symlink to current dir
-  file: 
-    src=/opt/activemq/apache-activemq-{{ ACTIVEMQ_VERSION }} 
-    dest=/opt/activemq/current 
-    owner=activemq 
-    group=users 
-    state=link
+- name: ActiveMQ | Moving to another folder
+  shell: 
+    mv -f /usr/share/apache-activemq-{{ ACTIVEMQ_VERSION }} /usr/share/activemq
   tags:
     [install, activemq]
 
-- name: ActiveMQ | Copy ENV
-  copy: 
-    src=/opt/activemq/current/bin/env 
+- name: ActiveMQ | Copy configuration file
+  template: 
+    src=files/activemq/activemq 
     dest=/etc/default/activemq 
-    mode=0644
+  notify:
+    - ActiveMQ | Restart service
   tags:
     [install, activemq]
 
-- name: ActiveMQ | Change user name and password
-  lineinfile: 
-    dest=/etc/default/activemq 
-    regexp=~s/^ACTIVEMQ_USER= 
-    line=ACTIVEMQ_USER="activemq" 
-    state=present
+- name: ActiveMQ | Copy options file
+  template: 
+    src=files/activemq/activemq-options
+    dest=/usr/share/activemq/activemq-options
+  notify:
+    - ActiveMQ | Restart service
   tags:
     [install, activemq]
 
 - name: ActiveMQ | Create symlink for service
-  file: 
-    src=/opt/activemq/current/bin/activemq 
+  file:
+    src=/usr/share/activemq/bin/activemq 
     dest=/etc/init.d/activemq 
     state=link
+    force=yes
   tags:
     [install, activemq]

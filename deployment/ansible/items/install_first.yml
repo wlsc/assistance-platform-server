@@ -5,9 +5,6 @@
     update_cache=yes 
     state=latest
   with_items:
-    - bash
-    - openssl
-    - libssl-dev
-    - libssl-doc
+    [bash, openssl, libssl-dev, libssl-doc]
   tags: 
     [install, first]

@@ -1,7 +1,7 @@
 ---
 - name: Postgres | Install with dependencies
   apt: 
-    name={{item}} 
+    name={{ item }} 
     state=present 
     update_cache=yes
   with_items:
@@ -11,15 +11,7 @@
 
 - name: Postgres | Add user
   user: 
-    name=assistance-postgres
-  tags:
-    [install, postgres]
-
-- name: Postgres | Create user (role)
-  postgresql_user: 
-    name=assistance-postgres
-  become_user: 
-    postgres
+    name={{ POSTGRES_SYSTEM_USER }}
   tags:
     [install, postgres]
   
@@ -31,8 +23,7 @@
     lc_ctype='en_US.UTF-8'
     template='template0'
     state=present
-  become_user: 
-    postgres
+  become_user: "{{ POSTGRES_SYSTEM_USER }}"
   tags:
     [install, postgres]
 
@@ -44,7 +35,6 @@
     priv=ALL
     role_attr_flags=NOSUPERUSER,NOCREATEDB
     state=present
-  become_user: 
-    postgres
+  become_user: "{{ POSTGRES_SYSTEM_USER }}"
   tags:
     [install, postgres]

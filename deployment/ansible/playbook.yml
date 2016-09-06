@@ -15,13 +15,21 @@
     - include: items/install_cassandra.yml
     - include: items/install_activemq.yml
     - include: items/install_nginx.yml
+    - include: items/run_activemq.yml
     - include: items/run_nginx.yml
     - include: items/run_cassandra.yml
     - include: items/run_postgres.yml
     - include: items/run_assistance.yml
 
   handlers:
-   - name: Postgres | Restart service
-     service: 
-      name=postgresql 
-      state=restarted
+    - name: ActiveMQ | Restart service
+      service: 
+        name=activemq 
+        state=restarted
+      become: yes
+      become_user: "{{ ACTIVEMQ_USER }}"
+
+    - name: Postgres | Restart service
+      service: 
+        name=postgresql 
+        state=restarted

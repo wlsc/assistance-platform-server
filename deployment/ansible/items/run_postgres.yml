@@ -4,5 +4,6 @@
     name=postgresql 
     state=started 
     enabled=yes
+  become_user: "{{ POSTGRES_SYSTEM_USER }}"
   tags:
     [run, postgres]
