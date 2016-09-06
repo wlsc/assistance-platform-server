@@ -5,7 +5,7 @@ The Assistance Platform is a project which aims on providing assistance to users
 This project hosts the implementation of the Platform REST web service, the Module API and a Shared API between Modules and the Platform.
 
 ### Documentation
-Can be found in [wiki](https://github.com/Telecooperation/server_platform_assistance/wiki).
+Can be found under the [link](https://telecooperation.github.io/assistance-platform-server/docs/).
 
 ### Developers
 * [Bennet Jeutter](https://github.com/eintopf)
