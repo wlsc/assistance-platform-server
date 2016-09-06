@@ -3,7 +3,7 @@ package de.tudarmstadt.informatik.tk.assistanceplatform.modules.bundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.DataModule;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.BehaviorModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Module;
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.AssistanceModule;
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.action.IClientActionRunner;
@@ -71,10 +71,10 @@ public abstract class ModuleBundle implements IModuleBundleIdProvider {
           AssistanceModule assiModule = ((AssistanceModule) m);
           assiModule.setActionRunner(actionRunner);
           assiModule.setModuleIdProvider(this);
-        } else if (m instanceof DataModule) {
-          DataModule dataModule = ((DataModule) m);
+        } else if (m instanceof BehaviorModule) {
+          BehaviorModule behaviorModule = ((BehaviorModule) m);
 
-          dataModule.setSparkService(sparkService);
+          behaviorModule.setSparkService(sparkService);
         }
 
         m.start();

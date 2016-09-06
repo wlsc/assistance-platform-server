@@ -6,18 +6,19 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.services.dataprocessing.s
 import de.tudarmstadt.informatik.tk.assistanceplatform.services.persistency.CassandraServiceFactory;
 
 /**
- * DataModules are responsible for generating / aggregating higher-class data from the "normal" data
- * of the platform. This class should be sub-classed to process the data provided by the platform.
+ * BehaviorModules are responsible for generating / aggregating higher-class data from the "normal"
+ * data of the platform. This class should be sub-classed to process the data provided by the
+ * platform.
  * 
  * @author bjeutter
  *
  */
-public abstract class DataModule extends Module {
+public abstract class BehaviorModule extends Module {
   private ISparkService sparkService;
 
   private IUserDeviceEventPersistency eventPersistency;
 
-  public DataModule() {
+  public BehaviorModule() {
     super();
   }
 
