@@ -7,6 +7,10 @@ This project hosts the implementation of the Platform REST web service, the Modu
 ### Documentation
 Can be found under the [link](https://telecooperation.github.io/assistance-platform-server/docs/).
 
+### Assistance Clients
+* [Android client](https://github.com/Telecooperation/assistance-platform-client-android)
+* [iOS client](https://github.com/Telecooperation/assistance-platform-client-ios)
+
 ### Developers
 * [Bennet Jeutter](https://github.com/eintopf)
 
