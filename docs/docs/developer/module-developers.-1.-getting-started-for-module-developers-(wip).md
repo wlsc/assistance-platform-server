@@ -20,7 +20,7 @@ A user can always request current assistance information from the platform. The 
 ### Overview Platform
 Here you find an very simplified image over the interactions between clients, platform and modules.
 
-![](https://github.com/Telecooperation/server_platform_assistance/blob/master/docs/images/PlatformOverview.png)
+![](https://github.com/Telecooperation/assistance-platform-server/blob/master/docs/images/PlatformOverview.png)
 
 # Getting started!
 So now you should be able to somehow understand the concept and you want to implement your own module, what to do? This guide will show you how to implement a "Drive calm" module. It should measure the speed of a user and proactively warn him if he is going faster than 100km/h. The reactive assistance should show him how fast he is going.
