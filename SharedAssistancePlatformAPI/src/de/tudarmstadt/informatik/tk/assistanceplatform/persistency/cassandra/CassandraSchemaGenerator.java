@@ -86,11 +86,11 @@ public class CassandraSchemaGenerator {
       String fieldName = getNameOfField(f);
 
       // Append field name
-      stringBuilder.append("\t" + fieldName);
+      stringBuilder.append("\t").append(fieldName);
 
       // Append Field Type
       String fieldType = mapJavaToCassandraType(fieldName, f.getType());
-      stringBuilder.append(" " + fieldType);
+      stringBuilder.append(" ").append(fieldType);
 
       // Append comma for next line if not last field
       if (i != fields.length - 1 || structureType.equals(StructureType.TABLE)) {
@@ -102,7 +102,7 @@ public class CassandraSchemaGenerator {
 
     // Append Primary Key description
     if (structureType.equals(StructureType.TABLE)) {
-      stringBuilder.append("\t" + generatePrimaryKey(c));
+      stringBuilder.append("\t").append(generatePrimaryKey(c));
     }
 
     // Close create statement
@@ -115,10 +115,10 @@ public class CassandraSchemaGenerator {
     Column nameAnnotation = f.getAnnotation(Column.class);
     String fieldName = null;
 
-    if (nameAnnotation == null) {
-      fieldName = f.getName();
+    if (nameAnnotation != null) {
+      fieldName = nameAnnotation.name();
     } else {
-      fieldName = (nameAnnotation).name();
+      fieldName = f.getName();
     }
 
     return fieldName;
@@ -227,7 +227,7 @@ public class CassandraSchemaGenerator {
 
   private static boolean isCustomType(Class<?> type) {
     String typeName = type.getName();
-    boolean isCustomType = typeName.indexOf(".") != -1 && typeName.indexOf("java.") == -1;
+    boolean isCustomType = typeName.contains(".") && !typeName.contains("java.");
 
     return isCustomType;
   }

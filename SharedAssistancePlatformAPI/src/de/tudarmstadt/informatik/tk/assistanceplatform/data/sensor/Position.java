@@ -16,25 +16,25 @@ public class Position extends SensorData implements Serializable {
   /**
    * Altitude (optional)
    */
-  @JsonProperty(value = "altitude")
+  @JsonProperty("altitude")
   public double altitudeOptional;
 
   /**
    * Vertical accuracy (optional)
    */
-  @JsonProperty(value = "accuracyVertical")
+  @JsonProperty("accuracyVertical")
   public double accuracyVerticalOptional;
 
   /**
    * Course (optional)
    */
-  @JsonProperty(value = "course")
+  @JsonProperty("course")
   public int courseOptional;
 
   /**
    * Floor (optional)
    */
-  @JsonProperty(value = "floor")
+  @JsonProperty("floor")
   public int floorOptional;
 
   public Position() {
@@ -153,50 +153,37 @@ public class Position extends SensorData implements Serializable {
     int result = super.hashCode();
     long temp;
     temp = Double.doubleToLongBits(accuracyHorizontal);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     temp = Double.doubleToLongBits(accuracyVerticalOptional);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     temp = Double.doubleToLongBits(altitudeOptional);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     result = prime * result + courseOptional;
     result = prime * result + floorOptional;
     temp = Double.doubleToLongBits(latitude);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     temp = Double.doubleToLongBits(longitude);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     temp = Double.doubleToLongBits(speed);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     return result;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (!super.equals(obj))
+    }
+    if (!super.equals(obj)) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Position other = (Position) obj;
-    if (Double.doubleToLongBits(accuracyHorizontal) != Double
-        .doubleToLongBits(other.accuracyHorizontal))
-      return false;
-    if (Double.doubleToLongBits(accuracyVerticalOptional) != Double
-        .doubleToLongBits(other.accuracyVerticalOptional))
-      return false;
-    if (Double.doubleToLongBits(altitudeOptional) != Double
-        .doubleToLongBits(other.altitudeOptional))
-      return false;
-    if (courseOptional != other.courseOptional)
-      return false;
-    if (floorOptional != other.floorOptional)
-      return false;
-    if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
-      return false;
-    if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
-      return false;
-    if (Double.doubleToLongBits(speed) != Double.doubleToLongBits(other.speed))
-      return false;
-    return true;
+    return !(Double.doubleToLongBits(accuracyHorizontal) != Double
+        .doubleToLongBits(other.accuracyHorizontal)) && !(Double.doubleToLongBits(accuracyVerticalOptional) != Double
+        .doubleToLongBits(other.accuracyVerticalOptional)) && !(Double.doubleToLongBits(altitudeOptional) != Double
+        .doubleToLongBits(other.altitudeOptional)) && !(courseOptional != other.courseOptional) && !(floorOptional != other.floorOptional) && !(Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude)) && !(Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude)) && !(Double.doubleToLongBits(speed) != Double.doubleToLongBits(other.speed));
   }
 }

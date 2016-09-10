@@ -12,18 +12,18 @@ public class Gyroscope extends SensorData implements Serializable {
   public double y;
   public double z;
 
-  @JsonProperty(value = "xUncalibratedNoDrift")
+  @JsonProperty("xUncalibratedNoDrift")
   public float xUncalibratedNoDriftOptional;
-  @JsonProperty(value = "yUncalibratedNoDrift")
+  @JsonProperty("yUncalibratedNoDrift")
   public float yUncalibratedNoDriftOptional;
-  @JsonProperty(value = "zUncalibratedNoDrift")
+  @JsonProperty("zUncalibratedNoDrift")
   public float zUncalibratedNoDriftOptional;
 
-  @JsonProperty(value = "xUncalibratedEstimatedDrift")
+  @JsonProperty("xUncalibratedEstimatedDrift")
   public float xUncalibratedEstimatedDriftOptional;
-  @JsonProperty(value = "yUncalibratedEstimatedDrift")
+  @JsonProperty("yUncalibratedEstimatedDrift")
   public float yUncalibratedEstimatedDriftOptional;
-  @JsonProperty(value = "zUncalibratedEstimatedDrift")
+  @JsonProperty("zUncalibratedEstimatedDrift")
   public float zUncalibratedEstimatedDriftOptional;
 
   public Gyroscope() {
@@ -152,15 +152,15 @@ public class Gyroscope extends SensorData implements Serializable {
     int result = super.hashCode();
     long temp;
     temp = Double.doubleToLongBits(x);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     result = prime * result + Float.floatToIntBits(xUncalibratedEstimatedDriftOptional);
     result = prime * result + Float.floatToIntBits(xUncalibratedNoDriftOptional);
     temp = Double.doubleToLongBits(y);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     result = prime * result + Float.floatToIntBits(yUncalibratedEstimatedDriftOptional);
     result = prime * result + Float.floatToIntBits(yUncalibratedNoDriftOptional);
     temp = Double.doubleToLongBits(z);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     result = prime * result + Float.floatToIntBits(zUncalibratedEstimatedDriftOptional);
     result = prime * result + Float.floatToIntBits(zUncalibratedNoDriftOptional);
     return result;
@@ -169,37 +169,22 @@ public class Gyroscope extends SensorData implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (!super.equals(obj))
+    }
+    if (!super.equals(obj)) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Gyroscope other = (Gyroscope) obj;
-    if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
-      return false;
-    if (Float.floatToIntBits(xUncalibratedEstimatedDriftOptional) != Float
-        .floatToIntBits(other.xUncalibratedEstimatedDriftOptional))
-      return false;
-    if (Float.floatToIntBits(xUncalibratedNoDriftOptional) != Float
-        .floatToIntBits(other.xUncalibratedNoDriftOptional))
-      return false;
-    if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
-      return false;
-    if (Float.floatToIntBits(yUncalibratedEstimatedDriftOptional) != Float
-        .floatToIntBits(other.yUncalibratedEstimatedDriftOptional))
-      return false;
-    if (Float.floatToIntBits(yUncalibratedNoDriftOptional) != Float
-        .floatToIntBits(other.yUncalibratedNoDriftOptional))
-      return false;
-    if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
-      return false;
-    if (Float.floatToIntBits(zUncalibratedEstimatedDriftOptional) != Float
-        .floatToIntBits(other.zUncalibratedEstimatedDriftOptional))
-      return false;
-    if (Float.floatToIntBits(zUncalibratedNoDriftOptional) != Float
-        .floatToIntBits(other.zUncalibratedNoDriftOptional))
-      return false;
-    return true;
+    return !(Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) && !(Float.floatToIntBits(xUncalibratedEstimatedDriftOptional) != Float
+        .floatToIntBits(other.xUncalibratedEstimatedDriftOptional)) && !(Float.floatToIntBits(xUncalibratedNoDriftOptional) != Float
+        .floatToIntBits(other.xUncalibratedNoDriftOptional)) && !(Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) && !(Float.floatToIntBits(yUncalibratedEstimatedDriftOptional) != Float
+        .floatToIntBits(other.yUncalibratedEstimatedDriftOptional)) && !(Float.floatToIntBits(yUncalibratedNoDriftOptional) != Float
+        .floatToIntBits(other.yUncalibratedNoDriftOptional)) && !(Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) && !(Float.floatToIntBits(zUncalibratedEstimatedDriftOptional) != Float
+        .floatToIntBits(other.zUncalibratedEstimatedDriftOptional)) && !(Float.floatToIntBits(zUncalibratedNoDriftOptional) != Float
+        .floatToIntBits(other.zUncalibratedNoDriftOptional));
   }
 }

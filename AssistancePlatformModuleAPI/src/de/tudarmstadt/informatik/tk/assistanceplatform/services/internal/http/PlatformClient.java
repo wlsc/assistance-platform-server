@@ -27,7 +27,7 @@ import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 
 public class PlatformClient implements IGetUserActivationsForModule {
-  private final static Logger logger = Logger.getLogger(PlatformClient.class);
+  private static final Logger logger = Logger.getLogger(PlatformClient.class);
 
   AssistancePlatformService service;
 

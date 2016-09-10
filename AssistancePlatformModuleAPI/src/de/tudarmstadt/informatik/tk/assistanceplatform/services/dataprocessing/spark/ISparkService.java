@@ -14,14 +14,14 @@ public interface ISparkService {
    * @param batchDuration The duration in which the events hould be batched
    * @return
    */
-  public JavaStreamingContext createStreamingContext(Duration batchDuration);
+  JavaStreamingContext createStreamingContext(Duration batchDuration);
 
   /**
    * Creates a "general" Apache Spark context
    * 
    * @return
    */
-  public JavaSparkContext createContext();
+  JavaSparkContext createContext();
 
   /**
    * Creates and returns a event receiver stream (streams events from the messaging system [e.g.
@@ -31,6 +31,6 @@ public interface ISparkService {
    * @param eventType
    * @return
    */
-  public <T extends Event> JavaDStream<T> getEventReceiverStream(JavaStreamingContext sc,
+  <T extends Event> JavaDStream<T> getEventReceiverStream(JavaStreamingContext sc,
       Class<T> eventType);
 }

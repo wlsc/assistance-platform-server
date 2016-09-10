@@ -15,7 +15,7 @@ class ModuleBundleRegistrator {
 
   private PlatformClient client;
 
-  private boolean update = false;
+  private boolean update;
 
   public ModuleBundleRegistrator(ModuleBundle bundle, PlatformClient platformClient) {
     this.bundle = bundle;

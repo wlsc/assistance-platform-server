@@ -11,7 +11,7 @@ public class MobileConnection extends SensorData implements Serializable {
   public String mobileCountryCode;
   public String mobileNetworkCode;
 
-  @JsonProperty(value = "voipAvailable")
+  @JsonProperty("voipAvailable")
   public boolean voipAvailableOptional;
 
   public MobileConnection() {

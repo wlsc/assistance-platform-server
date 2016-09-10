@@ -34,7 +34,7 @@ public class JmsMessagingService extends MessagingService {
 
   private Map<Consumer, MessageConsumer> consumersToJMSConsumers = new HashMap<>();
 
-  private final static Logger logger = Logger.getLogger(JmsMessagingService.class);
+  private static final Logger logger = Logger.getLogger(JmsMessagingService.class);
 
 
   public JmsMessagingService() {

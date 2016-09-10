@@ -15,26 +15,26 @@ public class Alarm implements Serializable {
 
   // Optional
 
-  @JsonProperty(value = "offset")
+  @JsonProperty("offset")
   public Integer offsetOptional; // <- Sekunden vom Startzeitpunkt des Events:
                                  // negativ
   // = vorher, musst du also deins Mal -1 nehmen.
   // Falls bei dir -1 gespeichert ist (default)
   // stattdessen defaultOffset auf true setzen und
   // offset weglassen
-  @JsonProperty(value = "absoluteDate")
+  @JsonProperty("absoluteDate")
   public String absoluteDateOptional; // <- fester Alarm-Zeitpunkt in ISO 8601
-  @JsonProperty(value = "proximity")
+  @JsonProperty("proximity")
   public Integer proximityOptional; // <- 0: None, 1: Enter, 2: Leave (Typen
                                     // für
   // Location-basierten Alarm)
-  @JsonProperty(value = "locationTitle")
+  @JsonProperty("locationTitle")
   public String locationTitleOptional;
-  @JsonProperty(value = "locationLatitude")
+  @JsonProperty("locationLatitude")
   public Double locationLatitudeOptional;
-  @JsonProperty(value = "locationLongitude")
+  @JsonProperty("locationLongitude")
   public Double locationLongitudeOptional;
-  @JsonProperty(value = "locationRadius")
+  @JsonProperty("locationRadius")
   public Double locationRadiusOptional; // (in Metern, 0 = default)
 
   public Alarm() {}

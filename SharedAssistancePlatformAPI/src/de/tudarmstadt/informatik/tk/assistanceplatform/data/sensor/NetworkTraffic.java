@@ -12,10 +12,10 @@ public class NetworkTraffic extends SensorData implements Serializable {
   public long txBytes;
   public boolean background;
 
-  @JsonProperty(value = "longitude")
+  @JsonProperty("longitude")
   public double longitudeOptional;
 
-  @JsonProperty(value = "latitude")
+  @JsonProperty("latitude")
   public double latitudeOptional;
 
   public NetworkTraffic() {}

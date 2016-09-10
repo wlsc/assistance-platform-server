@@ -100,50 +100,68 @@ public class Foreground extends SensorData implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (!super.equals(obj))
+    }
+    if (!super.equals(obj)) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Foreground other = (Foreground) obj;
     if (activityLabel == null) {
-      if (other.activityLabel != null)
+      if (other.activityLabel != null) {
         return false;
-    } else if (!activityLabel.equals(other.activityLabel))
+      }
+    } else if (!activityLabel.equals(other.activityLabel)) {
       return false;
+    }
     if (appName == null) {
-      if (other.appName != null)
+      if (other.appName != null) {
         return false;
-    } else if (!appName.equals(other.appName))
+      }
+    } else if (!appName.equals(other.appName)) {
       return false;
+    }
     if (className == null) {
-      if (other.className != null)
+      if (other.className != null) {
         return false;
-    } else if (!className.equals(other.className))
+      }
+    } else if (!className.equals(other.className)) {
       return false;
+    }
     if (color == null) {
-      if (other.color != null)
+      if (other.color != null) {
         return false;
-    } else if (!color.equals(other.color))
+      }
+    } else if (!color.equals(other.color)) {
       return false;
+    }
     if (eventType == null) {
-      if (other.eventType != null)
+      if (other.eventType != null) {
         return false;
-    } else if (!eventType.equals(other.eventType))
+      }
+    } else if (!eventType.equals(other.eventType)) {
       return false;
-    if (keystrokes != other.keystrokes)
+    }
+    if (keystrokes != other.keystrokes) {
       return false;
+    }
     if (packageName == null) {
-      if (other.packageName != null)
+      if (other.packageName != null) {
         return false;
-    } else if (!packageName.equals(other.packageName))
+      }
+    } else if (!packageName.equals(other.packageName)) {
       return false;
+    }
     if (url == null) {
-      if (other.url != null)
+      if (other.url != null) {
         return false;
-    } else if (!url.equals(other.url))
+      }
+    } else if (!url.equals(other.url)) {
       return false;
+    }
     return true;
   }
 

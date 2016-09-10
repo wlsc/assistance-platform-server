@@ -53,17 +53,16 @@ public class ConnectionStatus extends SensorData implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (!super.equals(obj))
+    }
+    if (!super.equals(obj)) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     ConnectionStatus other = (ConnectionStatus) obj;
-    if (isMobile != other.isMobile)
-      return false;
-    if (isWifi != other.isWifi)
-      return false;
-    return true;
+    return !(isMobile != other.isMobile) && !(isWifi != other.isWifi);
   }
 }

@@ -32,37 +32,37 @@ public class Calendar extends SensorData {
 
   // Optional
 
-  @JsonProperty(value = "URL")
+  @JsonProperty("URL")
   public String URLOptional;
 
-  @JsonProperty(value = "isDetached")
+  @JsonProperty("isDetached")
   public Boolean isDetachedOptional;
 
-  @JsonProperty(value = "lastModifiedDate")
+  @JsonProperty("lastModifiedDate")
   public String lastModifiedDateOptional;
 
-  @JsonProperty(value = "duration")
+  @JsonProperty("duration")
   public String durationOptional;
 
-  @JsonProperty(value = "originalAllDay")
+  @JsonProperty("originalAllDay")
   public Boolean originalAllDayOptional;
 
-  @JsonProperty(value = "originalId")
+  @JsonProperty("originalId")
   public String originalIdOptional;
 
-  @JsonProperty(value = "originalInstanceTime")
+  @JsonProperty("originalInstanceTime")
   public Long originalInstanceTimeOptional;
 
-  @JsonProperty(value = "recurrenceExceptionDate")
+  @JsonProperty("recurrenceExceptionDate")
   public String recurrenceExceptionDateOptional;
 
-  @JsonProperty(value = "recurrenceExceptionRule")
+  @JsonProperty("recurrenceExceptionRule")
   public String recurrenceExceptionRuleOptional;
 
-  @JsonProperty(value = "lastDate")
+  @JsonProperty("lastDate")
   public Long lastDateOptional;
 
-  @JsonProperty(value = "recurrenceDate")
+  @JsonProperty("recurrenceDate")
   public String recurrenceDateOptional;
 
   public Calendar() {}

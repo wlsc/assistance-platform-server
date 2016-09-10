@@ -74,7 +74,9 @@ public class BundleBootstrapper {
     Logger.getLogger(BundleBootstrapper.class)
         .warn("Waiting 10secs to propagate module registration.");
     long start = System.currentTimeMillis();
-    while (System.currentTimeMillis() - start < 10000);
+    while (System.currentTimeMillis() - start < 10000) {
+      ;
+    }
   }
 
   private static MessagingService createBasicMessagingService(ModuleBundle bundle) {

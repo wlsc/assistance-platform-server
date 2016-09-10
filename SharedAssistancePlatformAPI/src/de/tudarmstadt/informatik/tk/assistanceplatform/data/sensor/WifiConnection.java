@@ -10,19 +10,19 @@ public class WifiConnection extends SensorData implements Serializable {
   public String ssid;
   public String bssid;
 
-  @JsonProperty(value = "channel")
+  @JsonProperty("channel")
   public int channelOptional;
 
-  @JsonProperty(value = "frequency")
+  @JsonProperty("frequency")
   public int frequencyOptional;
 
-  @JsonProperty(value = "linkSpeed")
+  @JsonProperty("linkSpeed")
   public int linkSpeedOptional;
 
-  @JsonProperty(value = "signalStrength")
+  @JsonProperty("signalStrength")
   public int signalStrenghtOptional;
 
-  @JsonProperty(value = "networkId")
+  @JsonProperty("networkId")
   public int networkIdOptional;
 
   public WifiConnection() {
@@ -131,33 +131,45 @@ public class WifiConnection extends SensorData implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (!super.equals(obj))
+    }
+    if (!super.equals(obj)) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     WifiConnection other = (WifiConnection) obj;
     if (bssid == null) {
-      if (other.bssid != null)
+      if (other.bssid != null) {
         return false;
-    } else if (!bssid.equals(other.bssid))
+      }
+    } else if (!bssid.equals(other.bssid)) {
       return false;
-    if (channelOptional != other.channelOptional)
+    }
+    if (channelOptional != other.channelOptional) {
       return false;
-    if (frequencyOptional != other.frequencyOptional)
+    }
+    if (frequencyOptional != other.frequencyOptional) {
       return false;
-    if (linkSpeedOptional != other.linkSpeedOptional)
+    }
+    if (linkSpeedOptional != other.linkSpeedOptional) {
       return false;
-    if (networkIdOptional != other.networkIdOptional)
+    }
+    if (networkIdOptional != other.networkIdOptional) {
       return false;
-    if (signalStrenghtOptional != other.signalStrenghtOptional)
+    }
+    if (signalStrenghtOptional != other.signalStrenghtOptional) {
       return false;
+    }
     if (ssid == null) {
-      if (other.ssid != null)
+      if (other.ssid != null) {
         return false;
-    } else if (!ssid.equals(other.ssid))
+      }
+    } else if (!ssid.equals(other.ssid)) {
       return false;
+    }
     return true;
   }
 }

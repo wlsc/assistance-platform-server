@@ -60,7 +60,7 @@ public class MessagingServiceReceiver<T> extends Receiver<T> {
 
   protected MessagingService createMessagingService() {
     PlatformClientFactory.createInstance(platformUrlAndPort);
-    return (MessagingService) ConfiguredJmsServiceFactory.createJmsInstance(usingModuleId);
+    return ConfiguredJmsServiceFactory.createJmsInstance(usingModuleId);
   }
 
   private void channelReceiver(Channel<T> channel, T data) {

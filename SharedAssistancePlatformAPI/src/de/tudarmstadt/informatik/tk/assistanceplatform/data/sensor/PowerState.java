@@ -10,13 +10,13 @@ public class PowerState extends SensorData implements Serializable {
   public boolean isCharging;
   public float percent;
 
-  @JsonProperty(value = "chargingState")
+  @JsonProperty("chargingState")
   public int charingStateOptional;
 
-  @JsonProperty(value = "charingMode")
+  @JsonProperty("charingMode")
   public int charingModeOptional;
 
-  @JsonProperty(value = "powerSaveMode")
+  @JsonProperty("powerSaveMode")
   public boolean powerSaveModeOptional;
 
   public boolean getIsCharging() {

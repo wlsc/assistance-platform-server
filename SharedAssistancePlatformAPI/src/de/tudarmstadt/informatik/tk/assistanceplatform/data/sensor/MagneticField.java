@@ -12,21 +12,21 @@ public class MagneticField extends SensorData implements Serializable {
   public double y;
   public double z;
 
-  @JsonProperty(value = "xUncalibratedNoHardIron")
+  @JsonProperty("xUncalibratedNoHardIron")
   public float xUncalibratedNoHardIronOptional;
-  @JsonProperty(value = "yUncalibratedNoHardIron")
+  @JsonProperty("yUncalibratedNoHardIron")
   public float yUncalibratedNoHardIronOptional;
-  @JsonProperty(value = "zUncalibratedNoHardIron")
+  @JsonProperty("zUncalibratedNoHardIron")
   public float zUncalibratedNoHardIronOptional;
 
-  @JsonProperty(value = "xUncalibratedEstimatedIronBias")
+  @JsonProperty("xUncalibratedEstimatedIronBias")
   public float xUncalibratedEstimatedIronBiasOptional;
-  @JsonProperty(value = "yUncalibratedEstimatedIronBias")
+  @JsonProperty("yUncalibratedEstimatedIronBias")
   public float yUncalibratedEstimatedIronBiasOptional;
-  @JsonProperty(value = "zUncalibratedEstimatedIronBias")
+  @JsonProperty("zUncalibratedEstimatedIronBias")
   public float zUncalibratedEstimatedIronBiasOptional;
 
-  @JsonProperty(value = "accuracy")
+  @JsonProperty("accuracy")
   public int accuracyOptional;
 
   public MagneticField() {
@@ -130,15 +130,15 @@ public class MagneticField extends SensorData implements Serializable {
     result = prime * result + accuracyOptional;
     long temp;
     temp = Double.doubleToLongBits(x);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     result = prime * result + Float.floatToIntBits(xUncalibratedEstimatedIronBiasOptional);
     result = prime * result + Float.floatToIntBits(xUncalibratedNoHardIronOptional);
     temp = Double.doubleToLongBits(y);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     result = prime * result + Float.floatToIntBits(yUncalibratedEstimatedIronBiasOptional);
     result = prime * result + Float.floatToIntBits(yUncalibratedNoHardIronOptional);
     temp = Double.doubleToLongBits(z);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ temp >>> 32);
     result = prime * result + Float.floatToIntBits(zUncalibratedEstimatedIronBiasOptional);
     result = prime * result + Float.floatToIntBits(zUncalibratedNoHardIronOptional);
     return result;
@@ -146,39 +146,22 @@ public class MagneticField extends SensorData implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (!super.equals(obj))
+    }
+    if (!super.equals(obj)) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     MagneticField other = (MagneticField) obj;
-    if (accuracyOptional != other.accuracyOptional)
-      return false;
-    if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
-      return false;
-    if (Float.floatToIntBits(xUncalibratedEstimatedIronBiasOptional) != Float
-        .floatToIntBits(other.xUncalibratedEstimatedIronBiasOptional))
-      return false;
-    if (Float.floatToIntBits(xUncalibratedNoHardIronOptional) != Float
-        .floatToIntBits(other.xUncalibratedNoHardIronOptional))
-      return false;
-    if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
-      return false;
-    if (Float.floatToIntBits(yUncalibratedEstimatedIronBiasOptional) != Float
-        .floatToIntBits(other.yUncalibratedEstimatedIronBiasOptional))
-      return false;
-    if (Float.floatToIntBits(yUncalibratedNoHardIronOptional) != Float
-        .floatToIntBits(other.yUncalibratedNoHardIronOptional))
-      return false;
-    if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
-      return false;
-    if (Float.floatToIntBits(zUncalibratedEstimatedIronBiasOptional) != Float
-        .floatToIntBits(other.zUncalibratedEstimatedIronBiasOptional))
-      return false;
-    if (Float.floatToIntBits(zUncalibratedNoHardIronOptional) != Float
-        .floatToIntBits(other.zUncalibratedNoHardIronOptional))
-      return false;
-    return true;
+    return !(accuracyOptional != other.accuracyOptional) && !(Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) && !(Float.floatToIntBits(xUncalibratedEstimatedIronBiasOptional) != Float
+        .floatToIntBits(other.xUncalibratedEstimatedIronBiasOptional)) && !(Float.floatToIntBits(xUncalibratedNoHardIronOptional) != Float
+        .floatToIntBits(other.xUncalibratedNoHardIronOptional)) && !(Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) && !(Float.floatToIntBits(yUncalibratedEstimatedIronBiasOptional) != Float
+        .floatToIntBits(other.yUncalibratedEstimatedIronBiasOptional)) && !(Float.floatToIntBits(yUncalibratedNoHardIronOptional) != Float
+        .floatToIntBits(other.yUncalibratedNoHardIronOptional)) && !(Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) && !(Float.floatToIntBits(zUncalibratedEstimatedIronBiasOptional) != Float
+        .floatToIntBits(other.zUncalibratedEstimatedIronBiasOptional)) && !(Float.floatToIntBits(zUncalibratedNoHardIronOptional) != Float
+        .floatToIntBits(other.zUncalibratedNoHardIronOptional));
   }
 }

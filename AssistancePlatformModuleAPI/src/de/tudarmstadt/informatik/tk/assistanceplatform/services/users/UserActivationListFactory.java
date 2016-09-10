@@ -4,10 +4,10 @@ public class UserActivationListFactory {
   private static UserActivationList instance;
 
   public static UserActivationList getInstance() {
-    if (instance == null) {
-      return new UserActivationList();
+    if (instance != null) {
+      return instance;
     }
 
-    return instance;
+    return new UserActivationList();
   }
 }

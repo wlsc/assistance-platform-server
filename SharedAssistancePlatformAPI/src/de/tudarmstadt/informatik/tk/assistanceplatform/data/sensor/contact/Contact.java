@@ -18,59 +18,59 @@ public class Contact extends SensorData {
   public Boolean isDeleted;
 
   // Optional
-  @JsonProperty(value = "displayName")
+  @JsonProperty("displayName")
   public String displayNameOptional;
 
-  @JsonProperty(value = "starred")
+  @JsonProperty("starred")
   public Integer starredOptional;
 
-  @JsonProperty(value = "lastTimeContacted")
+  @JsonProperty("lastTimeContacted")
   public Integer lastTimeContactedOptional;
 
-  @JsonProperty(value = "timesContacted")
+  @JsonProperty("timesContacted")
   public Integer timesContactedOptional;
 
-  @JsonProperty(value = "contactType")
+  @JsonProperty("contactType")
   public Integer contactTypeOptional; // <- 0: Person, 1: Organisation
 
-  @JsonProperty(value = "namePrefix")
+  @JsonProperty("namePrefix")
   public String namePrefixOptional;
 
-  @JsonProperty(value = "middleName")
+  @JsonProperty("middleName")
   public String middleNameOptional;
 
-  @JsonProperty(value = "previousFamilyName")
+  @JsonProperty("previousFamilyName")
   public String previousFamilyNameOptional;
 
-  @JsonProperty(value = "nameSuffix")
+  @JsonProperty("nameSuffix")
   public String nameSuffixOptional;
 
-  @JsonProperty(value = "nickname")
+  @JsonProperty("nickname")
   public String nicknameOptional;
 
-  @JsonProperty(value = "phoneticGivenName")
+  @JsonProperty("phoneticGivenName")
   public String phoneticGivenNameOptional;
 
-  @JsonProperty(value = "phoneticMiddleName")
+  @JsonProperty("phoneticMiddleName")
   public String phoneticMiddleNameOptional;
 
-  @JsonProperty(value = "phoneticFamilyName")
+  @JsonProperty("phoneticFamilyName")
   public String phoneticFamilyNameOptional;
 
-  @JsonProperty(value = "organizationName")
+  @JsonProperty("organizationName")
   public String organizationNameOptional;
 
-  @JsonProperty(value = "departmentName")
+  @JsonProperty("departmentName")
   public String departmentNameOptional;
 
-  @JsonProperty(value = "jobTitle")
+  @JsonProperty("jobTitle")
   public String jobTitleOptional;
 
-  @JsonProperty(value = "phoneNumbers")
+  @JsonProperty("phoneNumbers")
   @Frozen
   public Set<LabeledContactValue> phoneNumbersOptional;
 
-  @JsonProperty(value = "emailAddresses")
+  @JsonProperty("emailAddresses")
   @Frozen
   public Set<LabeledContactValue> emailAddressesOptional;
 

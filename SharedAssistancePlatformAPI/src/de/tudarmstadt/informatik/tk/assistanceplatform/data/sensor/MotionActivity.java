@@ -13,10 +13,10 @@ public class MotionActivity extends SensorData implements Serializable {
   public int stationary;
   public int unknown;
 
-  @JsonProperty(value = "onFoot")
+  @JsonProperty("onFoot")
   public int onFootOptional;
 
-  @JsonProperty(value = "tilting")
+  @JsonProperty("tilting")
   public int tiltingOptional;
 
   public MotionActivity() {
@@ -95,27 +95,16 @@ public class MotionActivity extends SensorData implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (!super.equals(obj))
+    }
+    if (!super.equals(obj)) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     MotionActivity other = (MotionActivity) obj;
-    if (driving != other.driving)
-      return false;
-    if (onFootOptional != other.onFootOptional)
-      return false;
-    if (running != other.running)
-      return false;
-    if (stationary != other.stationary)
-      return false;
-    if (tiltingOptional != other.tiltingOptional)
-      return false;
-    if (unknown != other.unknown)
-      return false;
-    if (walking != other.walking)
-      return false;
-    return true;
+    return !(driving != other.driving) && !(onFootOptional != other.onFootOptional) && !(running != other.running) && !(stationary != other.stationary) && !(tiltingOptional != other.tiltingOptional) && !(unknown != other.unknown) && !(walking != other.walking);
   }
 }

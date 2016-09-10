@@ -8,7 +8,7 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.data.UserDeviceEvent;
  * @author bjeutter
  */
 public interface IUserDeviceEventPersistency {
-  public boolean persist(UserDeviceEvent data);
+  boolean persist(UserDeviceEvent data);
 
-  public boolean persistMany(UserDeviceEvent[] data);
+  boolean persistMany(UserDeviceEvent[] data);
 }
