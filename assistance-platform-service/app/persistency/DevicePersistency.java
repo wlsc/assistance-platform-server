@@ -261,9 +261,7 @@ public class DevicePersistency {
 					.query(conn,
 							"SELECT " + ALL_FIELDS + " FROM " + TABLE_NAME
 									+ " " + where, new ArrayListHandler(),
-							params).stream().map(array -> {
-						return convertResultArrayToDevice(array);
-					}).toArray(Device[]::new);
+							params).stream().map(array -> convertResultArrayToDevice(array)).toArray(Device[]::new);
 
 			return devices;
 		});

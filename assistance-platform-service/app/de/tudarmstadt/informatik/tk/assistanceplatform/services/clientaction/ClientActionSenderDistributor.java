@@ -27,9 +27,7 @@ public class ClientActionSenderDistributor {
 		List<Promise<Boolean>> sendPromises = new LinkedList<>();
 
 		for (Entry<String, List<Device>> e : devicesToPlatforms.entrySet()) {
-			String[] receiverIds = e.getValue().parallelStream().map((d) -> {
-				return d.messagingRegistrationId;
-			}).toArray(String[]::new);
+			String[] receiverIds = e.getValue().parallelStream().map((d) -> d.messagingRegistrationId).toArray(String[]::new);
 
 			try {
 				sendPromises.add(factory.getClientSender(e.getKey())

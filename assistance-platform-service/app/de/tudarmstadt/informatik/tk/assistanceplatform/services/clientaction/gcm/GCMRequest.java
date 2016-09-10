@@ -25,13 +25,13 @@ public class GCMRequest {
 
     public void addRegId(String regId){
         if(registration_ids == null)
-            registration_ids = new LinkedList<String>();
+            registration_ids = new LinkedList<>();
         registration_ids.add(regId);
     }
 
     public void setData(String dat){
         if(data == null)
-            data = new HashMap<String,String>();
+            data = new HashMap<>();
 
         data.put("payload", dat);
     }

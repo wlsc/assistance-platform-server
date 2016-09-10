@@ -62,16 +62,12 @@ public class AssistanceController extends RestController {
 
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result activate() {
-		return handleActivationStatusChange((a) -> {
-			return UserModuleActivationPersistency.create(a);
-		}, true);
+		return handleActivationStatusChange(UserModuleActivationPersistency::create, true);
 	}
 
 	@Security.Authenticated(UserAuthenticator.class)
 	public Result deactivate() {
-		return handleActivationStatusChange((a) -> {
-			return UserModuleActivationPersistency.remove(a);
-		}, false);
+		return handleActivationStatusChange(UserModuleActivationPersistency::remove, false);
 	}
 
 	private Result handleActivationStatusChange(

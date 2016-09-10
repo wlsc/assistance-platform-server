@@ -22,9 +22,7 @@ import errors.AssistanceAPIErrors;
 public class CustomAssistanceProxy extends RestController {
 	@Security.Authenticated(UserAuthenticator.class)
 	public Promise<Result> customGet(String moduleId, String path) {		
-		return custom(moduleId, path, (r) -> {
-			return r.get();
-		});
+		return custom(moduleId, path, (r) -> r.get());
 	}
 	
 	@Security.Authenticated(UserAuthenticator.class)
@@ -67,9 +65,7 @@ public class CustomAssistanceProxy extends RestController {
 		request.setHeader("ASSISTANCE-USER-ID", Long.toString(userId));
 		Promise<WSResponse> responsePromise = prepareAndFireRequest.apply(request);
 
-		return responsePromise.map((response) -> {
-			return (Result) Results.status(response.getStatus(),
-					response.getBody());
-		});
+		return responsePromise.map((response) -> (Result) Results.status(response.getStatus(),
+                response.getBody()));
 	}
 }

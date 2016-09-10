@@ -61,37 +61,26 @@ public class Global extends GlobalSettings {
 																		// milliseconds
 						Duration.create(30, TimeUnit.MINUTES), // Frequency 30
 																// minutes
-						new Runnable() {
-							@Override
-							public void run() {
-								aliveChecker.checkModulesAliveStati();
-							}
-						}, Akka.system().dispatcher());
+						(Runnable) aliveChecker::checkModulesAliveStati, Akka.system().dispatcher());
 	}
 
 	@Override
 	public Promise<play.mvc.Result> onError(RequestHeader request, Throwable t) {
-		return F.Promise.promise(() -> {
-			return play.mvc.Results.internalServerError(RestController
-					.errorInJson(new APIError(0, t.getMessage())));
-		});
+		return F.Promise.promise(() -> play.mvc.Results.internalServerError(RestController
+                .errorInJson(new APIError(0, t.getMessage()))));
 	}
 
 	@Override
 	public Promise<play.mvc.Result> onHandlerNotFound(RequestHeader request) {
-		return F.Promise.promise(() -> {
-			return play.mvc.Results.badRequest(RestController
-					.errorInJson(new APIError(0,
-							"Handler not found. Invalid route.")));
-		});
+		return F.Promise.promise(() -> play.mvc.Results.badRequest(RestController
+                .errorInJson(new APIError(0,
+                        "Handler not found. Invalid route."))));
 	}
 
 	@Override
 	public Promise<play.mvc.Result> onBadRequest(RequestHeader request,
 			String error) {
-		return F.Promise.promise(() -> {
-			return play.mvc.Results.badRequest(RestController
-					.errorInJson(new APIError(0, error)));
-		});
+		return F.Promise.promise(() -> play.mvc.Results.badRequest(RestController
+                .errorInJson(new APIError(0, error))));
 	}
 }
