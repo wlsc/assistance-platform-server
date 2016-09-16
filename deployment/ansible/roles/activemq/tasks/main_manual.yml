@@ -1,4 +1,5 @@
 ---
+# NOTE: THIS ISN'T CURRENTLY FINISHED!
 - name: ActiveMQ | Create directory for user
   file: 
     path=/home/{{ ACTIVEMQ_USER }} 
@@ -62,3 +63,12 @@
     force=yes
   tags:
     [install, activemq]
+
+- name: ActiveMQ | Start
+  service:
+    name=activemq
+    state=started
+    enabled=yes
+  become_user: "{{ ACTIVEMQ_USER }}"
+  tags:
+    [run, activemq]

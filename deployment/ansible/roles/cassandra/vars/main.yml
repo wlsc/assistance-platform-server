@@ -1,0 +1,5 @@
+---
+# Cassandra config
+CASSANDRA_IP: "127.0.0.1" # TODO: replace in config
+CASSANDRA_PORT_9042_TCP_ADDR: "127.0.0.1"
+CASSANDRA_PORT_9042_TCP_PORT: "9042"

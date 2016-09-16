@@ -1,7 +1,0 @@
----
-- name: NGINX | Start
-  service: 
-    name=nginx 
-    state=started
-  tags: 
-    [run, nginx]

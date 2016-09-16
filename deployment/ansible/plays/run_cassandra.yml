@@ -1,7 +1,0 @@
----
-- name: Cassandra | Start/Restart service
-  service: 
-    name=cassandra 
-    state=restarted
-  tags: 
-    [run, cassandra]

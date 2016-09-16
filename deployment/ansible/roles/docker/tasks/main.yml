@@ -1,0 +1,51 @@
+---
+- name: Install dependencies
+  apt:
+    name={{ item }}
+    state=present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+  tags:
+    [install, docker]
+
+- name: Add repo key
+  apt_key:
+    url=hkp://p80.pool.sks-keyservers.net:80
+    id=58118E89F3A912897C070ADBF76221572C52609D
+    state=present
+  tags:
+    [install, docker]
+
+- name: Add source repo
+  apt_repository:
+    repo="deb https://apt.dockerproject.org/repo ubuntu-xenial main"
+    state=present
+    filename="docker"
+  tags:
+    [install, docker]
+
+- name: Purge old repo if exists
+  apt:
+    name=lxc-docker
+    state=absent
+    purge=yes
+    update_cache=yes
+  tags:
+    [install, docker]
+
+- name: Install engine
+  apt:
+    name=docker-engine
+    state=present
+    update_cache=yes
+  tags:
+    [install, docker]
+
+- name: Start service
+  service:
+    name=docker
+    state=started
+    enabled=yes
+  tags:
+    [install, docker]

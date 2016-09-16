@@ -1,35 +1,14 @@
 ---
 - hosts: local
-
   gather_facts: false
   become: yes
-
   vars_files:
     - config/config.yml
-
-  tasks:
-    - include: plays/install_first.yml
-    - include: plays/install_java8.yml
-    - include: plays/install_sbt.yml
-    - include: plays/install_postgres.yml
-    - include: plays/install_cassandra.yml
-    - include: plays/install_activemq.yml
-    - include: plays/install_nginx.yml
-    - include: plays/run_activemq.yml
-    - include: plays/run_nginx.yml
-    - include: plays/run_cassandra.yml
-    - include: plays/run_postgres.yml
-    - include: plays/run_assistance.yml
-
-  handlers:
-    - name: ActiveMQ | Restart service
-      service: 
-        name=activemq 
-        state=restarted
-      become: yes
-      become_user: "{{ ACTIVEMQ_USER }}"
-
-    - name: Postgres | Restart service
-      service: 
-        name=postgresql 
-        state=restarted
+  roles:
+    - prerequisites
+    - docker
+    - nginx
+    - activemq
+    - cassandra
+    - postgres
+    #- assistance

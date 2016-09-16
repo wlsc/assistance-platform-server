@@ -1,0 +1,54 @@
+---
+- name: Install last versions of various libs (Bash, OpenSSl other libs)
+  apt:
+    name={{ item }}
+    update_cache=yes
+    state=latest
+  with_items:
+    - bash
+    - openssl
+    - libssl-dev
+    - libssl-doc
+    - virtualenv
+    - python
+    - python-pip
+    - python-software-properties
+  tags: 
+    [install, prerequisites]
+
+- name: Oracle Java 8 repo installation
+  apt_repository:
+    repo="ppa:webupd8team/java"
+  tags:
+    [install, prerequisites, java8]
+
+- name: Oracle Java 8 installation
+  apt:
+    name=oracle-java8-installer
+    state=present
+    update_cache=yes
+  tags:
+    [install, prerequisites, java8]
+
+- name: Install SBT source repo
+  apt_repository:
+    repo="deb https://dl.bintray.com/sbt/debian /"
+    state=present
+    filename="sbt"
+  tags:
+    [install, prerequisites, sbt]
+
+- name: Add SBT apt key
+  apt_key: 
+    keyserver=hkp://keyserver.ubuntu.com:80 
+    id=642AC823
+  tags:
+    [install, prerequisites, sbt]
+
+- name: SBT installation
+  apt:
+    name=sbt
+    state=present
+    update_cache=yes
+  tags:
+    [install, prerequisites, sbt]

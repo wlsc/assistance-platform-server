@@ -1,11 +1,9 @@
 ---
 - name: Cassandra | Install source entry
-  lineinfile: 
-    dest=/etc/apt/sources.list.d/cassandra.sources.list
-    line="deb http://debian.datastax.com/community stable main"
-    state=present 
-    insertafter=EOF 
-    create=yes 
+  apt_repository:
+    repo="deb http://debian.datastax.com/community stable main"
+    state=present
+    filename="cassandra.sources"
   tags:
     [install, cassandra]
 
@@ -32,3 +30,10 @@
     - Postgres | Restart service
   tags:
     [install, cassandra]
+
+- name: Cassandra | Start/Restart service
+  service: 
+    name=cassandra 
+    state=restarted
+  tags: 
+    [run, cassandra]

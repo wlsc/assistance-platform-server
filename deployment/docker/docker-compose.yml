@@ -6,7 +6,7 @@ activemq:
   image: webcenter/activemq
   ports:
     - "61616:61616"
-    - 8161:8161
+    - "8161:8161"
   hostname: activemq
 
 cassandra:

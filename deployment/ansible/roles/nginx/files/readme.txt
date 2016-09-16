@@ -1,0 +1,1 @@
+Place your NGINX certificates into certs folder.

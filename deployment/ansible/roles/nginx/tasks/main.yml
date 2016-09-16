@@ -1,0 +1,19 @@
+---
+- name: Pull/run docker container
+  docker_container:
+    name: nginx
+    image: jwilder/nginx-proxy
+    tls: yes
+    state: started
+    restart_retries: 5
+    restart: no
+    volumes:
+      - "{{ role_path }}/files/certs:/etc/nginx/certs"
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    published_ports:
+      - "443:443"
+      - "80:80"
+    env:
+      DEFAULT_HOST: assi
+  tags:
+    [run, nignx]

@@ -1,0 +1,16 @@
+---
+- name: Pull/run docker container
+  docker_container:
+    name: cassandra
+    image: cassandra
+    tls: yes
+    state: started
+    restart_retries: 5
+    restart: no
+    volumes:
+      - "{{ role_path }}/files:/etc/cassandra"
+    published_ports:
+      - "9160:9160"
+      - "{{ CASSANDRA_PORT_9042_TCP_PORT }}:{{ CASSANDRA_PORT_9042_TCP_PORT }}"
+  tags:
+    [run, cassandra]

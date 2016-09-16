@@ -1,8 +1,0 @@
----
-- name: NGINX | Install
-  apt: 
-    name=nginx 
-    state=present 
-    update_cache=yes
-  tags:
-    [install, nginx]
