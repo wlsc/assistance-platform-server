@@ -1,8 +1,4 @@
-/// Docker Stuff
-maintainer := "Bennet Jeutter" // Maintainer
-dockerExposedPorts := Seq(9000, 9443) // Expose Ports
-dockerUpdateLatest := true
-dockerRepository := Option("m156")
+maintainer := "Bennet Jeutter"
 
 name := """assistance-platform-service"""
 
@@ -10,13 +6,11 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-scalaVersion := "2.10.5"
+scalaVersion := "2.11.8"
 
 resolvers += (
-    "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
-)
-
-resolvers += "Assi nexus" at "http://130.83.163.56:9001/content/repositories/public/"
+  "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository"
+  )
 
 libraryDependencies ++= Seq(
   javaJdbc,
@@ -24,11 +18,10 @@ libraryDependencies ++= Seq(
   javaWs,
   evolutions,
   "org.mindrot" % "jbcrypt" % "0.3m",
-  "org.postgresql" % "postgresql" % "9.2-1003-jdbc4",
-  "com.nimbusds" % "nimbus-jose-jwt" % "4.2",
+  "org.postgresql" % "postgresql" % "9.4-1206-jdbc41",
+  "com.nimbusds" % "nimbus-jose-jwt" % "4.26.1",
   "commons-dbutils" % "commons-dbutils" % "1.6",
-  "de.tudarmstadt.informatik.tk.assistanceplatform" % "SharedAssistancePlatformAPI" % "0.0.2-SNAPSHOT",
-  "commons-lang" % "commons-lang" % "2.2"
+  "org.apache.commons" % "commons-lang3" % "3.4"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
