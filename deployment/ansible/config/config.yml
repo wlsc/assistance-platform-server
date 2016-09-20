@@ -2,5 +2,5 @@
 # General configuration file
 # Configuration for services -> in "roles" folder
 PROJECT_NAME: "assistance"
-PROJECT_ROOT: "/home/x02/dev/server_platform_assistance"
+PROJECT_ROOT: "/home/x02/dev/assistance-platform-server"
 PROJECT_REPO: "git@github.com:Telecooperation/assistance-platform-server.git"
