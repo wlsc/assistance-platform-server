@@ -1,0 +1,75 @@
+---
+- name: Assistance | Setting ENV. ActiveMQ address
+  lineinfile:
+    dest=/etc/environment
+    regexp=^ACTIVEMQ_PORT_61616_TCP_ADDR
+    line=ACTIVEMQ_PORT_61616_TCP_ADDR={{ ACTIVEMQ_PORT_61616_TCP_ADDR }}
+    state=present
+  tags:
+    [run, assistance]
+
+- name: Assistance | Setting ENV. ActiveMQ port
+  lineinfile:
+    dest=/etc/environment
+    regexp=^ACTIVEMQ_PORT_61616_TCP_PORT
+    line=ACTIVEMQ_PORT_61616_TCP_PORT={{ ACTIVEMQ_PORT_61616_TCP_PORT }}
+    state=present
+  tags:
+    [run, assistance]
+
+- name: Assistance | Setting ENV. Postgres address
+  lineinfile:
+    dest=/etc/environment
+    regexp=^DB_PORT_5432_TCP_ADDR
+    line=DB_PORT_5432_TCP_ADDR={{ DB_PORT_5432_TCP_ADDR }}
+    state=present
+  tags:
+    [run, assistance]
+
+- name: Assistance | Setting ENV. Postgres port
+  lineinfile:
+    dest=/etc/environment
+    regexp=^DB_PORT_5432_TCP_PORT
+    line=DB_PORT_5432_TCP_PORT={{ DB_PORT_5432_TCP_PORT }}
+    state=present
+  tags:
+    [run, assistance]
+
+- name: Assistance | Setting ENV. Cassandra address
+  lineinfile:
+    dest=/etc/environment
+    regexp=^CASSANDRA_PORT_9042_TCP_ADDR
+    line=CASSANDRA_PORT_9042_TCP_ADDR={{ CASSANDRA_PORT_9042_TCP_ADDR }}
+    state=present
+  tags:
+    [run, assistance]
+
+- name: Assistance | Setting ENV. Cassandra port
+  lineinfile:
+    dest=/etc/environment
+    regexp=^CASSANDRA_PORT_9042_TCP_PORT
+    line=CASSANDRA_PORT_9042_TCP_PORT={{ CASSANDRA_PORT_9042_TCP_PORT }}
+    state=present
+  tags:
+    [run, assistance]
+
+- name: Assistance | Give service execution permission
+  file: 
+    path={{ PROJECT_ROOT }}/assistance-platform-service/activator
+    mode=u+x
+  tags:
+    [run, assistance]
+
+- name: Assistance | Start
+  command: "{{ PROJECT_ROOT }}/assistance-platform-service/activator run"
+  args:
+    chdir: "{{ PROJECT_ROOT }}/assistance-platform-service/"
+  environment:
+      ACTIVEMQ_PORT_61616_TCP_ADDR: "{{ ACTIVEMQ_PORT_61616_TCP_ADDR }}"
+      ACTIVEMQ_PORT_61616_TCP_PORT: "{{ ACTIVEMQ_PORT_61616_TCP_PORT }}"
+      DB_PORT_5432_TCP_ADDR: "{{ DB_PORT_5432_TCP_ADDR }}"
+      DB_PORT_5432_TCP_PORT: "{{ DB_PORT_5432_TCP_PORT }}"
+      CASSANDRA_PORT_9042_TCP_ADDR: "{{ CASSANDRA_PORT_9042_TCP_ADDR }}"
+      CASSANDRA_PORT_9042_TCP_PORT: "{{ CASSANDRA_PORT_9042_TCP_PORT }}"
+  tags:
+    [run, assistance]
