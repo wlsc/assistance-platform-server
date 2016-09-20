@@ -11,4 +11,4 @@
     - activemq
     - cassandra
     - postgres
-    #- assistance
+    - assistance
