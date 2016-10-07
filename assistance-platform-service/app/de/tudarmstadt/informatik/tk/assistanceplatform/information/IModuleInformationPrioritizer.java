@@ -1,14 +1,15 @@
 package de.tudarmstadt.informatik.tk.assistanceplatform.information;
 
-import java.util.List;
-
 import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
+
+import java.util.List;
 
 /**
  * This interface can be implemented to provide a strategy for prioritzing a list of module information cards
- * @author bjeutter
  *
+ * @author bjeutter
  */
+@FunctionalInterface
 public interface IModuleInformationPrioritizer {
-	public List<ModuleInformationCard> getPrioritizedInformationList(List<ModuleInformationCard> unsortedInformations);
+    public List<ModuleInformationCard> getPrioritizedInformationList(List<ModuleInformationCard> unsortedInformations);
 }

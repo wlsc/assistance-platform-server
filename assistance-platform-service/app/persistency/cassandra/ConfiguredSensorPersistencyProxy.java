@@ -4,12 +4,12 @@ import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.IUserDeviceEv
 import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSensorDataPersistency;
 
 public class ConfiguredSensorPersistencyProxy {
-	private IUserDeviceEventPersistency sensorDataPersistency;
+    private IUserDeviceEventPersistency sensorDataPersistency;
 
-	public IUserDeviceEventPersistency getSensorDataPersistency() {
-		if(sensorDataPersistency == null) {
-			sensorDataPersistency = new CassandraSensorDataPersistency(CassandraSessionProxyFactory.getSessionProxy());
-		}
-		return sensorDataPersistency;
-	}
+    public IUserDeviceEventPersistency getSensorDataPersistency() {
+        if (sensorDataPersistency == null) {
+            sensorDataPersistency = new CassandraSensorDataPersistency(CassandraSessionProxyFactory.getSessionProxy());
+        }
+        return sensorDataPersistency;
+    }
 }

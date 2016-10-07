@@ -1,165 +1,166 @@
 package persistency;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import models.ActiveAssistanceModule;
 import models.UserModuleActivation;
-
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.commons.lang3.ArrayUtils;
-
 import play.db.DB;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 public class UserModuleActivationPersistency {
-	private static String TABLE_NAME = "users_modules";
+    private static String TABLE_NAME = "users_modules";
 
-	public static boolean create(UserModuleActivation activation) {
-		Long userId = activation.userId;
-		String moduleId = activation.moduleId;
+    private UserModuleActivationPersistency() {
+    }
 
-		if (doesActivationExist(userId, moduleId)) {
-			return true;
-		}
+    public static boolean create(UserModuleActivation activation) {
+        Long userId = activation.userId;
+        String moduleId = activation.moduleId;
 
-		return DB.withConnection(conn -> {
-			PreparedStatement s = conn.prepareStatement("INSERT INTO "
-					+ TABLE_NAME
-					+ " (user_id, module_id, creation_time) VALUES "
-					+ "(?, ?, CURRENT_TIMESTAMP)");
+        if (doesActivationExist(userId, moduleId)) {
+            return true;
+        }
 
-			s.setLong(1, userId);
-			s.setString(2, moduleId);
+        return DB.withConnection(conn -> {
+            PreparedStatement s = conn.prepareStatement("INSERT INTO "
+                    + TABLE_NAME
+                    + " (user_id, module_id, creation_time) VALUES "
+                    + "(?, ?, CURRENT_TIMESTAMP)");
 
-			boolean result = s.executeUpdate() != 0;
+            s.setLong(1, userId);
+            s.setString(2, moduleId);
 
-			s.close();
+            boolean result = s.executeUpdate() != 0;
 
-			return result;
-		});
-	}
+            s.close();
 
-	public static boolean remove(UserModuleActivation activation) {
-		Long userId = activation.userId;
-		String moduleId = activation.moduleId;
+            return result;
+        });
+    }
 
-		return DB.withConnection(conn -> {
-			PreparedStatement s = conn.prepareStatement("DELETE FROM "
-					+ TABLE_NAME + " WHERE user_id = ? AND module_id = ?");
+    public static boolean remove(UserModuleActivation activation) {
+        Long userId = activation.userId;
+        String moduleId = activation.moduleId;
 
-			s.setLong(1, userId);
-			s.setString(2, moduleId);
+        return DB.withConnection(conn -> {
+            PreparedStatement s = conn.prepareStatement("DELETE FROM "
+                    + TABLE_NAME + " WHERE user_id = ? AND module_id = ?");
 
-			boolean result = s.executeUpdate() != 0;
+            s.setLong(1, userId);
+            s.setString(2, moduleId);
 
-			s.close();
+            boolean result = s.executeUpdate() != 0;
 
-			return result;
-		});
-	}
+            s.close();
 
-	public static boolean doesActivationExist(Long userId, String moduleId) {
-		return DB.withConnection(conn -> {
-			PreparedStatement s = conn.prepareStatement("SELECT user_id FROM "
-					+ TABLE_NAME + " WHERE user_id = ? AND module_id = ?");
-			s.setLong(1, userId);
-			s.setString(2, moduleId);
-			ResultSet result = s.executeQuery();
+            return result;
+        });
+    }
 
-			boolean returnResult = result != null && result.next();
+    public static boolean doesActivationExist(Long userId, String moduleId) {
+        return DB.withConnection(conn -> {
+            PreparedStatement s = conn.prepareStatement("SELECT user_id FROM "
+                    + TABLE_NAME + " WHERE user_id = ? AND module_id = ?");
+            s.setLong(1, userId);
+            s.setString(2, moduleId);
+            ResultSet result = s.executeQuery();
 
-			result.close();
-			s.close();
+            boolean returnResult = result != null && result.next();
 
-			return returnResult;
-		});
-	}
+            result.close();
+            s.close();
 
-	public static boolean doesActivationExist(UserModuleActivation activation) {
-		return doesActivationExist(activation.userId, activation.moduleId);
-	}
+            return returnResult;
+        });
+    }
 
-	public static String[] activatedModuleIdsForUser(long userId) {
-		return DB.withConnection(conn -> {
+    public static boolean doesActivationExist(UserModuleActivation activation) {
+        return doesActivationExist(activation.userId, activation.moduleId);
+    }
 
-			String[] modules = new QueryRunner()
-					.query(conn,
-							"SELECT module_id FROM " + TABLE_NAME
-									+ " WHERE user_id = ?",
-							new ArrayListHandler(), userId).stream()
-					.map(array -> {
-						String module = (String) array[0];
+    public static String[] activatedModuleIdsForUser(long userId) {
+        return DB.withConnection(conn -> {
 
-						return module;
-					}).toArray(String[]::new);
+            String[] modules = new QueryRunner()
+                    .query(conn,
+                            "SELECT module_id FROM " + TABLE_NAME
+                                    + " WHERE user_id = ?",
+                            new ArrayListHandler(), userId).stream()
+                    .map(array -> {
+                        String module = (String) array[0];
 
-			return modules;
-		});
-	}
+                        return module;
+                    }).toArray(String[]::new);
 
-	public static long[] userActivationsForModule(String moduleId) {
-		return DB.withConnection(conn -> {
+            return modules;
+        });
+    }
 
-			Long[] userIds = new QueryRunner()
-					.query(conn,
-							"SELECT user_id FROM " + TABLE_NAME
-									+ " WHERE module_id = ?",
-							new ArrayListHandler(), moduleId).stream()
-					.map(array -> {
-						long id = (long) array[0];
+    public static long[] userActivationsForModule(String moduleId) {
+        return DB.withConnection(conn -> {
 
-						return id;
-					}).toArray(Long[]::new);
+            Long[] userIds = new QueryRunner()
+                    .query(conn,
+                            "SELECT user_id FROM " + TABLE_NAME
+                                    + " WHERE module_id = ?",
+                            new ArrayListHandler(), moduleId).stream()
+                    .map(array -> {
+                        long id = (long) array[0];
 
-			return ArrayUtils.toPrimitive(userIds);
-		});
-	}
+                        return id;
+                    }).toArray(Long[]::new);
 
-	public static ActiveAssistanceModule[] activatedModuleEndpointsForUser(
-			long userId) {
-		return activatedModuleEndpointsWithQuery(
-				"SELECT m.id, m.rest_contact_address FROM " + TABLE_NAME
-						+ " a LEFT JOIN "
-						+ ActiveAssistanceModulePersistency.TABLE_NAME
-						+ " AS m ON a.module_id = m.id WHERE a.user_id = ?",
-				userId);
-	}
+            return ArrayUtils.toPrimitive(userIds);
+        });
+    }
 
-	public static ActiveAssistanceModule[] activatedModuleEndpointsForUser(
-			String[] moduleIds) {
-		
-		String[] newModuleIds = new String[moduleIds.length];
-		
-		for(int i = 0; i < moduleIds.length; i++) {
-			newModuleIds[i] = "'" + moduleIds[i] + "'";
-		}
-		
-		return activatedModuleEndpointsWithQuery(
-				"SELECT m.id, m.rest_contact_address FROM "
-						+ ActiveAssistanceModulePersistency.TABLE_NAME
-						+ " m WHERE m.id IN " +  "(" + String.join(",", newModuleIds) + ")");
-	}
+    public static ActiveAssistanceModule[] activatedModuleEndpointsForUser(
+            long userId) {
+        return activatedModuleEndpointsWithQuery(
+                "SELECT m.id, m.rest_contact_address FROM " + TABLE_NAME
+                        + " a LEFT JOIN "
+                        + ActiveAssistanceModulePersistency.TABLE_NAME
+                        + " AS m ON a.module_id = m.id WHERE a.user_id = ?",
+                userId);
+    }
 
-	private static ActiveAssistanceModule[] activatedModuleEndpointsWithQuery(
-			String query, Object... params) {
-		return DB.withConnection(conn -> {
+    public static ActiveAssistanceModule[] activatedModuleEndpointsForUser(
+            String[] moduleIds) {
 
-			ActiveAssistanceModule[] modules = new QueryRunner()
-					.query(conn, query, new ArrayListHandler(), params)
-					.stream()
-					.map(UserModuleActivationPersistency::mapModuleEndpoint)
-					.toArray(ActiveAssistanceModule[]::new);
+        String[] newModuleIds = new String[moduleIds.length];
 
-			return modules;
-		});
-	}
+        for (int i = 0; i < moduleIds.length; i++) {
+            newModuleIds[i] = "'" + moduleIds[i] + "'";
+        }
 
-	private static ActiveAssistanceModule mapModuleEndpoint(Object[] array) {
-		String id = (String) array[0];
-		String restAddress = (String) array[1];
+        return activatedModuleEndpointsWithQuery(
+                "SELECT m.id, m.rest_contact_address FROM "
+                        + ActiveAssistanceModulePersistency.TABLE_NAME
+                        + " m WHERE m.id IN " + "(" + String.join(",", newModuleIds) + ")");
+    }
 
-		return new ActiveAssistanceModule(null, id, null, null, null, null,
-				null, null, null, null, restAddress);
-	}
+    private static ActiveAssistanceModule[] activatedModuleEndpointsWithQuery(
+            String query, Object... params) {
+        return DB.withConnection(conn -> {
+
+            ActiveAssistanceModule[] modules = new QueryRunner()
+                    .query(conn, query, new ArrayListHandler(), params)
+                    .stream()
+                    .map(UserModuleActivationPersistency::mapModuleEndpoint)
+                    .toArray(ActiveAssistanceModule[]::new);
+
+            return modules;
+        });
+    }
+
+    private static ActiveAssistanceModule mapModuleEndpoint(Object[] array) {
+        String id = (String) array[0];
+        String restAddress = (String) array[1];
+
+        return new ActiveAssistanceModule(null, id, null, null, null, null,
+                null, null, null, null, restAddress);
+    }
 }

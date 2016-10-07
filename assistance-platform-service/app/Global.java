@@ -1,20 +1,17 @@
-import java.util.concurrent.TimeUnit;
-
-
+import controllers.RestController;
+import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
+import errors.APIError;
 import periodic.ModuleAliveChecker;
 import persistency.cassandra.CassandraSessionProxyFactory;
-import persistency.cassandra.ConfiguredSensorPersistencyProxy;
 import play.Application;
 import play.GlobalSettings;
-import play.Logger;
 import play.libs.Akka;
 import play.libs.F;
 import play.libs.F.Promise;
 import play.mvc.Http.RequestHeader;
 import scala.concurrent.duration.Duration;
-import controllers.RestController;
-import de.tudarmstadt.informatik.tk.assistanceplatform.persistency.cassandra.CassandraSessionProxy;
-import errors.APIError;
+
+import java.util.concurrent.TimeUnit;
 
 public class Global extends GlobalSettings {
     @Override
@@ -33,11 +30,11 @@ public class Global extends GlobalSettings {
         ModuleAliveChecker aliveChecker = new ModuleAliveChecker();
 
         Akka.system().scheduler()
-                .schedule(Duration.create(0, TimeUnit.MILLISECONDS), // Initial
+                .schedule(Duration.create(0L, TimeUnit.MILLISECONDS), // Initial
                         // delay
                         // 0
                         // milliseconds
-                        Duration.create(30, TimeUnit.MINUTES), // Frequency 30
+                        Duration.create(30L, TimeUnit.MINUTES), // Frequency 30
                         // minutes
                         (Runnable) aliveChecker::checkModulesAliveStati, Akka.system().dispatcher());
     }

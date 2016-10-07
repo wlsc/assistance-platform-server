@@ -5,7 +5,6 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /ip                           controllers.Application.ip()
-GET     /jmeterusers/:proof                 controllers.UsersController.creatJmeterTestUsers(proof)
 POST		/evaluation/log_responsetime	controllers.Application.log_responsetimes
 
 # User management

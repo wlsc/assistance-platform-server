@@ -1,10 +1,14 @@
 package controllers;
 
-import java.text.DateFormat;
-import java.util.List;
-import java.util.TimeZone;
-import java.util.function.Predicate;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.content.ClientFeedbackDto;
+import de.tudarmstadt.informatik.tk.assistanceplatform.information.CurrentModuleInformationAggregator;
+import de.tudarmstadt.informatik.tk.assistanceplatform.information.IModuleInformationPrioritizer;
+import de.tudarmstadt.informatik.tk.assistanceplatform.information.ModuleInformationByTimestampPrioritizer;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
+import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
+import errors.AssistanceAPIErrors;
 import messaging.JmsMessagingServiceFactory;
 import models.ActiveAssistanceModule;
 import models.UserModuleActivation;
@@ -19,197 +23,191 @@ import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import de.tudarmstadt.informatik.tk.assistance.model.client.feedback.content.ClientFeedbackDto;
-import de.tudarmstadt.informatik.tk.assistanceplatform.information.CurrentModuleInformationAggregator;
-import de.tudarmstadt.informatik.tk.assistanceplatform.information.IModuleInformationPrioritizer;
-import de.tudarmstadt.informatik.tk.assistanceplatform.information.ModuleInformationByTimestampPrioritizer;
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.assistance.informationprovider.ModuleInformationCard;
-import de.tudarmstadt.informatik.tk.assistanceplatform.platform.data.UserRegistrationInformationEvent;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.messaging.MessagingService;
-import errors.AssistanceAPIErrors;
+import java.text.DateFormat;
+import java.util.List;
+import java.util.TimeZone;
+import java.util.function.Predicate;
 
 public class AssistanceController extends RestController {
-	MessagingService ms = JmsMessagingServiceFactory.createServiceFromConfig();
+    MessagingService ms = JmsMessagingServiceFactory.createServiceFromConfig();
 
-	@Security.Authenticated(UserAuthenticator.class)
-	public Result list(String language) {
+    @Security.Authenticated(UserAuthenticator.class)
+    public Result list(String language) {
 
-		JsonNode result = Cache
-				.getOrElse(
-						"moduleList" + language,
-						() -> {
-							ActiveAssistanceModule[] assiModules = ActiveAssistanceModulePersistency
-									.list(language);
+        JsonNode result = Cache
+                .getOrElse(
+                        "moduleList" + language,
+                        () -> {
+                            ActiveAssistanceModule[] assiModules = ActiveAssistanceModulePersistency
+                                    .list(language);
 
-							JsonNode json = Json.toJson(assiModules);
-							return json;
-						}, 3600);
+                            JsonNode json = Json.toJson(assiModules);
+                            return json;
+                        }, 3600);
 
-		return ok(result);
-	}
+        return ok(result);
+    }
 
-	@Security.Authenticated(UserAuthenticator.class)
-	public Result activations() {
-		Long userId = getUserIdForRequest();
+    @Security.Authenticated(UserAuthenticator.class)
+    public Result activations() {
+        Long userId = getUserIdForRequest();
 
-		String[] result = UserModuleActivationPersistency
-				.activatedModuleIdsForUser(userId);
+        String[] result = UserModuleActivationPersistency
+                .activatedModuleIdsForUser(userId);
 
-		return ok(Json.toJson(result));
-	}
+        return ok(Json.toJson(result));
+    }
 
-	@Security.Authenticated(UserAuthenticator.class)
-	public Result activate() {
-		return handleActivationStatusChange(UserModuleActivationPersistency::create, true);
-	}
+    @Security.Authenticated(UserAuthenticator.class)
+    public Result activate() {
+        return handleActivationStatusChange(UserModuleActivationPersistency::create, true);
+    }
 
-	@Security.Authenticated(UserAuthenticator.class)
-	public Result deactivate() {
-		return handleActivationStatusChange(UserModuleActivationPersistency::remove, false);
-	}
+    @Security.Authenticated(UserAuthenticator.class)
+    public Result deactivate() {
+        return handleActivationStatusChange(UserModuleActivationPersistency::remove, false);
+    }
 
-	private Result handleActivationStatusChange(
-			Predicate<UserModuleActivation> activationCheck,
-			boolean endResultOfRegistrationStatus) {
-		JsonNode postData = request().body().asJson();
+    private Result handleActivationStatusChange(
+            Predicate<UserModuleActivation> activationCheck,
+            boolean endResultOfRegistrationStatus) {
+        JsonNode postData = request().body().asJson();
 
-		// Get Module ID to activate from request
-		JsonNode moduleIdNode = postData.findPath("module_id");
-		if (moduleIdNode.isMissingNode()) {
-			return badRequestJson(AssistanceAPIErrors.missingModuleIDParameter);
-		}
+        // Get Module ID to activate from request
+        JsonNode moduleIdNode = postData.findPath("module_id");
+        if (moduleIdNode.isMissingNode()) {
+            return badRequestJson(AssistanceAPIErrors.missingModuleIDParameter);
+        }
 
-		String moduleId = moduleIdNode.textValue();
-		
-		// Check if module exists
-		if(!ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
-			return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
-		}
+        String moduleId = moduleIdNode.textValue();
 
-		// Get User id from request
-		long userId = getUserIdForRequest();
+        // Check if module exists
+        if (!ActiveAssistanceModulePersistency.doesModuleWithIdExist(moduleId)) {
+            return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
+        }
 
-		UserModuleActivation activation = new UserModuleActivation(userId,
-				moduleId);
+        // Get User id from request
+        long userId = getUserIdForRequest();
 
-		if (activationCheck.test(activation)) {
-			publishUserRegistrationInformationEvent(userId, moduleId,
-					endResultOfRegistrationStatus);
+        UserModuleActivation activation = new UserModuleActivation(userId,
+                moduleId);
 
-			return ok();
-		} else {
-			if (UserModuleActivationPersistency.doesActivationExist(activation) == endResultOfRegistrationStatus) {
-				return badRequestJson(AssistanceAPIErrors.moduleActivationNotActive);
-			} else {
-				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
-			}
-		}
-	}
+        if (activationCheck.test(activation)) {
+            publishUserRegistrationInformationEvent(userId, moduleId,
+                    endResultOfRegistrationStatus);
 
-	private void publishUserRegistrationInformationEvent(long userId,
-			String moduleId, boolean wantsToBeRegistered) {
-		ms.channel(UserRegistrationInformationEvent.class).publish(
-				new UserRegistrationInformationEvent(userId, moduleId,
-						wantsToBeRegistered));
-	}
+            return ok();
+        } else {
+            if (UserModuleActivationPersistency.doesActivationExist(activation) == endResultOfRegistrationStatus) {
+                return badRequestJson(AssistanceAPIErrors.moduleActivationNotActive);
+            } else {
+                return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+            }
+        }
+    }
 
-	@Security.Authenticated(UserAuthenticator.class)
-	public Promise<Result> current(Long deviceId) {
-		return processCurrentForModules(
-				deviceId,
-				(uId) -> getActivatedModuleEndpoints(uId),
-				(cards) -> {
-					IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationByTimestampPrioritizer();
-					return infoPrioritizer.getPrioritizedInformationList(cards);
-				});
-	}
+    private void publishUserRegistrationInformationEvent(long userId,
+                                                         String moduleId, boolean wantsToBeRegistered) {
+        ms.channel(UserRegistrationInformationEvent.class).publish(
+                new UserRegistrationInformationEvent(userId, moduleId,
+                        wantsToBeRegistered));
+    }
 
-	private ActiveAssistanceModule[] getActivatedModuleEndpoints(long userId) {
-		return UserModuleActivationPersistency
-				.activatedModuleEndpointsForUser(userId);
-	}
+    @Security.Authenticated(UserAuthenticator.class)
+    public Promise<Result> current(Long deviceId) {
+        return processCurrentForModules(
+                deviceId,
+                this::getActivatedModuleEndpoints,
+                (cards) -> {
+                    IModuleInformationPrioritizer infoPrioritizer = new ModuleInformationByTimestampPrioritizer();
+                    return infoPrioritizer.getPrioritizedInformationList(cards);
+                });
+    }
 
-	@Security.Authenticated(UserAuthenticator.class)
-	public Promise<Result> currentForModule(String moduleId, Long deviceId) {
-		long userId = getUserIdForRequest();
-		
-		if(!UserModuleActivationPersistency.doesActivationExist(userId, moduleId)) {
-			return Promise.pure(badRequestJson(AssistanceAPIErrors.moduleActivationNotActive));
-		}
-		
-		return processCurrentForModules(
-				deviceId,
-				(uId) -> UserModuleActivationPersistency.activatedModuleEndpointsForUser(new String[] { moduleId }),
-				(c) -> c
-				);
-	}
+    private ActiveAssistanceModule[] getActivatedModuleEndpoints(long userId) {
+        return UserModuleActivationPersistency
+                .activatedModuleEndpointsForUser(userId);
+    }
 
-	private Promise<Result> processCurrentForModules(
-			long deviceId,
-			Function<Long, ActiveAssistanceModule[]> moduleProvider,
-			Function<List<ModuleInformationCard>, List<ModuleInformationCard>> postProcessingStep) {
-		Promise<Result> deviceIdCheckErrror = checkDeviceId(deviceId);
+    @Security.Authenticated(UserAuthenticator.class)
+    public Promise<Result> currentForModule(String moduleId, Long deviceId) {
+        long userId = getUserIdForRequest();
 
-		if (deviceIdCheckErrror != null) {
-			return deviceIdCheckErrror;
-		}
+        if (!UserModuleActivationPersistency.doesActivationExist(userId, moduleId)) {
+            return Promise.pure(badRequestJson(AssistanceAPIErrors.moduleActivationNotActive));
+        }
 
-		// Get User id from request
-		long userId = getUserIdForRequest();
+        return processCurrentForModules(
+                deviceId,
+                (uId) -> UserModuleActivationPersistency.activatedModuleEndpointsForUser(new String[]{moduleId}),
+                (c) -> c
+        );
+    }
 
-		// Get the activated modules
-		ActiveAssistanceModule[] activatedModules = null;
-		try {
-			activatedModules = moduleProvider.apply(userId);
-		} catch (Throwable e) {
-			Logger.error("Something went wrong on fetching module information", e);
-		}
+    private Promise<Result> processCurrentForModules(
+            long deviceId,
+            Function<Long, ActiveAssistanceModule[]> moduleProvider,
+            Function<List<ModuleInformationCard>, List<ModuleInformationCard>> postProcessingStep) {
+        Promise<Result> deviceIdCheckErrror = checkDeviceId(deviceId);
 
-		Promise<List<ModuleInformationCard>> cardPromise = requestModuleInformationCards(
-				userId, deviceId, activatedModules);
+        if (deviceIdCheckErrror != null) {
+            return deviceIdCheckErrror;
+        }
 
-		if (postProcessingStep != null) {
-			cardPromise = cardPromise.map(postProcessingStep);
-		}
+        // Get User id from request
+        long userId = getUserIdForRequest();
 
-		return cardPromise.map((prioritizedCards) -> {
-			// Map to Client format
-			TimeZone tz = TimeZone.getTimeZone("UTC");
-			DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
-			df.setTimeZone(tz);
-			
-			ClientFeedbackDto[] feedbackDTOs = prioritizedCards.stream().map((mic) -> {
-				String created = df.format(mic.getTimestamp());
+        // Get the activated modules
+        ActiveAssistanceModule[] activatedModules = null;
+        try {
+            activatedModules = moduleProvider.apply(userId);
+        } catch (Throwable e) {
+            Logger.error("Something went wrong on fetching module information", e);
+        }
 
-				return new ClientFeedbackDto(mic.getModuleId(), mic.getContent(),created);
-			}).toArray(ClientFeedbackDto[]::new);
-			// End mapping to client format
-			
-			JsonNode jsonResult = Json.toJson(feedbackDTOs);
+        Promise<List<ModuleInformationCard>> cardPromise = requestModuleInformationCards(
+                userId, deviceId, activatedModules);
 
-			return ok(jsonResult);
-		});
-	}
+        if (postProcessingStep != null) {
+            cardPromise = cardPromise.map(postProcessingStep);
+        }
 
-	private Promise<Result> checkDeviceId(long deviceId) {
-		if (!DevicePersistency.doesExist(deviceId)) {
-			return Promise
-					.pure(badRequestJson(AssistanceAPIErrors.deviceIdNotKnown));
-		}
+        return cardPromise.map((prioritizedCards) -> {
+            // Map to Client format
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+            df.setTimeZone(tz);
 
-		return null;
-	}
+            ClientFeedbackDto[] feedbackDTOs = prioritizedCards.stream().map((mic) -> {
+                String created = df.format(mic.getTimestamp());
 
-	private Promise<List<ModuleInformationCard>> requestModuleInformationCards(
-			long userId, long deviceId, ActiveAssistanceModule[] modules) {
-		CurrentModuleInformationAggregator informationAggregator = new CurrentModuleInformationAggregator(
-				userId, deviceId, modules);
+                return new ClientFeedbackDto(mic.getModuleId(), mic.getContent(), created);
+            }).toArray(ClientFeedbackDto[]::new);
+            // End mapping to client format
 
-		Promise<List<ModuleInformationCard>> result = informationAggregator
-				.requestCurrentInformationCards();
+            JsonNode jsonResult = Json.toJson(feedbackDTOs);
 
-		return result;
-	}
+            return ok(jsonResult);
+        });
+    }
+
+    private Promise<Result> checkDeviceId(long deviceId) {
+        if (!DevicePersistency.doesExist(deviceId)) {
+            return Promise
+                    .pure(badRequestJson(AssistanceAPIErrors.deviceIdNotKnown));
+        }
+
+        return null;
+    }
+
+    private Promise<List<ModuleInformationCard>> requestModuleInformationCards(
+            long userId, long deviceId, ActiveAssistanceModule[] modules) {
+        CurrentModuleInformationAggregator informationAggregator = new CurrentModuleInformationAggregator(
+                userId, deviceId, modules);
+
+        Promise<List<ModuleInformationCard>> result = informationAggregator
+                .requestCurrentInformationCards();
+
+        return result;
+    }
 }

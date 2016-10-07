@@ -1,12 +1,14 @@
 package controllers;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import org.apache.commons.lang3.math.NumberUtils;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
+import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
+import errors.APIError;
+import errors.AssistanceAPIErrors;
 import models.ActiveAssistanceModule;
+import org.apache.commons.lang3.math.NumberUtils;
 import persistency.ActiveAssistanceModulePersistency;
 import persistency.UserModuleActivationPersistency;
 import play.Logger;
@@ -14,229 +16,222 @@ import play.cache.Cache;
 import play.libs.Json;
 import play.mvc.Result;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import de.tudarmstadt.informatik.tk.assistanceplatform.modules.Capability;
-import de.tudarmstadt.informatik.tk.assistanceplatform.services.internal.http.assistanceplatformservice.response.ModuleActivationsResponse;
-import errors.APIError;
-import errors.AssistanceAPIErrors;
+import java.util.function.Function;
 
 public class ModulesController extends RestController {
-	public Result register() {
-		return receiveAndProcessAssistanceModuleInformation(false,
-				AssistanceAPIErrors.moduleAlreadyExists,
-				ActiveAssistanceModulePersistency::create);
-	}
+    public Result register() {
+        return receiveAndProcessAssistanceModuleInformation(false,
+                AssistanceAPIErrors.moduleAlreadyExists,
+                ActiveAssistanceModulePersistency::create);
+    }
 
-	public Result update() {
-		return receiveAndProcessAssistanceModuleInformation(true,
-				AssistanceAPIErrors.moduleDoesNotExist,
-				ActiveAssistanceModulePersistency::update);
-	}
+    public Result update() {
+        return receiveAndProcessAssistanceModuleInformation(true,
+                AssistanceAPIErrors.moduleDoesNotExist,
+                ActiveAssistanceModulePersistency::update);
+    }
 
-	public Result alive() {
-		JsonNode postData = request().body().asJson();
+    public Result alive() {
+        JsonNode postData = request().body().asJson();
 
-		if (postData.has("id")) {
-			String id = postData.get("id").asText();
+        if (postData.has("id")) {
+            String id = postData.get("id").asText();
 
-			if (!ActiveAssistanceModulePersistency.doesModuleWithIdExist(id)) {
-				return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
-			}
+            if (!ActiveAssistanceModulePersistency.doesModuleWithIdExist(id)) {
+                return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
+            }
 
-			if (!ActiveAssistanceModulePersistency.setIsAlive(id)) {
-				return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
-			}
-		} else {
-			return badRequestJson(AssistanceAPIErrors.missingParametersGeneral);
-		}
+            if (!ActiveAssistanceModulePersistency.setIsAlive(id)) {
+                return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+            }
+        } else {
+            return badRequestJson(AssistanceAPIErrors.missingParametersGeneral);
+        }
 
-		return ok();
-	}
+        return ok();
+    }
 
-	public Result activations(String moduleId) {
-		return ok(Json.toJson(new ModuleActivationsResponse(
-				UserModuleActivationPersistency
-						.userActivationsForModule(moduleId))));
-	}
+    public Result activations(String moduleId) {
+        return ok(Json.toJson(new ModuleActivationsResponse(
+                UserModuleActivationPersistency
+                        .userActivationsForModule(moduleId))));
+    }
 
-	private Result receiveAndProcessAssistanceModuleInformation(
-			boolean expectedExistanceOfModule,
-			APIError errorWhenModuleExistanceOtherThanExpected,
-			Function<ActiveAssistanceModule, Boolean> func) {
-		JsonNode postData = request().body().asJson();
+    private Result receiveAndProcessAssistanceModuleInformation(
+            boolean expectedExistanceOfModule,
+            APIError errorWhenModuleExistanceOtherThanExpected,
+            Function<ActiveAssistanceModule, Boolean> func) {
+        JsonNode postData = request().body().asJson();
 
-		if (areAllRequiredRegisterParametersPosted(postData)) {
-			String id = getIdNode(postData).textValue();
+        if (areAllRequiredRegisterParametersPosted(postData)) {
+            String id = getIdNode(postData).textValue();
 
-			if (ActiveAssistanceModulePersistency.doesModuleWithIdExist(id) != expectedExistanceOfModule) {
-				return badRequestJson(errorWhenModuleExistanceOtherThanExpected);
-			}
+            if (ActiveAssistanceModulePersistency.doesModuleWithIdExist(id) != expectedExistanceOfModule) {
+                return badRequestJson(errorWhenModuleExistanceOtherThanExpected);
+            }
 
-			String name = getNameNode(postData).textValue();
-			String logoUrl = getLogoUrlNode(postData).textValue();
-			String description_short = getDescrShortNode(postData).textValue();
-			String description_long = getDescrLongNode(postData).textValue();
+            String name = getNameNode(postData).textValue();
+            String logoUrl = getLogoUrlNode(postData).textValue();
+            String description_short = getDescrShortNode(postData).textValue();
+            String description_long = getDescrLongNode(postData).textValue();
 
-			ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = new ObjectMapper();
 
-			Capability[] requiredCapabilites = null;
-			Capability[] optionalCapabilities = null;
+            Capability[] requiredCapabilites = null;
+            Capability[] optionalCapabilities = null;
 
-			try {
-				requiredCapabilites = objectMapper.treeToValue(
-						getRequiredCapsNode(postData), Capability[].class);
-				optionalCapabilities = objectMapper.treeToValue(
-						getOptionalCapsNode(postData), Capability[].class);
-			} catch (JsonProcessingException e) {
-				Logger.warn(
-						"Seems like someone posted malformed JSON for module information",
-						e);
-			}
+            try {
+                requiredCapabilites = objectMapper.treeToValue(
+                        getRequiredCapsNode(postData), Capability[].class);
+                optionalCapabilities = objectMapper.treeToValue(
+                        getOptionalCapsNode(postData), Capability[].class);
+            } catch (JsonProcessingException e) {
+                Logger.warn(
+                        "Seems like someone posted malformed JSON for module information",
+                        e);
+            }
 
-			String copyright = getCopyrightNode(postData).textValue();
+            String copyright = getCopyrightNode(postData).textValue();
 
-			String administratorEmail = getAdminEmailNode(postData).asText();
+            String administratorEmail = getAdminEmailNode(postData).asText();
 
-			String supportEmail = getSupportEmailNode(postData).asText();
-			
-			String restContactAddress = getRestContactAddress(postData); 
+            String supportEmail = getSupportEmailNode(postData).asText();
 
-			// TODO: Validation der Parameter?
+            String restContactAddress = getRestContactAddress(postData);
 
-			ActiveAssistanceModule module = new ActiveAssistanceModule(name,
-					id, logoUrl, description_short, description_long,
-					requiredCapabilites, optionalCapabilities, copyright,
-					administratorEmail, supportEmail, restContactAddress);
+            // TODO: Validation der Parameter?
 
-			if (func.apply(module)
-					&& ActiveAssistanceModulePersistency.setIsAlive(module.id)) {
-				clearCacheForLanguage("en");
-				return ok(); 
-			}
+            ActiveAssistanceModule module = new ActiveAssistanceModule(name,
+                    id, logoUrl, description_short, description_long,
+                    requiredCapabilites, optionalCapabilities, copyright,
+                    administratorEmail, supportEmail, restContactAddress);
 
-			return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
-		} else {
-			return badRequestJson(AssistanceAPIErrors.missingModuleParameters);
-		}
-	}
+            if (func.apply(module)
+                    && ActiveAssistanceModulePersistency.setIsAlive(module.id)) {
+                clearCacheForLanguage("en");
+                return ok();
+            }
 
-	private boolean areAllRequiredRegisterParametersPosted(JsonNode postData) {
-		return postData != null && !getIdNode(postData).isMissingNode()
-				&& !getNameNode(postData).isMissingNode()
-				&& !getLogoUrlNode(postData).isMissingNode()
-				&& !getDescrShortNode(postData).isMissingNode()
-				&& !getDescrLongNode(postData).isMissingNode()
-				&& !getRequiredCapsNode(postData).isMissingNode()
-				&& !getOptionalCapsNode(postData).isMissingNode()
-				&& !getCopyrightNode(postData).isMissingNode()
-				&& !getAdminEmailNode(postData).isMissingNode();
-	}
-	
-	private String getRestContactAddress(JsonNode postData) {
-		String submittedAddressData = postData.findPath("restContactAddress").asText();
-		
-		// If it is just a number, then it is the port
-		if(NumberUtils.isNumber(submittedAddressData)) {
-			String requestorIp = request().remoteAddress();
-			
-			return requestorIp + ":" + submittedAddressData;
-		}
-		
-		return submittedAddressData;
-	}
+            return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+        } else {
+            return badRequestJson(AssistanceAPIErrors.missingModuleParameters);
+        }
+    }
 
-	private JsonNode getIdNode(JsonNode postData) {
-		return postData.findPath("id");
-	}
+    private boolean areAllRequiredRegisterParametersPosted(JsonNode postData) {
+        return postData != null && !getIdNode(postData).isMissingNode()
+                && !getNameNode(postData).isMissingNode()
+                && !getLogoUrlNode(postData).isMissingNode()
+                && !getDescrShortNode(postData).isMissingNode()
+                && !getDescrLongNode(postData).isMissingNode()
+                && !getRequiredCapsNode(postData).isMissingNode()
+                && !getOptionalCapsNode(postData).isMissingNode()
+                && !getCopyrightNode(postData).isMissingNode()
+                && !getAdminEmailNode(postData).isMissingNode();
+    }
 
-	private JsonNode getRequiredCapsNode(JsonNode postData) {
-		return postData.withArray("requiredCaps");
-	}
+    private String getRestContactAddress(JsonNode postData) {
+        String submittedAddressData = postData.findPath("restContactAddress").asText();
 
-	private JsonNode getOptionalCapsNode(JsonNode postData) {
-		return postData.withArray("optionalCaps");
-	}
+        // If it is just a number, then it is the port
+        if (NumberUtils.isNumber(submittedAddressData)) {
+            String requestorIp = request().remoteAddress();
 
-	private JsonNode getCopyrightNode(JsonNode postData) {
-		return postData.findPath("copyright");
-	}
+            return requestorIp + ":" + submittedAddressData;
+        }
 
-	private JsonNode getAdminEmailNode(JsonNode postData) {
-		return postData.findPath("administratorEmail");
-	}
+        return submittedAddressData;
+    }
 
-	private JsonNode getSupportEmailNode(JsonNode postData) {
-		return postData.findPath("supportEmail");
-	}
+    private JsonNode getIdNode(JsonNode postData) {
+        return postData.findPath("id");
+    }
 
-	public Result localize() {
-		JsonNode postData = request().body().asJson();
+    private JsonNode getRequiredCapsNode(JsonNode postData) {
+        return postData.withArray("requiredCaps");
+    }
 
-		if (areAllRequiredLocalizationParametersPosted(postData)) {
-			String id = getIdNode(postData).textValue();
+    private JsonNode getOptionalCapsNode(JsonNode postData) {
+        return postData.withArray("optionalCaps");
+    }
 
-			if (!ActiveAssistanceModulePersistency.doesModuleWithIdExist(id)) {
-				return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
-			}
+    private JsonNode getCopyrightNode(JsonNode postData) {
+        return postData.findPath("copyright");
+    }
 
-			String name = getNameNode(postData).textValue();
-			String logoUrl = getLogoUrlNode(postData).textValue();
-			String description_short = getDescrShortNode(postData).textValue();
-			String description_long = getDescrLongNode(postData).textValue();
+    private JsonNode getAdminEmailNode(JsonNode postData) {
+        return postData.findPath("administratorEmail");
+    }
 
-			ActiveAssistanceModule module = new ActiveAssistanceModule(name,
-					id, logoUrl, description_short, description_long, null,
-					null, null, null, null, null);
+    private JsonNode getSupportEmailNode(JsonNode postData) {
+        return postData.findPath("supportEmail");
+    }
 
-			String languageCode = getLanguageCode(postData).textValue();
+    public Result localize() {
+        JsonNode postData = request().body().asJson();
 
-			if (ActiveAssistanceModulePersistency
-					.localize(languageCode, module)) {
-				clearCacheForLanguage(languageCode);
+        if (areAllRequiredLocalizationParametersPosted(postData)) {
+            String id = getIdNode(postData).textValue();
 
-				return ok(); // TODO: Ggf zurück geben, wann sich das Modul das
-								// nächste mal "Alive" melden soll
-			}
+            if (!ActiveAssistanceModulePersistency.doesModuleWithIdExist(id)) {
+                return badRequestJson(AssistanceAPIErrors.moduleDoesNotExist);
+            }
 
-			return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
-		} else {
-			return badRequestJson(AssistanceAPIErrors.missingModuleParameters);
-		}
-	}
+            String name = getNameNode(postData).textValue();
+            String logoUrl = getLogoUrlNode(postData).textValue();
+            String description_short = getDescrShortNode(postData).textValue();
+            String description_long = getDescrLongNode(postData).textValue();
 
-	private void clearCacheForLanguage(String languageCode) {
-		Cache.remove("moduleList" + languageCode);
-	}
+            ActiveAssistanceModule module = new ActiveAssistanceModule(name,
+                    id, logoUrl, description_short, description_long, null,
+                    null, null, null, null, null);
 
-	private boolean areAllRequiredLocalizationParametersPosted(JsonNode postData) {
-		return postData != null && !getIdNode(postData).isMissingNode()
-				&& !getNameNode(postData).isMissingNode()
-				&& !getLogoUrlNode(postData).isMissingNode()
-				&& !getDescrShortNode(postData).isMissingNode()
-				&& !getDescrLongNode(postData).isMissingNode()
-				&& !getLanguageCode(postData).isMissingNode();
-	}
+            String languageCode = getLanguageCode(postData).textValue();
 
-	private JsonNode getNameNode(JsonNode postData) {
-		return postData.findPath("name");
-	}
+            if (ActiveAssistanceModulePersistency
+                    .localize(languageCode, module)) {
+                clearCacheForLanguage(languageCode);
 
-	private JsonNode getLogoUrlNode(JsonNode postData) {
-		return postData.findPath("logoUrl");
-	}
+                return ok(); // TODO: Ggf zurück geben, wann sich das Modul das
+                // nächste mal "Alive" melden soll
+            }
 
-	private JsonNode getDescrShortNode(JsonNode postData) {
-		return postData.findPath("descriptionShort");
-	}
+            return internalServerErrorJson(AssistanceAPIErrors.unknownInternalServerError);
+        } else {
+            return badRequestJson(AssistanceAPIErrors.missingModuleParameters);
+        }
+    }
 
-	private JsonNode getDescrLongNode(JsonNode postData) {
-		return postData.findPath("descriptionLong");
-	}
+    private void clearCacheForLanguage(String languageCode) {
+        Cache.remove("moduleList" + languageCode);
+    }
 
-	private JsonNode getLanguageCode(JsonNode postData) {
-		return postData.findPath("languageCode");
-	}
+    private boolean areAllRequiredLocalizationParametersPosted(JsonNode postData) {
+        return postData != null && !getIdNode(postData).isMissingNode()
+                && !getNameNode(postData).isMissingNode()
+                && !getLogoUrlNode(postData).isMissingNode()
+                && !getDescrShortNode(postData).isMissingNode()
+                && !getDescrLongNode(postData).isMissingNode()
+                && !getLanguageCode(postData).isMissingNode();
+    }
+
+    private JsonNode getNameNode(JsonNode postData) {
+        return postData.findPath("name");
+    }
+
+    private JsonNode getLogoUrlNode(JsonNode postData) {
+        return postData.findPath("logoUrl");
+    }
+
+    private JsonNode getDescrShortNode(JsonNode postData) {
+        return postData.findPath("descriptionShort");
+    }
+
+    private JsonNode getDescrLongNode(JsonNode postData) {
+        return postData.findPath("descriptionLong");
+    }
+
+    private JsonNode getLanguageCode(JsonNode postData) {
+        return postData.findPath("languageCode");
+    }
 }
