@@ -194,13 +194,31 @@
     
         <li class="main active"><a href="#deploying-with-ansible">Deploying with Ansible</a></li>
         
+            <li><a href="#getting-started">Getting started</a></li>
+        
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
 <h1 id="deploying-with-ansible">Deploying with Ansible<a class="headerlink" href="#deploying-with-ansible" title="Permanent link">&para;</a></h1>
-<p>Currently in development.</p></div>
+<p>In this section you will read how to deploy the Assistant Platform with Ansible.</p>
+<h2 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<p>Follow these few steps for easy installation with open source <a href="https://ansible.com">Ansible</a> IT automation tool.</p>
+<h3 id="prerequisites-on-your-host-machine">Prerequisites on your host machine<a class="headerlink" href="#prerequisites-on-your-host-machine" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Python &gt;= 2.7</li>
+<li>Ansible &gt;= 2.1</li>
+<li>Linux system (tested on Ubuntu 16.04)</li>
+</ul>
+<h3 id="installation-instructions">Installation instructions<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Step 1</strong>: Clone repository into some directory</li>
+<li><strong>Step 2</strong>: Open <strong>config.yml</strong> (&ldquo;assistance-platform-server/deployment/ansible/config/config.yml&rdquo;) with an editor and configure your parameters. <em>Default</em>: it is ready to be installed on localhost (don&rsquo;t forget to edit hosts.yml if you not willing to install on localhost).</li>
+<li><strong>Step 3</strong>: After you configured it, cd to &ldquo;assistance-platform-server\deployment\ansible" and run command &ldquo;ansible-playbook playbook.yml&rdquo;. The Ansible installation will begin.</li>
+<li><strong>Step 4</strong>: Check installation was successfull by visiting http://localhost/</li>
+<li><strong>Step 5</strong>: Your copy of <strong>Assistance Platform</strong> is up and running. Read documentation for <a href="https://telecooperation.github.io/assistance-platform-server/docs/developer/module-developers.-1.-getting-started-for-module-developers-(wip)/">module development</a>.</li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">

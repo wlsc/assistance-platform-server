@@ -4,7 +4,7 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +12,7 @@
     
     <url>
      <loc>None/license/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -21,25 +21,25 @@
         
     <url>
      <loc>None/api/client-actions-and-commands/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/api/client-feedback-channel-format/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/api/rest-api-for-clients/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/api/sensor-types-and-api-mapping/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -49,13 +49,13 @@
         
     <url>
      <loc>None/deploy/deploying-with-ansible/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/deploy/deploying-with-docker/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -65,31 +65,31 @@
         
     <url>
      <loc>None/developer/module-developers.-1.-getting-started-for-module-developers-(wip)/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/developer/module-developers.-2.-advanced.-providing-custom-rest-extension/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/developer/module-developers.-3.-dockerize-your-module/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/developer/preprocess-events-before-save-and-distribution/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/developer/rest-api-for-modules-(internal)/</loc>
-     <lastmod>2016-09-06</lastmod>
+     <lastmod>2016-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

@@ -402,13 +402,28 @@
         },
         {
             "location": "/deploy/deploying-with-ansible/",
-            "text": "Deploying with Ansible\n\u00b6\n\n\nCurrently in development.",
+            "text": "Deploying with Ansible\n\u00b6\n\n\nIn this section you will read how to deploy the Assistant Platform with Ansible.\n\n\nGetting started\n\u00b6\n\n\nFollow these few steps for easy installation with open source \nAnsible\n IT automation tool.\n\n\nPrerequisites on your host machine\n\u00b6\n\n\n\n\nPython >= 2.7\n\n\nAnsible >= 2.1\n\n\nLinux system (tested on Ubuntu 16.04)\n\n\n\n\nInstallation instructions\n\u00b6\n\n\n\n\nStep 1\n: Clone repository into some directory\n\n\nStep 2\n: Open \nconfig.yml\n (\u201cassistance-platform-server/deployment/ansible/config/config.yml\u201d) with an editor and configure your parameters. \nDefault\n: it is ready to be installed on localhost (don\u2019t forget to edit hosts.yml if you not willing to install on localhost).\n\n\nStep 3\n: After you configured it, cd to \u201cassistance-platform-server\\deployment\\ansible\" and run command \u201cansible-playbook playbook.yml\u201d. The Ansible installation will begin.\n\n\nStep 4\n: Check installation was successfull by visiting http://localhost/\n\n\nStep 5\n: Your copy of \nAssistance Platform\n is up and running. Read documentation for \nmodule development\n.",
             "title": "Deploying with ansible"
         },
         {
             "location": "/deploy/deploying-with-ansible/#deploying-with-ansible",
-            "text": "Currently in development.",
+            "text": "In this section you will read how to deploy the Assistant Platform with Ansible.",
             "title": "Deploying with Ansible"
+        },
+        {
+            "location": "/deploy/deploying-with-ansible/#getting-started",
+            "text": "Follow these few steps for easy installation with open source  Ansible  IT automation tool.",
+            "title": "Getting started"
+        },
+        {
+            "location": "/deploy/deploying-with-ansible/#prerequisites-on-your-host-machine",
+            "text": "Python >= 2.7  Ansible >= 2.1  Linux system (tested on Ubuntu 16.04)",
+            "title": "Prerequisites on your host machine"
+        },
+        {
+            "location": "/deploy/deploying-with-ansible/#installation-instructions",
+            "text": "Step 1 : Clone repository into some directory  Step 2 : Open  config.yml  (\u201cassistance-platform-server/deployment/ansible/config/config.yml\u201d) with an editor and configure your parameters.  Default : it is ready to be installed on localhost (don\u2019t forget to edit hosts.yml if you not willing to install on localhost).  Step 3 : After you configured it, cd to \u201cassistance-platform-server\\deployment\\ansible\" and run command \u201cansible-playbook playbook.yml\u201d. The Ansible installation will begin.  Step 4 : Check installation was successfull by visiting http://localhost/  Step 5 : Your copy of  Assistance Platform  is up and running. Read documentation for  module development .",
+            "title": "Installation instructions"
         },
         {
             "location": "/deploy/deploying-with-docker/",
