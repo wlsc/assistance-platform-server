@@ -19,8 +19,9 @@
         <p>Server of the Assistance Platform. The project @Telecooperation Lab, TU Darmstadt</p>
 
         <p class="view"><a href="https://github.com/Telecooperation/assistance-platform-server">View the Project on GitHub <small>Telecooperation/assistance-platform-server</small></a></p>
-
-
+        <p>
+          <a href="https://codebeat.co/projects/github-com-telecooperation-assistance-platform-server"><img src="https://codebeat.co/badges/1d24d333-4d9b-4edc-8bd3-19876d151630" alt="Codebeat badge"></a>
+        </p>
         <ul>
           <li><a href="https://github.com/Telecooperation/assistance-platform-server/zipball/master">Download <strong>ZIP File</strong></a></li>
           <li><a href="https://github.com/Telecooperation/assistance-platform-server/tarball/master">Download <strong>TAR Ball</strong></a></li>
@@ -35,30 +36,60 @@
 
 <p>This project hosts the implementation of the Platform REST web service, the Module API and a Shared API between Modules and the Platform.</p>
 
+<h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started</h2>
+
+<p>Follow these few steps for easy installation with open source <a href="https://ansible.com">Ansible</a> IT automation tool.</p>
+
 <h3>
-<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h3>
+<a id="prerequisites-on-your-host-machine" class="anchor" href="#prerequisites-on-your-host-machine" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prerequisites on your host machine</h3>
+
+<ul>
+<li>Python &gt;= 2.7</li>
+<li>Ansible &gt;= 2.1</li>
+<li>Linux system (tested on Ubuntu 16.04)</li>
+</ul>
+
+<h3>
+<a id="installation-instructions" class="anchor" href="#installation-instructions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation instructions</h3>
+
+<ul>
+<li>
+<strong>Step 1</strong>: Clone repository into some directory</li>
+<li>
+<strong>Step 2</strong>: Open <strong>config.yml</strong> ("assistance-platform-server/deployment/ansible/config/config.yml") with an editor and configure your parameters. <em>Default</em>: it is ready to be installed on localhost (don't forget to edit hosts.yml if you not willing to install on localhost).</li>
+<li>
+<strong>Step 3</strong>: After you configured it, cd to "assistance-platform-server\deployment\ansible\" and run command "ansible-playbook playbook.yml". The Ansible installation will begin.</li>
+<li>
+<strong>Step 4</strong>: Check installation was successfull by visiting http://localhost/</li>
+<li>
+<strong>Step 5</strong>: Your copy of <strong>Assistance Platform</strong> is up and running. Read documentation for <a href="https://telecooperation.github.io/assistance-platform-server/docs/developer/module-developers.-1.-getting-started-for-module-developers-(wip)/">module development</a>.</li>
+</ul>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h2>
 
 <p>Can be found under the <a href="https://telecooperation.github.io/assistance-platform-server/docs/">link</a>.</p>
 
-<h3>
-<a id="clients" class="anchor" href="#clients" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clients</h3>
+<h2>
+<a id="clients" class="anchor" href="#clients" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clients</h2>
 
 <ul>
-<li><a href="https://github.com/Telecooperation/assistance-platform-client-android">Android client</a></li>
-<li><a href="https://github.com/Telecooperation/assistance-platform-client-ios">iOS client</a></li>
+<li><a href="https://github.com/Telecooperation/assistance-platform-client-android">Android</a></li>
+<li><a href="https://github.com/Telecooperation/assistance-platform-client-ios">iOS</a></li>
 </ul>
 
-<h3>
-<a id="developers" class="anchor" href="#developers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Developers</h3>
+<h2>
+<a id="developers" class="anchor" href="#developers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Developers</h2>
 
 <ul>
-<li><a href="https://github.com/eintopf">Bennet Jeutter (server)</a></li>
-<li><a href="https://github.com/wlsc">Wladimir Schmidt (Android client)</a></li>
-<li><a href="https://github.com/nickolasguendling">Nickolas Guendling (iOS client)</a></li>
+<li><a href="https://github.com/eintopf">Bennet Jeutter (Backend)</a></li>
+<li><a href="https://github.com/wlsc">Wladimir Schmidt (Android assistant)</a></li>
+<li><a href="https://github.com/nickolasguendling">Nickolas Guendling (iOS assistant)</a></li>
 </ul>
 
-<h3>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h3>
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
 <p>Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
