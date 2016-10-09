@@ -1,13 +1,29 @@
 ---
+- name: Copy docker config
+  template:
+    src=docker.conf
+    dest={{ PROJECT_ROOT }}/assistance-platform-service/conf/docker.conf
+    mode=0655
+  tags:
+    [install, assistance]
+
+- name: Copy application config
+  template:
+    src=application.conf
+    dest={{ PROJECT_ROOT }}/assistance-platform-service/conf/application.conf
+    mode=0655
+  tags:
+    [install, assistance]
+
 - name: SBT clean project
-  shell: sbt clean
+  shell: "sbt clean"
   args:
     chdir: "{{ PROJECT_ROOT }}/assistance-platform-service/"
   tags:
     [install, assistance]
 
 - name: Create and publish docker image to local repository
-  shell: sbt docker
+  shell: "sbt docker"
   args:
     chdir: "{{ PROJECT_ROOT }}/assistance-platform-service/"
   tags:
@@ -16,21 +32,23 @@
 - name: Run generated docker container
   docker_container:
     name: assistance
-    hostname: assi
     image: telecooperation/assistance-platform-service
+    hostname: assistance
     state: started
     restart_retries: 5
     restart: no
-    command: "-Dconfig.resource=docker.conf"
     published_ports:
-      - "9000"
+      - "{{ PROJECT_PORT }}:{{ PROJECT_PORT }}"
+    exposed_ports:
+      - "{{ PROJECT_PORT }}:{{ PROJECT_PORT }}"
     links:
+      - nginx
       - postgres
       - cassandra
       - activemq
     env:
-      VIRTUAL_HOST: assi
-      VIRTUAL_PORT: 9000
+      VIRTUAL_HOST: "{{ PROJECT_IP }}"
+      VIRTUAL_PORT: "{{ PROJECT_PORT }}"
       ACTIVEMQ_PORT_61616_TCP_ADDR: "{{ ACTIVEMQ_PORT_61616_TCP_ADDR }}"
       ACTIVEMQ_PORT_61616_TCP_PORT: "{{ ACTIVEMQ_PORT_61616_TCP_PORT }}"
       DB_PORT_5432_TCP_ADDR: "{{ DB_PORT_5432_TCP_ADDR }}"

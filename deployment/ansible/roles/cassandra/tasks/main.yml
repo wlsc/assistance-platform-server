@@ -2,15 +2,20 @@
 - name: Pull/run docker container
   docker_container:
     name: cassandra
-    image: cassandra
+    image: spotify/cassandra
+    hostname: cassandra
     tls: yes
     state: started
     restart_retries: 5
     restart: no
-    volumes:
-      - "{{ role_path }}/files:/etc/cassandra"
+    #volumes:
+    #  - "{{ role_path }}/files:/etc/cassandra"
     published_ports:
-      - "9160:9160"
+      - "{{ CASSANDRA_PORT_9160_TCP_PORT }}:{{ CASSANDRA_PORT_9160_TCP_PORT }}"
       - "{{ CASSANDRA_PORT_9042_TCP_PORT }}:{{ CASSANDRA_PORT_9042_TCP_PORT }}"
+    env:
+      CASSANDRA_LISTEN_ADDRESS: "{{ CASSANDRA_PORT_9042_TCP_ADDR }}"
+      CASSANDRA_BROADCAST_ADDRESS: "{{ CASSANDRA_PORT_9042_TCP_ADDR }}"
+      CASSANDRA_SEEDS: "{{ CASSANDRA_PORT_9042_TCP_ADDR }}"
   tags:
     [run, cassandra]

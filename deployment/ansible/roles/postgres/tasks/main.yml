@@ -2,8 +2,8 @@
 - name: Pull/run docker container
   docker_container:
     name: postgres
-    hostname: "{{ DB_PORT_5432_TCP_ADDR }}"
     image: postgres
+    hostname: postgres
     tls: yes
     state: started
     restart_retries: 5

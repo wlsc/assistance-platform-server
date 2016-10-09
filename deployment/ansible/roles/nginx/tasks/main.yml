@@ -3,6 +3,7 @@
   docker_container:
     name: nginx
     image: jwilder/nginx-proxy
+    hostname: nginx
     tls: yes
     state: started
     restart_retries: 5
@@ -11,9 +12,10 @@
       - "{{ role_path }}/files/certs:/etc/nginx/certs"
       - /var/run/docker.sock:/tmp/docker.sock:ro
     published_ports:
-      - "443:443"
-      - "80:80"
+      - "{{ NGINX_HTTP_PORT }}:{{ NGINX_HTTP_PORT }}"
+      - "{{ NGINX_SSL_PORT }}:{{ NGINX_SSL_PORT }}"
     env:
-      DEFAULT_HOST: assi
+      DEFAULT_HOST: "{{ PROJECT_IP }}"
+      DEFAULT_PORT: "{{ PROJECT_PORT }}"
   tags:
     [run, nignx]

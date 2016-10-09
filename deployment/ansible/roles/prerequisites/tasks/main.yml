@@ -5,14 +5,19 @@
     update_cache=yes
     state=latest
   with_items:
+    - apt-transport-https
+    - ca-certificates
     - bash
     - openssl
     - libssl-dev
     - libssl-doc
     - virtualenv
     - python
+    - python3
     - python-pip
     - python-software-properties
+    - ansible
+    - nodejs
   tags: 
     [install, prerequisites]
 

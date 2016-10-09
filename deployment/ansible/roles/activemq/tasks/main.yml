@@ -2,14 +2,14 @@
 - name: Pull/run docker container
   docker_container:
     name: activemq
-    hostname: "{{ ACTIVEMQ_PORT_61616_TCP_ADDR }}"
     image: webcenter/activemq
+    hostname: activemq
     tls: yes
     state: started
     restart_retries: 5
     restart: no
     published_ports:
       - "{{ ACTIVEMQ_PORT_61616_TCP_PORT }}:{{ ACTIVEMQ_PORT_61616_TCP_PORT }}"
-      - "8161:8161"
+      - "{{ ACTIVEMQ_PORT_8161_TCP_PORT }}:{{ ACTIVEMQ_PORT_8161_TCP_PORT }}"
   tags:
     [run, activemq]
