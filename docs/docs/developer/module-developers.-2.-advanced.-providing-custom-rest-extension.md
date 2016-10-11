@@ -6,7 +6,7 @@ In some cases there can be a need for clients that are specialized for a specifi
 # How does this extension from a communication perspective work?
 The client knows the IDs of modules. He then can make a normal HTTP request to `/assistance/:module/custom/*path`. The platform then will lookup the IP of the modules REST server and forward the request to `*path` on the modules REST server. 
 
-![](https://github.com/Telecooperation/assistance-platform-server/blob/master/docs/images/ModuleRestCommunication.png)
+![Modules communication](../img/ModuleRestCommunication.png)
 
 # How can I implement a REST extension for my module?
 In order to build a REST extension you just need to implement the `generateCustomServlets()` in your `AssistanceModule` sub-class.
