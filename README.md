@@ -1,4 +1,5 @@
 # Assistance Platform
+[![License](https://img.shields.io/badge/license-Apache-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 [![codebeat badge](https://codebeat.co/badges/1d24d333-4d9b-4edc-8bd3-19876d151630)](https://codebeat.co/projects/github-com-telecooperation-assistance-platform-server)
 
 The Assistance Platform is a project which aims on providing assistance to users in all thinkable situations. Therefore it offers a sleek REST API for clients to upload data (e.g. sensor data) related to a user. The user can activate / deactivate so called "modules". A module is some sort of extension of the "Assistance Platform" which consumes user data. These modules implement assistance logic (when to notify the user, when to send a mail etc.) and extract higher-level information from the stream of user / device events.
