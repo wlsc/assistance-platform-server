@@ -15,45 +15,21 @@
   tags:
     [install, assistance]
 
-- name: SBT clean project
-  shell: "sbt clean"
-  args:
-    chdir: "{{ PROJECT_ROOT }}/assistance-platform-service/"
-  tags:
-    [install, assistance]
+- block:
+    - include: run.yml
+  rescue:
+    - name: SBT clean project
+      shell: "sbt clean"
+      args:
+        chdir: "{{ PROJECT_ROOT }}/assistance-platform-service/"
+      tags:
+        [install, assistance]
 
-- name: Create and publish docker image to local repository
-  shell: "sbt docker"
-  args:
-    chdir: "{{ PROJECT_ROOT }}/assistance-platform-service/"
-  tags:
-    [install, assistance]
+    - name: Create and publish docker image to local repository
+      shell: "sbt docker"
+      args:
+        chdir: "{{ PROJECT_ROOT }}/assistance-platform-service/"
+      tags:
+        [install, assistance]
 
-- name: Run generated docker container
-  docker_container:
-    name: assistance
-    image: telecooperation/assistance-platform-service
-    hostname: assistance
-    state: started
-    restart_retries: 5
-    restart: no
-    published_ports:
-      - "{{ PROJECT_PORT }}:{{ PROJECT_PORT }}"
-    exposed_ports:
-      - "{{ PROJECT_PORT }}:{{ PROJECT_PORT }}"
-    links:
-      - nginx
-      - postgres
-      - cassandra
-      - activemq
-    env:
-      VIRTUAL_HOST: "{{ PROJECT_IP }}"
-      VIRTUAL_PORT: "{{ PROJECT_PORT }}"
-      ACTIVEMQ_PORT_61616_TCP_ADDR: "{{ ACTIVEMQ_PORT_61616_TCP_ADDR }}"
-      ACTIVEMQ_PORT_61616_TCP_PORT: "{{ ACTIVEMQ_PORT_61616_TCP_PORT }}"
-      DB_PORT_5432_TCP_ADDR: "{{ DB_PORT_5432_TCP_ADDR }}"
-      DB_PORT_5432_TCP_PORT: "{{ DB_PORT_5432_TCP_PORT }}"
-      CASSANDRA_PORT_9042_TCP_ADDR: "{{ CASSANDRA_PORT_9042_TCP_ADDR }}"
-      CASSANDRA_PORT_9042_TCP_PORT: "{{ CASSANDRA_PORT_9042_TCP_PORT }}"
-  tags:
-    [run, assistance]
+    - include: run.yml

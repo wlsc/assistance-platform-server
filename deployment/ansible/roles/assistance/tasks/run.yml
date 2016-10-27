@@ -1,0 +1,29 @@
+---
+- name: Run generated docker container
+  docker_container:
+    name: assistance
+    image: telecooperation/assistance-platform-service
+    hostname: assistance
+    state: started
+    restart_retries: 5
+    restart: no
+    published_ports:
+      - "{{ PROJECT_PORT }}:{{ PROJECT_PORT }}"
+    exposed_ports:
+      - "{{ PROJECT_PORT }}:{{ PROJECT_PORT }}"
+    links:
+      - nginx
+      - postgres
+      - cassandra
+      - activemq
+    env:
+      VIRTUAL_HOST: "{{ PROJECT_IP }}"
+      VIRTUAL_PORT: "{{ PROJECT_PORT }}"
+      ACTIVEMQ_PORT_61616_TCP_ADDR: "{{ ACTIVEMQ_PORT_61616_TCP_ADDR }}"
+      ACTIVEMQ_PORT_61616_TCP_PORT: "{{ ACTIVEMQ_PORT_61616_TCP_PORT }}"
+      DB_PORT_5432_TCP_ADDR: "{{ DB_PORT_5432_TCP_ADDR }}"
+      DB_PORT_5432_TCP_PORT: "{{ DB_PORT_5432_TCP_PORT }}"
+      CASSANDRA_PORT_9042_TCP_ADDR: "{{ CASSANDRA_PORT_9042_TCP_ADDR }}"
+      CASSANDRA_PORT_9042_TCP_PORT: "{{ CASSANDRA_PORT_9042_TCP_PORT }}"
+  tags:
+    [run, assistance]
