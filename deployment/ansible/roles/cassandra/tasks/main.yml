@@ -8,7 +8,8 @@
     state: started
     restart_retries: 5
     restart: no
-    #volumes:
+    volumes:
+      - "{{ lookup('env','HOME') }}/.cassandra/data:/var/lib/cassandra/data"
     #  - "{{ role_path }}/files:/etc/cassandra"
     published_ports:
       - "{{ CASSANDRA_PORT_9160_TCP_PORT }}:{{ CASSANDRA_PORT_9160_TCP_PORT }}"

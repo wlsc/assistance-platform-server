@@ -8,6 +8,8 @@
     state: started
     restart_retries: 5
     restart: no
+    volumes:
+      - "{{ lookup('env','HOME') }}/.postgres/data:/var/lib/postgresql/data"
     published_ports:
       - "{{ DB_PORT_5432_TCP_PORT }}:{{ DB_PORT_5432_TCP_PORT }}"
   tags:
